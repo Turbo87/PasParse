@@ -95,6 +95,9 @@ type
     constructor Create(ASource, AFileName: string);
     destructor Destroy; override;
 
+    /// Read-only representation of the current reading position as TLocation
+    property Location: TLocation read GetLocation;
+
     /// Retrieve the next token, returns nil if end-of-file
     ///  The caller needs to make sure that the created
     ///  TToken instance is freed again
@@ -372,12 +375,12 @@ begin
     // If not match found -> raise exception
     if AMatch = nil then
       raise ELexException.Create('Unrecognized character ''' + Peek(0) + '''',
-                                 GetLocation)
+                                 Location)
     else
     begin
       // Create a new TToken instance from the match that was found
       AText := Copy(FSource, FIndex + 1, AMatch.Length);
-      Result := TToken.Create(AMatch.TokenType, GetLocation, AText,
+      Result := TToken.Create(AMatch.TokenType, Location, AText,
                               AMatch.ParsedText);
       Inc(FIndex, AMatch.Length);
       FreeAndNil(AMatch);
