@@ -3,7 +3,7 @@ unit ULexScanner;
 interface
 
 uses
-  ULocation, UTokenType, UToken, UTokenSet, Classes;
+  ULocation, UTokenType, UToken, UTokenSet, UDictionary;
 
 type
   TLexScanner = class(TObject)
@@ -32,7 +32,7 @@ type
     FFileName: string;
     FIndex: Integer;
     FSource: string;
-    FWordTypes: TStringList;
+    FWordTypes: TDictionary;
 
     /// Adds contents of the given TTokenSet to the FWordTypes dictionary
     procedure AddWordTypes(ATokenSet: TTokenSet; ASuffixLength: Integer);
@@ -129,7 +129,7 @@ begin
       // Convert token name to keyword (e.g. TTIfKeyword -> If)
       ABaseWord := Copy(ATokenString, 3, Length(ATokenString) - ASuffixLength);
       // Add keyword-token pair to FWordTypes keyword list
-      FWordTypes.AddObject(AnsiLowerCase(ABaseWord), TObject(Integer(ATokenType)));
+      FWordTypes.Write(AnsiLowerCase(ABaseWord), TObject(Integer(ATokenType)));
     end;  
   end;      
 end;
@@ -156,6 +156,7 @@ var
   AWord: string;
   ATokenType: TTokenType;
   AIndex: integer;
+  AObject: TObject;
 begin
   if not IsWordLeadChar(Peek(0)) then
     Result := nil
@@ -167,9 +168,8 @@ begin
 
     // Check whether the parsed identifier is a known keyword
     AWord := Copy(FSource, FIndex + 1, ALength);
-    AIndex := FWordTypes.IndexOf(AnsiLowerCase(AWord));
-    if AIndex > -1 then
-      ATokenType := TTokenType(Integer(FWordTypes.Objects[AIndex]))
+    if FWordTypes.Read(AnsiLowerCase(AWord), AObject) then
+      ATokenType := TTokenType(Integer(AObject))
     else
       ATokenType := TTIdentifier;
 
@@ -189,7 +189,7 @@ begin
   FFileName := AFileName;
 
   // Create new keyword list
-  FWordTypes := TStringList.Create;
+  FWordTypes := TDictionary.Create;
   // Added (semi-)keywords to the keyword list
   AddWordTypes(TTokenSets.TSSemikeyword, Length('TTSemikeyword'));
   AddWordTypes(TTokenSets.TSKeyword, Length('TTKeyword'));
