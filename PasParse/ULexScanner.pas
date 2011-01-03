@@ -198,7 +198,7 @@ begin
     
     if Peek(1) = '$' then
     begin
-      AParsedText := Copy(FSource, FIndex + 3, ALength - 3);
+      AParsedText := Trim(Copy(FSource, FIndex + 3, ALength - 3));
       Result := TMatch.Create(TTCompilerDirective, ALength, AParsedText);
     end
     else
@@ -412,8 +412,7 @@ begin
 
     if Peek(ALength) = '$' then
     begin
-      // TODO Trim()
-      AParsedText := Copy(FSource, FIndex + 4, ALength - 5);
+      AParsedText := Trim(Copy(FSource, FIndex + 4, ALength - 5));
       Result := TMatch.Create(TTCompilerDirective, ALength, AParsedText);
     end
     else
