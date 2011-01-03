@@ -3,6 +3,7 @@ unit UTokenType;
 interface
 
 type
+  /// Enum of all available token types
   TTokenType = (
     // Sentinel
     TTEndOfFile,
