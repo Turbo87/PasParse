@@ -44,6 +44,7 @@ begin
     begin
       WriteLn('Loading file: ''' + ParamStr(1) + '''');
       LoadFile(ParamStr(1));
+      Readln;
     end;
   except
     on E:Exception do
