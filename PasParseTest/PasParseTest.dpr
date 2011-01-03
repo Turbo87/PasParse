@@ -9,8 +9,7 @@ uses
 
 begin
   try
-    if not TTestLexScanner.Test then
-      raise Exception.Create('TestLexScanner failed!');
+    TTestLexScanner.Test;
   except
     on E:Exception do
       Writeln(E.Classname, ': ', E.Message);
