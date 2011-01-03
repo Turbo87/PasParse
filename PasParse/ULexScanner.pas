@@ -35,7 +35,7 @@ type
     FWordTypes: TStringList;
 
     /// Adds contents of the given TTokenSet to the FWordTypes dictionary
-    procedure AddWordTypes(ATokenTypes: TTokenSet; ASuffixLength: Integer);
+    procedure AddWordTypes(ATokenSet: TTokenSet; ASuffixLength: Integer);
 
     /// Searches for an identifier beginning with an ampersand (&)
     function AmpersandIdentifier: TLexScanner.TMatch;
@@ -103,7 +103,7 @@ uses
 
 { TLexScanner }
 
-procedure TLexScanner.AddWordTypes(ATokenTypes: TTokenSet;
+procedure TLexScanner.AddWordTypes(ATokenSet: TTokenSet;
                                    ASuffixLength: Integer);
 var
   ATokenType: TTokenType;
@@ -112,7 +112,7 @@ var
 begin
   for ATokenType := Low(TTokenType) to High(TTokenType) do
   begin
-    if ATokenTypes.Contains(ATokenType) then
+    if ATokenSet.Contains(ATokenType) then
     begin
       ATokenString := GetEnumName(TypeInfo(TTokenType), Integer(ATokenType));
       ABaseWord := Copy(ATokenString, 3, Length(ATokenString) - ASuffixLength);
