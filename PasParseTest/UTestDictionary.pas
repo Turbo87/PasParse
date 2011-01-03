@@ -45,10 +45,10 @@ begin
   OK(Integer(AObject) = 5, 'Integer(AObject) = 5');
 
   // Write second pair
-  OK(not ADict.Write('test2', TObject(1)), 'Write');
+  OK(not ADict.Write('test2', TObject(true)), 'Write');
 
   // Read second pair
-  OK(ADict.Read('test2') = TObject(1), 'Read');
+  OK(ADict.Read('test2') = TObject(true), 'Read');
 
   // Overwrite first pair
   OK(ADict.Write('test1', TObject(3)), 'Write');
