@@ -1,0 +1,44 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectGuid>{b120ecf8-fd09-4ac5-8b49-b66b7f9c94a7}</ProjectGuid>
+  </PropertyGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Projects Include="PasLexConsole\PasLexConsole.dproj" />
+    <Projects Include="PasParse\PasParse.dproj" />
+  </ItemGroup>
+  <ProjectExtensions>
+    <Borland.Personality>Default.Personality</Borland.Personality>
+    <Borland.ProjectType />
+    <BorlandProject>
+  <BorlandProject xmlns=""> <Default.Personality> </Default.Personality> </BorlandProject></BorlandProject>
+  </ProjectExtensions>
+  <Target Name="PasParse">
+    <MSBuild Projects="PasParse\PasParse.dproj" Targets="" />
+  </Target>
+  <Target Name="PasParse:Clean">
+    <MSBuild Projects="PasParse\PasParse.dproj" Targets="Clean" />
+  </Target>
+  <Target Name="PasParse:Make">
+    <MSBuild Projects="PasParse\PasParse.dproj" Targets="Make" />
+  </Target>
+  <Target Name="PasLexConsole">
+    <MSBuild Projects="PasLexConsole\PasLexConsole.dproj" Targets="" />
+  </Target>
+  <Target Name="PasLexConsole:Clean">
+    <MSBuild Projects="PasLexConsole\PasLexConsole.dproj" Targets="Clean" />
+  </Target>
+  <Target Name="PasLexConsole:Make">
+    <MSBuild Projects="PasLexConsole\PasLexConsole.dproj" Targets="Make" />
+  </Target>
+  <Target Name="Build">
+    <CallTarget Targets="PasParse;PasLexConsole" />
+  </Target>
+  <Target Name="Clean">
+    <CallTarget Targets="PasParse:Clean;PasLexConsole:Clean" />
+  </Target>
+  <Target Name="Make">
+    <CallTarget Targets="PasParse:Make;PasLexConsole:Make" />
+  </Target>
+  <Import Condition="Exists('$(MSBuildBinPath)\Borland.Group.Targets')" Project="$(MSBuildBinPath)\Borland.Group.Targets" />
+</Project>
