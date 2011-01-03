@@ -8,18 +8,23 @@ uses
 type
   TLexScanner = class(TObject)
   type
+    /// An instance of this class is returned when a matching token is found
     TMatch = class(TObject)
     private
       FLength: Integer;
       FParsedText: string;
       FTokenType: TTokenType;
     public
+      /// Standard constructor
       constructor Create(ATokenType: TTokenType; ALength: Integer); overload;
+      /// Additional constructor with parsed text
       constructor Create(ATokenType: TTokenType; ALength: Integer;
                          AParsedText: string); overload;
 
+      /// Length of the found token
       property Length: Integer read FLength;
       property ParsedText: String read FParsedText;
+      /// Type of the token
       property TokenType: TTokenType read FTokenType;
     end;
 
@@ -29,39 +34,65 @@ type
     FSource: string;
     FWordTypes: TStringList;
 
+    /// Adds contents of the given TTokenSet to the FWordTypes dictionary
     procedure AddWordTypes(ATokenTypes: TTokenSet; ASuffixLength: Integer);
 
+    /// Searches for an identifier beginning with an ampersand (&)
     function AmpersandIdentifier: TLexScanner.TMatch;
+    /// Searches for an identifier
     function BareWord: TLexScanner.TMatch;
+    /// Searches for a curly braces comment {...}
     function CurlyBraceComment: TLexScanner.TMatch;
+    /// Searches for a dot-dot token (..)
     function DotDot: TLexScanner.TMatch;
+    /// Searches for a double-quoted apostrophe ("'")
     function DoubleQuotedApostrophe: TLexScanner.TMatch;
+    /// Searches for an equality or assignment operator (:= < <= <> = > >=)
     function EqualityOrAssignmentOperator: TLexScanner.TMatch;
+    /// Searches for a hexadecimal number
     function HexNumber: TLexScanner.TMatch;
+    /// Searches for a decimal number
     function Number: TLexScanner.TMatch;
+    /// Searches for a parenthesis-star comment (*...*)
     function ParenStarComment: TLexScanner.TMatch;
+    /// Searches for a valid single character token
     function SingleCharacter: TLexScanner.TMatch;
+    /// Searches for a single line comment (// until next line break)                                
     function SingleLineComment: TLexScanner.TMatch;
+    /// Searches for a string literal
     function StringLiteral: TLexScanner.TMatch;
 
+    /// Retrieve the next match, returns nil if no match found
     function NextMatch: TLexScanner.TMatch;
 
+    /// Checks whether the requested offset is still a valid string position
     function CanRead(AOffset: Integer): Boolean;
+    /// Reads the character at the given offset
     function Read(AOffset: Integer): Char;
+    /// Reads the character at the given offset (checks for valid position first)
     function Peek(AOffset: Integer): Char;
 
+    /// Checks whether the given character is valid for starting an identifier
     function IsWordLeadChar(AChar: Char): Boolean;
+    /// Checks whether the given character is valid for continuing an identifier
     function IsWordContinuationChar(AChar: Char): Boolean;
+    /// Checks whether the given character is a valid hexadecimal digit
     function IsHexDigit(AChar: Char): Boolean;
+    /// Checks whether the given character is a valid digit
     function IsDigit(AChar: Char): Boolean;
+    /// Checks whether the given character is a letter (A-Z and a-z)
     function IsLetter(AChar: Char): Boolean;
+    /// Checks whether the given character is some form of whitespace
     function IsWhitespace(AChar: Char): Boolean;
 
+    /// Returns a TLocation record of the current reading position
     function GetLocation: TLocation;
 
   public
+    /// Standard constructor
     constructor Create(ASource, AFileName: string);
 
+    /// Retrieve the next token, returns nil if end-of-file
     function NextToken: TToken;
   end;
 
