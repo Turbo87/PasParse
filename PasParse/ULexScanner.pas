@@ -111,12 +111,17 @@ var
   ATokenString: string;
   ABaseWord: string;
 begin
+  // Iterate through all available token types
   for ATokenType := Low(TTokenType) to High(TTokenType) do
   begin
+    // If the given TTokenSet contains the current token type
     if ATokenSet.Contains(ATokenType) then
     begin
+      // Get token name (e.g. TTIfKeyword)
       ATokenString := GetEnumName(TypeInfo(TTokenType), Integer(ATokenType));
+      // Convert token name to keyword (e.g. TTIfKeyword -> If)
       ABaseWord := Copy(ATokenString, 3, Length(ATokenString) - ASuffixLength);
+      // Add keyword-token pair to FWordTypes keyword list
       FWordTypes.AddObject(AnsiLowerCase(ABaseWord), TObject(Integer(ATokenType)));
     end;  
   end;      
@@ -153,6 +158,7 @@ begin
     while IsWordContinuationChar(Peek(ALength)) do
       Inc(ALength);
 
+    // Check whether the parsed identifier is a known keyword
     AWord := Copy(FSource, FIndex + 1, ALength);
     AIndex := FWordTypes.IndexOf(AnsiLowerCase(AWord));
     if AIndex > -1 then
@@ -171,13 +177,17 @@ end;
 
 constructor TLexScanner.Create(ASource, AFileName: string);
 begin
+  // Save source string and filename
   FSource := ASource;
   FFileName := AFileName;
 
+  // Create new keyword list
   FWordTypes := TStringList.Create;
+  // Added (semi-)keywords to the keyword list
   AddWordTypes(TTokenSets.TSSemikeyword, Length('TTSemikeyword'));
   AddWordTypes(TTokenSets.TSKeyword, Length('TTKeyword'));
 
+  // Set current reading position to zero
   FIndex := 0;
 end;
 
@@ -195,7 +205,8 @@ begin
       Inc(ALength);
 
     Inc(ALength);
-    
+
+    // Check for compiler directive {$...}
     if Peek(1) = '$' then
     begin
       AParsedText := Trim(Copy(FSource, FIndex + 3, ALength - 3));
@@ -208,6 +219,7 @@ end;
 
 destructor TLexScanner.Destroy;
 begin
+  // Destroy keyword list
   FreeAndNil(FWordTypes);
   inherited;
 end;
@@ -256,6 +268,7 @@ end;
 
 function TLexScanner.GetLocation: TLocation;
 begin
+  // TLocation is a record. No need to free it again afterwards.
   Result := TLocation.Create(FFileName, FSource, FIndex);
 end;
 
@@ -263,6 +276,7 @@ function TLexScanner.HexNumber: TLexScanner.TMatch;
 var
   ALength: Integer;
 begin
+  // Hex number begins with $
   if Peek(0) <> '$' then
     Result := nil
   else
@@ -340,19 +354,24 @@ var
   AMatch: TMatch;
   AText: string;
 begin
+  // Skip whitespace
   while (FIndex < Length(FSource)) and IsWhitespace(Peek(0))  do
     Inc(FIndex);
 
+  // End-of-file reached
   if FIndex >= Length(FSource) then
     Result := nil
   else
   begin
+    // Get next match
     AMatch := NextMatch;
+    // If not match found -> raise exception
     if AMatch = nil then
       raise ELexException.Create('Unrecognized character ''' + Peek(0) + '''',
                                  GetLocation)
     else
     begin
+      // Create a new TToken instance from the match that was found
       AText := Copy(FSource, FIndex + 1, AMatch.Length);
       Result := TToken.Create(AMatch.TokenType, GetLocation, AText,
                               AMatch.ParsedText);
@@ -374,6 +393,7 @@ begin
     while IsDigit(Peek(ALength)) do
       Inc(ALength);
 
+    // Check for decimal point
     if (Peek(ALength) = '.') and (Peek(ALength + 1) <> '.') then
     begin
       Inc(ALength);
@@ -381,6 +401,7 @@ begin
         Inc(ALength);
     end;
 
+    // Check for exponential format
     if (Peek(ALength) = 'e') or (Peek(ALength) = 'E') then
     begin
       Inc(ALength);
@@ -410,6 +431,7 @@ begin
 
     Inc(ALength, 2);
 
+    // Check for compiler directive {$...}
     if Peek(2) = '$' then
     begin
       AParsedText := Trim(Copy(FSource, FIndex + 4, ALength - 5));
@@ -430,6 +452,7 @@ end;
 
 function TLexScanner.Read(AOffset: Integer): Char;
 begin
+  // Delphi string indices start with 1!!
   Result := FSource[FIndex + AOffset + 1];
 end;
 
@@ -509,6 +532,7 @@ end;
 
 constructor TLexScanner.TMatch.Create(ATokenType: TTokenType; ALength: Integer);
 begin
+  // Call overloaded constructor with AParsedText = ''
   Create(ATokenType, ALength, '');
 end;
 
