@@ -4,7 +4,8 @@ program PasParseTest;
 
 uses
   SysUtils,
-  UTestLexScanner in 'UTestLexScanner.pas';
+  UTestLexScanner in 'UTestLexScanner.pas',
+  UTest in 'UTest.pas';
 
 begin
   try
