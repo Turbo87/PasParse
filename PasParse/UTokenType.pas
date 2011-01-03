@@ -162,8 +162,6 @@ type
     TTTimesSign
   );
 
-  TTokenTypes = set of TTokenType;
-
 implementation
 
 end.

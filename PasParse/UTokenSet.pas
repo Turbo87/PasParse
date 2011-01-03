@@ -8,7 +8,7 @@ uses
 type
   TTokenSet = class
   private
-    FTokenTypes: TTokenTypes;
+    FTokenTypes: set of TTokenType;
     FName: string;
 
   public
