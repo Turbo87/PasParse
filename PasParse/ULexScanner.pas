@@ -91,6 +91,7 @@ type
   public
     /// Standard constructor
     constructor Create(ASource, AFileName: string);
+    destructor Destroy; override;
 
     /// Retrieve the next token, returns nil if end-of-file
     function NextToken: TToken;
@@ -203,6 +204,12 @@ begin
     else
       Result := TMatch.Create(TTCurlyBraceComment, ALength);
   end;
+end;
+
+destructor TLexScanner.Destroy;
+begin
+  FreeAndNil(FWordTypes);
+  inherited;
 end;
 
 function TLexScanner.DotDot: TLexScanner.TMatch;
