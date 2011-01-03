@@ -63,6 +63,8 @@ type
     function StringLiteral: TLexScanner.TMatch;
 
     /// Retrieve the next match, returns nil if no match found
+    ///  The caller needs to make sure that the created
+    ///  TMatch instance is freed again
     function NextMatch: TLexScanner.TMatch;
 
     /// Checks whether the requested offset is still a valid string position
