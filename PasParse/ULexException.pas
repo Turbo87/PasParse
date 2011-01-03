@@ -6,7 +6,7 @@ uses
   UBaseException;
 
 type
-  TLexException = class(TBaseException)
+  ELexException = class(EBaseException)
   end;
 
 implementation

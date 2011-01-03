@@ -311,7 +311,7 @@ begin
   begin
     AMatch := NextMatch;
     if AMatch = nil then
-      raise TLexException.Create('Unrecognized character ''' + Peek(0) + '''',
+      raise ELexException.Create('Unrecognized character ''' + Peek(0) + '''',
                                  GetLocation)
     else
     begin

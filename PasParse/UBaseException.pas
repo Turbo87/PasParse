@@ -6,7 +6,7 @@ uses
   SysUtils, ULocation;
 
 type
-  TBaseException = class(Exception)
+  EBaseException = class(Exception)
   private
     FLocation: TLocation;
 
@@ -20,7 +20,7 @@ implementation
 
 { TBaseException }
 
-constructor TBaseException.Create(AMessage: string; ALocation: TLocation);
+constructor EBaseException.Create(AMessage: string; ALocation: TLocation);
 begin
   inherited Create(AMessage);
   FLocation := ALocation;
