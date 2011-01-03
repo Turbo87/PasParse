@@ -29,15 +29,18 @@
     <DelphiCompile Include="PasParse.dpk">
       <MainSource>MainSource</MainSource>
     </DelphiCompile>
-    <DCCReference Include="i:\rtl.dcp" />
-    <DCCReference Include="i:\vcl.dcp" />
+    <DCCReference Include="rtl.dcp" />
     <DCCReference Include="UBaseException.pas" />
+    <DCCReference Include="UDictionary.pas" />
     <DCCReference Include="ULexException.pas" />
     <DCCReference Include="ULexScanner.pas" />
     <DCCReference Include="ULocation.pas" />
+    <DCCReference Include="UPreprocessorException.pas" />
+    <DCCReference Include="URuleType.pas" />
     <DCCReference Include="UToken.pas" />
     <DCCReference Include="UTokenSet.pas" />
     <DCCReference Include="UTokenSets.pas" />
     <DCCReference Include="UTokenType.pas" />
+    <DCCReference Include="vcl.dcp" />
   </ItemGroup>
 </Project>

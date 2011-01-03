@@ -36,6 +36,9 @@ contains
   UToken in 'UToken.pas',
   UTokenSet in 'UTokenSet.pas',
   UTokenSets in 'UTokenSets.pas',
-  UTokenType in 'UTokenType.pas';
+  UTokenType in 'UTokenType.pas',
+  URuleType in 'URuleType.pas',
+  UPreprocessorException in 'UPreprocessorException.pas',
+  UDictionary in 'UDictionary.pas';
 
 end.
