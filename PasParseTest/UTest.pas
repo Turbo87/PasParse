@@ -13,7 +13,8 @@ type
     class function ReturnCode: Integer;
 
   protected
-    class function OK(AResult: Boolean; ADescription: string): Boolean;
+    class function OK(AResult: Boolean): Boolean; overload;
+    class function OK(AResult: Boolean; ADescription: string): Boolean; overload;
     class procedure TestAll; virtual; abstract;
     class function GetName: string; virtual; abstract;
     class procedure Plan(ANumber: Integer);
@@ -53,6 +54,11 @@ begin
     WriteLn(AResultText + ' - ' + ADescription)
   else
     WriteLn(AResultText);
+end;
+
+class function TTest.OK(AResult: Boolean): Boolean;
+begin
+  OK(AResult, '');
 end;
 
 class procedure TTest.Plan(ANumber: Integer);
