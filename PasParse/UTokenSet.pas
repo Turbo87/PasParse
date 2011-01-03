@@ -8,7 +8,7 @@ uses
 type
   TTokenSet = class
   private
-    FTokenTypes: set of TTokenType;
+    FTokenSet: set of TTokenType;
     FName: string;
 
   public
@@ -25,7 +25,7 @@ implementation
 
 procedure TTokenSet.Add(ATokenType: TTokenType);
 begin
-  Include(FTokenTypes, ATokenType);
+  Include(FTokenSet, ATokenType);
 end;
 
 procedure TTokenSet.AddRange(ATokenSet: TTokenSet);
@@ -41,13 +41,13 @@ end;
 
 function TTokenSet.Contains(ATokenType: TTokenType): Boolean;
 begin
-  Result := (ATokenType in FTokenTypes);
+  Result := (ATokenType in FTokenSet);
 end;
 
 constructor TTokenSet.Create(AName: string);
 begin
   FName := AName;
-  FTokenTypes := [];
+  FTokenSet := [];
 end;
 
 end.
