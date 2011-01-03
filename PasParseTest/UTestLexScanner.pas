@@ -200,7 +200,7 @@ type
     class function TestTwoTokens(ASource: string; ATokenType1, ATokenType2:
       TTokenType; AText1, AText2: string): Boolean;
 
-  public
+  protected
     class procedure TestAll; override;
   end;
 
