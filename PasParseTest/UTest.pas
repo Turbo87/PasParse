@@ -3,8 +3,6 @@ unit UTest;
 interface
 
 type
-  TFunction = function: Boolean of object;
-
   TTest = class
   private
   class var
@@ -17,7 +15,7 @@ class procedure Reset;
 class function ReturnCode: Integer;
 
 protected
-  class function OK(AFunction: TFunction; ADescription: string): Boolean;
+  class function OK(AResult: Boolean; ADescription: string): Boolean;
 class procedure TestAll; virtual; abstract;
 class procedure Plan(ANumber: Integer);
 
@@ -32,29 +30,30 @@ uses
 
 { TTest }
 
-class function TTest.OK(AFunction: TFunction; ADescription: string): Boolean;
+class function TTest.OK(AResult: Boolean; ADescription: string): Boolean;
 var
-  AResult: string;
+  AResultText: string;
 begin
+  Result := AResult;
+
   Inc(FExecuted);
-  Result := AFunction;
-  if Result then
-    AResult := 'ok'
+  if AResult then
+    AResultText := 'ok'
   else
   begin
-    AResult := 'not ok';
+    AResultText := 'not ok';
     Inc(FFailed);
 
     raise Exception.Create('Test #' + IntToStr(FExecuted) + ' failed: ' +
       ADescription);
   end;
 
-  AResult := AResult + ' ' + IntToStr(FExecuted);
+  AResultText := AResultText + ' ' + IntToStr(FExecuted);
 
   if ADescription <> '' then
-    WriteLn(AResult + ' - ' + ADescription)
+    WriteLn(AResultText + ' - ' + ADescription)
   else
-    WriteLn(AResult);
+    WriteLn(AResultText);
 end;
 
 class procedure TTest.Plan(ANumber: Integer);
