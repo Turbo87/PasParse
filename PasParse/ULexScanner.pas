@@ -378,7 +378,7 @@ begin
       Result := TToken.Create(AMatch.TokenType, GetLocation, AText,
                               AMatch.ParsedText);
       Inc(FIndex, AMatch.Length);
-      AMatch.Destroy;
+      FreeAndNil(AMatch);
     end;
   end;
 end;
