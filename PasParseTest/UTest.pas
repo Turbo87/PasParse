@@ -5,23 +5,21 @@ interface
 type
   TTest = class
   private
-  class var
-      FPlanned: Integer;
-    class var
-        FFailed: Integer;
-      class var
-          FExecuted: Integer;
-class procedure Reset;
-class function ReturnCode: Integer;
+    class var FPlanned: Integer;
+    class var FFailed: Integer;
+    class var FExecuted: Integer;
 
-protected
-  class function OK(AResult: Boolean; ADescription: string): Boolean;
-class procedure TestAll; virtual; abstract;
-class procedure Plan(ANumber: Integer);
+    class procedure Reset;
+    class function ReturnCode: Integer;
 
-public
-  class function Test: Integer;
-        end;
+  protected
+    class function OK(AResult: Boolean; ADescription: string): Boolean;
+    class procedure TestAll; virtual; abstract;
+    class procedure Plan(ANumber: Integer);
+
+  public
+    class function Test: Integer;
+  end;
 
 implementation
 
