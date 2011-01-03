@@ -410,7 +410,7 @@ begin
 
     Inc(ALength, 2);
 
-    if Peek(ALength) = '$' then
+    if Peek(2) = '$' then
     begin
       AParsedText := Trim(Copy(FSource, FIndex + 4, ALength - 5));
       Result := TMatch.Create(TTCompilerDirective, ALength, AParsedText);
