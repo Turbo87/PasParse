@@ -15,6 +15,7 @@ type
   protected
     class function OK(AResult: Boolean; ADescription: string): Boolean;
     class procedure TestAll; virtual; abstract;
+    class function GetName: string; virtual; abstract;
     class procedure Plan(ANumber: Integer);
 
   public
@@ -77,6 +78,9 @@ end;
 class function TTest.Test: Integer;
 begin
   Reset;
+  WriteLn('');
+  WriteLn('Test: ' + GetName);
+  WriteLn('');
   TestAll;
   Result := ReturnCode
 end;

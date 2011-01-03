@@ -202,6 +202,7 @@ type
 
   protected
     class procedure TestAll; override;
+    class function GetName: string; override;
   end;
 
 implementation
@@ -210,6 +211,11 @@ uses
   ULexScanner, UToken, SysUtils;
 
 { TTestLexScanner }
+
+class function TTestLexScanner.GetName: string;
+begin
+  Result := 'LexScanner';
+end;
 
 class function TTestLexScanner.TestBlankSource: Boolean;
 begin
