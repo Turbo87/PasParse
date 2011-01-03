@@ -207,7 +207,7 @@ type
 implementation
 
 uses
-  ULexScanner, UToken;
+  ULexScanner, UToken, SysUtils;
 
 { TTestLexScanner }
 
@@ -1142,6 +1142,9 @@ begin
 
   AToken := ALexScanner.NextToken;
   Result := (AToken = nil);
+  FreeAndNil(AToken);
+
+  FreeAndNil(ALexScanner);
 end;
 
 class function TTestLexScanner.TestOneToken(ASource: string;
@@ -1155,9 +1158,13 @@ begin
   AToken := ALexScanner.NextToken;
   Result := (AToken <> nil) and (AToken.TokenType = ATokenType) and
     (AToken.Text = AText);
+  FreeAndNil(AToken);
 
   AToken := ALexScanner.NextToken;
   Result := (AToken = nil) and Result;
+  FreeAndNil(AToken);
+
+  FreeAndNil(ALexScanner);
 end;
 
 class function TTestLexScanner.TestOneTokenPlusParsed(ASource: string;
@@ -1171,9 +1178,13 @@ begin
   AToken := ALexScanner.NextToken;
   Result := (AToken <> nil) and (AToken.TokenType = ATokenType) and
     (AToken.Text = AText) and (AToken.ParsedText = AParsedText);
+  FreeAndNil(AToken);
 
   AToken := ALexScanner.NextToken;
   Result := (AToken = nil) and Result;
+  FreeAndNil(AToken);
+
+  FreeAndNil(ALexScanner);
 end;
 
 class function TTestLexScanner.TestTwoTokens(ASource: string; ATokenType1,
@@ -1188,15 +1199,20 @@ begin
   Result := (AToken <> nil) and
     (AToken.TokenType = ATokenType1) and
     (AToken.Text = AText1);
+  FreeAndNil(AToken);
 
   AToken := ALexScanner.NextToken;
   Result := (AToken <> nil) and
     (AToken.TokenType = ATokenType2) and
     (AToken.Text = AText2) and
     Result;
+  FreeAndNil(AToken);
 
   AToken := ALexScanner.NextToken;
   Result := (AToken = nil) and Result;
+  FreeAndNil(AToken);
+
+  FreeAndNil(ALexScanner);
 end;
 
 class procedure TTestLexScanner.TestAll;
