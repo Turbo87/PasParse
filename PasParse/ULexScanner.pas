@@ -94,6 +94,8 @@ type
     destructor Destroy; override;
 
     /// Retrieve the next token, returns nil if end-of-file
+    ///  The caller needs to make sure that the created
+    ///  TToken instance is freed again
     function NextToken: TToken;
   end;
 
