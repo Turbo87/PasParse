@@ -38,6 +38,7 @@ contains
   UTokenSets in 'UTokenSets.pas',
   UTokenType in 'UTokenType.pas',
   URuleType in 'URuleType.pas',
+  UCompilerDefines in 'UCompilerDefines.pas',
   UPreprocessorException in 'UPreprocessorException.pas',
   UDictionary in 'UDictionary.pas';
 

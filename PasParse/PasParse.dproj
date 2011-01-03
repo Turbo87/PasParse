@@ -31,6 +31,7 @@
     </DelphiCompile>
     <DCCReference Include="rtl.dcp" />
     <DCCReference Include="UBaseException.pas" />
+    <DCCReference Include="UCompilerDefines.pas" />
     <DCCReference Include="UDictionary.pas" />
     <DCCReference Include="ULexException.pas" />
     <DCCReference Include="ULexScanner.pas" />
