@@ -2,6 +2,9 @@ unit UTestLexScanner;
 
 interface
 
+uses
+  UTokenType;
+
 type
   TTestLexScanner = class
   private
@@ -189,6 +192,14 @@ type
     class function TestSemicolon: Boolean;
     class function TestTimesSign: Boolean;
 
+    class function TestBlank(ASource: string): Boolean;
+    class function TestOneToken(ASource: string; ATokenType: TTokenType; AText: string):
+      Boolean;
+    class function TestOneTokenPlusParsed(ASource: string; ATokenType:
+      TTokenType; AText: string; AParsedText: string): Boolean;
+    class function TestTwoTokens(ASource: string; ATokenType1, ATokenType2:
+      TTokenType; AText1, AText2: string): Boolean;
+
   public
     class function Test: Boolean;
   end;
@@ -196,2822 +207,996 @@ type
 implementation
 
 uses
-  ULexScanner, UToken, UTokenType;
+  ULexScanner, UToken;
 
 { TTestLexScanner }
 
 class function TTestLexScanner.TestBlankSource: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := AToken = nil;
+  Result := TestBlank('');
 end;
 
 class function TTestLexScanner.TestOnlyWhitespace: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('  ' + #13#10 + '  ', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := AToken = nil;
+  Result := TestBlank('  ' + #13#10 + '  ');
 end;
 
 class function TTestLexScanner.TestLeadingWhitespaceIsIgnored: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('  ' + #13#10 + '  *', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and
-    (AToken.TokenType = TTTimesSign) and
-    (AToken.Text = '*');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('  ' + #13#10 + '  *', TTTimesSign, '*');
 end;
 
 class function TTestLexScanner.TestTwoTimesSign: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('**', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and
-    (AToken.TokenType = TTTimesSign) and
-    (AToken.Text = '*');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and
-    (AToken <> nil) and
-    (AToken.TokenType = TTTimesSign) and
-    (AToken.Text = '*');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestTwoTokens('**', TTTimesSign, TTTimesSign, '*', '*');
 end;
 
 class function TTestLexScanner.TestSingleLineCommentAtEof: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('// Foo', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and
-    (AToken.TokenType = TTSingleLineComment) and
-    (AToken.Text = '// Foo');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('// Foo', TTSingleLineComment, '// Foo');
 end;
 
 class function TTestLexScanner.TestSingleLineCommentFollowedByCrlf: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('// Foo' + #13#10, '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and
-    (AToken.TokenType = TTSingleLineComment) and
-    (AToken.Text = '// Foo');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('// Foo' + #13#10, TTSingleLineComment, '// Foo');
 end;
 
 class function TTestLexScanner.TestSingleLineCommentFollowedByLf: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('// Foo' + #10, '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and
-    (AToken.TokenType = TTSingleLineComment) and
-    (AToken.Text = '// Foo');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('// Foo' + #10, TTSingleLineComment, '// Foo');
 end;
 
 class function TTestLexScanner.TestTwoSingleLineComments: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('// Foo' + #13#10 + '// Bar', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and
-    (AToken.TokenType = TTSingleLineComment) and
-    (AToken.Text = '// Foo');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and
-    (AToken <> nil) and
-    (AToken.TokenType = TTSingleLineComment) and
-    (AToken.Text = '// Bar');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestTwoTokens('// Foo' + #13#10 + '// Bar', TTSingleLineComment, TTSingleLineComment, '// Foo', '// Bar');
 end;
 
 class function TTestLexScanner.TestCurlyBraceComment: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('{ Foo }', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and
-    (AToken.TokenType = TTCurlyBraceComment) and
-    (AToken.Text = '{ Foo }');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('{ Foo }', TTCurlyBraceComment, '{ Foo }');
 end;
 
 class function TTestLexScanner.TestCurlyBraceCommentWithEmbeddedNewline:
   Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('{ Foo' + #13#10 + '  Bar }', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and
-    (AToken.TokenType = TTCurlyBraceComment) and
-    (AToken.Text = '{ Foo' + #13#10 + '  Bar }');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('{ Foo' + #13#10 + '  Bar }', TTCurlyBraceComment, '{ Foo' + #13#10 + '  Bar }');
 end;
 
 class function TTestLexScanner.TestTwoCurlyBraceComments: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('{Foo}{Bar}', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and
-    (AToken.TokenType = TTCurlyBraceComment) and
-    (AToken.Text = '{Foo}');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and
-    (AToken <> nil) and
-    (AToken.TokenType = TTCurlyBraceComment) and
-    (AToken.Text = '{Bar}');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestTwoTokens('{Foo}{Bar}', TTCurlyBraceComment, TTCurlyBraceComment, '{Foo}', '{Bar}');
 end;
 
 class function TTestLexScanner.TestParenStarComment: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('(* Foo *)', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and
-    (AToken.TokenType = TTParenStarComment) and
-    (AToken.Text = '(* Foo *)');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('(* Foo *)', TTParenStarComment, '(* Foo *)');
 end;
 
 class function TTestLexScanner.TestParenStarCommentWithEmbeddedNewline:
   Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('(* Foo' + #13#10 + '   Bar *)', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and
-    (AToken.TokenType = TTParenStarComment) and
-    (AToken.Text = '(* Foo' + #13#10 + '   Bar *)');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('(* Foo' + #13#10 + '   Bar *)', TTParenStarComment, '(* Foo' + #13#10 + '   Bar *)');
 end;
 
 class function TTestLexScanner.TestTwoParenStarComments: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('(*Foo*)(*Bar*)', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and
-    (AToken.TokenType = TTParenStarComment) and
-    (AToken.Text = '(*Foo*)');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and
-    (AToken <> nil) and
-    (AToken.TokenType = TTParenStarComment) and
-    (AToken.Text = '(*Bar*)');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestTwoTokens('(*Foo*)(*Bar*)', TTParenStarComment, TTParenStarComment, '(*Foo*)', '(*Bar*)');
 end;
 
 class function TTestLexScanner.TestCurlyBraceCompilerDirective: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('{$DEFINE FOO}', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and
-    (AToken.TokenType = TTCompilerDirective) and
-    (AToken.Text = '{$DEFINE FOO}') and
-    (AToken.ParsedText = 'DEFINE FOO');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneTokenPlusParsed('{$DEFINE FOO}', TTCompilerDirective, '{$DEFINE FOO}', 'DEFINE FOO');
 end;
 
 class function TTestLexScanner.TestCurlyBraceCompilerDirectiveTrimsTrailing:
   Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('{$DEFINE FOO }', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and
-    (AToken.TokenType = TTCompilerDirective) and
-    (AToken.Text = '{$DEFINE FOO }') and
-    (AToken.ParsedText = 'DEFINE FOO');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneTokenPlusParsed('{$DEFINE FOO }', TTCompilerDirective, '{$DEFINE FOO }', 'DEFINE FOO');
 end;
 
 class function TTestLexScanner.TestParenStarCompilerDirective: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('(*$DEFINE FOO*)', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and
-    (AToken.TokenType = TTCompilerDirective) and
-    (AToken.Text = '(*$DEFINE FOO*)') and
-    (AToken.ParsedText = 'DEFINE FOO');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneTokenPlusParsed('(*$DEFINE FOO*)', TTCompilerDirective, '(*$DEFINE FOO*)', 'DEFINE FOO');
 end;
 
 class function TTestLexScanner.TestParenStarCompilerDirectiveTrimsTrailing:
   Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('(*$DEFINE FOO *)', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and
-    (AToken.TokenType = TTCompilerDirective) and
-    (AToken.Text = '(*$DEFINE FOO *)') and
-    (AToken.ParsedText = 'DEFINE FOO');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneTokenPlusParsed('(*$DEFINE FOO *)', TTCompilerDirective, '(*$DEFINE FOO *)', 'DEFINE FOO');
 end;
 
 class function TTestLexScanner.TestDigit: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('0', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and
-    (AToken.TokenType = TTNumber) and
-    (AToken.Text = '0');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('0', TTNumber, '0');
 end;
 
 class function TTestLexScanner.TestInteger: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('42', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and
-    (AToken.TokenType = TTNumber) and
-    (AToken.Text = '42');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('42', TTNumber, '42');
 end;
 
 class function TTestLexScanner.TestFloat: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('42.42', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and
-    (AToken.TokenType = TTNumber) and
-    (AToken.Text = '42.42');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('42.42', TTNumber, '42.42');
 end;
 
 class function TTestLexScanner.TestFloatWithNoDigitsAfterDecimalPoint: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('42.', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and
-    (AToken.TokenType = TTNumber) and
-    (AToken.Text = '42.');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('42.', TTNumber, '42.');
 end;
 
 class function TTestLexScanner.TestScientificNotation: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('42e42', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and
-    (AToken.TokenType = TTNumber) and
-    (AToken.Text = '42e42');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('42e42', TTNumber, '42e42');
 end;
 
 class function TTestLexScanner.TestScientificNotationWithCapitalLetter:
   Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('42E42', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and
-    (AToken.TokenType = TTNumber) and
-    (AToken.Text = '42E42');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('42E42', TTNumber, '42E42');
 end;
 
 class function TTestLexScanner.TestNegativeExponent: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('42e-42', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and
-    (AToken.TokenType = TTNumber) and
-    (AToken.Text = '42e-42');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('42e-42', TTNumber, '42e-42');
 end;
 
 class function TTestLexScanner.TestExplicitlyPositiveExponent: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('42e+42', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and
-    (AToken.TokenType = TTNumber) and
-    (AToken.Text = '42e+42');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('42e+42', TTNumber, '42e+42');
 end;
 
 class function
   TTestLexScanner.TestExplicitlyPositiveNumberLexesAsUnaryOperator: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('+42', '');
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and
-    (AToken.TokenType = TTPlusSign) and
-    (AToken.Text = '+');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and
-    (AToken.TokenType = TTNumber) and
-    (AToken.Text = '42');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestTwoTokens('+42', TTPlusSign, TTNumber, '+', '42');
 end;
 
 class function TTestLexScanner.TestNegativeNumberLexesAsUnaryOperator: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('-42', '');
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and
-    (AToken.TokenType = TTMinusSign) and
-    (AToken.Text = '-');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and
-    (AToken.TokenType = TTNumber) and
-    (AToken.Text = '42');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestTwoTokens('-42', TTMinusSign, TTNumber, '-', '42');
 end;
 
 class function TTestLexScanner.TestHex: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('$2A', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and
-    (AToken.TokenType = TTNumber) and
-    (AToken.Text = '$2A');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('$2A', TTNumber, '$2A');
 end;
 
 class function TTestLexScanner.TestEmptyString: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('''''', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and
-    (AToken.TokenType = TTStringLiteral) and
-    (AToken.Text = '''''');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('''''', TTStringLiteral, '''''');
 end;
 
 class function TTestLexScanner.TestSimpleString: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create(''' abc ''', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and
-    (AToken.TokenType = TTStringLiteral) and
-    (AToken.Text = ''' abc ''');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken(''' abc ''', TTStringLiteral, ''' abc ''');
 end;
 
 class function TTestLexScanner.TestStringWithEmbeddedApostrophe: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('''Bob''''s''', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and
-    (AToken.TokenType = TTStringLiteral) and
-    (AToken.Text = '''Bob''''s''');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('''Bob''''s''', TTStringLiteral, '''Bob''''s''');
 end;
 
 class function TTestLexScanner.TestCharacter: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('#32', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and
-    (AToken.TokenType = TTStringLiteral) and
-    (AToken.Text = '#32');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('#32', TTStringLiteral, '#32');
 end;
 
 class function TTestLexScanner.TestHexCharacter: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('#$1A', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and
-    (AToken.TokenType = TTStringLiteral) and
-    (AToken.Text = '#$1A');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('#$1A', TTStringLiteral, '#$1A');
 end;
 
 class function TTestLexScanner.TestMixed: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('''Foo''#13#10''Bar''', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and
-    (AToken.TokenType = TTStringLiteral) and
-    (AToken.Text = '''Foo''#13#10''Bar''');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('''Foo''#13#10''Bar''', TTStringLiteral, '''Foo''#13#10''Bar''');
 end;
 
 class function TTestLexScanner.TestDoubleQuotedCharacter: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
   // This is valid only in asm blocks, but valid nonetheless.
-  ALexScanner := TLexScanner.Create('"''"', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and
-    (AToken.TokenType = TTStringLiteral) and
-    (AToken.Text = '"''"');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('"''"', TTStringLiteral, '"''"');
 end;
 
 class function TTestLexScanner.TestIdentifier: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('Foo', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTIdentifier) and
-    (AToken.Text = 'Foo');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('Foo', TTIdentifier, 'Foo');
 end;
 
 class function TTestLexScanner.TestLeadingUnderscore: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('_Foo', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTIdentifier) and
-    (AToken.Text = '_Foo');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('_Foo', TTIdentifier, '_Foo');
 end;
 
 class function TTestLexScanner.TestEmbeddedUnderscore: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('Foo_Bar', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTIdentifier) and
-    (AToken.Text = 'Foo_Bar');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('Foo_Bar', TTIdentifier, 'Foo_Bar');
 end;
 
 class function TTestLexScanner.TestEmbeddedDigits: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('Foo42', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTIdentifier) and
-    (AToken.Text = 'Foo42');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('Foo42', TTIdentifier, 'Foo42');
 end;
 
 class function TTestLexScanner.TestAmpersandIdentifier: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('&Foo', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTIdentifier) and
-    (AToken.Text = '&Foo');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('&Foo', TTIdentifier, '&Foo');
 end;
 
 class function TTestLexScanner.TestAmpersandSemikeyword: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('&Absolute', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTIdentifier) and
-    (AToken.Text = '&Absolute');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('&Absolute', TTIdentifier, '&Absolute');
 end;
 
 class function TTestLexScanner.TestAmpersandKeyword: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('&And', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTIdentifier) and
-    (AToken.Text = '&And');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('&And', TTIdentifier, '&And');
 end;
 
 class function TTestLexScanner.TestSemikeywordsAreCaseInsensitive: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('Absolute', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTAbsoluteSemikeyword) and
-    (AToken.Text = 'Absolute');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('Absolute', TTAbsoluteSemikeyword, 'Absolute');
 end;
 
 class function TTestLexScanner.TestAbsoluteSemikeyword: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('absolute', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTAbsoluteSemikeyword) and
-    (AToken.Text = 'absolute');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('absolute', TTAbsoluteSemikeyword, 'absolute');
 end;
 
 class function TTestLexScanner.TestAbstractSemikeyword: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('abstract', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTAbstractSemikeyword) and
-    (AToken.Text = 'abstract');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('abstract', TTAbstractSemikeyword, 'abstract');
 end;
 
 class function TTestLexScanner.TestAssemblerSemikeyword: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('assembler', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTAssemblerSemikeyword) and
-    (AToken.Text = 'assembler');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('assembler', TTAssemblerSemikeyword, 'assembler');
 end;
 
 class function TTestLexScanner.TestAssemblySemikeyword: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('assembly', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTAssemblySemikeyword) and
-    (AToken.Text = 'assembly');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('assembly', TTAssemblySemikeyword, 'assembly');
 end;
 
 class function TTestLexScanner.TestAtSemikeyword: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('at', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTAtSemikeyword) and
-    (AToken.Text = 'at');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('at', TTAtSemikeyword, 'at');
 end;
 
 class function TTestLexScanner.TestAutomatedSemikeyword: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('automated', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTAutomatedSemikeyword) and
-    (AToken.Text = 'automated');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('automated', TTAutomatedSemikeyword, 'automated');
 end;
 
 class function TTestLexScanner.TestCdeclSemikeyword: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('cdecl', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTCdeclSemikeyword) and
-    (AToken.Text = 'cdecl');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('cdecl', TTCdeclSemikeyword, 'cdecl');
 end;
 
 class function TTestLexScanner.TestContainsSemikeyword: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('contains', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTContainsSemikeyword) and
-    (AToken.Text = 'contains');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('contains', TTContainsSemikeyword, 'contains');
 end;
 
 class function TTestLexScanner.TestDefaultSemikeyword: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('default', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTDefaultSemikeyword) and
-    (AToken.Text = 'default');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('default', TTDefaultSemikeyword, 'default');
 end;
 
 class function TTestLexScanner.TestDeprecatedSemikeyword: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('deprecated', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTDeprecatedSemikeyword)
-    and (AToken.Text = 'deprecated');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('deprecated', TTDeprecatedSemikeyword, 'deprecated');
 end;
 
 class function TTestLexScanner.TestDispIdSemikeyword: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('dispid', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTDispIdSemikeyword) and
-    (AToken.Text = 'dispid');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('dispid', TTDispIdSemikeyword, 'dispid');
 end;
 
 class function TTestLexScanner.TestDynamicSemikeyword: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('dynamic', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTDynamicSemikeyword) and
-    (AToken.Text = 'dynamic');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('dynamic', TTDynamicSemikeyword, 'dynamic');
 end;
 
 class function TTestLexScanner.TestExportSemikeyword: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('export', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTExportSemikeyword) and
-    (AToken.Text = 'export');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('export', TTExportSemikeyword, 'export');
 end;
 
 class function TTestLexScanner.TestExternalSemikeyword: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('external', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTExternalSemikeyword) and
-    (AToken.Text = 'external');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('external', TTExternalSemikeyword, 'external');
 end;
 
 class function TTestLexScanner.TestFarSemikeyword: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('far', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTFarSemikeyword) and
-    (AToken.Text = 'far');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('far', TTFarSemikeyword, 'far');
 end;
 
 class function TTestLexScanner.TestFinalSemikeyword: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('final', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTFinalSemikeyword) and
-    (AToken.Text = 'final');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('final', TTFinalSemikeyword, 'final');
 end;
 
 class function TTestLexScanner.TestForwardSemikeyword: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('forward', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTForwardSemikeyword) and
-    (AToken.Text = 'forward');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('forward', TTForwardSemikeyword, 'forward');
 end;
 
 class function TTestLexScanner.TestHelperSemikeyword: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('helper', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTHelperSemikeyword) and
-    (AToken.Text = 'helper');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('helper', TTHelperSemikeyword, 'helper');
 end;
 
 class function TTestLexScanner.TestImplementsSemikeyword: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('implements', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTImplementsSemikeyword)
-    and (AToken.Text = 'implements');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('implements', TTImplementsSemikeyword, 'implements');
 end;
 
 class function TTestLexScanner.TestIndexSemikeyword: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('index', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTIndexSemikeyword) and
-    (AToken.Text = 'index');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('index', TTIndexSemikeyword, 'index');
 end;
 
 class function TTestLexScanner.TestLocalSemikeyword: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('local', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTLocalSemikeyword) and
-    (AToken.Text = 'local');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('local', TTLocalSemikeyword, 'local');
 end;
 
 class function TTestLexScanner.TestMessageSemikeyword: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('message', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTMessageSemikeyword) and
-    (AToken.Text = 'message');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('message', TTMessageSemikeyword, 'message');
 end;
 
 class function TTestLexScanner.TestNameSemikeyword: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('name', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTNameSemikeyword) and
-    (AToken.Text = 'name');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('name', TTNameSemikeyword, 'name');
 end;
 
 class function TTestLexScanner.TestNearSemikeyword: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('near', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTNearSemikeyword) and
-    (AToken.Text = 'near');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('near', TTNearSemikeyword, 'near');
 end;
 
 class function TTestLexScanner.TestNoDefaultSemikeyword: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('nodefault', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTNoDefaultSemikeyword) and
-    (AToken.Text = 'nodefault');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('nodefault', TTNoDefaultSemikeyword, 'nodefault');
 end;
 
 class function TTestLexScanner.TestOnSemikeyword: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('on', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTOnSemikeyword) and
-    (AToken.Text = 'on');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('on', TTOnSemikeyword, 'on');
 end;
 
 class function TTestLexScanner.TestOperatorSemikeyword: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('operator', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTOperatorSemikeyword) and
-    (AToken.Text = 'operator');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('operator', TTOperatorSemikeyword, 'operator');
 end;
 
 class function TTestLexScanner.TestOutSemikeyword: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('out', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTOutSemikeyword) and
-    (AToken.Text = 'out');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('out', TTOutSemikeyword, 'out');
 end;
 
 class function TTestLexScanner.TestOverloadSemikeyword: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('overload', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTOverloadSemikeyword) and
-    (AToken.Text = 'overload');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('overload', TTOverloadSemikeyword, 'overload');
 end;
 
 class function TTestLexScanner.TestOverrideSemikeyword: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('override', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTOverrideSemikeyword) and
-    (AToken.Text = 'override');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('override', TTOverrideSemikeyword, 'override');
 end;
 
 class function TTestLexScanner.TestPackageSemikeyword: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('package', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTPackageSemikeyword) and
-    (AToken.Text = 'package');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('package', TTPackageSemikeyword, 'package');
 end;
 
 class function TTestLexScanner.TestPascalSemikeyword: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('pascal', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTPascalSemikeyword) and
-    (AToken.Text = 'pascal');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('pascal', TTPascalSemikeyword, 'pascal');
 end;
 
 class function TTestLexScanner.TestPlatformSemikeyword: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('platform', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTPlatformSemikeyword) and
-    (AToken.Text = 'platform');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('platform', TTPlatformSemikeyword, 'platform');
 end;
 
 class function TTestLexScanner.TestPrivateSemikeyword: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('private', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTPrivateSemikeyword) and
-    (AToken.Text = 'private');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('private', TTPrivateSemikeyword, 'private');
 end;
 
 class function TTestLexScanner.TestProtectedSemikeyword: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('protected', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTProtectedSemikeyword) and
-    (AToken.Text = 'protected');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('protected', TTProtectedSemikeyword, 'protected');
 end;
 
 class function TTestLexScanner.TestPublicSemikeyword: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('public', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTPublicSemikeyword) and
-    (AToken.Text = 'public');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('public', TTPublicSemikeyword, 'public');
 end;
 
 class function TTestLexScanner.TestPublishedSemikeyword: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('published', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTPublishedSemikeyword) and
-    (AToken.Text = 'published');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('published', TTPublishedSemikeyword, 'published');
 end;
 
 class function TTestLexScanner.TestReadSemikeyword: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('read', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTReadSemikeyword) and
-    (AToken.Text = 'read');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('read', TTReadSemikeyword, 'read');
 end;
 
 class function TTestLexScanner.TestReadOnlySemikeyword: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('readonly', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTReadOnlySemikeyword) and
-    (AToken.Text = 'readonly');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('readonly', TTReadOnlySemikeyword, 'readonly');
 end;
 
 class function TTestLexScanner.TestRegisterSemikeyword: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('register', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTRegisterSemikeyword) and
-    (AToken.Text = 'register');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('register', TTRegisterSemikeyword, 'register');
 end;
 
 class function TTestLexScanner.TestReintroduceSemikeyword: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('reintroduce', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTReintroduceSemikeyword)
-    and (AToken.Text = 'reintroduce');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('reintroduce', TTReintroduceSemikeyword, 'reintroduce');
 end;
 
 class function TTestLexScanner.TestRequiresSemikeyword: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('requires', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTRequiresSemikeyword) and
-    (AToken.Text = 'requires');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('requires', TTRequiresSemikeyword, 'requires');
 end;
 
 class function TTestLexScanner.TestResidentSemikeyword: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('resident', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTResidentSemikeyword) and
-    (AToken.Text = 'resident');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('resident', TTResidentSemikeyword, 'resident');
 end;
 
 class function TTestLexScanner.TestSafecallSemikeyword: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('safecall', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTSafecallSemikeyword) and
-    (AToken.Text = 'safecall');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('safecall', TTSafecallSemikeyword, 'safecall');
 end;
 
 class function TTestLexScanner.TestSealedSemikeyword: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('sealed', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTSealedSemikeyword) and
-    (AToken.Text = 'sealed');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('sealed', TTSealedSemikeyword, 'sealed');
 end;
 
 class function TTestLexScanner.TestStdcallSemikeyword: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('stdcall', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTStdcallSemikeyword) and
-    (AToken.Text = 'stdcall');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('stdcall', TTStdcallSemikeyword, 'stdcall');
 end;
 
 class function TTestLexScanner.TestStoredSemikeyword: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('stored', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTStoredSemikeyword) and
-    (AToken.Text = 'stored');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('stored', TTStoredSemikeyword, 'stored');
 end;
 
 class function TTestLexScanner.TestStrictSemikeyword: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('strict', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTStrictSemikeyword) and
-    (AToken.Text = 'strict');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('strict', TTStrictSemikeyword, 'strict');
 end;
 
 class function TTestLexScanner.TestVarArgsSemikeyword: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('varargs', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTVarArgsSemikeyword) and
-    (AToken.Text = 'varargs');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('varargs', TTVarArgsSemikeyword, 'varargs');
 end;
 
 class function TTestLexScanner.TestVirtualSemikeyword: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('virtual', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTVirtualSemikeyword) and
-    (AToken.Text = 'virtual');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('virtual', TTVirtualSemikeyword, 'virtual');
 end;
 
 class function TTestLexScanner.TestWriteSemikeyword: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('write', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTWriteSemikeyword) and
-    (AToken.Text = 'write');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('write', TTWriteSemikeyword, 'write');
 end;
 
 class function TTestLexScanner.TestWriteOnlySemikeyword: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('writeonly', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTWriteOnlySemikeyword) and
-    (AToken.Text = 'writeonly');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('writeonly', TTWriteOnlySemikeyword, 'writeonly');
 end;
 
 class function TTestLexScanner.TestKeywordsAreCaseInsensitive: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('And', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTAndKeyword) and
-    (AToken.Text = 'And');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('And', TTAndKeyword, 'And');
 end;
 
 class function TTestLexScanner.TestAndKeyword: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('and', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTAndKeyword) and
-    (AToken.Text = 'and');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('and', TTAndKeyword, 'and');
 end;
 
 class function TTestLexScanner.TestArrayKeyword: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('array', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTArrayKeyword) and
-    (AToken.Text = 'array');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('array', TTArrayKeyword, 'array');
 end;
 
 class function TTestLexScanner.TestAsKeyword: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('as', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTAsKeyword) and
-    (AToken.Text = 'as');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('as', TTAsKeyword, 'as');
 end;
 
 class function TTestLexScanner.TestAsmKeyword: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('asm', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTAsmKeyword) and
-    (AToken.Text = 'asm');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('asm', TTAsmKeyword, 'asm');
 end;
 
 class function TTestLexScanner.TestbeginKeyword: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('begin', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTbeginKeyword) and
-    (AToken.Text = 'begin');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('begin', TTbeginKeyword, 'begin');
 end;
 
 class function TTestLexScanner.TestCaseKeyword: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('case', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTCaseKeyword) and
-    (AToken.Text = 'case');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('case', TTCaseKeyword, 'case');
 end;
 
 class function TTestLexScanner.TestClassKeyword: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('class', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTClassKeyword) and
-    (AToken.Text = 'class');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('class', TTClassKeyword, 'class');
 end;
 
 class function TTestLexScanner.TestConstKeyword: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('const', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTConstKeyword) and
-    (AToken.Text = 'const');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('const', TTConstKeyword, 'const');
 end;
 
 class function TTestLexScanner.TestConstructorKeyword: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('constructor', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTConstructorKeyword) and
-    (AToken.Text = 'constructor');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('constructor', TTConstructorKeyword, 'constructor');
 end;
 
 class function TTestLexScanner.TestDestructorKeyword: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('destructor', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTDestructorKeyword) and
-    (AToken.Text = 'destructor');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('destructor', TTDestructorKeyword, 'destructor');
 end;
 
 class function TTestLexScanner.TestDispInterfaceKeyword: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('dispinterface', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTDispInterfaceKeyword) and
-    (AToken.Text = 'dispinterface');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('dispinterface', TTDispInterfaceKeyword, 'dispinterface');
 end;
 
 class function TTestLexScanner.TestDivKeyword: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('div', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTDivKeyword) and
-    (AToken.Text = 'div');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('div', TTDivKeyword, 'div');
 end;
 
 class function TTestLexScanner.TestDoKeyword: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('do', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTDoKeyword) and
-    (AToken.Text = 'do');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('do', TTDoKeyword, 'do');
 end;
 
 class function TTestLexScanner.TestDownToKeyword: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('downto', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTDownToKeyword) and
-    (AToken.Text = 'downto');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('downto', TTDownToKeyword, 'downto');
 end;
 
 class function TTestLexScanner.TestElseKeyword: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('else', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTElseKeyword) and
-    (AToken.Text = 'else');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('else', TTElseKeyword, 'else');
 end;
 
 class function TTestLexScanner.TestEndKeyword: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('end', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTEndKeyword) and
-    (AToken.Text = 'end');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('end', TTEndKeyword, 'end');
 end;
 
 class function TTestLexScanner.TestExceptKeyword: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('except', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTExceptKeyword) and
-    (AToken.Text = 'except');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('except', TTExceptKeyword, 'except');
 end;
 
 class function TTestLexScanner.TestExportsKeyword: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('exports', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTExportsKeyword) and
-    (AToken.Text = 'exports');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('exports', TTExportsKeyword, 'exports');
 end;
 
 class function TTestLexScanner.TestFileKeyword: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('file', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTFileKeyword) and
-    (AToken.Text = 'file');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('file', TTFileKeyword, 'file');
 end;
 
 class function TTestLexScanner.TestFinalizationKeyword: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('finalization', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTFinalizationKeyword) and
-    (AToken.Text = 'finalization');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('finalization', TTFinalizationKeyword, 'finalization');
 end;
 
 class function TTestLexScanner.TestFinallyKeyword: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('finally', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTFinallyKeyword) and
-    (AToken.Text = 'finally');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('finally', TTFinallyKeyword, 'finally');
 end;
 
 class function TTestLexScanner.TestForKeyword: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('for', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTForKeyword) and
-    (AToken.Text = 'for');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('for', TTForKeyword, 'for');
 end;
 
 class function TTestLexScanner.TestFunctionKeyword: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('function', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTFunctionKeyword) and
-    (AToken.Text = 'function');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('function', TTFunctionKeyword, 'function');
 end;
 
 class function TTestLexScanner.TestGotoKeyword: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('goto', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTGotoKeyword) and
-    (AToken.Text = 'goto');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('goto', TTGotoKeyword, 'goto');
 end;
 
 class function TTestLexScanner.TestIfKeyword: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('if', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTIfKeyword) and
-    (AToken.Text = 'if');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('if', TTIfKeyword, 'if');
 end;
 
 class function TTestLexScanner.TestImplementationKeyword: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('implementation', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTImplementationKeyword)
-    and (AToken.Text = 'implementation');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('implementation', TTImplementationKeyword, 'implementation');
 end;
 
 class function TTestLexScanner.TestInKeyword: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('in', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTInKeyword) and
-    (AToken.Text = 'in');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('in', TTInKeyword, 'in');
 end;
 
 class function TTestLexScanner.TestInheritedKeyword: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('inherited', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTInheritedKeyword) and
-    (AToken.Text = 'inherited');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('inherited', TTInheritedKeyword, 'inherited');
 end;
 
 class function TTestLexScanner.TestInitializationKeyword: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('initialization', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTInitializationKeyword)
-    and (AToken.Text = 'initialization');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('initialization', TTInitializationKeyword, 'initialization');
 end;
 
 class function TTestLexScanner.TestInlineKeyword: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('inline', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTInlineKeyword) and
-    (AToken.Text = 'inline');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('inline', TTInlineKeyword, 'inline');
 end;
 
 class function TTestLexScanner.TestInterfaceKeyword: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('interface', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTInterfaceKeyword) and
-    (AToken.Text = 'interface');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('interface', TTInterfaceKeyword, 'interface');
 end;
 
 class function TTestLexScanner.TestIsKeyword: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('is', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTIsKeyword) and
-    (AToken.Text = 'is');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('is', TTIsKeyword, 'is');
 end;
 
 class function TTestLexScanner.TestLabelKeyword: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('label', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTLabelKeyword) and
-    (AToken.Text = 'label');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('label', TTLabelKeyword, 'label');
 end;
 
 class function TTestLexScanner.TestLibraryKeyword: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('library', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTLibraryKeyword) and
-    (AToken.Text = 'library');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('library', TTLibraryKeyword, 'library');
 end;
 
 class function TTestLexScanner.TestModKeyword: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('mod', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTModKeyword) and
-    (AToken.Text = 'mod');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('mod', TTModKeyword, 'mod');
 end;
 
 class function TTestLexScanner.TestNilKeyword: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('nil', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTNilKeyword) and
-    (AToken.Text = 'nil');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('nil', TTNilKeyword, 'nil');
 end;
 
 class function TTestLexScanner.TestNotKeyword: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('not', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTNotKeyword) and
-    (AToken.Text = 'not');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('not', TTNotKeyword, 'not');
 end;
 
 class function TTestLexScanner.TestObjectKeyword: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('object', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTObjectKeyword) and
-    (AToken.Text = 'object');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('object', TTObjectKeyword, 'object');
 end;
 
 class function TTestLexScanner.TestOfKeyword: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('of', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTOfKeyword) and
-    (AToken.Text = 'of');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('of', TTOfKeyword, 'of');
 end;
 
 class function TTestLexScanner.TestOrKeyword: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('or', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTOrKeyword) and
-    (AToken.Text = 'or');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('or', TTOrKeyword, 'or');
 end;
 
 class function TTestLexScanner.TestPackedKeyword: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('packed', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTPackedKeyword) and
-    (AToken.Text = 'packed');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('packed', TTPackedKeyword, 'packed');
 end;
 
 class function TTestLexScanner.TestProcedureKeyword: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('procedure', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTProcedureKeyword) and
-    (AToken.Text = 'procedure');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('procedure', TTProcedureKeyword, 'procedure');
 end;
 
 class function TTestLexScanner.TestProgramKeyword: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('program', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTProgramKeyword) and
-    (AToken.Text = 'program');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('program', TTProgramKeyword, 'program');
 end;
 
 class function TTestLexScanner.TestPropertyKeyword: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('property', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTPropertyKeyword) and
-    (AToken.Text = 'property');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('property', TTPropertyKeyword, 'property');
 end;
 
 class function TTestLexScanner.TestRaiseKeyword: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('raise', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTRaiseKeyword) and
-    (AToken.Text = 'raise');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('raise', TTRaiseKeyword, 'raise');
 end;
 
 class function TTestLexScanner.TestRecordKeyword: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('record', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTRecordKeyword) and
-    (AToken.Text = 'record');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('record', TTRecordKeyword, 'record');
 end;
 
 class function TTestLexScanner.TestRepeatKeyword: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('repeat', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTRepeatKeyword) and
-    (AToken.Text = 'repeat');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('repeat', TTRepeatKeyword, 'repeat');
 end;
 
 class function TTestLexScanner.TestResourceStringKeyword: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('resourcestring', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTResourceStringKeyword)
-    and (AToken.Text = 'resourcestring');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('resourcestring', TTResourceStringKeyword, 'resourcestring');
 end;
 
 class function TTestLexScanner.TestSetKeyword: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('set', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTSetKeyword) and
-    (AToken.Text = 'set');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('set', TTSetKeyword, 'set');
 end;
 
 class function TTestLexScanner.TestShlKeyword: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('shl', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTShlKeyword) and
-    (AToken.Text = 'shl');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('shl', TTShlKeyword, 'shl');
 end;
 
 class function TTestLexScanner.TestShrKeyword: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('shr', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTShrKeyword) and
-    (AToken.Text = 'shr');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('shr', TTShrKeyword, 'shr');
 end;
 
 class function TTestLexScanner.TestStringKeyword: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('string', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTStringKeyword) and
-    (AToken.Text = 'string');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('string', TTStringKeyword, 'string');
 end;
 
 class function TTestLexScanner.TestThenKeyword: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('then', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTThenKeyword) and
-    (AToken.Text = 'then');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('then', TTThenKeyword, 'then');
 end;
 
 class function TTestLexScanner.TestThreadVarKeyword: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('threadvar', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTThreadVarKeyword) and
-    (AToken.Text = 'threadvar');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('threadvar', TTThreadVarKeyword, 'threadvar');
 end;
 
 class function TTestLexScanner.TestToKeyword: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('to', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTToKeyword) and
-    (AToken.Text = 'to');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('to', TTToKeyword, 'to');
 end;
 
 class function TTestLexScanner.TestTryKeyword: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('try', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTTryKeyword) and
-    (AToken.Text = 'try');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('try', TTTryKeyword, 'try');
 end;
 
 class function TTestLexScanner.TestTypeKeyword: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('type', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTTypeKeyword) and
-    (AToken.Text = 'type');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('type', TTTypeKeyword, 'type');
 end;
 
 class function TTestLexScanner.TestUnitKeyword: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('unit', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTUnitKeyword) and
-    (AToken.Text = 'unit');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('unit', TTUnitKeyword, 'unit');
 end;
 
 class function TTestLexScanner.TestUntilKeyword: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('until', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTUntilKeyword) and
-    (AToken.Text = 'until');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('until', TTUntilKeyword, 'until');
 end;
 
 class function TTestLexScanner.TestUsesKeyword: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('uses', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTUsesKeyword) and
-    (AToken.Text = 'uses');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('uses', TTUsesKeyword, 'uses');
 end;
 
 class function TTestLexScanner.TestVarKeyword: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('var', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTVarKeyword) and
-    (AToken.Text = 'var');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('var', TTVarKeyword, 'var');
 end;
 
 class function TTestLexScanner.TestWhileKeyword: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('while', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTWhileKeyword) and
-    (AToken.Text = 'while');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('while', TTWhileKeyword, 'while');
 end;
 
 class function TTestLexScanner.TestWithKeyword: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('with', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTWithKeyword) and
-    (AToken.Text = 'with');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('with', TTWithKeyword, 'with');
 end;
 
 class function TTestLexScanner.TestXorKeyword: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('xor', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTXorKeyword) and
-    (AToken.Text = 'xor');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('xor', TTXorKeyword, 'xor');
 end;
 
 class function TTestLexScanner.TestColonEquals: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create(':=', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTColonEquals) and
-    (AToken.Text = ':=');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken(':=', TTColonEquals, ':=');
 end;
 
 class function TTestLexScanner.TestEqualSign: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('=', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTEqualSign) and
-    (AToken.Text = '=');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('=', TTEqualSign, '=');
 end;
 
 class function TTestLexScanner.TestGreaterThan: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('>', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTGreaterThan) and
-    (AToken.Text = '>');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('>', TTGreaterThan, '>');
 end;
 
 class function TTestLexScanner.TestLessThan: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('<', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTLessThan) and
-    (AToken.Text = '<');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('<', TTLessThan, '<');
 end;
 
 class function TTestLexScanner.TestLessOrEqual: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('<=', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTLessOrEqual) and
-    (AToken.Text = '<=');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('<=', TTLessOrEqual, '<=');
 end;
 
 class function TTestLexScanner.TestGreaterOrEqual: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('>=', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTGreaterOrEqual) and
-    (AToken.Text = '>=');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('>=', TTGreaterOrEqual, '>=');
 end;
 
 class function TTestLexScanner.TestNotEqual: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('<>', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTNotEqual) and
-    (AToken.Text = '<>');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('<>', TTNotEqual, '<>');
 end;
 
 class function TTestLexScanner.TestAtSign: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('@', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTAtSign) and
-    (AToken.Text = '@');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('@', TTAtSign, '@');
 end;
 
 class function TTestLexScanner.TestCaret: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('^', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTCaret) and
-    (AToken.Text = '^');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('^', TTCaret, '^');
 end;
 
 class function TTestLexScanner.TestCloseBracket: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create(']', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTCloseBracket) and
-    (AToken.Text = ']');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken(']', TTCloseBracket, ']');
 end;
 
 class function TTestLexScanner.TestCloseParenthesis: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create(')', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTCloseParenthesis) and
-    (AToken.Text = ')');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken(')', TTCloseParenthesis, ')');
 end;
 
 class function TTestLexScanner.TestColon: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create(':', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTColon) and
-    (AToken.Text = ':');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken(':', TTColon, ':');
 end;
 
 class function TTestLexScanner.TestComma: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create(',', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTComma) and
-    (AToken.Text = ',');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken(',', TTComma, ',');
 end;
 
 class function TTestLexScanner.TestDivideBySign: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('/', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTDivideBySign) and
-    (AToken.Text = '/');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('/', TTDivideBySign, '/');
 end;
 
 class function TTestLexScanner.TestDot: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('.', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTDot) and
-    (AToken.Text = '.');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('.', TTDot, '.');
 end;
 
 class function TTestLexScanner.TestDotDot: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('..', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTDotDot) and
-    (AToken.Text = '..');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('..', TTDotDot, '..');
 end;
 
 class function TTestLexScanner.TestMinusSign: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('-', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTMinusSign) and
-    (AToken.Text = '-');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('-', TTMinusSign, '-');
 end;
 
 class function TTestLexScanner.TestOpenBracket: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('[', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTOpenBracket) and
-    (AToken.Text = '[');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('[', TTOpenBracket, '[');
 end;
 
 class function TTestLexScanner.TestOpenParenthesis: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('(', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTOpenParenthesis) and
-    (AToken.Text = '(');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('(', TTOpenParenthesis, '(');
 end;
 
 class function TTestLexScanner.TestPlusSign: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('+', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTPlusSign) and
-    (AToken.Text = '+');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken('+', TTPlusSign, '+');
 end;
 
 class function TTestLexScanner.TestSemicolon: Boolean;
-var
-  ALexScanner: TLexScanner;
-  AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create(';', '');
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTSemicolon) and
-    (AToken.Text = ';');
-
-  AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := TestOneToken(';', TTSemicolon, ';');
 end;
 
 class function TTestLexScanner.TestTimesSign: Boolean;
+begin
+  Result := TestOneToken('*', TTTimesSign, '*');
+end;
+
+class function TTestLexScanner.TestBlank(ASource: string): Boolean;
 var
   ALexScanner: TLexScanner;
   AToken: TToken;
 begin
-  ALexScanner := TLexScanner.Create('*', '');
+  ALexScanner := TLexScanner.Create(ASource, '');
 
   AToken := ALexScanner.NextToken;
-  Result := (AToken <> nil) and (AToken.TokenType = TTTimesSign) and
-    (AToken.Text = '*');
+  Result := (AToken = nil);
+end;
+
+class function TTestLexScanner.TestOneToken(ASource: string;
+  ATokenType: TTokenType; AText: string): Boolean;
+var
+  ALexScanner: TLexScanner;
+  AToken: TToken;
+begin
+  ALexScanner := TLexScanner.Create(ASource, '');
 
   AToken := ALexScanner.NextToken;
-  Result := Result and (AToken = nil);
+  Result := (AToken <> nil) and (AToken.TokenType = ATokenType) and
+    (AToken.Text = AText);
+
+  AToken := ALexScanner.NextToken;
+  Result := (AToken = nil) and Result;
+end;
+
+class function TTestLexScanner.TestOneTokenPlusParsed(ASource: string;
+  ATokenType: TTokenType; AText: string; AParsedText: string): Boolean;
+var
+  ALexScanner: TLexScanner;
+  AToken: TToken;
+begin
+  ALexScanner := TLexScanner.Create(ASource, '');
+
+  AToken := ALexScanner.NextToken;
+  Result := (AToken <> nil) and (AToken.TokenType = ATokenType) and
+    (AToken.Text = AText) and (AToken.ParsedText = AParsedText);
+
+  AToken := ALexScanner.NextToken;
+  Result := (AToken = nil) and Result;
+end;
+
+class function TTestLexScanner.TestTwoTokens(ASource: string; ATokenType1,
+  ATokenType2: TTokenType; AText1, AText2: string): Boolean;
+var
+  ALexScanner: TLexScanner;
+  AToken: TToken;
+begin
+  ALexScanner := TLexScanner.Create(ASource, '');
+
+  AToken := ALexScanner.NextToken;
+  Result := (AToken <> nil) and
+    (AToken.TokenType = ATokenType1) and
+    (AToken.Text = AText1);
+
+  AToken := ALexScanner.NextToken;
+  Result := (AToken <> nil) and
+    (AToken.TokenType = ATokenType2) and
+    (AToken.Text = AText2) and
+    Result;
+
+  AToken := ALexScanner.NextToken;
+  Result := (AToken = nil) and Result;
 end;
 
 class function TTestLexScanner.Test: Boolean;
