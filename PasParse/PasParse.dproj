@@ -30,6 +30,7 @@
       <MainSource>MainSource</MainSource>
     </DelphiCompile>
     <DCCReference Include="rtl.dcp" />
+    <DCCReference Include="UASTNode.pas" />
     <DCCReference Include="UBaseException.pas" />
     <DCCReference Include="UCompilerDefines.pas" />
     <DCCReference Include="UDictionary.pas" />
@@ -37,6 +38,7 @@
     <DCCReference Include="ULexScanner.pas" />
     <DCCReference Include="ULocation.pas" />
     <DCCReference Include="UPreprocessorException.pas" />
+    <DCCReference Include="URuleDelegate.pas" />
     <DCCReference Include="URuleType.pas" />
     <DCCReference Include="UToken.pas" />
     <DCCReference Include="UTokenSet.pas" />

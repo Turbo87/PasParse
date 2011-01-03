@@ -40,6 +40,8 @@ contains
   URuleType in 'URuleType.pas',
   UCompilerDefines in 'UCompilerDefines.pas',
   UPreprocessorException in 'UPreprocessorException.pas',
-  UDictionary in 'UDictionary.pas';
+  UDictionary in 'UDictionary.pas',
+  URuleDelegate in 'URuleDelegate.pas',
+  UASTNode in 'UASTNode.pas';
 
 end.
