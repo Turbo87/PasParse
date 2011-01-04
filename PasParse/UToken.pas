@@ -31,6 +31,10 @@ type
     property Text: string read FText;
     /// Type of the token
     property TokenType: TTokenType read FTokenType;
+
+    /// Creates a copy of the token with another token type.
+    ///  The caller has to destroy the resulting object again!
+    function WithTokenType(ATokenType: TTokenType): TToken;
   end;
 
 implementation
@@ -67,6 +71,11 @@ begin
     ' |' + Text + '|';
   if (ParsedText <> '') then
     Result := Result + ', parsed=|' + ParsedText + '|';
+end;
+
+function TToken.WithTokenType(ATokenType: TTokenType): TToken;
+begin
+  Result := TToken.Create(ATokenType, Location, Text, ParsedText);
 end;
 
 end.
