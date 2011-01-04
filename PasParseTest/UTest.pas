@@ -60,12 +60,12 @@ end;
 
 class function TTest.OK(AResult: Boolean): Boolean;
 begin
-  OK(AResult, '');
+  Result := OK(AResult, '');
 end;
 
 class function TTest.OK(ADescription: string; AResult: Boolean): Boolean;
 begin
-  OK(AResult, ADescription);
+  Result := OK(AResult, ADescription);
 end;
 
 class procedure TTest.Plan(ANumber: Integer);
