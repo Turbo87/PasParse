@@ -36,6 +36,8 @@ var
 begin
   ALexScanner := TLexScanner.Create(ASource, '');
 
+  Result := True;
+  
   for I := 0 to Length(ATokens) - 1 do
   begin
     AToken := ALexScanner.NextToken;
