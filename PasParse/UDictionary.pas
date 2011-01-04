@@ -14,26 +14,26 @@ type
     FFreeChildren: Boolean;
 
     /// Returns the integer-based index of the given key or -1 if not found
-    function IndexOf(AKey: string): Integer;
+    function IndexOf(const AKey: string): Integer;
 
   public
     /// Standard constructor
-    constructor Create(AFreeChildren: Boolean = False); 
+    constructor Create(const AFreeChildren: Boolean = False);
     /// Standard destructor
     destructor Destroy; override;
 
     /// Returns true if the given key was found in the dictionary and writes
     ///  the corresponding TObject instance to the AValue output parameter
-    function Read(AKey: string; out AValue: TObject): Boolean; overload;
+    function Read(const AKey: string; out AValue: TObject): Boolean; overload;
     /// Returns the TObject instance corresponding with the given key or
     ///  nil if not found
-    function Read(AKey: string): TObject; overload;
+    function Read(const AKey: string): TObject; overload;
     /// Assigns the given TObject to the given key.
     ///  Returns whether the key already existed before.
-    function Write(AKey: string; AValue: TObject): Boolean;
+    function Write(const AKey: string; AValue: TObject): Boolean;
 
     /// Tests whether a key exists in the dictionary
-    function Contains(AKey: string): Boolean;
+    function Contains(const AKey: string): Boolean;
   end;
 
 implementation
@@ -43,7 +43,7 @@ uses
 
 { TDictionary }
 
-function TDictionary.Contains(AKey: string): Boolean;
+function TDictionary.Contains(const AKey: string): Boolean;
 var
   AIndex: Integer;
 begin
@@ -51,7 +51,7 @@ begin
   Result := (AIndex >= 0);
 end;
 
-constructor TDictionary.Create(AFreeChildren: Boolean);
+constructor TDictionary.Create(const AFreeChildren: Boolean);
 begin
   FFreeChildren := AFreeChildren;
   FList := TStringList.Create;
@@ -74,12 +74,12 @@ begin
   inherited;
 end;
 
-function TDictionary.IndexOf(AKey: string): Integer;
+function TDictionary.IndexOf(const AKey: string): Integer;
 begin
   Result := FList.IndexOf(AKey);
 end;
 
-function TDictionary.Read(AKey: string; out AValue: TObject): Boolean;
+function TDictionary.Read(const AKey: string; out AValue: TObject): Boolean;
 var
   AIndex: Integer;
 begin
@@ -89,7 +89,7 @@ begin
     AValue := FList.Objects[AIndex]
 end;
 
-function TDictionary.Read(AKey: string): TObject;
+function TDictionary.Read(const AKey: string): TObject;
 var
   AValue: TObject;
 begin
@@ -99,7 +99,7 @@ begin
     Result := nil;
 end;
 
-function TDictionary.Write(AKey: string; AValue: TObject): Boolean;
+function TDictionary.Write(const AKey: string; AValue: TObject): Boolean;
 var
   AIndex: Integer;
 begin
