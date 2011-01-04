@@ -9,9 +9,13 @@ type
   TASTNode = class
   type
     TProperty = class
+    private
+      FKey: string;
+      FValue: TASTNode;
+
     public
-      AKey: string;
-      AValue: TASTNode;
+      property Key: string read FKey;
+      property Value: TASTNode read FValue;
     end;
 
   private

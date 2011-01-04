@@ -59,9 +59,9 @@ begin
   begin
     AProperty := (FProperties.Items[I] as TASTNode.TProperty);
     Result := Result + #13#10 + StringOfChar(' ', AChildIndentCount * 2) +
-      AProperty.AKey + ': ';
-    if AProperty.AValue <> nil then
-      Result := Result + AProperty.AValue.InspectTo(AChildIndentCount)
+      AProperty.Key + ': ';
+    if AProperty.Value <> nil then
+      Result := Result + AProperty.Value.InspectTo(AChildIndentCount)
     else
       Result := Result + '(none)';
   end;
