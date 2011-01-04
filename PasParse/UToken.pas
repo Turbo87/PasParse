@@ -14,6 +14,7 @@ type
     FText: string;
     FTokenType: TTokenType;
 
+  protected
     function GetLocation: TLocation; override;
     function GetEndLocation: TLocation; override;
 
