@@ -18,6 +18,8 @@ type
     function GetLocation: TLocation; override;
     function GetEndLocation: TLocation; override;
 
+    function InspectTo(AIndentCount: Integer): string; override;
+
   public
     /// Standard constructor
     constructor Create(ATokenType: TTokenType; ALocation: TLocation;
@@ -32,6 +34,9 @@ type
   end;
 
 implementation
+
+uses
+  TypInfo;
 
 { TToken }
 
@@ -54,6 +59,14 @@ end;
 function TToken.GetLocation: TLocation;
 begin
   Result := FLocation;
+end;
+
+function TToken.InspectTo(AIndentCount: Integer): string;
+begin
+  Result := Copy(GetEnumName(TypeInfo(TTokenType), Integer(TokenType)), 3) +
+    ' |' + Text + '|';
+  if (ParsedText <> '') then
+    Result := Result + ', parsed=|' + ParsedText + '|';
 end;
 
 end.

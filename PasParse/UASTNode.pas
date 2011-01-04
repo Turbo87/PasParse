@@ -13,6 +13,7 @@ type
   protected
     function GetLocation: TLocation; virtual; abstract;
     function GetEndLocation: TLocation; virtual; abstract;
+    function InspectTo(AIndentCount: Integer): string; virtual; abstract;
 
   public
     /// Location at the start of the token
@@ -24,6 +25,7 @@ type
 
     class function ToCode(AFirstNode, ALastNode: TASTNode): string; overload;
     function ToCode: string; overload;
+    function Inspect: string;
   end;
 
 implementation
@@ -41,6 +43,11 @@ begin
   else
     Result :=
       Copy(AFirst.FileSource, AFirst.Offset, ALast.Offset - AFirst.Offset);  
+end;
+
+function TASTNode.Inspect: string;
+begin
+  Result := InspectTo(0);
 end;
 
 function TASTNode.ToCode: string;
