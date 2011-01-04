@@ -134,6 +134,9 @@ begin
   OK('TestParenStarCommentWithEmbeddedNewline', TestOneToken('(* Foo' + #13#10 + '   Bar *)', TTParenStarComment, '(* Foo' + #13#10 + '   Bar *)'));
   OK('TestTwoParenStarComments', TestTwoTokens('(*Foo*)(*Bar*)', TTParenStarComment, TTParenStarComment, '(*Foo*)', '(*Bar*)'));
 
+  OK('TestCurlyBraceCommentNeverEnding', TestOneToken('{abc', TTCurlyBraceComment, '{abc'));
+  OK('TestParenStarCommentNeverEnding', TestOneToken('(*abc', TTParenStarComment, '(*abc'));
+
   OK('TestCurlyBraceCompilerDirective', TestOneTokenPlusParsed('{$DEFINE FOO}', TTCompilerDirective, '{$DEFINE FOO}', 'DEFINE FOO'));
   OK('TestCurlyBraceCompilerDirectiveTrimsTrailing', TestOneTokenPlusParsed('{$DEFINE FOO }', TTCompilerDirective, '{$DEFINE FOO }', 'DEFINE FOO'));
   OK('TestParenStarCompilerDirective', TestOneTokenPlusParsed('(*$DEFINE FOO*)', TTCompilerDirective, '(*$DEFINE FOO*)', 'DEFINE FOO'));
