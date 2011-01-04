@@ -303,12 +303,14 @@ begin
   OK('TestTimesSign', TestOneToken('*', TTTimesSign, '*'));
 
   try
-    TestOneToken('''abc', TTStringLiteral, '''abc')
+    TestOneToken('''abc', TTStringLiteral, '''abc');
+    OK(False, 'TestNeverEndingString');
   except
+    on ETestException do;
     on ELexException do
       OK(True, 'TestNeverEndingString');
   else
-      OK(False, 'TestNeverEndingString');
+    OK(False, 'TestNeverEndingString');
   end;
 end;
 
