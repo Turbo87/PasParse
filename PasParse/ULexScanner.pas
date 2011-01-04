@@ -454,7 +454,8 @@ begin
   if CanRead(AOffset) then
     Result := Read(AOffset)
   else
-    Result := #255;
+    // #4 = End of Transmission
+    Result := #4;
 end;
 
 function TLexScanner.Read(AOffset: Integer): Char;
