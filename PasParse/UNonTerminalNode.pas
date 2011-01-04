@@ -53,7 +53,7 @@ var
   I: Integer;
   AProperty: TASTNode.TProperty;
 begin
-  Result := ClassName;
+  Result := Copy(ClassName, 2);
   AChildIndentCount := AIndentCount + 1;
   for I := 0 to FProperties.Count - 1 do
   begin
