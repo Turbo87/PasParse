@@ -4,8 +4,12 @@
   </PropertyGroup>
   <ItemGroup />
   <ItemGroup>
-    <Projects Include="PasLexConsole\PasLexConsole.dproj" />
-    <Projects Include="PasParseTest\PasParseTest.dproj" />
+    <Projects Include="PasLexConsole\PasLexConsole.dproj">
+      <Dependencies>PasParse\PasParse.dproj</Dependencies>
+    </Projects>
+    <Projects Include="PasParseTest\PasParseTest.dproj">
+      <Dependencies>PasParse\PasParse.dproj</Dependencies>
+    </Projects>
     <Projects Include="PasParse\PasParse.dproj" />
   </ItemGroup>
   <ProjectExtensions>
@@ -23,22 +27,22 @@
   <Target Name="PasParse:Make">
     <MSBuild Projects="PasParse\PasParse.dproj" Targets="Make" />
   </Target>
-  <Target Name="PasLexConsole">
+  <Target Name="PasLexConsole" DependsOnTargets="PasParse">
     <MSBuild Projects="PasLexConsole\PasLexConsole.dproj" Targets="" />
   </Target>
-  <Target Name="PasLexConsole:Clean">
+  <Target Name="PasLexConsole:Clean" DependsOnTargets="PasParse:Clean">
     <MSBuild Projects="PasLexConsole\PasLexConsole.dproj" Targets="Clean" />
   </Target>
-  <Target Name="PasLexConsole:Make">
+  <Target Name="PasLexConsole:Make" DependsOnTargets="PasParse:Make">
     <MSBuild Projects="PasLexConsole\PasLexConsole.dproj" Targets="Make" />
   </Target>
-  <Target Name="PasParseTest">
+  <Target Name="PasParseTest" DependsOnTargets="PasParse">
     <MSBuild Projects="PasParseTest\PasParseTest.dproj" Targets="" />
   </Target>
-  <Target Name="PasParseTest:Clean">
+  <Target Name="PasParseTest:Clean" DependsOnTargets="PasParse:Clean">
     <MSBuild Projects="PasParseTest\PasParseTest.dproj" Targets="Clean" />
   </Target>
-  <Target Name="PasParseTest:Make">
+  <Target Name="PasParseTest:Make" DependsOnTargets="PasParse:Make">
     <MSBuild Projects="PasParseTest\PasParseTest.dproj" Targets="Make" />
   </Target>
   <Target Name="Build">
