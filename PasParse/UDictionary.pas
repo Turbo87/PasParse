@@ -18,7 +18,7 @@ type
     /// Standard constructor
     constructor Create;
     /// Standard destructor
-    destructor Destroy;
+    destructor Destroy; override;
 
     /// Returns true if the given key was found in the dictionary and writes
     ///  the corresponding TObject instance to the AValue output parameter
@@ -57,6 +57,7 @@ end;
 destructor TDictionary.Destroy;
 begin
   FreeAndNil(FList);
+  inherited;
 end;
 
 function TDictionary.IndexOf(AKey: string): Integer;
