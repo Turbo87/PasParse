@@ -7,11 +7,21 @@ uses
 
 type
   TASTNode = class
+  type
+    TProperty = class
+    public
+      AKey: string;
+      AValue: TASTNode;
+    end;
+
   private
     FParentNode: TASTNode;
 
   protected
+    /// TObjectList with TASTNode elements
     FChildNodes: TObjectList;
+    /// TObjectList with TASTNode.TProperty elements
+    FProperties: TObjectList;
 
     function GetLocation: TLocation; virtual; abstract;
     function GetEndLocation: TLocation; virtual; abstract;
