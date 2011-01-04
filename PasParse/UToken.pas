@@ -10,6 +10,7 @@ type
   TToken = class(TASTNode)
   private
     FLocation: TLocation;
+    FEndLocation: TLocation;
     FParsedText: string;
     FText: string;
     FTokenType: TTokenType;
@@ -51,13 +52,15 @@ begin
   FLocation := ALocation;
   FText := AText;
   FParsedText := AParsedText;
+
+  // Create a new TLocation instance at the end position of the token
+  FEndLocation := TLocation.Create(FLocation.FileName, FLocation.FileSource,
+    FLocation.Offset + Length(FText));
 end;
 
 function TToken.GetEndLocation: TLocation;
 begin
-  // Create a new TLocation instance at the end position of the token
-  Result := TLocation.Create(FLocation.FileName, FLocation.FileSource,
-                             FLocation.Offset + Length(FText));
+  Result := FEndLocation;
 end;
 
 function TToken.GetLocation: TLocation;
