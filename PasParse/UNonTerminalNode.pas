@@ -10,6 +10,9 @@ type
   protected
     function GetLocation: TLocation; override;
     function GetEndLocation: TLocation; override;
+
+  public
+    function InspectTo(AIndentCount: Integer): string; override;
   end;
 
 implementation
@@ -41,6 +44,26 @@ begin
     Result := (FChildNodes.Items[I] as TASTNode).Location;
     if Result <> nil then
       Break;
+  end;
+end;
+
+function TNonTerminalNode.InspectTo(AIndentCount: Integer): string;
+var
+  AChildIndentCount: Integer;
+  I: Integer;
+  AProperty: TASTNode.TProperty;
+begin
+  Result := ClassName;
+  AChildIndentCount := AIndentCount + 1;
+  for I := 0 to FProperties.Count - 1 do
+  begin
+    AProperty := (FProperties.Items[I] as TASTNode.TProperty);
+    Result := Result + #13#10 + StringOfChar(' ', AChildIndentCount * 2) +
+      AProperty.AKey + ': ';
+    if AProperty.AValue <> nil then
+      Result := Result + AProperty.AValue.InspectTo(AChildIndentCount)
+    else
+      Result := Result + '(none)';
   end;
 end;
 
