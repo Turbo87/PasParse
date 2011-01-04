@@ -25,6 +25,7 @@ type
     /// Standard constructor
     constructor Create(ATokenType: TTokenType; ALocation: TLocation;
                        AText, AParsedText: string);
+    destructor Destroy; override;
 
     /// Parsed text if available, otherwise empty string ''
     property ParsedText: string read FParsedText;
@@ -56,6 +57,13 @@ begin
   // Create a new TLocation instance at the end position of the token
   FEndLocation := TLocation.Create(FLocation.FileName, FLocation.FileSource,
     FLocation.Offset + Length(FText));
+end;
+
+destructor TToken.Destroy;
+begin
+  FLocation.Free;
+  FEndLocation.Free;
+  inherited;
 end;
 
 function TToken.GetEndLocation: TLocation;

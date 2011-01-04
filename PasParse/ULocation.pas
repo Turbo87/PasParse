@@ -3,7 +3,7 @@ unit ULocation;
 interface
 
 type
-  TLocation = record
+  TLocation = class
   private
     FFileName: string;
     FFileSource: string;
@@ -12,7 +12,7 @@ type
     function GetDirectory: string;
 
   public
-    class function Create(AFileName, AFileSource: string; AOffset: Integer): TLocation; static;
+    constructor Create(AFileName, AFileSource: string; AOffset: Integer);
 
     property Directory: string read GetDirectory;
     property FileName: string read FFileName;
@@ -24,11 +24,11 @@ implementation
 
 { TLocation }
 
-class function TLocation.Create(AFileName, AFileSource: string; AOffset: Integer): TLocation;
+constructor TLocation.Create(AFileName, AFileSource: string; AOffset: Integer);
 begin
-  Result.FFileName := AFileName;
-  Result.FFileSource := AFileSource;
-  Result.FOffset := AOffset;
+  FFileName := AFileName;
+  FFileSource := AFileSource;
+  FOffset := AOffset;
 end;
 
 function TLocation.GetDirectory: string;

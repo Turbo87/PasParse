@@ -88,6 +88,7 @@ type
     function IsWhitespace(AChar: Char): Boolean;
 
     /// Returns a TLocation record of the current reading position
+    ///  The caller is responsible for freeing the resulting TLocation instance
     function GetLocation: TLocation;
 
   public
@@ -96,6 +97,7 @@ type
     destructor Destroy; override;
 
     /// Read-only representation of the current reading position as TLocation
+    ///  The caller is responsible for freeing the resulting TLocation instance
     property Location: TLocation read GetLocation;
 
     /// Retrieve the next token, returns nil if end-of-file
@@ -274,7 +276,6 @@ end;
 
 function TLexScanner.GetLocation: TLocation;
 begin
-  // TLocation is a record. No need to free it again afterwards.
   Result := TLocation.Create(FFileName, FSource, FIndex);
 end;
 

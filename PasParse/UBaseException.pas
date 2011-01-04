@@ -14,6 +14,7 @@ type
   public
     /// Standard constructor
     constructor Create(AMessage: string; ALocation: TLocation);
+    destructor Destroy; override;
 
     /// Location where the exception was raised
     property Location: TLocation read FLocation;
@@ -27,6 +28,12 @@ constructor EBaseException.Create(AMessage: string; ALocation: TLocation);
 begin
   inherited Create(AMessage);
   FLocation := ALocation;
+end;
+
+destructor EBaseException.Destroy;
+begin
+  FLocation.Free;
+  inherited;
 end;
 
 end.
