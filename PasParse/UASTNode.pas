@@ -27,6 +27,9 @@ type
     function GetEndLocation: TLocation; virtual; abstract;
 
   public
+    constructor Create; 
+    destructor Destroy; override;
+
     /// Location at the start of the token
     property Location: TLocation read GetLocation;
     /// Location at the end of the token
@@ -68,6 +71,20 @@ begin
   begin
     (FChildNodes.Items[I] as TASTNode).BuildParentReferences(Self);
   end;
+end;
+
+constructor TASTNode.Create;
+begin
+  inherited;
+  FChildNodes := TObjectList.Create;
+  FProperties := TObjectList.Create;
+end;
+
+destructor TASTNode.Destroy;
+begin
+  FChildNodes.Free;
+  FProperties.Free;
+  inherited;
 end;
 
 function TASTNode.Inspect: string;
