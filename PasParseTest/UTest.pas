@@ -15,6 +15,7 @@ type
   protected
     class function OK(AResult: Boolean): Boolean; overload;
     class function OK(AResult: Boolean; ADescription: string): Boolean; overload;
+    class function OK(ADescription: string; AResult: Boolean): Boolean; overload;
     class procedure TestAll; virtual; abstract;
     class function GetName: string; virtual; abstract;
     class procedure Plan(ANumber: Integer);
@@ -58,6 +59,11 @@ end;
 class function TTest.OK(AResult: Boolean): Boolean;
 begin
   OK(AResult, '');
+end;
+
+class function TTest.OK(ADescription: string; AResult: Boolean): Boolean;
+begin
+  OK(AResult, ADescription);
 end;
 
 class procedure TTest.Plan(ANumber: Integer);
