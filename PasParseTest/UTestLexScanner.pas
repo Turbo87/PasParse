@@ -120,7 +120,9 @@ begin
   OK('TestBlankSource', TestBlank(''));
   OK('TestOnlyWhitespace', TestBlank('  ' + #13#10 + '  '));
   OK('TestLeadingWhitespaceIsIgnored', TestOneToken('  ' + #13#10 + '  *', TTTimesSign, '*'));
+
   OK('TestTwoTimesSign', TestTwoTokens('**', TTTimesSign, TTTimesSign, '*', '*'));
+
   OK('TestSingleLineCommentAtEof', TestOneToken('// Foo', TTSingleLineComment, '// Foo'));
   OK('TestSingleLineCommentFollowedByCrlf', TestOneToken('// Foo' + #13#10, TTSingleLineComment, '// Foo'));
   OK('TestSingleLineCommentFollowedByLf', TestOneToken('// Foo' + #10, TTSingleLineComment, '// Foo'));
@@ -131,10 +133,12 @@ begin
   OK('TestParenStarComment', TestOneToken('(* Foo *)', TTParenStarComment, '(* Foo *)'));
   OK('TestParenStarCommentWithEmbeddedNewline', TestOneToken('(* Foo' + #13#10 + '   Bar *)', TTParenStarComment, '(* Foo' + #13#10 + '   Bar *)'));
   OK('TestTwoParenStarComments', TestTwoTokens('(*Foo*)(*Bar*)', TTParenStarComment, TTParenStarComment, '(*Foo*)', '(*Bar*)'));
+
   OK('TestCurlyBraceCompilerDirective', TestOneTokenPlusParsed('{$DEFINE FOO}', TTCompilerDirective, '{$DEFINE FOO}', 'DEFINE FOO'));
   OK('TestCurlyBraceCompilerDirectiveTrimsTrailing', TestOneTokenPlusParsed('{$DEFINE FOO }', TTCompilerDirective, '{$DEFINE FOO }', 'DEFINE FOO'));
   OK('TestParenStarCompilerDirective', TestOneTokenPlusParsed('(*$DEFINE FOO*)', TTCompilerDirective, '(*$DEFINE FOO*)', 'DEFINE FOO'));
   OK('TestParenStarCompilerDirectiveTrimsTrailing', TestOneTokenPlusParsed('(*$DEFINE FOO *)', TTCompilerDirective, '(*$DEFINE FOO *)', 'DEFINE FOO'));
+
   OK('TestDigit', TestOneToken('0', TTNumber, '0'));
   OK('TestInteger', TestOneToken('42', TTNumber, '42'));
   OK('TestFloat', TestOneToken('42.42', TTNumber, '42.42'));
@@ -146,6 +150,7 @@ begin
   OK('TestExplicitlyPositiveNumberLexesAsUnaryOperator', TestTwoTokens('+42', TTPlusSign, TTNumber, '+', '42'));
   OK('TestNegativeNumberLexesAsUnaryOperator', TestTwoTokens('-42', TTMinusSign, TTNumber, '-', '42'));
   OK('TestHex', TestOneToken('$2A', TTNumber, '$2A'));
+
   OK('TestEmptyString', TestOneToken('''''', TTStringLiteral, ''''''));
   OK('TestSimpleString', TestOneToken(''' abc ''', TTStringLiteral, ''' abc '''));
   OK('TestStringWithEmbeddedApostrophe', TestOneToken('''Bob''''s''', TTStringLiteral, '''Bob''''s'''));
@@ -154,6 +159,7 @@ begin
   OK('TestMixed', TestOneToken('''Foo''#13#10''Bar''', TTStringLiteral, '''Foo''#13#10''Bar'''));
   // This is valid only in asm blocks, but valid nonetheless.
   OK('TestDoubleQuotedCharacter', TestOneToken('"''"', TTStringLiteral, '"''"'));
+
   OK('TestIdentifier', TestOneToken('Foo', TTIdentifier, 'Foo'));
   OK('TestLeadingUnderscore', TestOneToken('_Foo', TTIdentifier, '_Foo'));
   OK('TestEmbeddedUnderscore', TestOneToken('Foo_Bar', TTIdentifier, 'Foo_Bar'));
@@ -161,6 +167,7 @@ begin
   OK('TestAmpersandIdentifier', TestOneToken('&Foo', TTIdentifier, '&Foo'));
   OK('TestAmpersandSemikeyword', TestOneToken('&Absolute', TTIdentifier, '&Absolute'));
   OK('TestAmpersandKeyword', TestOneToken('&And', TTIdentifier, '&And'));
+
   OK('TestSemikeywordsAreCaseInsensitive', TestOneToken('Absolute', TTAbsoluteSemikeyword, 'Absolute'));
   OK('TestAbsoluteSemikeyword', TestOneToken('absolute', TTAbsoluteSemikeyword, 'absolute'));
   OK('TestAbstractSemikeyword', TestOneToken('abstract', TTAbstractSemikeyword, 'abstract'));
@@ -214,6 +221,7 @@ begin
   OK('TestVirtualSemikeyword', TestOneToken('virtual', TTVirtualSemikeyword, 'virtual'));
   OK('TestWriteSemikeyword', TestOneToken('write', TTWriteSemikeyword, 'write'));
   OK('TestWriteOnlySemikeyword', TestOneToken('writeonly', TTWriteOnlySemikeyword, 'writeonly'));
+
   OK('TestKeywordsAreCaseInsensitive', TestOneToken('And', TTAndKeyword, 'And'));
   OK('TestAndKeyword', TestOneToken('and', TTAndKeyword, 'and'));
   OK('TestArrayKeyword', TestOneToken('array', TTArrayKeyword, 'array'));
@@ -279,6 +287,7 @@ begin
   OK('TestWhileKeyword', TestOneToken('while', TTWhileKeyword, 'while'));
   OK('TestWithKeyword', TestOneToken('with', TTWithKeyword, 'with'));
   OK('TestXorKeyword', TestOneToken('xor', TTXorKeyword, 'xor'));
+
   OK('TestColonEquals', TestOneToken(':=', TTColonEquals, ':='));
   OK('TestEqualSign', TestOneToken('=', TTEqualSign, '='));
   OK('TestGreaterThan', TestOneToken('>', TTGreaterThan, '>'));
@@ -286,6 +295,7 @@ begin
   OK('TestLessOrEqual', TestOneToken('<=', TTLessOrEqual, '<='));
   OK('TestGreaterOrEqual', TestOneToken('>=', TTGreaterOrEqual, '>='));
   OK('TestNotEqual', TestOneToken('<>', TTNotEqual, '<>'));
+
   OK('TestAtSign', TestOneToken('@', TTAtSign, '@'));
   OK('TestCaret', TestOneToken('^', TTCaret, '^'));
   OK('TestCloseBracket', TestOneToken(']', TTCloseBracket, ']'));
