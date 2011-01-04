@@ -23,11 +23,12 @@ type
     /// TObjectList with TASTNode.TProperty elements
     FProperties: TObjectList;
 
+    constructor Create;
+
     function GetLocation: TLocation; virtual; abstract;
     function GetEndLocation: TLocation; virtual; abstract;
 
   public
-    constructor Create; 
     destructor Destroy; override;
 
     /// Location at the start of the token
