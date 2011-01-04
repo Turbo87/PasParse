@@ -21,7 +21,7 @@ implementation
 uses
   SysUtils, ULocation, UPreprocessorException;
 
-{ TTestDictionary }
+{ TTestCompilerDefines }
 
 class function TTestCompilerDefines.DefineIsTrue(
   ACompilerDefines: TCompilerDefines; ACompilerDirective: string): Boolean;
