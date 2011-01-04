@@ -25,9 +25,12 @@ uses
 
 class function TTestCompilerDefines.DefineIsTrue(
   ACompilerDefines: TCompilerDefines; ACompilerDirective: string): Boolean;
+var
+  ALocation: TLocation;
 begin
-  Result :=
-    ACompilerDefines.IsTrue(ACompilerDirective, TLocation.Create('', '', 0));
+  ALocation := TLocation.Create('', '', 0);
+  Result := ACompilerDefines.IsTrue(ACompilerDirective, ALocation);
+  ALocation.Free;
 end;
 
 class function TTestCompilerDefines.GetName: string;
