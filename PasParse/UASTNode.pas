@@ -22,7 +22,8 @@ type
 
     property ParentNode: TASTNode read FParentNode;
 
-    class function ToCode(AFirstNode, ALastNode: TASTNode): string;
+    class function ToCode(AFirstNode, ALastNode: TASTNode): string; overload;
+    function ToCode: string; overload;
   end;
 
 implementation
@@ -40,6 +41,11 @@ begin
   else
     Result :=
       Copy(AFirst.FileSource, AFirst.Offset, ALast.Offset - AFirst.Offset);  
+end;
+
+function TASTNode.ToCode: string;
+begin
+  Result := ToCode(Self, Self);
 end;
 
 end.
