@@ -10,13 +10,15 @@ type
   private
     /// Internal list of the dictionary
     FList: TStringList;
+    /// Should the destructor free its children in the destructor
+    FFreeChildren: Boolean;
 
     /// Returns the integer-based index of the given key or -1 if not found
     function IndexOf(AKey: string): Integer;
 
   public
     /// Standard constructor
-    constructor Create;
+    constructor Create(AFreeChildren: Boolean = False); 
     /// Standard destructor
     destructor Destroy; override;
 
@@ -49,13 +51,25 @@ begin
   Result := (AIndex >= 0);
 end;
 
-constructor TDictionary.Create;
+constructor TDictionary.Create(AFreeChildren: Boolean);
 begin
+  FFreeChildren := AFreeChildren;
   FList := TStringList.Create;
 end;
 
 destructor TDictionary.Destroy;
+var
+  I: Integer;
 begin
+  if FFreeChildren then
+  begin
+    for I := 0 to FList.Count - 1 do
+    begin
+      FList.Objects[I].Free;
+      FList.Objects[I] := nil;
+    end;
+  end;
+    
   FreeAndNil(FList);
   inherited;
 end;
