@@ -155,7 +155,6 @@ var
   ALength: Integer;
   AWord: string;
   ATokenType: TTokenType;
-  AIndex: integer;
   AObject: TObject;
 begin
   if not IsWordLeadChar(Peek(0)) then
