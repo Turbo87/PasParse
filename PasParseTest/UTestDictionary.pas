@@ -50,10 +50,10 @@ begin
   // Read second pair
   OK(ADict.Read('test2') = TObject(true), 'Read');
 
-  // Write second pair
+  // Write third pair
   OK(not ADict.Write('test3', TObject(false)), 'Write');
 
-  // Read second pair
+  // Read third pair
   OK(ADict.Read('test3') = TObject(false), 'Read');
 
   // Overwrite first pair
