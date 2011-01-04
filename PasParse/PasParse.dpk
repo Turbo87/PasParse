@@ -43,6 +43,7 @@ contains
   UDictionary in 'UDictionary.pas',
   URuleDelegate in 'URuleDelegate.pas',
   UASTNode in 'UASTNode.pas',
-  UNonTerminalNode in 'UNonTerminalNode.pas';
+  UNonTerminalNode in 'UNonTerminalNode.pas',
+  UBinaryOperationNode in 'UBinaryOperationNode.pas';
 
 end.

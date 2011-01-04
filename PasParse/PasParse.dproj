@@ -32,7 +32,9 @@
     <DCCReference Include="rtl.dcp" />
     <DCCReference Include="UASTNode.pas" />
     <DCCReference Include="UBaseException.pas" />
+    <DCCReference Include="UBinaryOperationNode.pas" />
     <DCCReference Include="UCompilerDefines.pas" />
+    <DCCReference Include="UDelimitedItemNode.pas" />
     <DCCReference Include="UDictionary.pas" />
     <DCCReference Include="ULexException.pas" />
     <DCCReference Include="ULexScanner.pas" />

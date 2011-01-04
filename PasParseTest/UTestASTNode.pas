@@ -13,7 +13,9 @@ type
     class function MakeToken(ATokenType: TTokenType; AText: string): TToken;
     /// Tests if TToken.Inspect() works as expected
     class function TestInspectToken: Boolean;
-    
+    /// Tests if TBinaryOperationNode.Inspect() works as expected
+    class function TestInspectBinaryOperationNode: Boolean;
+
   protected
     class procedure TestAll; override;
     class function GetName: string; override;
@@ -22,7 +24,7 @@ type
 implementation
 
 uses
-  UASTNode, ULocation;
+  UASTNode, ULocation, UBinaryOperationNode;
 
 { TTestASTNode }
 
@@ -39,7 +41,28 @@ end;
 
 class procedure TTestASTNode.TestAll;
 begin
-  OK('Inspect()', TestInspectToken);
+  OK('InspectToken', TestInspectToken);
+  OK('InspectBinaryOperationNode', TestInspectBinaryOperationNode);
+end;
+
+class function TTestASTNode.TestInspectBinaryOperationNode: Boolean;
+var
+  ALeft: TASTNode;
+  AOp: TToken;
+  ARight: TASTNode;
+  ANode: TASTNode;
+begin
+  ALeft := MakeToken(TTNumber, '6');
+  AOp := MakeToken(TTTimesSign, '*');
+  ARight := MakeToken(TTNumber, '9');
+  ANode := TBinaryOperationNode.Create(ALeft, AOp, ARight);
+  Result := (ANode.Inspect = 'BinaryOperationNode' + #13#10 +
+    '  LeftNode: Number |6|' + #13#10 + '  OperatorNode: TimesSign |*|' +
+    #13#10 + '  RightNode: Number |9|');
+  ANode.Free;
+  ALeft.Free;
+  AOp.Free;
+  ARight.Free;
 end;
 
 class function TTestASTNode.TestInspectToken: Boolean;
