@@ -2,7 +2,12 @@ unit UTest;
 
 interface
 
+uses
+  SysUtils;
+
 type
+  ETestException = class(Exception);
+
   TTest = class
   private
     class var FPlanned: Integer;
@@ -26,9 +31,6 @@ type
 
 implementation
 
-uses
-  SysUtils;
-
 { TTest }
 
 class function TTest.OK(AResult: Boolean; ADescription: string): Boolean;
@@ -45,7 +47,7 @@ begin
     AResultText := 'not ok';
     Inc(FFailed);
 
-    raise Exception.Create('Test #' + IntToStr(FExecuted) + ' failed: ' +
+    raise ETestException.Create('Test #' + IntToStr(FExecuted) + ' failed: ' +
       ADescription);
   end;
 
