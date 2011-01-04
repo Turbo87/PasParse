@@ -19,13 +19,13 @@ type
     function GetLocation: TLocation; override;
     function GetEndLocation: TLocation; override;
 
-    function InspectTo(AIndentCount: Integer): string; override;
-
   public
     /// Standard constructor
     constructor Create(ATokenType: TTokenType; ALocation: TLocation;
                        AText, AParsedText: string);
     destructor Destroy; override;
+
+    function InspectTo(AIndentCount: Integer): string; override;
 
     /// Parsed text if available, otherwise empty string ''
     property ParsedText: string read FParsedText;

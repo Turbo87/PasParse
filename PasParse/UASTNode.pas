@@ -15,13 +15,14 @@ type
 
     function GetLocation: TLocation; virtual; abstract;
     function GetEndLocation: TLocation; virtual; abstract;
-    function InspectTo(AIndentCount: Integer): string; virtual; abstract;
 
   public
     /// Location at the start of the token
     property Location: TLocation read GetLocation;
     /// Location at the end of the token
     property EndLocation: TLocation read GetEndLocation;
+
+    function InspectTo(AIndentCount: Integer): string; virtual; abstract;
 
     procedure BuildParentReferences(AASTNode: TASTNode);
     property ParentNode: TASTNode read FParentNode;
