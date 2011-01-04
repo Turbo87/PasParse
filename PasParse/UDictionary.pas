@@ -34,6 +34,8 @@ type
 
     /// Tests whether a key exists in the dictionary
     function Contains(const AKey: string): Boolean;
+
+    property Items[const AKey: string]: TObject read Read;
   end;
 
 implementation

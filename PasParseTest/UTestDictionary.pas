@@ -35,6 +35,7 @@ begin
   OK(not ADict.Contains('test1'), 'Contains');
   OK(not ADict.Read('test1', AObject), 'Read');
   OK(ADict.Read('test2') = nil, 'Read');
+  OK(ADict.Items['test3'] = nil, 'Items[]');
 
   // Write first pair
   OK(not ADict.Write('test1', TObject(5)), 'Write');
@@ -54,7 +55,7 @@ begin
   OK(not ADict.Write('test3', TObject(false)), 'Write');
 
   // Read third pair
-  OK(ADict.Read('test3') = TObject(false), 'Read');
+  OK(ADict.Items['test3'] = TObject(false), 'Items[]');
 
   // Overwrite first pair
   OK(ADict.Write('test1', TObject(3)), 'Write');
