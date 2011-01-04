@@ -42,6 +42,7 @@ contains
   UPreprocessorException in 'UPreprocessorException.pas',
   UDictionary in 'UDictionary.pas',
   URuleDelegate in 'URuleDelegate.pas',
-  UASTNode in 'UASTNode.pas';
+  UASTNode in 'UASTNode.pas',
+  UNonTerminalNode in 'UNonTerminalNode.pas';
 
 end.
