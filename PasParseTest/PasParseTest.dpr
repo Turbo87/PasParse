@@ -7,11 +7,13 @@ uses
   UTestLexScanner in 'UTestLexScanner.pas',
   UTest in 'UTest.pas',
   UTestDictionary in 'UTestDictionary.pas',
-  UTestCompilerDefines in 'UTestCompilerDefines.pas';
+  UTestCompilerDefines in 'UTestCompilerDefines.pas',
+  UTestASTNode in 'UTestASTNode.pas';
 
 begin
   try
     TTestDictionary.Test;
+    TTestASTNode.Test;
     TTestLexScanner.Test;
     TTestCompilerDefines.Test;
   except
