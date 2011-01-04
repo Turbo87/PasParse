@@ -39,7 +39,7 @@ class procedure TTestCompilerDefines.TestAll;
 var
   ADefines: TCompilerDefines;
 begin
-  ADefines := TCompilerDefines.CreateEmpty;
+  ADefines := TCompilerDefines.Create;
 
   // Test for False if undefined IfDef
   OK(not DefineIsTrue(ADefines, 'IFDEF FOO'), 'not IFDEF FOO');

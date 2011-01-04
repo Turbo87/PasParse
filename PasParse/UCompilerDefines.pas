@@ -10,10 +10,8 @@ type
   private
     FDictionary: TDictionary;
 
-    constructor Create;
-
   public
-    constructor CreateEmpty;
+    constructor Create;
     constructor CreateStandard;
     destructor Destroy; override;
 
@@ -36,11 +34,6 @@ uses
 constructor TCompilerDefines.Create;
 begin
   FDictionary := TDictionary.Create;
-end;
-
-constructor TCompilerDefines.CreateEmpty;
-begin
-  Create;
 end;
 
 constructor TCompilerDefines.CreateStandard;
