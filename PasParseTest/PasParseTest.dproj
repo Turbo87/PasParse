@@ -22,6 +22,7 @@
     <DCC_ResourcePath>$(BDS)\lib\Debug;$(BDS)\Lib\Debug\Indy10</DCC_ResourcePath>
     <DCC_ObjPath>$(BDS)\lib\Debug;$(BDS)\Lib\Debug\Indy10</DCC_ObjPath>
     <DCC_IncludePath>$(BDS)\lib\Debug;$(BDS)\Lib\Debug\Indy10</DCC_IncludePath>
+    <DCC_MapFile>3</DCC_MapFile>
   </PropertyGroup>
   <ProjectExtensions>
     <Borland.Personality>Delphi.Personality</Borland.Personality>
@@ -34,6 +35,8 @@
     <DelphiCompile Include="PasParseTest.dpr">
       <MainSource>MainSource</MainSource>
     </DelphiCompile>
+    <DCCReference Include="..\FastMM\FastMM4.pas" />
+    <DCCReference Include="..\FastMM\FastMM4Messages.pas" />
     <DCCReference Include="UTest.pas" />
     <DCCReference Include="UTestASTNode.pas" />
     <DCCReference Include="UTestCompilerDefines.pas" />

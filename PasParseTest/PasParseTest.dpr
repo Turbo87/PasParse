@@ -3,6 +3,8 @@ program PasParseTest;
 {$APPTYPE CONSOLE}
 
 uses
+  FastMM4 in '..\FastMM\FastMM4.pas',
+  FastMM4Messages in '..\FastMM\FastMM4Messages.pas',
   SysUtils,
   UTestLexScanner in 'UTestLexScanner.pas',
   UTest in 'UTest.pas',
