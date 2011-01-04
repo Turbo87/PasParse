@@ -3,14 +3,16 @@ unit UASTNode;
 interface
 
 uses
-  ULocation;
+  ULocation, Contnrs;
 
 type
   TASTNode = class
   private
     FParentNode: TASTNode;
-    
+
   protected
+    FChildNodes: TObjectList;
+
     function GetLocation: TLocation; virtual; abstract;
     function GetEndLocation: TLocation; virtual; abstract;
     function InspectTo(AIndentCount: Integer): string; virtual; abstract;
