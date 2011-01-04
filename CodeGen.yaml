@@ -1,0 +1,405 @@
+NodeTypes:
+  ArrayTypeNode:
+    - {Name: ArrayKeywordNode, Type: Token}
+    - {Name: OpenBracketNode, Type: Token}
+    - {Name: IndexListNode, Type: ListNode<DelimitedItemNode<AstNode>>}
+    - {Name: CloseBracketNode, Type: Token}
+    - {Name: OfKeywordNode, Type: Token}
+    - {Name: TypeNode, Type: AstNode}
+  AssemblerStatementNode:
+    - {Name: AsmKeywordNode, Type: Token}
+    - {Name: EndKeywordNode, Type: Token}
+  AttributeNode:
+    - {Name: OpenBracketNode, Type: Token}
+    - {Name: ScopeNode, Type: Token}
+    - {Name: ColonNode, Type: Token}
+    - {Name: ValueNode, Type: AstNode}
+    - {Name: CloseBracketNode, Type: Token}
+  BinaryOperationNode:
+    - {Name: LeftNode, Type: AstNode}
+    - {Name: OperatorNode, Type: Token}
+    - {Name: RightNode, Type: AstNode}
+  BlockNode:
+    - {Name: BeginKeywordNode, Type: Token}
+    - {Name: StatementListNode, Type: ListNode<DelimitedItemNode<AstNode>>}
+    - {Name: EndKeywordNode, Type: Token}
+  CaseSelectorNode:
+    - {Name: ValueListNode, Type: ListNode<DelimitedItemNode<AstNode>>}
+    - {Name: ColonNode, Type: Token}
+    - {Name: StatementNode, Type: AstNode}
+    - {Name: SemicolonNode, Type: Token}
+  CaseStatementNode:
+    - {Name: CaseKeywordNode, Type: Token}
+    - {Name: ExpressionNode, Type: AstNode}
+    - {Name: OfKeywordNode, Type: Token}
+    - {Name: SelectorListNode, Type: ListNode<CaseSelectorNode>}
+    - {Name: ElseKeywordNode, Type: Token}
+    - {Name: ElseStatementListNode, Type: ListNode<DelimitedItemNode<AstNode>>}
+    - {Name: EndKeywordNode, Type: Token}
+  ClassOfNode:
+    - {Name: ClassKeywordNode, Type: Token}
+    - {Name: OfKeywordNode, Type: Token}
+    - {Name: TypeNode, Type: AstNode}
+  ClassTypeNode:
+    - {Name: ClassKeywordNode, Type: Token}
+    - {Name: DispositionNode, Type: Token}
+    - {Name: OpenParenthesisNode, Type: Token}
+    - {Name: InheritanceListNode, Type: ListNode<DelimitedItemNode<AstNode>>}
+    - {Name: CloseParenthesisNode, Type: Token}
+    - {Name: ContentListNode, Type: ListNode<VisibilitySectionNode>}
+    - {Name: EndKeywordNode, Type: Token}
+  ConstantDeclNode:
+    - {Name: NameNode, Type: Token}
+    - {Name: ColonNode, Type: Token}
+    - {Name: TypeNode, Type: AstNode}
+    - {Name: EqualSignNode, Type: Token}
+    - {Name: ValueNode, Type: AstNode}
+    - {Name: PortabilityDirectiveListNode, Type: ListNode<Token>}
+    - {Name: SemicolonNode, Type: Token}
+  ConstantListNode:
+    - {Name: OpenParenthesisNode, Type: Token}
+    - {Name: ItemListNode, Type: ListNode<DelimitedItemNode<AstNode>>}
+    - {Name: CloseParenthesisNode, Type: Token}
+  ConstSectionNode:
+    - {Name: ConstKeywordNode, Type: Token}
+    - {Name: ConstListNode, Type: ListNode<ConstantDeclNode>}
+  DirectiveNode:
+    - {Name: SemicolonNode, Type: Token}
+    - {Name: KeywordNode, Type: Token}
+    - {Name: ValueNode, Type: AstNode}
+    - {Name: DataNode, Type: AstNode}
+  EnumeratedTypeNode:
+    - {Name: OpenParenthesisNode, Type: Token}
+    - {Name: ItemListNode, Type: ListNode<DelimitedItemNode<EnumeratedTypeElementNode>>}
+    - {Name: CloseParenthesisNode, Type: Token}
+  EnumeratedTypeElementNode:
+    - {Name: NameNode, Type: Token}
+    - {Name: EqualSignNode, Type: Token}
+    - {Name: ValueNode, Type: AstNode}
+  ExceptionItemNode:
+    - {Name: OnSemikeywordNode, Type: Token}
+    - {Name: NameNode, Type: Token}
+    - {Name: ColonNode, Type: Token}
+    - {Name: TypeNode, Type: AstNode}
+    - {Name: DoKeywordNode, Type: Token}
+    - {Name: StatementNode, Type: AstNode}
+    - {Name: SemicolonNode, Type: Token}
+  ExportsItemNode:
+    - {Name: NameNode, Type: AstNode}
+    - {Name: SpecifierListNode, Type: ListNode<ExportsSpecifierNode>}
+  ExportsSpecifierNode:
+    - {Name: KeywordNode, Type: Token}
+    - {Name: ValueNode, Type: AstNode}
+  ExportsStatementNode:
+    - {Name: ExportsKeywordNode, Type: Token}
+    - {Name: ItemListNode, Type: ListNode<DelimitedItemNode<ExportsItemNode>>}
+    - {Name: SemicolonNode, Type: Token}
+  FancyBlockNode:
+    - {Name: DeclListNode, Type: ListNode<AstNode>}
+    - {Name: BlockNode, Type: AstNode}
+  FieldDeclNode:
+    - {Name: NameListNode, Type: ListNode<DelimitedItemNode<Token>>}
+    - {Name: ColonNode, Type: Token}
+    - {Name: TypeNode, Type: AstNode}
+    - {Name: PortabilityDirectiveListNode, Type: ListNode<Token>}
+    - {Name: SemicolonNode, Type: Token}
+  FieldSectionNode:
+    - {Name: ClassKeywordNode, Type: Token}
+    - {Name: VarKeywordNode, Type: Token}
+    - {Name: FieldListNode, Type: ListNode<FieldDeclNode>}
+  FileTypeNode:
+    - {Name: FileKeywordNode, Type: Token}
+    - {Name: OfKeywordNode, Type: Token}
+    - {Name: TypeNode, Type: AstNode}
+  ForInStatementNode:
+    - {Name: ForKeywordNode, Type: Token}
+    - {Name: LoopVariableNode, Type: Token}
+    - {Name: InKeywordNode, Type: Token}
+    - {Name: ExpressionNode, Type: AstNode}
+    - {Name: DoKeywordNode, Type: Token}
+    - {Name: StatementNode, Type: AstNode}
+  ForStatementNode:
+    - {Name: ForKeywordNode, Type: Token}
+    - {Name: LoopVariableNode, Type: Token}
+    - {Name: ColonEqualsNode, Type: Token}
+    - {Name: StartingValueNode, Type: AstNode}
+    - {Name: DirectionNode, Type: Token}
+    - {Name: EndingValueNode, Type: AstNode}
+    - {Name: DoKeywordNode, Type: Token}
+    - {Name: StatementNode, Type: AstNode}
+  GotoStatementNode:
+    - {Name: GotoKeywordNode, Type: Token}
+    - {Name: LabelIdNode, Type: Token}
+  IfStatementNode:
+    - {Name: IfKeywordNode, Type: Token}
+    - {Name: ConditionNode, Type: AstNode}
+    - {Name: ThenKeywordNode, Type: Token}
+    - {Name: ThenStatementNode, Type: AstNode}
+    - {Name: ElseKeywordNode, Type: Token}
+    - {Name: ElseStatementNode, Type: AstNode}
+  InitSectionNode:
+    - {Name: InitializationKeywordNode, Type: Token}
+    - {Name: InitializationStatementListNode, Type: ListNode<DelimitedItemNode<AstNode>>}
+    - {Name: FinalizationKeywordNode, Type: Token}
+    - {Name: FinalizationStatementListNode, Type: ListNode<DelimitedItemNode<AstNode>>}
+    - {Name: EndKeywordNode, Type: Token}
+  InterfaceTypeNode:
+    - {Name: InterfaceKeywordNode, Type: Token}
+    - {Name: OpenParenthesisNode, Type: Token}
+    - {Name: BaseInterfaceNode, Type: AstNode}
+    - {Name: CloseParenthesisNode, Type: Token}
+    - {Name: OpenBracketNode, Type: Token}
+    - {Name: GuidNode, Type: AstNode}
+    - {Name: CloseBracketNode, Type: Token}
+    - {Name: MethodAndPropertyListNode, Type: ListNode<AstNode>}
+    - {Name: EndKeywordNode, Type: Token}
+  LabelDeclSectionNode:
+    - {Name: LabelKeywordNode, Type: Token}
+    - {Name: LabelListNode, Type: ListNode<DelimitedItemNode<Token>>}
+    - {Name: SemicolonNode, Type: Token}
+  LabeledStatementNode:
+    - {Name: LabelIdNode, Type: Token}
+    - {Name: ColonNode, Type: Token}
+    - {Name: StatementNode, Type: AstNode}
+  MethodHeadingNode:
+    - {Name: ClassKeywordNode, Type: Token}
+    - {Name: MethodTypeNode, Type: Token}
+    - {Name: NameNode, Type: AstNode}
+    - {Name: OpenParenthesisNode, Type: Token}
+    - {Name: ParameterListNode, Type: ListNode<DelimitedItemNode<ParameterNode>>}
+    - {Name: CloseParenthesisNode, Type: Token}
+    - {Name: ColonNode, Type: Token}
+    - {Name: ReturnTypeNode, Type: AstNode}
+    - {Name: DirectiveListNode, Type: ListNode<DirectiveNode>}
+    - {Name: SemicolonNode, Type: Token}
+  MethodImplementationNode:
+    - {Name: MethodHeadingNode, Type: MethodHeadingNode}
+    - {Name: FancyBlockNode, Type: FancyBlockNode}
+    - {Name: SemicolonNode, Type: Token}
+  MethodResolutionNode:
+    - {Name: MethodTypeNode, Type: Token}
+    - {Name: InterfaceMethodNode, Type: AstNode}
+    - {Name: EqualSignNode, Type: Token}
+    - {Name: ImplementationMethodNode, Type: Token}
+    - {Name: SemicolonNode, Type: Token}
+  NumberFormatNode:
+    - {Name: ValueNode, Type: AstNode}
+    - {Name: SizeColonNode, Type: Token}
+    - {Name: SizeNode, Type: AstNode}
+    - {Name: PrecisionColonNode, Type: Token}
+    - {Name: PrecisionNode, Type: AstNode}
+  OpenArrayNode:
+    - {Name: ArrayKeywordNode, Type: Token}
+    - {Name: OfKeywordNode, Type: Token}
+    - {Name: TypeNode, Type: AstNode}
+  PackageNode:
+    - {Name: PackageKeywordNode, Type: Token}
+    - {Name: NameNode, Type: AstNode}
+    - {Name: SemicolonNode, Type: Token}
+    - {Name: RequiresClauseNode, Type: RequiresClauseNode}
+    - {Name: ContainsClauseNode, Type: UsesClauseNode}
+    - {Name: AttributeListNode, Type: ListNode<AttributeNode>}
+    - {Name: EndKeywordNode, Type: Token}
+    - {Name: DotNode, Type: Token}
+  PackedTypeNode:
+    - {Name: PackedKeywordNode, Type: Token}
+    - {Name: TypeNode, Type: AstNode}
+  ParameterizedNode:
+    - {Name: LeftNode, Type: AstNode}
+    - {Name: OpenDelimiterNode, Type: Token}
+    - {Name: ParameterListNode, Type: ListNode<DelimitedItemNode<AstNode>>}
+    - {Name: CloseDelimiterNode, Type: Token}
+  ParameterNode:
+    - {Name: ModifierNode, Type: Token}
+    - {Name: NameListNode, Type: ListNode<DelimitedItemNode<Token>>}
+    - {Name: ColonNode, Type: Token}
+    - {Name: TypeNode, Type: AstNode}
+    - {Name: EqualSignNode, Type: Token}
+    - {Name: DefaultValueNode, Type: AstNode}
+  ParenthesizedExpressionNode:
+    - {Name: OpenParenthesisNode, Type: Token}
+    - {Name: ExpressionNode, Type: AstNode}
+    - {Name: CloseParenthesisNode, Type: Token}
+  PointerDereferenceNode:
+    - {Name: OperandNode, Type: AstNode}
+    - {Name: CaretNode, Type: Token}
+  PointerTypeNode:
+    - {Name: CaretNode, Type: Token}
+    - {Name: TypeNode, Type: AstNode}
+  ProcedureTypeNode:
+    - {Name: MethodTypeNode, Type: Token}
+    - {Name: OpenParenthesisNode, Type: Token}
+    - {Name: ParameterListNode, Type: ListNode<DelimitedItemNode<ParameterNode>>}
+    - {Name: CloseParenthesisNode, Type: Token}
+    - {Name: ColonNode, Type: Token}
+    - {Name: ReturnTypeNode, Type: AstNode}
+    - {Name: FirstDirectiveListNode, Type: ListNode<DirectiveNode>}
+    - {Name: OfKeywordNode, Type: Token}
+    - {Name: ObjectKeywordNode, Type: Token}
+    - {Name: SecondDirectiveListNode, Type: ListNode<DirectiveNode>}
+  ProgramNode:
+    - {Name: ProgramKeywordNode, Type: Token}
+    - {Name: NameNode, Type: Token}
+    - {Name: NoiseOpenParenthesisNode, Type: Token}
+    - {Name: NoiseContentListNode, Type: ListNode<DelimitedItemNode<Token>>}
+    - {Name: NoiseCloseParenthesisNode, Type: Token}
+    - {Name: SemicolonNode, Type: Token}
+    - {Name: UsesClauseNode, Type: UsesClauseNode}
+    - {Name: DeclarationListNode, Type: ListNode<AstNode>}
+    - {Name: InitSectionNode, Type: InitSectionNode}
+    - {Name: DotNode, Type: Token}
+  PropertyNode:
+    - {Name: ClassKeywordNode, Type: Token}
+    - {Name: PropertyKeywordNode, Type: Token}
+    - {Name: NameNode, Type: Token}
+    - {Name: OpenBracketNode, Type: Token}
+    - {Name: ParameterListNode, Type: ListNode<DelimitedItemNode<ParameterNode>>}
+    - {Name: CloseBracketNode, Type: Token}
+    - {Name: ColonNode, Type: Token}
+    - {Name: TypeNode, Type: AstNode}
+    - {Name: DirectiveListNode, Type: ListNode<DirectiveNode>}
+    - {Name: SemicolonNode, Type: Token}
+  RaiseStatementNode:
+    - {Name: RaiseKeywordNode, Type: Token}
+    - {Name: ExceptionNode, Type: AstNode}
+    - {Name: AtSemikeywordNode, Type: Token}
+    - {Name: AddressNode, Type: AstNode}
+  RecordFieldConstantNode:
+    - {Name: NameNode, Type: AstNode}
+    - {Name: ColonNode, Type: Token}
+    - {Name: ValueNode, Type: AstNode}
+  RecordTypeNode:
+    - {Name: RecordKeywordNode, Type: Token}
+    - {Name: ContentListNode, Type: ListNode<VisibilitySectionNode>}
+    - {Name: VariantSectionNode, Type: VariantSectionNode}
+    - {Name: EndKeywordNode, Type: Token}
+  RepeatStatementNode:
+    - {Name: RepeatKeywordNode, Type: Token}
+    - {Name: StatementListNode, Type: ListNode<DelimitedItemNode<AstNode>>}
+    - {Name: UntilKeywordNode, Type: Token}
+    - {Name: ConditionNode, Type: AstNode}
+  RequiresClauseNode:
+    - {Name: RequiresSemikeywordNode, Type: Token}
+    - {Name: PackageListNode, Type: ListNode<DelimitedItemNode<AstNode>>}
+    - {Name: SemicolonNode, Type: Token}
+  SetLiteralNode:
+    - {Name: OpenBracketNode, Type: Token}
+    - {Name: ItemListNode, Type: ListNode<DelimitedItemNode<AstNode>>}
+    - {Name: CloseBracketNode, Type: Token}
+  SetOfNode:
+    - {Name: SetKeywordNode, Type: Token}
+    - {Name: OfKeywordNode, Type: Token}
+    - {Name: TypeNode, Type: AstNode}
+  StringOfLengthNode:
+    - {Name: StringKeywordNode, Type: Token}
+    - {Name: OpenBracketNode, Type: Token}
+    - {Name: LengthNode, Type: AstNode}
+    - {Name: CloseBracketNode, Type: Token}
+  TryExceptNode:
+    - {Name: TryKeywordNode, Type: Token}
+    - {Name: TryStatementListNode, Type: ListNode<DelimitedItemNode<AstNode>>}
+    - {Name: ExceptKeywordNode, Type: Token}
+    - {Name: ExceptionItemListNode, Type: ListNode<ExceptionItemNode>}
+    - {Name: ElseKeywordNode, Type: Token}
+    - {Name: ElseStatementListNode, Type: ListNode<DelimitedItemNode<AstNode>>}
+    - {Name: EndKeywordNode, Type: Token}
+  TryFinallyNode:
+    - {Name: TryKeywordNode, Type: Token}
+    - {Name: TryStatementListNode, Type: ListNode<DelimitedItemNode<AstNode>>}
+    - {Name: FinallyKeywordNode, Type: Token}
+    - {Name: FinallyStatementListNode, Type: ListNode<DelimitedItemNode<AstNode>>}
+    - {Name: EndKeywordNode, Type: Token}
+  TypeDeclNode:
+    - {Name: NameNode, Type: Token}
+    - {Name: EqualSignNode, Type: Token}
+    - {Name: TypeKeywordNode, Type: Token}
+    - {Name: TypeNode, Type: AstNode}
+    - {Name: PortabilityDirectiveListNode, Type: ListNode<Token>}
+    - {Name: SemicolonNode, Type: Token}
+  TypeForwardDeclarationNode:
+    - {Name: NameNode, Type: Token}
+    - {Name: EqualSignNode, Type: Token}
+    - {Name: TypeNode, Type: Token}
+    - {Name: SemicolonNode, Type: Token}
+  TypeHelperNode:
+    - {Name: TypeKeywordNode, Type: Token}
+    - {Name: HelperSemikeywordNode, Type: Token}
+    - {Name: OpenParenthesisNode, Type: Token}
+    - {Name: BaseHelperTypeNode, Type: AstNode}
+    - {Name: CloseParenthesisNode, Type: Token}
+    - {Name: ForKeywordNode, Type: Token}
+    - {Name: TypeNode, Type: AstNode}
+    - {Name: ContentListNode, Type: ListNode<VisibilitySectionNode>}
+    - {Name: EndKeywordNode, Type: Token}
+  TypeSectionNode:
+    - {Name: TypeKeywordNode, Type: Token}
+    - {Name: TypeListNode, Type: ListNode<AstNode>}
+  UnaryOperationNode:
+    - {Name: OperatorNode, Type: Token}
+    - {Name: OperandNode, Type: AstNode}
+  UnitNode:
+    - {Name: UnitKeywordNode, Type: Token}
+    - {Name: UnitNameNode, Type: Token}
+    - {Name: PortabilityDirectiveListNode, Type: ListNode<Token>}
+    - {Name: SemicolonNode, Type: Token}
+    - {Name: InterfaceSectionNode, Type: UnitSectionNode}
+    - {Name: ImplementationSectionNode, Type: UnitSectionNode}
+    - {Name: InitSectionNode, Type: InitSectionNode}
+    - {Name: DotNode, Type: Token}
+  UnitSectionNode:
+    - {Name: HeaderKeywordNode, Type: Token}
+    - {Name: UsesClauseNode, Type: UsesClauseNode}
+    - {Name: ContentListNode, Type: ListNode<AstNode>}
+  UsedUnitNode:
+    - {Name: NameNode, Type: AstNode}
+    - {Name: InKeywordNode, Type: Token}
+    - {Name: FileNameNode, Type: Token}
+  UsesClauseNode:
+    - {Name: UsesKeywordNode, Type: Token}
+    - {Name: UnitListNode, Type: ListNode<DelimitedItemNode<UsedUnitNode>>}
+    - {Name: SemicolonNode, Type: Token}
+  VarDeclNode:
+    - {Name: NameListNode, Type: ListNode<DelimitedItemNode<Token>>}
+    - {Name: ColonNode, Type: Token}
+    - {Name: TypeNode, Type: AstNode}
+    - {Name: FirstPortabilityDirectiveListNode, Type: ListNode<Token>}
+    - {Name: AbsoluteSemikeywordNode, Type: Token}
+    - {Name: AbsoluteAddressNode, Type: AstNode}
+    - {Name: EqualSignNode, Type: Token}
+    - {Name: ValueNode, Type: AstNode}
+    - {Name: SecondPortabilityDirectiveListNode, Type: ListNode<Token>}
+    - {Name: SemicolonNode, Type: Token}
+  VariantGroupNode:
+    - {Name: ValueListNode, Type: ListNode<DelimitedItemNode<AstNode>>}
+    - {Name: ColonNode, Type: Token}
+    - {Name: OpenParenthesisNode, Type: Token}
+    - {Name: FieldDeclListNode, Type: ListNode<FieldDeclNode>}
+    - {Name: VariantSectionNode, Type: VariantSectionNode}
+    - {Name: CloseParenthesisNode, Type: Token}
+    - {Name: SemicolonNode, Type: Token}
+  VariantSectionNode:
+    - {Name: CaseKeywordNode, Type: Token}
+    - {Name: NameNode, Type: Token}
+    - {Name: ColonNode, Type: Token}
+    - {Name: TypeNode, Type: AstNode}
+    - {Name: OfKeywordNode, Type: Token}
+    - {Name: VariantGroupListNode, Type: ListNode<VariantGroupNode>}
+  VarSectionNode:
+    - {Name: VarKeywordNode, Type: Token}
+    - {Name: VarListNode, Type: ListNode<VarDeclNode>}
+  VisibilityNode:
+    - {Name: StrictSemikeywordNode, Type: Token}
+    - {Name: VisibilityKeywordNode, Type: Token}
+  VisibilitySectionNode:
+    - {Name: VisibilityNode, Type: VisibilityNode}
+    - {Name: ContentListNode, Type: ListNode<AstNode>}
+  WhileStatementNode:
+    - {Name: WhileKeywordNode, Type: Token}
+    - {Name: ConditionNode, Type: AstNode}
+    - {Name: DoKeywordNode, Type: Token}
+    - {Name: StatementNode, Type: AstNode}
+  WithStatementNode:
+    - {Name: WithKeywordNode, Type: Token}
+    - {Name: ExpressionListNode, Type: ListNode<DelimitedItemNode<AstNode>>}
+    - {Name: DoKeywordNode, Type: Token}
+    - {Name: StatementNode, Type: AstNode}
