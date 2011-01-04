@@ -8,7 +8,8 @@ uses
 type
   TTokenSets = class
   protected
-    class procedure Prepare; virtual;
+    class procedure Prepare;
+    class procedure Destroy;
     
   public
     class var TSAddOp: TTokenSet;
@@ -48,6 +49,42 @@ type
 implementation
 
 { TTokenSets }
+
+class procedure TTokenSets.Destroy;
+begin
+  TSAddOp.Free;
+  TSBlock.Free;
+  TSClassDisposition.Free;
+  TSConstHeader.Free;
+  TSDirective.Free;
+  TSExportsSpecifier.Free;
+  TSForDirection.Free;
+  TSForwardableType.Free;
+  TSInitSection.Free;
+  TSInterfaceType.Free;
+  TSKeyword.Free;
+  TSMethodType.Free;
+  TSMulOp.Free;
+  TSParameterizedPropertyDirective.Free;
+  TSParameterlessPropertyDirective.Free;
+  TSParameterModifier.Free;
+  TSPortabilityDirective.Free;
+  TSProgram.Free;
+  TSRelOp.Free;
+  TSSemikeyword.Free;
+  TSUnaryOperator.Free;
+  TSUses.Free;
+  TSVarHeader.Free;
+  TSVisibilitySingleWord.Free;
+  TSIdent.Free;
+  TSParticle.Free;
+  TSExpression.Free;
+  TSExtendedIdent.Free;
+  TSLabelId.Free;
+  TSParameter.Free;
+  TSSimpleParameterType.Free;
+  TSVisibility.Free;
+end;
 
 class procedure TTokenSets.Prepare;
 begin
@@ -357,4 +394,8 @@ end;
 
 initialization
   TTokenSets.Prepare;
+
+finalization
+  TTokenSets.Destroy;
+
 end.
