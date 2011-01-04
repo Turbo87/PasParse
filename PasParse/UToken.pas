@@ -49,6 +49,7 @@ uses
 constructor TToken.Create(ATokenType: TTokenType; ALocation: TLocation; AText,
   AParsedText: string);
 begin
+  inherited Create;
   FTokenType := ATokenType;
   FLocation := ALocation;
   FText := AText;
