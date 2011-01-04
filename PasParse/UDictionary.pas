@@ -55,6 +55,7 @@ end;
 
 constructor TDictionary.Create(const AFreeChildren: Boolean);
 begin
+  inherited Create;
   FFreeChildren := AFreeChildren;
   FList := TStringList.Create;
 end;
