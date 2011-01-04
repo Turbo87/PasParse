@@ -37,19 +37,27 @@ begin
   ALexScanner := TLexScanner.Create(ASource, '');
 
   Result := True;
-  
-  for I := 0 to Length(ATokens) - 1 do
-  begin
-    AToken := ALexScanner.NextToken;
-    Result := (AToken <> nil) and (AToken.Inspect = ATokens[I]);
-    FreeAndNil(AToken);
+
+  try
+    for I := 0 to Length(ATokens) - 1 do
+    begin
+      try
+        AToken := ALexScanner.NextToken;
+        Result := (AToken <> nil) and (AToken.Inspect = ATokens[I]);
+      finally
+        FreeAndNil(AToken);
+      end;
+    end;
+
+    try
+      AToken := ALexScanner.NextToken;
+      Result := (AToken = nil) and Result;
+    finally
+     FreeAndNil(AToken);
+    end;
+  finally
+    FreeAndNil(ALexScanner);
   end;
-
-  AToken := ALexScanner.NextToken;
-  Result := (AToken = nil) and Result;
-  FreeAndNil(AToken);
-
-  FreeAndNil(ALexScanner);
 end;
 
 class procedure TTestLexScanner.TestAll;
