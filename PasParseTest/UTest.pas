@@ -49,11 +49,10 @@ begin
   end;
 
   AResultText := AResultText + ' ' + IntToStr(FExecuted);
-
   if ADescription <> '' then
-    WriteLn(AResultText + ' - ' + ADescription)
-  else
-    WriteLn(AResultText);
+    AResultText := AResultText + ' - ' + ADescription;
+
+  WriteLn(AResultText);
 end;
 
 class function TTest.OK(AResult: Boolean): Boolean;
