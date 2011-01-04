@@ -50,11 +50,13 @@ begin
   // Test for exception on undefined if
   try
     DefineIsTrue(ADefines, 'IF Foo');
+    OK(False, 'IF Foo');
   except
+    on ETestException do;
     on EPreprocessorException do
       OK(True, 'IF Foo');
   else
-      OK(False, 'IF Foo');
+    OK(False, 'IF Foo');
   end;
 
   // Test DefineDirectiveAsTrue
