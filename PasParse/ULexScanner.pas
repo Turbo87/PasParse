@@ -518,8 +518,10 @@ begin
       if Peek(ALength) = '''' then
       begin
         Inc(ALength);
-        while Peek(ALength) <> '''' do
+        while CanRead(ALength) and (Read(ALength) <> '''') do
           Inc(ALength);
+        if (not CanRead(ALength)) and (Read(ALength) <> '''') then
+          raise ELexException.Create('Closing apostrophe missing', Location);
         Inc(ALength);
       end
       else

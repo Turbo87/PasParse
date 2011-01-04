@@ -24,7 +24,7 @@ type
 implementation
 
 uses
-  ULexScanner, UToken, SysUtils;
+  ULexScanner, UToken, SysUtils, ULexException;
 
 { TTestLexScanner }
 
@@ -301,6 +301,15 @@ begin
   OK('TestPlusSign', TestOneToken('+', TTPlusSign, '+'));
   OK('TestSemicolon', TestOneToken(';', TTSemicolon, ';'));
   OK('TestTimesSign', TestOneToken('*', TTTimesSign, '*'));
+
+  try
+    TestOneToken('''abc', TTStringLiteral, '''abc')
+  except
+    on ELexException do
+      OK(True, 'TestNeverEndingString');
+  else
+      OK(False, 'TestNeverEndingString');
+  end;
 end;
 
 end.
