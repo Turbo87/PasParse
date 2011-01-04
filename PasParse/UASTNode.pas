@@ -8,6 +8,8 @@ uses
 type
   TASTNode = class
   type
+    /// Key-Value-Pair based on string and TASTNode
+    ///  The user is responsible for freeing FValue!
     TProperty = class
     private
       FKey: string;
@@ -16,6 +18,8 @@ type
     public
       property Key: string read FKey;
       property Value: TASTNode read FValue;
+
+      constructor Create(const AKey: string; const AValue: TASTNode);
     end;
 
   private
@@ -100,6 +104,16 @@ end;
 function TASTNode.ToCode: string;
 begin
   Result := ToCode(Self, Self);
+end;
+
+{ TASTNode.TProperty }
+
+constructor TASTNode.TProperty.Create(const AKey: string;
+  const AValue: TASTNode);
+begin
+  inherited Create;
+  FKey := AKey;
+  FValue := AValue;
 end;
 
 end.
