@@ -23,6 +23,7 @@ type
     /// Location at the end of the token
     property EndLocation: TLocation read GetEndLocation;
 
+    procedure BuildParentReferences(AASTNode: TASTNode);
     property ParentNode: TASTNode read FParentNode;
 
     class function ToCode(AFirstNode, ALastNode: TASTNode): string; overload;
@@ -45,6 +46,17 @@ begin
   else
     Result :=
       Copy(AFirst.FileSource, AFirst.Offset, ALast.Offset - AFirst.Offset);  
+end;
+
+procedure TASTNode.BuildParentReferences(AASTNode: TASTNode);
+var
+  I: Integer;
+begin
+  FParentNode := AASTNode;
+  for I := 0 to FChildNodes.Count - 1 do
+  begin
+    (FChildNodes.Items[I] as TASTNode).BuildParentReferences(Self);
+  end;
 end;
 
 function TASTNode.Inspect: string;
