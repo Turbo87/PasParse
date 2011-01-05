@@ -10,12 +10,12 @@ type
   protected
     FTokenSet: ITokenSet;
 
-    function CanParse: Boolean; override;
-    function Evaluate: TASTNode; override;
-
   public
     constructor Create(AParser: IParser; ARuleType: TRuleType;
       ATokenSet: ITokenSet);
+
+    function CanParse: Boolean; override;
+    function Evaluate: TASTNode; override;
   end;
 
 implementation

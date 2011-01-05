@@ -11,11 +11,11 @@ type
     FParser: IParser;
     FRuleType: TRuleType;
 
-    function CanParse: Boolean; virtual; abstract;
-    function Evaluate: TASTNode; virtual; abstract;
-
   public
     constructor Create(AParser: IParser; ARuleType: TRuleType);
+
+    function CanParse: Boolean; virtual; abstract;
+    function Evaluate: TASTNode; virtual; abstract;
 
     function Execute: TASTNode;
   end;

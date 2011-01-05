@@ -7,565 +7,565 @@ uses
 
 type
   TArrayTypeRule = class(TRule)
-  protected
+  public
     function CanParse: Boolean; override;
     function Evaluate: TASTNode; override;
   end;
   
   TAssemblerStatementRule = class(TRule)
-  protected
+  public
     function CanParse: Boolean; override;
     function Evaluate: TASTNode; override;
   end;
   
   TAssemblyAttributeRule = class(TRule)
-  protected
+  public
     function CanParse: Boolean; override;
     function Evaluate: TASTNode; override;
   end;
   
   TAtomRule = class(TRule)
-  protected
+  public
     function CanParse: Boolean; override;
     function Evaluate: TASTNode; override;
   end;
   
   TBareInheritedRule = class(TRule)
-  protected
+  public
     function CanParse: Boolean; override;
     function Evaluate: TASTNode; override;
   end;
   
   TBlockRule = class(TRule)
-  protected
+  public
     function CanParse: Boolean; override;
     function Evaluate: TASTNode; override;
   end;
   
   TCaseSelectorRule = class(TRule)
-  protected
+  public
     function CanParse: Boolean; override;
     function Evaluate: TASTNode; override;
   end;
   
   TCaseStatementRule = class(TRule)
-  protected
+  public
     function CanParse: Boolean; override;
     function Evaluate: TASTNode; override;
   end;
   
   TClassHelperTypeRule = class(TRule)
-  protected
+  public
     function CanParse: Boolean; override;
     function Evaluate: TASTNode; override;
   end;
   
   TClassOfTypeRule = class(TRule)
-  protected
+  public
     function CanParse: Boolean; override;
     function Evaluate: TASTNode; override;
   end;
   
   TClassTypeRule = class(TRule)
-  protected
+  public
     function CanParse: Boolean; override;
     function Evaluate: TASTNode; override;
   end;
   
   TConstantDeclRule = class(TRule)
-  protected
+  public
     function CanParse: Boolean; override;
     function Evaluate: TASTNode; override;
   end;
   
   TConstSectionRule = class(TRule)
-  protected
+  public
     function CanParse: Boolean; override;
     function Evaluate: TASTNode; override;
   end;
   
   TDirectiveRule = class(TRule)
-  protected
+  public
     function CanParse: Boolean; override;
     function Evaluate: TASTNode; override;
   end;
   
   TEnumeratedTypeRule = class(TRule)
-  protected
+  public
     function CanParse: Boolean; override;
     function Evaluate: TASTNode; override;
   end;
   
   TEnumeratedTypeElementRule = class(TRule)
-  protected
+  public
     function CanParse: Boolean; override;
     function Evaluate: TASTNode; override;
   end;
   
   TExceptionItemRule = class(TRule)
-  protected
+  public
     function CanParse: Boolean; override;
     function Evaluate: TASTNode; override;
   end;
   
   TExportsItemRule = class(TRule)
-  protected
+  public
     function CanParse: Boolean; override;
     function Evaluate: TASTNode; override;
   end;
   
   TExportsSpecifierRule = class(TRule)
-  protected
+  public
     function CanParse: Boolean; override;
     function Evaluate: TASTNode; override;
   end;
   
   TExportsStatementRule = class(TRule)
-  protected
+  public
     function CanParse: Boolean; override;
     function Evaluate: TASTNode; override;
   end;
   
   TExpressionRule = class(TRule)
-  protected
+  public
     function CanParse: Boolean; override;
     function Evaluate: TASTNode; override;
   end;
   
   TExpressionListRule = class(TRule)
-  protected
+  public
     function CanParse: Boolean; override;
     function Evaluate: TASTNode; override;
   end;
   
   TExpressionOrAssignmentRule = class(TRule)
-  protected
+  public
     function CanParse: Boolean; override;
     function Evaluate: TASTNode; override;
   end;
   
   TExpressionOrRangeRule = class(TRule)
-  protected
+  public
     function CanParse: Boolean; override;
     function Evaluate: TASTNode; override;
   end;
   
   TExpressionOrRangeListRule = class(TRule)
-  protected
+  public
     function CanParse: Boolean; override;
     function Evaluate: TASTNode; override;
   end;
   
   TExtendedIdentRule = class(TRule)
-  protected
+  public
     function CanParse: Boolean; override;
     function Evaluate: TASTNode; override;
   end;
   
   TFactorRule = class(TRule)
-  protected
+  public
     function CanParse: Boolean; override;
     function Evaluate: TASTNode; override;
   end;
   
   TFancyBlockRule = class(TRule)
-  protected
+  public
     function CanParse: Boolean; override;
     function Evaluate: TASTNode; override;
   end;
   
   TFieldDeclRule = class(TRule)
-  protected
+  public
     function CanParse: Boolean; override;
     function Evaluate: TASTNode; override;
   end;
   
   TFieldSectionRule = class(TRule)
-  protected
+  public
     function CanParse: Boolean; override;
     function Evaluate: TASTNode; override;
   end;
   
   TFileTypeRule = class(TRule)
-  protected
+  public
     function CanParse: Boolean; override;
     function Evaluate: TASTNode; override;
   end;
   
   TForStatementRule = class(TRule)
-  protected
+  public
     function CanParse: Boolean; override;
     function Evaluate: TASTNode; override;
   end;
   
   TGoalRule = class(TRule)
-  protected
+  public
     function CanParse: Boolean; override;
     function Evaluate: TASTNode; override;
   end;
   
   TGotoStatementRule = class(TRule)
-  protected
+  public
     function CanParse: Boolean; override;
     function Evaluate: TASTNode; override;
   end;
   
   TIdentRule = class(TRule)
-  protected
+  public
     function CanParse: Boolean; override;
     function Evaluate: TASTNode; override;
   end;
   
   TIdentListRule = class(TRule)
-  protected
+  public
     function CanParse: Boolean; override;
     function Evaluate: TASTNode; override;
   end;
   
   TIfStatementRule = class(TRule)
-  protected
+  public
     function CanParse: Boolean; override;
     function Evaluate: TASTNode; override;
   end;
   
   TImplementationDeclRule = class(TRule)
-  protected
+  public
     function CanParse: Boolean; override;
     function Evaluate: TASTNode; override;
   end;
   
   TImplementationSectionRule = class(TRule)
-  protected
+  public
     function CanParse: Boolean; override;
     function Evaluate: TASTNode; override;
   end;
   
   TInitSectionRule = class(TRule)
-  protected
+  public
     function CanParse: Boolean; override;
     function Evaluate: TASTNode; override;
   end;
   
   TInterfaceDeclRule = class(TRule)
-  protected
+  public
     function CanParse: Boolean; override;
     function Evaluate: TASTNode; override;
   end;
   
   TInterfaceSectionRule = class(TRule)
-  protected
+  public
     function CanParse: Boolean; override;
     function Evaluate: TASTNode; override;
   end;
   
   TInterfaceTypeRule = class(TRule)
-  protected
+  public
     function CanParse: Boolean; override;
     function Evaluate: TASTNode; override;
   end;
   
   TLabelDeclSectionRule = class(TRule)
-  protected
+  public
     function CanParse: Boolean; override;
     function Evaluate: TASTNode; override;
   end;
   
   TLabelIdRule = class(TRule)
-  protected
+  public
     function CanParse: Boolean; override;
     function Evaluate: TASTNode; override;
   end;
   
   TMethodHeadingRule = class(TRule)
-  protected
+  public
     function CanParse: Boolean; override;
     function Evaluate: TASTNode; override;
   end;
   
   TMethodImplementationRule = class(TRule)
-  protected
+  public
     function CanParse: Boolean; override;
     function Evaluate: TASTNode; override;
   end;
   
   TMethodOrPropertyRule = class(TRule)
-  protected
+  public
     function CanParse: Boolean; override;
     function Evaluate: TASTNode; override;
   end;
   
   TMethodReturnTypeRule = class(TRule)
-  protected
+  public
     function CanParse: Boolean; override;
     function Evaluate: TASTNode; override;
   end;
   
   TOpenArrayRule = class(TRule)
-  protected
+  public
     function CanParse: Boolean; override;
     function Evaluate: TASTNode; override;
   end;
   
   TPackageRule = class(TRule)
-  protected
+  public
     function CanParse: Boolean; override;
     function Evaluate: TASTNode; override;
   end;
   
   TPackedTypeRule = class(TRule)
-  protected
+  public
     function CanParse: Boolean; override;
     function Evaluate: TASTNode; override;
   end;
   
   TParameterRule = class(TRule)
-  protected
+  public
     function CanParse: Boolean; override;
     function Evaluate: TASTNode; override;
   end;
   
   TParameterExpressionRule = class(TRule)
-  protected
+  public
     function CanParse: Boolean; override;
     function Evaluate: TASTNode; override;
   end;
   
   TParameterTypeRule = class(TRule)
-  protected
+  public
     function CanParse: Boolean; override;
     function Evaluate: TASTNode; override;
   end;
   
   TParenthesizedExpressionRule = class(TRule)
-  protected
+  public
     function CanParse: Boolean; override;
     function Evaluate: TASTNode; override;
   end;
   
   TParticleRule = class(TRule)
-  protected
+  public
     function CanParse: Boolean; override;
     function Evaluate: TASTNode; override;
   end;
   
   TPointerTypeRule = class(TRule)
-  protected
+  public
     function CanParse: Boolean; override;
     function Evaluate: TASTNode; override;
   end;
   
   TProcedureTypeRule = class(TRule)
-  protected
+  public
     function CanParse: Boolean; override;
     function Evaluate: TASTNode; override;
   end;
   
   TProgramRule = class(TRule)
-  protected
+  public
     function CanParse: Boolean; override;
     function Evaluate: TASTNode; override;
   end;
   
   TPropertyRule = class(TRule)
-  protected
+  public
     function CanParse: Boolean; override;
     function Evaluate: TASTNode; override;
   end;
   
   TPropertyDirectiveRule = class(TRule)
-  protected
+  public
     function CanParse: Boolean; override;
     function Evaluate: TASTNode; override;
   end;
   
   TQualifiedIdentRule = class(TRule)
-  protected
+  public
     function CanParse: Boolean; override;
     function Evaluate: TASTNode; override;
   end;
   
   TRaiseStatementRule = class(TRule)
-  protected
+  public
     function CanParse: Boolean; override;
     function Evaluate: TASTNode; override;
   end;
   
   TRecordFieldConstantRule = class(TRule)
-  protected
+  public
     function CanParse: Boolean; override;
     function Evaluate: TASTNode; override;
   end;
   
   TRecordHelperTypeRule = class(TRule)
-  protected
+  public
     function CanParse: Boolean; override;
     function Evaluate: TASTNode; override;
   end;
   
   TRecordTypeRule = class(TRule)
-  protected
+  public
     function CanParse: Boolean; override;
     function Evaluate: TASTNode; override;
   end;
   
   TRepeatStatementRule = class(TRule)
-  protected
+  public
     function CanParse: Boolean; override;
     function Evaluate: TASTNode; override;
   end;
   
   TRequiresClauseRule = class(TRule)
-  protected
+  public
     function CanParse: Boolean; override;
     function Evaluate: TASTNode; override;
   end;
   
   TSetLiteralRule = class(TRule)
-  protected
+  public
     function CanParse: Boolean; override;
     function Evaluate: TASTNode; override;
   end;
   
   TSetTypeRule = class(TRule)
-  protected
+  public
     function CanParse: Boolean; override;
     function Evaluate: TASTNode; override;
   end;
   
   TSimpleExpressionRule = class(TRule)
-  protected
+  public
     function CanParse: Boolean; override;
     function Evaluate: TASTNode; override;
   end;
   
   TSimpleStatementRule = class(TRule)
-  protected
+  public
     function CanParse: Boolean; override;
     function Evaluate: TASTNode; override;
   end;
   
   TStatementRule = class(TRule)
-  protected
+  public
     function CanParse: Boolean; override;
     function Evaluate: TASTNode; override;
   end;
   
   TStatementListRule = class(TRule)
-  protected
+  public
     function CanParse: Boolean; override;
     function Evaluate: TASTNode; override;
   end;
   
   TStringTypeRule = class(TRule)
-  protected
+  public
     function CanParse: Boolean; override;
     function Evaluate: TASTNode; override;
   end;
   
   TTermRule = class(TRule)
-  protected
+  public
     function CanParse: Boolean; override;
     function Evaluate: TASTNode; override;
   end;
   
   TTryStatementRule = class(TRule)
-  protected
+  public
     function CanParse: Boolean; override;
     function Evaluate: TASTNode; override;
   end;
   
   TTypeRule = class(TRule)
-  protected
+  public
     function CanParse: Boolean; override;
     function Evaluate: TASTNode; override;
   end;
   
   TTypedConstantRule = class(TRule)
-  protected
+  public
     function CanParse: Boolean; override;
     function Evaluate: TASTNode; override;
   end;
   
   TTypeDeclRule = class(TRule)
-  protected
+  public
     function CanParse: Boolean; override;
     function Evaluate: TASTNode; override;
   end;
   
   TTypeSectionRule = class(TRule)
-  protected
+  public
     function CanParse: Boolean; override;
     function Evaluate: TASTNode; override;
   end;
   
   TUnitRule = class(TRule)
-  protected
+  public
     function CanParse: Boolean; override;
     function Evaluate: TASTNode; override;
   end;
   
   TUsedUnitRule = class(TRule)
-  protected
+  public
     function CanParse: Boolean; override;
     function Evaluate: TASTNode; override;
   end;
   
   TUsesClauseRule = class(TRule)
-  protected
+  public
     function CanParse: Boolean; override;
     function Evaluate: TASTNode; override;
   end;
   
   TVarDeclRule = class(TRule)
-  protected
+  public
     function CanParse: Boolean; override;
     function Evaluate: TASTNode; override;
   end;
   
   TVariantGroupRule = class(TRule)
-  protected
+  public
     function CanParse: Boolean; override;
     function Evaluate: TASTNode; override;
   end;
   
   TVariantSectionRule = class(TRule)
-  protected
+  public
     function CanParse: Boolean; override;
     function Evaluate: TASTNode; override;
   end;
   
   TVarSectionRule = class(TRule)
-  protected
+  public
     function CanParse: Boolean; override;
     function Evaluate: TASTNode; override;
   end;
   
   TVisibilityRule = class(TRule)
-  protected
+  public
     function CanParse: Boolean; override;
     function Evaluate: TASTNode; override;
   end;
   
   TVisibilitySectionRule = class(TRule)
-  protected
+  public
     function CanParse: Boolean; override;
     function Evaluate: TASTNode; override;
   end;
   
   TVisibilitySectionContentRule = class(TRule)
-  protected
+  public
     function CanParse: Boolean; override;
     function Evaluate: TASTNode; override;
   end;
   
   TWhileStatementRule = class(TRule)
-  protected
+  public
     function CanParse: Boolean; override;
     function Evaluate: TASTNode; override;
   end;
   
   TWithStatementRule = class(TRule)
-  protected
+  public
     function CanParse: Boolean; override;
     function Evaluate: TASTNode; override;
   end;
