@@ -48,6 +48,7 @@ contains
   UGeneratedNodes in 'UGeneratedNodes.pas',
   UListNode in 'UListNode.pas',
   UFrame in 'UFrame.pas',
-  UParseException in 'UParseException.pas';
+  UParseException in 'UParseException.pas',
+  UInvalidOperationException in 'UInvalidOperationException.pas';
 
 end.

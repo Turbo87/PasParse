@@ -37,6 +37,7 @@
     <DCCReference Include="UDictionary.pas" />
     <DCCReference Include="UFrame.pas" />
     <DCCReference Include="UGeneratedNodes.pas" />
+    <DCCReference Include="UInvalidOperationException.pas" />
     <DCCReference Include="ULexException.pas" />
     <DCCReference Include="ULexScanner.pas" />
     <DCCReference Include="UListNode.pas" />
