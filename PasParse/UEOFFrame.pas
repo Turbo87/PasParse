@@ -3,10 +3,10 @@ unit UEOFFrame;
 interface
 
 uses
-  UFrame, ULocation, UTokenType, UTokenSet, UToken;
+  UIFrame, ULocation, UTokenType, UTokenSet, UToken;
 
 type
-  TEOFFrame = class(TFrame)
+  TEOFFrame = class(IFrame)
   private
     FLocation: TLocation;
 
@@ -65,7 +65,7 @@ begin
   Result := FLocation;
 end;
 
-function TEOFFrame.GetNext: TFrame;
+function TEOFFrame.GetNext: IFrame;
 begin
   raise EParseException.Create('Expected token but found end of file', Location);
 end;
@@ -81,7 +81,7 @@ begin
     ' but found end of file', Location);
 end;
 
-procedure TEOFFrame.SetNext(const Value: TFrame);
+procedure TEOFFrame.SetNext(const Value: IFrame);
 begin
   raise EInvalidOperationException.Create('Cannot set Next on NullFrame');
 end;

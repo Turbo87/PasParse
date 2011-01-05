@@ -1,4 +1,4 @@
-unit UFrame;
+unit UIFrame;
 
 interface
 
@@ -6,20 +6,20 @@ uses
   ULocation, UTokenType, UTokenSet, UToken;
 
 type
-  TFrame = class
+  IFrame = class
   protected
     function GetDisplayName: string; virtual; abstract;
     function GetIsEOF: Boolean; virtual; abstract;
     function GetLocation: TLocation; virtual; abstract;
-    function GetNext: TFrame; virtual; abstract;
-    procedure SetNext(const Value: TFrame); virtual; abstract;
+    function GetNext: IFrame; virtual; abstract;
+    procedure SetNext(const Value: IFrame); virtual; abstract;
     function GetTokenType: TTokenType; virtual; abstract;
 
   public
     property DisplayName: string read GetDisplayName;
     property IsEOF: Boolean read GetIsEOF;
     property Location: TLocation read GetLocation;
-    property Next: TFrame read GetNext write SetNext;
+    property Next: IFrame read GetNext write SetNext;
     property TokenType: TTokenType read GetTokenType;
 
     function CanParseToken(ATokenSet: TTokenSet): Boolean; virtual; abstract;
