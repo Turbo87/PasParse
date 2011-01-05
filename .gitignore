@@ -39,3 +39,4 @@ results.txt
 *.drc
 *.map
 *.lnk
+*MemoryManager_EventLog.txt
