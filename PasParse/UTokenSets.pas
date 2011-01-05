@@ -9,7 +9,7 @@ type
   TTokenSets = class
   protected
     class procedure Prepare;
-    class procedure Destroy;
+    class procedure CleanUp; 
     
   public
     class var TSAddOp: TTokenSet;
@@ -50,7 +50,7 @@ implementation
 
 { TTokenSets }
 
-class procedure TTokenSets.Destroy;
+class procedure TTokenSets.CleanUp;
 begin
   TSAddOp.Free;
   TSBlock.Free;
@@ -396,6 +396,6 @@ initialization
   TTokenSets.Prepare;
 
 finalization
-  TTokenSets.Destroy;
+  TTokenSets.CleanUp;
 
 end.
