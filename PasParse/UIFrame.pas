@@ -3,7 +3,7 @@ unit UIFrame;
 interface
 
 uses
-  ULocation, UTokenType, UTokenSet, UToken;
+  ULocation, UTokenType, UITokenSet, UToken;
 
 type
   IFrame = class
@@ -22,8 +22,8 @@ type
     property Next: IFrame read GetNext write SetNext;
     property TokenType: TTokenType read GetTokenType;
 
-    function CanParseToken(ATokenSet: TTokenSet): Boolean; virtual; abstract;
-    function ParseToken(ATokenSet: TTokenSet): TToken; virtual; abstract;
+    function CanParseToken(ATokenSet: ITokenSet): Boolean; virtual; abstract;
+    function ParseToken(ATokenSet: ITokenSet): TToken; virtual; abstract;
   end;
 
 implementation

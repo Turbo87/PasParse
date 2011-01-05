@@ -3,7 +3,7 @@ unit UEOFFrame;
 interface
 
 uses
-  UIFrame, ULocation, UTokenType, UTokenSet, UToken;
+  UIFrame, ULocation, UTokenType, UITokenSet, UToken;
 
 type
   TEOFFrame = class(IFrame)
@@ -22,8 +22,8 @@ type
     constructor Create(ALocation: TLocation);
     destructor Destroy; override;
 
-    function CanParseToken(ATokenSet: TTokenSet): Boolean; override;
-    function ParseToken(ATokenSet: TTokenSet): TToken; override;
+    function CanParseToken(ATokenSet: ITokenSet): Boolean; override;
+    function ParseToken(ATokenSet: ITokenSet): TToken; override;
   end;
 
 implementation
@@ -33,7 +33,7 @@ uses
 
 { TEOFFrame }
 
-function TEOFFrame.CanParseToken(ATokenSet: TTokenSet): Boolean;
+function TEOFFrame.CanParseToken(ATokenSet: ITokenSet): Boolean;
 begin
   Result := False;
 end;
@@ -75,7 +75,7 @@ begin
   Result := TTEndOfFile;
 end;
 
-function TEOFFrame.ParseToken(ATokenSet: TTokenSet): TToken;
+function TEOFFrame.ParseToken(ATokenSet: ITokenSet): TToken;
 begin
   raise EParseException.Create('Expected ' + ATokenSet.Name +
     ' but found end of file', Location);

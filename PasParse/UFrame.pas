@@ -3,7 +3,7 @@ unit UFrame;
 interface
 
 uses
-  ULocation, UTokenType, UTokenSet, UToken, UIFrame;
+  ULocation, UTokenType, UITokenSet, UToken, UIFrame;
 
 type
   TFrame = class(IFrame)
@@ -22,8 +22,8 @@ type
   public
     constructor Create(AToken: TToken);
     
-    function CanParseToken(ATokenSet: TTokenSet): Boolean; override;
-    function ParseToken(ATokenSet: TTokenSet): TToken; override;
+    function CanParseToken(ATokenSet: ITokenSet): Boolean; override;
+    function ParseToken(ATokenSet: ITokenSet): TToken; override;
 
     property Token: TToken read FToken;
   end;
@@ -35,7 +35,7 @@ uses
 
 { TFrame }
 
-function TFrame.CanParseToken(ATokenSet: TTokenSet): Boolean;
+function TFrame.CanParseToken(ATokenSet: ITokenSet): Boolean;
 begin
   ATokenSet.Contains(FToken.TokenType);
 end;
@@ -74,7 +74,7 @@ begin
   Result := FToken.TokenType;
 end;
 
-function TFrame.ParseToken(ATokenSet: TTokenSet): TToken;
+function TFrame.ParseToken(ATokenSet: ITokenSet): TToken;
 begin
   if CanParseToken(ATokenSet) then
     Result := FToken
