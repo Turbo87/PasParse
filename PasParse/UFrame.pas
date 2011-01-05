@@ -12,13 +12,14 @@ type
     function GetIsEOF: Boolean; virtual; abstract;
     function GetLocation: TLocation; virtual; abstract;
     function GetNext: TFrame; virtual; abstract;
+    procedure SetNext(const Value: TFrame); virtual; abstract;
     function GetTokenType: TTokenType; virtual; abstract;
 
   public
     property DisplayName: string read GetDisplayName;
     property IsEOF: Boolean read GetIsEOF;
     property Location: TLocation read GetLocation;
-    property Next: TFrame read GetNext;
+    property Next: TFrame read GetNext write SetNext;
     property TokenType: TTokenType read GetTokenType;
 
     function CanParseToken(ATokenSet: TTokenSet): Boolean; virtual; abstract;
