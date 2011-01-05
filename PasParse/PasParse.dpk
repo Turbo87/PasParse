@@ -53,6 +53,7 @@ contains
   UInvalidOperationException in 'UInvalidOperationException.pas',
   UFrame in 'UFrame.pas',
   UITokenSet in 'UITokenSet.pas',
-  USingleTokenTokenSet in 'USingleTokenTokenSet.pas';
+  USingleTokenTokenSet in 'USingleTokenTokenSet.pas',
+  UIParser in 'UIParser.pas';
 
 end.

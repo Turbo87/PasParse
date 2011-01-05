@@ -4,7 +4,7 @@ interface
 
 uses
   UCompilerDefines, UToken, UIFrame, UITokenSet, UTokenType, UListNode,
-  UParseException, Contnrs;
+  UParseException, UIParser, Contnrs;
 
 type
   TFileLoader = class
@@ -14,24 +14,24 @@ type
 
   end;
 
-  TParser = class
-  private
+  TParser = class(IParser)
+  protected
     FNextFrame: IFrame;
     FRules: array of TRule;
 
     class function FrameFromTokens(ATokens: TObjectList): IFrame;
     function GetIsEOF: Boolean;
 
-    function ParseToken(ATokenType: TTokenType): TToken; overload;
-    function ParseTokenList(ATokenSet: ITokenSet): TListNode;
-    function TryParseToken(ATokenType: TTokenType): TToken;
-    function CanParseToken(ATokenType: TTokenType): Boolean; overload;
+    function ParseToken(ATokenType: TTokenType): TToken; overload; override;
+    function ParseTokenList(ATokenSet: ITokenSet): TListNode; override;
+    function TryParseToken(ATokenType: TTokenType): TToken; override;
+    function CanParseToken(ATokenType: TTokenType): Boolean; overload; override;
 
-    function Peek(AOffset: Integer): TTokenType;
+    function Peek(AOffset: Integer): TTokenType; override;
 
-    function CreateEmptyListNode: TListNode;
+    function CreateEmptyListNode: TListNode; override;
 
-    procedure MoveNext;
+    procedure MoveNext; override;
 
   public
     constructor CreateFromText(AText, AFileName: string;
@@ -42,10 +42,10 @@ type
 
     property IsEOF: Boolean read GetIsEOF;
 
-    function ParseToken(ATokenSet: ITokenSet): TToken; overload;
-    function CanParseToken(ATokenSet: ITokenSet): Boolean; overload;
+    function ParseToken(ATokenSet: ITokenSet): TToken; overload; override;
+    function CanParseToken(ATokenSet: ITokenSet): Boolean; overload; override;
 
-    function Failure(AExpected: string): EParseException;
+    function Failure(AExpected: string): EParseException; override;
   end;
 
 implementation
