@@ -24,8 +24,6 @@ type
     procedure AddTokenRule(ARuleType: TRuleType; ATokenSet: ITokenSet);
     procedure AddRule(ARuleType: TRuleType; ARuleClass: TRuleClass);
 
-    function ParseRuleInternal(ARuleType: TRuleType): TASTNode;
-
   protected
     function ParseTokenList(ATokenSet: ITokenSet): TListNode; override;
     function TryParseToken(ATokenType: TTokenType): TToken; override;
@@ -49,6 +47,7 @@ type
     function CanParseToken(ATokenType: TTokenType): Boolean; overload; override;
     function ParseRule(ARuleType: TRuleType): TASTNode;
     function CanParseRule(ARuleType: TRuleType): Boolean;
+    function ParseRuleInternal(ARuleType: TRuleType): TASTNode; override;
 
     function CreateEmptyListNode: TListNode; override;
 

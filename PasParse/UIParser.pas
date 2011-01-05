@@ -3,7 +3,8 @@ unit UIParser;
 interface
 
 uses
-  UToken, UITokenSet, UTokenType, UListNode, UParseException;
+  UToken, UITokenSet, UTokenType, UListNode, UParseException,
+  URuleType, UASTNode;
 
 type
   IParser = class
@@ -20,6 +21,7 @@ type
     function ParseToken(ATokenType: TTokenType): TToken; overload; virtual; abstract;
     function CanParseToken(ATokenSet: ITokenSet): Boolean; overload; virtual; abstract;
     function CanParseToken(ATokenType: TTokenType): Boolean; overload; virtual; abstract;
+    function ParseRuleInternal(ARuleType: TRuleType): TASTNode; virtual; abstract;
 
     function CreateEmptyListNode: TListNode; virtual; abstract;
 
