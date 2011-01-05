@@ -7,7 +7,7 @@ uses
 
 type
   TFrame = class
-  private
+  protected
     function GetDisplayName: string; virtual; abstract;
     function GetIsEOF: Boolean; virtual; abstract;
     function GetLocation: TLocation; virtual; abstract;
