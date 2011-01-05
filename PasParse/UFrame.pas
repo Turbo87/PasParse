@@ -37,7 +37,7 @@ uses
 
 function TFrame.CanParseToken(ATokenSet: ITokenSet): Boolean;
 begin
-  ATokenSet.Contains(FToken.TokenType);
+  Result := ATokenSet.Contains(FToken.TokenType);
 end;
 
 constructor TFrame.Create(AToken: TToken);
