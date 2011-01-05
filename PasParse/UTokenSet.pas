@@ -22,6 +22,8 @@ type
     procedure AddRange(ATokenSet: TTokenSet);
     /// Checks whether the set contains the given token type
     function Contains(ATokenType: TTokenType): Boolean;
+
+    property Name: string read FName;
   end;
 
 implementation
