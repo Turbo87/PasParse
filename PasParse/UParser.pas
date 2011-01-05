@@ -27,14 +27,10 @@ type
     function ParseRuleInternal(ARuleType: TRuleType): TASTNode;
 
   protected
-    function ParseToken(ATokenType: TTokenType): TToken; overload; override;
     function ParseTokenList(ATokenSet: ITokenSet): TListNode; override;
     function TryParseToken(ATokenType: TTokenType): TToken; override;
-    function CanParseToken(ATokenType: TTokenType): Boolean; overload; override;
 
     function Peek(AOffset: Integer): TTokenType; override;
-
-    function CreateEmptyListNode: TListNode; override;
 
     procedure MoveNext; override;
 
@@ -48,9 +44,13 @@ type
     property IsEOF: Boolean read GetIsEOF;
 
     function ParseToken(ATokenSet: ITokenSet): TToken; overload; override;
+    function ParseToken(ATokenType: TTokenType): TToken; overload; override;
     function CanParseToken(ATokenSet: ITokenSet): Boolean; overload; override;
+    function CanParseToken(ATokenType: TTokenType): Boolean; overload; override;
     function ParseRule(ARuleType: TRuleType): TASTNode;
     function CanParseRule(ARuleType: TRuleType): Boolean;
+
+    function CreateEmptyListNode: TListNode; override;
 
     function Failure(AExpected: string): EParseException; override;
   end;
