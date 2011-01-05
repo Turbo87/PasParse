@@ -44,8 +44,8 @@ contains
   URuleDelegate in 'URuleDelegate.pas',
   UASTNode in 'UASTNode.pas',
   UNonTerminalNode in 'UNonTerminalNode.pas',
-  UBinaryOperationNode in 'UBinaryOperationNode.pas',
   UDelimitedItemNode in 'UDelimitedItemNode.pas',
+  UGeneratedNodes in 'UGeneratedNodes.pas',
   UListNode in 'UListNode.pas';
 
 end.

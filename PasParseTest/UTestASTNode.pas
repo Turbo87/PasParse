@@ -24,7 +24,7 @@ type
 implementation
 
 uses
-  UASTNode, ULocation, UBinaryOperationNode;
+  UASTNode, ULocation, UGeneratedNodes;
 
 { TTestASTNode }
 
