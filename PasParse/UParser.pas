@@ -205,10 +205,13 @@ constructor TParser.CreateFromText(AText, AFileName: string;
   ACompilerDefines: TCompilerDefines; AFileLoader: TFileLoader);
 var
   ALexScanner: TLexScanner;
+  ATokens: TObjectList;
 begin
   ALexScanner := TLexScanner.Create(AText, AFileName);
+  ATokens := ALexScanner.Tokens;
   // TODO TokenFilter
-  CreateFromTokens(ALexScanner.Tokens);
+  CreateFromTokens(ATokens);
+  ATokens.Free;
   ALexScanner.Free;
 end;
 
