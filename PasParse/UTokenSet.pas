@@ -3,11 +3,11 @@ unit UTokenSet;
 interface
 
 uses
-  UTokenType;
+  UTokenType, UITokenSet;
 
 type
   /// A named set of token types
-  TTokenSet = class
+  TTokenSet = class(ITokenSet)
   private
     FTokenSet: set of TTokenType;
     FName: string;
@@ -21,9 +21,9 @@ type
     /// Add a range of token types to the set
     procedure AddRange(ATokenSet: TTokenSet);
     /// Checks whether the set contains the given token type
-    function Contains(ATokenType: TTokenType): Boolean;
+    function Contains(ATokenType: TTokenType): Boolean; override;
 
-    property Name: string read FName;
+    function GetName: string; override;
   end;
 
 implementation
@@ -59,6 +59,11 @@ constructor TTokenSet.Create(AName: string);
 begin
   FName := AName;
   FTokenSet := [];
+end;
+
+function TTokenSet.GetName: string;
+begin
+  Result := FName;
 end;
 
 end.
