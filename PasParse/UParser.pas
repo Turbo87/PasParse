@@ -45,6 +45,7 @@ type
     function ParseToken(ATokenType: TTokenType): TToken; overload; override;
     function CanParseToken(ATokenSet: ITokenSet): Boolean; overload; override;
     function CanParseToken(ATokenType: TTokenType): Boolean; overload; override;
+    function ParseDelimitedList(AItemRule: TRuleType; ADelimiterType: TTokenType): TListNode; override;
     function ParseRule(ARuleType: TRuleType): TASTNode;
     function CanParseRule(ARuleType: TRuleType): Boolean;
     function ParseRuleInternal(ARuleType: TRuleType): TASTNode; override;
@@ -58,7 +59,7 @@ implementation
 
 uses
   ULexScanner, UEOFFrame, ULocation, UFrame, USingleTokenTokenSet, UTokenRule,
-  UTokenSets, URules;
+  UTokenSets, URules, UDelimitedItemNode;
 
 { TParser }
 
@@ -271,6 +272,27 @@ begin
   ASingleTokenTokenSet := TSingleTokenTokenSet.Create(ATokenType);
   Result := ParseToken(ASingleTokenTokenSet);
   ASingleTokenTokenSet.Free;
+end;
+
+function TParser.ParseDelimitedList(AItemRule: TRuleType;
+  ADelimiterType: TTokenType): TListNode;
+var
+  AItems: TObjectList;
+  AItem: TASTNode;
+  ADelimiter: TToken;
+begin
+  AItems := TObjectList.Create(False);
+
+  repeat
+    AItem := ParseRuleInternal(AItemRule);
+    ADelimiter := nil;
+    if CanParseToken(ADelimiterType) then
+      ADelimiter := ParseToken(ADelimiterType);
+      
+    AItems.Add(TDelimitedItemNode.Create(AItem, ADelimiter));
+  until (not CanParseRule(AItemRule));
+
+  Result := TListNode.Create(AItems);
 end;
 
 function TParser.ParseRule(ARuleType: TRuleType): TASTNode;
