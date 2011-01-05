@@ -24,7 +24,7 @@ implementation
 
 function TTokenRule.CanParse: Boolean;
 begin
-  FParser.CanParseToken(FTokenSet);
+  Result := FParser.CanParseToken(FTokenSet);
 end;
 
 constructor TTokenRule.Create(AParser: IParser; ARuleType: TRuleType;
@@ -36,7 +36,7 @@ end;
 
 function TTokenRule.Evaluate: TASTNode;
 begin
-  FParser.ParseToken(FTokenSet);
+  Result := FParser.ParseToken(FTokenSet);
 end;
 
 end.
