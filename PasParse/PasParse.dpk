@@ -54,6 +54,7 @@ contains
   UFrame in 'UFrame.pas',
   UITokenSet in 'UITokenSet.pas',
   USingleTokenTokenSet in 'USingleTokenTokenSet.pas',
+  URule in 'URule.pas',
   UIParser in 'UIParser.pas';
 
 end.

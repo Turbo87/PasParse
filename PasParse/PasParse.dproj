@@ -50,6 +50,7 @@
     <DCCReference Include="UParseException.pas" />
     <DCCReference Include="UParser.pas" />
     <DCCReference Include="UPreprocessorException.pas" />
+    <DCCReference Include="URule.pas" />
     <DCCReference Include="URuleType.pas" />
     <DCCReference Include="USingleTokenTokenSet.pas" />
     <DCCReference Include="UToken.pas" />
