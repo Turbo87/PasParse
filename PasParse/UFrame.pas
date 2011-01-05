@@ -1,0 +1,91 @@
+unit UFrame;
+
+interface
+
+uses
+  ULocation, UTokenType, UTokenSet, UToken, UIFrame;
+
+type
+  TFrame = class(IFrame)
+  private
+    FToken: TToken;
+    FNext: IFrame;
+    
+  protected
+    function GetDisplayName: string; override;
+    function GetIsEOF: Boolean; override;
+    function GetLocation: TLocation; override;
+    function GetNext: IFrame; override;
+    procedure SetNext(const Value: IFrame); override;
+    function GetTokenType: TTokenType; override;
+
+  public
+    constructor Create(AToken: TToken);
+    
+    function CanParseToken(ATokenSet: TTokenSet): Boolean; override;
+    function ParseToken(ATokenSet: TTokenSet): TToken; override;
+
+    property Token: TToken read FToken;
+  end;
+
+implementation
+
+uses
+  TypInfo, UEOFFrame, UParseException;
+
+{ TFrame }
+
+function TFrame.CanParseToken(ATokenSet: TTokenSet): Boolean;
+begin
+  ATokenSet.Contains(FToken.TokenType);
+end;
+
+constructor TFrame.Create(AToken: TToken);
+begin
+  FNext := nil;
+  FToken := AToken;
+end;
+
+function TFrame.GetDisplayName: string;
+begin
+  Result := Copy(GetEnumName(TypeInfo(TTokenType), Integer(FToken.TokenType)), 3);
+end;
+
+function TFrame.GetIsEOF: Boolean;
+begin
+  Result := False;
+end;
+
+function TFrame.GetLocation: TLocation;
+begin
+  Result := FToken.Location;
+end;
+
+function TFrame.GetNext: IFrame;
+begin
+  if FNext = nil then
+    Result := TEOFFrame.Create(FToken.EndLocation)
+  else
+    Result := FNext;
+end;
+
+function TFrame.GetTokenType: TTokenType;
+begin
+  Result := FToken.TokenType;
+end;
+
+function TFrame.ParseToken(ATokenSet: TTokenSet): TToken;
+begin
+  if CanParseToken(ATokenSet) then
+    Result := FToken
+  else
+    raise EParseException.Create('Expected ' + ATokenSet.Name + ' but found ' +
+      DisplayName, Location);
+end;
+
+procedure TFrame.SetNext(const Value: IFrame);
+begin
+  FNext := Value;
+end;
+
+end.

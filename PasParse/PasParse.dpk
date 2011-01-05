@@ -50,6 +50,7 @@ contains
   UIFrame in 'UIFrame.pas',
   UEOFFrame in 'UEOFFrame.pas',
   UParseException in 'UParseException.pas',
-  UInvalidOperationException in 'UInvalidOperationException.pas';
+  UInvalidOperationException in 'UInvalidOperationException.pas',
+  UFrame in 'UFrame.pas';
 
 end.
