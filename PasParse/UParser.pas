@@ -218,7 +218,12 @@ begin
 end;
 
 destructor TParser.Destroy;
+var
+  I: Integer;
 begin
+  for I := 0 to High(FRules) do
+    FRules[I].Free;
+
   SetLength(FRules, 0);
   inherited;
 end;
