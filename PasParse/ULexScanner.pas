@@ -3,7 +3,7 @@ unit ULexScanner;
 interface
 
 uses
-  ULocation, UTokenType, UToken, UTokenSet, UDictionary;
+  ULocation, UTokenType, UToken, UTokenSet, UDictionary, Contnrs;
 
 type
   TLexScanner = class(TObject)
@@ -91,6 +91,10 @@ type
     ///  The caller is responsible for freeing the resulting TLocation instance
     function GetLocation: TLocation;
 
+    /// Returns a list with all found tokens
+    ///  The caller is responsible for destruction of the list and its items!
+    function GetTokens: TObjectList;
+
   public
     /// Standard constructor
     constructor Create(ASource, AFileName: string);
@@ -104,6 +108,10 @@ type
     ///  The caller needs to make sure that the created
     ///  TToken instance is freed again
     function NextToken: TToken;
+
+    /// Returns a list with all found tokens
+    ///  The caller is responsible for destruction of the list and its items!
+    property Tokens: TObjectList read GetTokens;
   end;
 
 implementation
@@ -277,6 +285,27 @@ end;
 function TLexScanner.GetLocation: TLocation;
 begin
   Result := TLocation.Create(FFileName, FSource, FIndex);
+end;
+
+function TLexScanner.GetTokens: TObjectList;
+var
+  ATokens: TObjectList;
+  AToken: TToken;
+begin
+  // Create TToken list that does not kill it's children on destruction
+  ATokens := TObjectList.Create(False);
+
+  // Iterate through tokens and add them to the list
+  repeat
+    AToken := NextToken;
+    // If last token reached, jump out of the loop
+    if AToken = nil then
+      Break;
+
+    ATokens.Add(AToken);
+  until False;
+
+  Result := ATokens;
 end;
 
 function TLexScanner.HexNumber: TLexScanner.TMatch;
