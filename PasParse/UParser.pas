@@ -4,24 +4,29 @@ interface
 
 uses
   UCompilerDefines, UToken, UIFrame, UITokenSet, UTokenType, UListNode,
-  UParseException, UIParser, Contnrs;
+  UParseException, UIParser, URule, URuleType, UASTNode, Contnrs;
 
 type
   TFileLoader = class
 
   end;
-  TRule = class
 
-  end;
+  TRuleClass = class of TRule;
 
   TParser = class(IParser)
-  protected
+  private
     FNextFrame: IFrame;
     FRules: array of TRule;
 
     class function FrameFromTokens(ATokens: TObjectList): IFrame;
     function GetIsEOF: Boolean;
 
+    procedure AddTokenRule(ARuleType: TRuleType; ATokenSet: ITokenSet);
+    procedure AddRule(ARuleType: TRuleType; ARuleClass: TRuleClass);
+
+    function ParseRuleInternal(ARuleType: TRuleType): TASTNode;
+
+  protected
     function ParseToken(ATokenType: TTokenType): TToken; overload; override;
     function ParseTokenList(ATokenSet: ITokenSet): TListNode; override;
     function TryParseToken(ATokenType: TTokenType): TToken; override;
@@ -44,6 +49,7 @@ type
 
     function ParseToken(ATokenSet: ITokenSet): TToken; overload; override;
     function CanParseToken(ATokenSet: ITokenSet): Boolean; overload; override;
+    function ParseRule(ARuleType: TRuleType): TASTNode;
 
     function Failure(AExpected: string): EParseException; override;
   end;
@@ -51,13 +57,24 @@ type
 implementation
 
 uses
-  ULexScanner, URuleType, UEOFFrame, ULocation, UFrame, USingleTokenTokenSet;
+  ULexScanner, UEOFFrame, ULocation, UFrame, USingleTokenTokenSet, UTokenRule,
+  UTokenSets, URules;
 
 { TParser }
 
 function TParser.CanParseToken(ATokenType: TTokenType): Boolean;
 begin
   Result := (Peek(0) = ATokenType);
+end;
+
+procedure TParser.AddRule(ARuleType: TRuleType; ARuleClass: TRuleClass);
+begin
+  FRules[Integer(ARuleType)] := ARuleClass.Create(Self, ARuleType);
+end;
+
+procedure TParser.AddTokenRule(ARuleType: TRuleType; ATokenSet: ITokenSet);
+begin
+  FRules[Integer(ARuleType)] := TTokenRule.Create(Self, ARuleType, ATokenSet);
 end;
 
 function TParser.CanParseToken(ATokenSet: ITokenSet): Boolean;
@@ -75,7 +92,107 @@ begin
   inherited Create;
   FNextFrame := AFrame;
   SetLength(FRules, Integer(High(TRuleType)) + 1);
-  // TODO AddRule calls
+
+  AddRule(RTArrayType, TArrayTypeRule);
+  AddRule(RTAssemblerStatement, TAssemblerStatementRule);
+  AddRule(RTAssemblyAttribute, TAssemblyAttributeRule);
+  AddRule(RTAtom, TAtomRule);
+  AddRule(RTBareInherited, TBareInheritedRule);
+  AddRule(RTBlock, TBlockRule);
+  AddRule(RTCaseSelector, TCaseSelectorRule);
+  AddRule(RTCaseStatement, TCaseStatementRule);
+  AddRule(RTClassHelperType, TClassHelperTypeRule);
+  AddRule(RTClassOfType, TClassOfTypeRule);
+  AddRule(RTClassType, TClassTypeRule);
+  AddRule(RTConstantDecl, TConstantDeclRule);
+  AddRule(RTConstSection, TConstSectionRule);
+  AddRule(RTDirective, TDirectiveRule);
+  AddRule(RTEnumeratedType, TEnumeratedTypeRule);
+  AddRule(RTEnumeratedTypeElement, TEnumeratedTypeElementRule);
+  AddRule(RTExceptionItem, TExceptionItemRule);
+  AddRule(RTExportsItem, TExportsItemRule);
+  AddRule(RTExportsSpecifier, TExportsSpecifierRule);
+  AddRule(RTExportsStatement, TExportsStatementRule);
+  AddRule(RTExpression, TExpressionRule);
+  AddRule(RTExpressionList, TExpressionListRule);
+  AddRule(RTExpressionOrAssignment, TExpressionOrAssignmentRule);
+  AddRule(RTExpressionOrRange, TExpressionOrRangeRule);
+  AddRule(RTExpressionOrRangeList, TExpressionOrRangeListRule);
+  AddRule(RTExtendedIdent, TExtendedIdentRule);
+  AddRule(RTFactor, TFactorRule);
+  AddRule(RTFancyBlock, TFancyBlockRule);
+  AddRule(RTFieldDecl, TFieldDeclRule);
+  AddRule(RTFieldSection, TFieldSectionRule);
+  AddRule(RTFileType, TFileTypeRule);
+  AddRule(RTForStatement, TForStatementRule);
+  AddRule(RTGoal, TGoalRule);
+  AddRule(RTGotoStatement, TGotoStatementRule);
+  AddRule(RTIdent, TIdentRule);
+  AddRule(RTIdentList, TIdentListRule);
+  AddRule(RTIfStatement, TIfStatementRule);
+  AddRule(RTImplementationDecl, TImplementationDeclRule);
+  AddRule(RTImplementationSection, TImplementationSectionRule);
+  AddRule(RTInitSection, TInitSectionRule);
+  AddRule(RTInterfaceDecl, TInterfaceDeclRule);
+  AddRule(RTInterfaceSection, TInterfaceSectionRule);
+  AddRule(RTInterfaceType, TInterfaceTypeRule);
+  AddRule(RTLabelDeclSection, TLabelDeclSectionRule);
+  AddRule(RTLabelId, TLabelIdRule);
+  AddRule(RTMethodHeading, TMethodHeadingRule);
+  AddRule(RTMethodImplementation, TMethodImplementationRule);
+  AddRule(RTMethodOrProperty, TMethodOrPropertyRule);
+  AddRule(RTMethodReturnType, TMethodReturnTypeRule);
+  AddRule(RTOpenArray, TOpenArrayRule);
+  AddRule(RTPackage, TPackageRule);
+  AddRule(RTPackedType, TPackedTypeRule);
+  AddRule(RTParameter, TParameterRule);
+  AddRule(RTParameterExpression, TParameterExpressionRule);
+  AddRule(RTParameterType, TParameterTypeRule);
+  AddRule(RTParenthesizedExpression, TParenthesizedExpressionRule);
+  AddRule(RTParticle, TParticleRule);
+  AddRule(RTPointerType, TPointerTypeRule);
+  AddRule(RTProcedureType, TProcedureTypeRule);
+  AddRule(RTProgram, TProgramRule);
+  AddRule(RTProperty, TPropertyRule);
+  AddRule(RTPropertyDirective, TPropertyDirectiveRule);
+  AddRule(RTQualifiedIdent, TQualifiedIdentRule);
+  AddRule(RTRaiseStatement, TRaiseStatementRule);
+  AddRule(RTRecordFieldConstant, TRecordFieldConstantRule);
+  AddRule(RTRecordHelperType, TRecordHelperTypeRule);
+  AddRule(RTRecordType, TRecordTypeRule);
+  AddRule(RTRepeatStatement, TRepeatStatementRule);
+  AddRule(RTRequiresClause, TRequiresClauseRule);
+  AddRule(RTSetLiteral, TSetLiteralRule);
+  AddRule(RTSetType, TSetTypeRule);
+  AddRule(RTSimpleExpression, TSimpleExpressionRule);
+  AddRule(RTSimpleStatement, TSimpleStatementRule);
+  AddRule(RTStatement, TStatementRule);
+  AddRule(RTStatementList, TStatementListRule);
+  AddRule(RTStringType, TStringTypeRule);
+  AddRule(RTTerm, TTermRule);
+  AddRule(RTTryStatement, TTryStatementRule);
+  AddRule(RTType, TTypeRule);
+  AddRule(RTTypedConstant, TTypedConstantRule);
+  AddRule(RTTypeDecl, TTypeDeclRule);
+  AddRule(RTTypeSection, TTypeSectionRule);
+  AddRule(RTUnit, TUnitRule);
+  AddRule(RTUsedUnit, TUsedUnitRule);
+  AddRule(RTUsesClause, TUsesClauseRule);
+  AddRule(RTVarDecl, TVarDeclRule);
+  AddRule(RTVariantGroup, TVariantGroupRule);
+  AddRule(RTVariantSection, TVariantSectionRule);
+  AddRule(RTVarSection, TVarSectionRule);
+  AddRule(RTVisibility, TVisibilityRule);
+  AddRule(RTVisibilitySection, TVisibilitySectionRule);
+  AddRule(RTVisibilitySectionContent, TVisibilitySectionContentRule);
+  AddRule(RTWhileStatement, TWhileStatementRule);
+  AddRule(RTWithStatement, TWithStatementRule);
+
+  AddTokenRule(RTAddOp, TTokenSets.TSAddOp);
+  AddTokenRule(RTMulOp, TTokenSets.TSMulOp);
+  AddTokenRule(RTPortabilityDirective, TTokenSets.TSPortabilityDirective);
+  AddTokenRule(RTRelOp, TTokenSets.TSRelOp);
+  AddTokenRule(RTUnaryOperator, TTokenSets.TSUnaryOperator);
 end;
 
 constructor TParser.CreateFromText(AText, AFileName: string;
@@ -149,6 +266,17 @@ begin
   ASingleTokenTokenSet := TSingleTokenTokenSet.Create(ATokenType);
   Result := ParseToken(ASingleTokenTokenSet);
   ASingleTokenTokenSet.Free;
+end;
+
+function TParser.ParseRule(ARuleType: TRuleType): TASTNode;
+begin
+  Result := ParseRuleInternal(ARuleType);
+  Result.BuildParentReferences(nil);
+end;
+
+function TParser.ParseRuleInternal(ARuleType: TRuleType): TASTNode;
+begin
+  Result := FRules[Integer(ARuleType)].Execute;
 end;
 
 function TParser.ParseToken(ATokenSet: ITokenSet): TToken;
