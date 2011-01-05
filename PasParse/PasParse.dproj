@@ -54,6 +54,7 @@
     <DCCReference Include="URuleType.pas" />
     <DCCReference Include="USingleTokenTokenSet.pas" />
     <DCCReference Include="UToken.pas" />
+    <DCCReference Include="UTokenRule.pas" />
     <DCCReference Include="UTokenSet.pas" />
     <DCCReference Include="UTokenSets.pas" />
     <DCCReference Include="UTokenType.pas" />

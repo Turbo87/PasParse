@@ -55,6 +55,7 @@ contains
   UITokenSet in 'UITokenSet.pas',
   USingleTokenTokenSet in 'USingleTokenTokenSet.pas',
   URule in 'URule.pas',
-  UIParser in 'UIParser.pas';
+  UIParser in 'UIParser.pas',
+  UTokenRule in 'UTokenRule.pas';
 
 end.
