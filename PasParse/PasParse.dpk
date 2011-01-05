@@ -45,6 +45,7 @@ contains
   UASTNode in 'UASTNode.pas',
   UNonTerminalNode in 'UNonTerminalNode.pas',
   UBinaryOperationNode in 'UBinaryOperationNode.pas',
-  UDelimitedItemNode in 'UDelimitedItemNode.pas';
+  UDelimitedItemNode in 'UDelimitedItemNode.pas',
+  UListNode in 'UListNode.pas';
 
 end.
