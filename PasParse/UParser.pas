@@ -50,6 +50,7 @@ type
     function ParseToken(ATokenSet: ITokenSet): TToken; overload; override;
     function CanParseToken(ATokenSet: ITokenSet): Boolean; overload; override;
     function ParseRule(ARuleType: TRuleType): TASTNode;
+    function CanParseRule(ARuleType: TRuleType): Boolean;
 
     function Failure(AExpected: string): EParseException; override;
   end;
@@ -61,6 +62,11 @@ uses
   UTokenSets, URules;
 
 { TParser }
+
+function TParser.CanParseRule(ARuleType: TRuleType): Boolean;
+begin
+  Result := FRules[Integer(ARuleType)].CanParse;
+end;
 
 function TParser.CanParseToken(ATokenType: TTokenType): Boolean;
 begin
