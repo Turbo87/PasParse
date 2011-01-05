@@ -46,6 +46,7 @@ contains
   UNonTerminalNode in 'UNonTerminalNode.pas',
   UDelimitedItemNode in 'UDelimitedItemNode.pas',
   UGeneratedNodes in 'UGeneratedNodes.pas',
-  UListNode in 'UListNode.pas';
+  UListNode in 'UListNode.pas',
+  UFrame in 'UFrame.pas';
 
 end.
