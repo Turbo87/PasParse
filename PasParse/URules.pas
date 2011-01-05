@@ -573,16 +573,42 @@ type
 
 implementation
 
+uses
+  UTokenType, UToken, UListNode, UGeneratedNodes;
+
 { TArrayTypeRule }
 
 function TArrayTypeRule.CanParse: Boolean;
 begin
-  Result := False;
+  Result := FParser.CanParseToken(TTArrayKeyword);
 end;
 
 function TArrayTypeRule.Evaluate: TASTNode;
+var
+  AArray: TToken;
+  AOpenBracket, ACloseBracket: TToken;
+  AIndexList: TListNode;
+  AOf: TToken;
+  AType: TASTNode;
 begin
-  Result := nil;
+  AArray := FParser.ParseToken(TTArrayKeyword);
+  AOpenBracket := nil;
+  ACloseBracket := nil;
+
+  if FParser.CanParseToken(TTOpenBracket) then
+  begin
+    AOpenBracket := FParser.ParseToken(TTOpenBracket);
+    AIndexList := FParser.ParseDelimitedList(RTType, TTComma);
+    ACloseBracket := FParser.ParseToken(TTCloseBracket);
+  end
+  else
+    AIndexList := FParser.CreateEmptyListNode;
+
+  AOf := FParser.ParseToken(TTOfKeyword);
+  AType := FParser.ParseRuleInternal(RTType);
+
+  Result := TArrayTypeNode.Create(AArray, AOpenBracket, AIndexList,
+    ACloseBracket, AOf, AType);
 end;
 
 { TAssemblerStatementRule }
