@@ -40,6 +40,7 @@
     <DCCReference Include="UGeneratedNodes.pas" />
     <DCCReference Include="UIFrame.pas" />
     <DCCReference Include="UInvalidOperationException.pas" />
+    <DCCReference Include="UITokenSet.pas" />
     <DCCReference Include="ULexException.pas" />
     <DCCReference Include="ULexScanner.pas" />
     <DCCReference Include="UListNode.pas" />

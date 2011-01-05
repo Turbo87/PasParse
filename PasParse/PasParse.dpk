@@ -51,6 +51,7 @@ contains
   UEOFFrame in 'UEOFFrame.pas',
   UParseException in 'UParseException.pas',
   UInvalidOperationException in 'UInvalidOperationException.pas',
-  UFrame in 'UFrame.pas';
+  UFrame in 'UFrame.pas',
+  UITokenSet in 'UITokenSet.pas';
 
 end.
