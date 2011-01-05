@@ -47,6 +47,7 @@
     <DCCReference Include="ULocation.pas" />
     <DCCReference Include="UNonTerminalNode.pas" />
     <DCCReference Include="UParseException.pas" />
+    <DCCReference Include="UParser.pas" />
     <DCCReference Include="UPreprocessorException.pas" />
     <DCCReference Include="URuleDelegate.pas" />
     <DCCReference Include="URuleType.pas" />

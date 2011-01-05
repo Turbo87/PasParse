@@ -47,6 +47,7 @@ contains
   UDelimitedItemNode in 'UDelimitedItemNode.pas',
   UGeneratedNodes in 'UGeneratedNodes.pas',
   UListNode in 'UListNode.pas',
+  UParser in 'UParser.pas',
   UIFrame in 'UIFrame.pas',
   UEOFFrame in 'UEOFFrame.pas',
   UParseException in 'UParseException.pas',
