@@ -11,19 +11,19 @@ type
     FLocation: TLocation;
 
   protected
-    function GetDisplayName: string;
-    function GetIsEOF: Boolean;
-    function GetLocation: TLocation;
-    function GetNext: TFrame;
-    procedure SetNext(const Value: TFrame); 
-    function GetTokenType: TTokenType;
+    function GetDisplayName: string; override;
+    function GetIsEOF: Boolean; override;
+    function GetLocation: TLocation; override;
+    function GetNext: IFrame; override;
+    procedure SetNext(const Value: IFrame); override;
+    function GetTokenType: TTokenType; override;
 
   public
     constructor Create(ALocation: TLocation);
     destructor Destroy; override;
 
-    function CanParseToken(ATokenSet: TTokenSet): Boolean;
-    function ParseToken(ATokenSet: TTokenSet): TToken;
+    function CanParseToken(ATokenSet: TTokenSet): Boolean; override;
+    function ParseToken(ATokenSet: TTokenSet): TToken; override;
   end;
 
 implementation
