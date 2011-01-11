@@ -1620,12 +1620,23 @@ end;
 
 function TStringTypeRule.CanParse: Boolean;
 begin
-  Result := False;
+  Result := FParser.CanParseToken(TTStringKeyword);
 end;
 
 function TStringTypeRule.Evaluate: TASTNode;
+var
+  AOpenBracket, ACloseBracket: TToken;
+  ALength: TASTNode;
 begin
-  Result := nil;
+  Result := FParser.ParseToken(TTStringKeyword);
+  if FParser.CanParseToken(TTOpenBracket) then
+  begin
+    AOpenBracket := FParser.ParseToken(TTOpenBracket);
+    ALength := FParser.ParseRuleInternal(RTExpression);
+    ACloseBracket := FParser.ParseToken(TTCloseBracket);
+    Result := TStringOfLengthNode.Create(Result as TToken,
+      AOpenBracket, ALength, ACloseBracket);
+  end;
 end;
 
 { TTermRule }
