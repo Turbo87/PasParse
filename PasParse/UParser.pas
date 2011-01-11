@@ -317,7 +317,6 @@ function TParser.ParseRequiredRuleList(ARuleType: TRuleType): TListNode;
 var
   AItems: TObjectList;
   AItem: TASTNode;
-  ADelimiter: TToken;
 begin
   AItems := TObjectList.Create(False);
 
