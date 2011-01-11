@@ -31,7 +31,8 @@ uses
   UTestLabelId in 'UTestLabelId.pas',
   UTestVisibility in 'UTestVisibility.pas',
   UTestGotoStatement in 'UTestGotoStatement.pas',
-  UTestParticle in 'UTestParticle.pas';
+  UTestParticle in 'UTestParticle.pas',
+  UTestAtom in 'UTestAtom.pas';
 
 begin
   try
@@ -44,6 +45,7 @@ begin
 
     TTestAddOp.Test;
     TTestAssemblerStatement.Test;
+    TTestAtom.Test;
     TTestBareInherited.Test;
     TTestClassOf.Test;
     TTestExtendedIdent.Test;

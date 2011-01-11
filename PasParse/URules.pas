@@ -646,7 +646,6 @@ begin
       FParser.MoveNext;
     except
       AASM.Free;
-      AASM := nil;
       raise;
     end;
 
@@ -670,12 +669,55 @@ end;
 
 function TAtomRule.CanParse: Boolean;
 begin
-  Result := False;
+  Result := FParser.CanParseRule(RTParticle);
 end;
 
 function TAtomRule.Evaluate: TASTNode;
+var
+  ADot: TToken;
+  ARight: TASTNode;
+  ACaret: TToken;
+  AOpenDelimiter, ACloseDelimiter: TToken;
+  AParameterList: TListNode;
 begin
-  Result := nil;
+  Result := FParser.ParseRuleInternal(RTParticle);
+  while True do
+  begin
+    if FParser.CanParseToken(TTDot) then
+    begin
+      ADot := FParser.ParseToken(TTDot);
+      ARight := FParser.ParseRuleInternal(RTExtendedIdent);
+      Result := TBinaryOperationNode.Create(Result, ADot, ARight);
+    end
+    else if FParser.CanParseToken(TTCaret) then
+    begin
+      ACaret := FParser.ParseToken(TTCaret);
+      Result := TPointerDereferenceNode.Create(Result, ACaret);
+    end
+    else if FParser.CanParseToken(TTOpenBracket) then
+    begin
+      AOpenDelimiter := FParser.ParseToken(TTOpenBracket);
+      AParameterList := FParser.ParseRuleInternal(RTExpressionList) as TListNode;
+      ACloseDelimiter := FParser.ParseToken(TTCloseBracket);
+      Result := TParameterizedNode.Create(Result, AOpenDelimiter,
+        AParameterList, ACloseDelimiter);
+    end
+    else if FParser.CanParseToken(TTOpenParenthesis) then
+    begin
+      AOpenDelimiter := FParser.ParseToken(TTOpenBracket);
+      if FParser.CanParseRule(RTExpressionList) then
+        AParameterList :=
+          FParser.ParseDelimitedList(RTParameterExpression, TTComma)
+      else
+        AParameterList := FParser.CreateEmptyListNode;
+
+      ACloseDelimiter := FParser.ParseToken(TTCloseBracket);
+      Result := TParameterizedNode.Create(Result, AOpenDelimiter,
+        AParameterList, ACloseDelimiter);
+    end
+    else
+      Break;
+  end;
 end;
 
 { TBareInheritedRule }
