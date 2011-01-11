@@ -235,7 +235,7 @@ end;
 function TParser.Failure(AExpected: string): EParseException;
 begin
   Result := EParseException.Create('Expected ' + AExpected + ' but was ' +
-    FNextFrame.DisplayName, FNextFrame.Location);
+    FNextFrame.DisplayName, FNextFrame.Location.Clone);
 end;
 
 class function TParser.FrameFromTokens(ATokens: TObjectList): IFrame;
