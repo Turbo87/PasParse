@@ -293,7 +293,7 @@ var
   AToken: TToken;
 begin
   // Create TToken list that does not kill it's children on destruction
-  ATokens := TObjectList.Create(False);
+  ATokens := TObjectList.Create;
 
   // Iterate through tokens and add them to the list
   repeat
