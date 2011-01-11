@@ -37,6 +37,8 @@ type
     /// Creates a copy of the token with another token type.
     ///  The caller has to destroy the resulting object again!
     function WithTokenType(ATokenType: TTokenType): TToken;
+
+    function Clone: TToken;
   end;
 
 implementation
@@ -45,6 +47,11 @@ uses
   TypInfo;
 
 { TToken }
+
+function TToken.Clone: TToken;
+begin
+  Result := TToken.Create(FTokenType, FLocation.Clone, FText, FParsedText);
+end;
 
 constructor TToken.Create(ATokenType: TTokenType; ALocation: TLocation; AText,
   AParsedText: string);
