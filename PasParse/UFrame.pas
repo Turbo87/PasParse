@@ -72,7 +72,7 @@ end;
 function TFrame.GetNext: IFrame;
 begin
   if FNext = nil then
-    Result := TEOFFrame.Create(FToken.EndLocation)
+    Result := TEOFFrame.Create(FToken.EndLocation.Clone)
   else
     Result := FNext;
 end;
