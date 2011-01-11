@@ -74,11 +74,14 @@ end;
 procedure TASTNode.BuildParentReferences(AASTNode: TASTNode);
 var
   I: Integer;
+  AChildNode: TASTNode;
 begin
   FParentNode := AASTNode;
   for I := 0 to FChildNodes.Count - 1 do
   begin
-    (FChildNodes.Items[I] as TASTNode).BuildParentReferences(Self);
+    AChildNode := (FChildNodes.Items[I] as TASTNode);
+    if AChildNode <> nil then
+      AChildNode.BuildParentReferences(Self);
   end;
 end;
 
