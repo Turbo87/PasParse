@@ -85,7 +85,7 @@ end;
 function TFrame.ParseToken(ATokenSet: ITokenSet): TToken;
 begin
   if CanParseToken(ATokenSet) then
-    Result := FToken
+    Result := FToken.Clone
   else
     raise EParseException.Create('Expected ' + ATokenSet.Name + ' but found ' +
       DisplayName, Location);
