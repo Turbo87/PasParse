@@ -67,9 +67,6 @@ begin
     '  RightNode: Number |9|');
 
   ANode.Free;
-  ALeft.Free;
-  AOp.Free;
-  ARight.Free;
 end;
 
 class function TTestASTNode.TestInspectNestedBinaryOperationNodes: Boolean;
@@ -100,12 +97,6 @@ begin
     '  RightNode: Number |9|');
 
   ANode.Free;
-  ALeft.Free;
-  AOp.Free;
-  ARight.Free;
-  ALeftLeft.Free;
-  ALeftOp.Free;
-  ALeftRight.Free;
 end;
 
 class function TTestASTNode.TestInspectToken: Boolean;

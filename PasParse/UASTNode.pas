@@ -85,7 +85,7 @@ end;
 constructor TASTNode.Create;
 begin
   inherited;
-  FChildNodes := TObjectList.Create(False);
+  FChildNodes := TObjectList.Create;
   FProperties := TObjectList.Create;
 end;
 
