@@ -20,12 +20,14 @@ type
   TTokenSetAlternate = class(IAlternate)
   private
     FTokenSet: ITokenSet;
+    FDestroyTokenSet: Boolean;
 
   protected
     function GetDisplayText: string; override;
 
   public
-    constructor Create(ATokenSet: ITokenSet);
+    constructor Create(ATokenSet: ITokenSet; ADestroyTokenSet: Boolean = False);
+    destructor Destroy; override;
 
     function TryParse(AParser: IParser): TASTNode; override;
     function LookAhead(AParser: IParser): Boolean; override;
@@ -84,7 +86,8 @@ end;
 
 procedure TAlternator.AddToken(ATokenType: TTokenType);
 begin
-  AddToken(TSingleTokenTokenSet.Create(ATokenType));
+  FAlternates.Add(TTokenSetAlternate.Create(
+    TSingleTokenTokenSet.Create(ATokenType), True));
 end;
 
 constructor TAlternator.Create;
@@ -156,9 +159,12 @@ end;
 
 { TTokenSetAlternate }
 
-constructor TTokenSetAlternate.Create(ATokenSet: ITokenSet);
+constructor TTokenSetAlternate.Create(ATokenSet: ITokenSet;
+  ADestroyTokenSet: Boolean);
 begin
+  inherited Create;
   FTokenSet := ATokenSet;
+  FDestroyTokenSet := ADestroyTokenSet;
 end;
 
 function TTokenSetAlternate.TryParse(AParser: IParser): TASTNode;
@@ -166,6 +172,14 @@ begin
   Result := nil;
   if AParser.CanParseToken(FTokenSet) then
     Result := AParser.ParseToken(FTokenSet);
+end;
+
+destructor TTokenSetAlternate.Destroy;
+begin
+  if FDestroyTokenSet then
+    FTokenSet.Free;
+    
+  inherited;
 end;
 
 function TTokenSetAlternate.GetDisplayText: string;
