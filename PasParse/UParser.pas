@@ -310,6 +310,7 @@ begin
   until (not CanParseRule(AItemRule));
 
   Result := TListNode.Create(AItems);
+  AItems.Free;
 end;
 
 function TParser.ParseRule(ARuleType: TRuleType): TASTNode;
