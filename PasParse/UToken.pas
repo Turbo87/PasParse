@@ -94,7 +94,7 @@ end;
 
 function TToken.WithTokenType(ATokenType: TTokenType): TToken;
 begin
-  Result := TToken.Create(ATokenType, Location, Text, ParsedText);
+  Result := TToken.Create(ATokenType, Location.Clone, Text, ParsedText);
 end;
 
 end.
