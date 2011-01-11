@@ -12,7 +12,8 @@ uses
   UTestCompilerDefines in 'UTestCompilerDefines.pas',
   UTestASTNode in 'UTestASTNode.pas',
   UTestRelOp in 'UTestRelOp.pas',
-  UTestParser in 'UTestParser.pas';
+  UTestParser in 'UTestParser.pas',
+  UTestAddOp in 'UTestAddOp.pas';
 
 begin
   try
@@ -21,6 +22,7 @@ begin
     TTestLexScanner.Test;
     TTestCompilerDefines.Test;
     TTestRelOp.Test;
+    TTestAddOp.Test;
   except
     on E:Exception do
       Writeln(E.Classname, ': ', E.Message);
