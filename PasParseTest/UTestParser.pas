@@ -39,7 +39,7 @@ begin
         raise EInvalidOperationException.Create('Rule did not consume all input');
 
     finally
-      Result := (AActualString = AGoal) and (not AParser.IsEOF);
+      Result := (AActualString = AGoal) and (AParser.IsEOF);
     end;
   finally
     AParser.Free;
