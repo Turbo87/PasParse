@@ -21,6 +21,7 @@ type
 
   public
     constructor Create(AToken: TToken);
+    destructor Destroy; override;
     
     function CanParseToken(ATokenSet: ITokenSet): Boolean; override;
     function ParseToken(ATokenSet: ITokenSet): TToken; override;
@@ -44,6 +45,12 @@ constructor TFrame.Create(AToken: TToken);
 begin
   FNext := nil;
   FToken := AToken;
+
+destructor TFrame.Destroy;
+begin
+  FNext.Free;
+  FToken.Free;
+  inherited;
 end;
 
 function TFrame.GetDisplayName: string;
