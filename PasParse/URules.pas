@@ -574,7 +574,7 @@ type
 implementation
 
 uses
-  UTokenType, UToken, UListNode, UGeneratedNodes, UTokenSets;
+  UTokenType, UToken, UListNode, UGeneratedNodes, UTokenSets, UParseException;
 
 { TArrayTypeRule }
 
@@ -615,12 +615,25 @@ end;
 
 function TAssemblerStatementRule.CanParse: Boolean;
 begin
-  Result := False;
+  Result := FParser.CanParseToken(TTAsmKeyword);
 end;
 
 function TAssemblerStatementRule.Evaluate: TASTNode;
+var
+  AASM, AEnd: TToken;
 begin
-  Result := nil;
+  AASM := FParser.ParseToken(TTAsmKeyword);
+  while not FParser.CanParseToken(TTEndKeyword) do
+    try
+      FParser.MoveNext;
+    except
+      AASM.Free;
+      AASM := nil;
+      raise;
+    end;
+
+  AEnd := FParser.ParseToken(TTEndKeyword);
+  Result := TAssemblerStatementNode.Create(AASM, AEnd);
 end;
 
 { TAssemblyAttributeRule }

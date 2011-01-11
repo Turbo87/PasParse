@@ -25,7 +25,8 @@ uses
   UTestUsedUnit in 'UTestUsedUnit.pas',
   UTestUsesClause in 'UTestUsesClause.pas',
   UTestClassOf in 'UTestClassOf.pas',
-  UTestBareInherited in 'UTestBareInherited.pas';
+  UTestBareInherited in 'UTestBareInherited.pas',
+  UTestAssemblerStatement in 'UTestAssemblerStatement.pas';
 
 begin
   try
@@ -35,6 +36,7 @@ begin
     TTestCompilerDefines.Test;
 
     TTestAddOp.Test;
+    TTestAssemblerStatement.Test;
     TTestBareInherited.Test;
     TTestClassOf.Test;
     TTestExtendedIdent.Test;
