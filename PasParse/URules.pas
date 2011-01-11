@@ -1036,12 +1036,17 @@ end;
 
 function TGotoStatementRule.CanParse: Boolean;
 begin
-  Result := False;
+  Result := FParser.CanParseToken(TTGotoKeyword);
 end;
 
 function TGotoStatementRule.Evaluate: TASTNode;
+var
+  AGoTo: TToken;
+  ALabelId: TToken;
 begin
-  Result := nil;
+  AGoTo := FParser.ParseToken(TTGotoKeyword);
+  ALabelId := FParser.ParseRuleInternal(RTLabelId) as TToken;
+  Result := TGotoStatementNode.Create(AGoTo, ALabelId);
 end;
 
 { TIdentRule }
