@@ -1628,12 +1628,23 @@ end;
 
 function TUsedUnitRule.CanParse: Boolean;
 begin
-  Result := False;
+  Result := FParser.CanParseToken(TTokenSets.TSIdent);
 end;
 
 function TUsedUnitRule.Evaluate: TASTNode;
+var
+  AName: TASTNode;
+  AIn, AFileName: TToken;
 begin
-  Result := nil;
+  AName := FParser.ParseRuleInternal(RTQualifiedIdent);
+  AIn := nil;
+  AFileName := nil;
+  if FParser.CanParseToken(TTInKeyword) then
+  begin
+    AIn := FParser.ParseToken(TTInKeyword);
+    AFileName := FParser.ParseToken(TTStringLiteral);
+  end;
+  Result := TUsedUnitNode.Create(AName, AIn, AFileName);
 end;
 
 { TUsesClauseRule }

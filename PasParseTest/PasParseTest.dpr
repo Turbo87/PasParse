@@ -21,7 +21,8 @@ uses
   UTestQualifiedIdent in 'UTestQualifiedIdent.pas',
   UTestIdent in 'UTestIdent.pas',
   UTestFileType in 'UTestFileType.pas',
-  UTestIdentList in 'UTestIdentList.pas';
+  UTestIdentList in 'UTestIdentList.pas',
+  UTestUsedUnit in 'UTestUsedUnit.pas';
 
 begin
   try
@@ -40,6 +41,7 @@ begin
     TTestQualifiedIdent.Test;
     TTestRelOp.Test;
     TTestUnaryOperator.Test;
+    TTestUsedUnit.Test;
   except
     on E:Exception do
       Writeln(E.Classname, ': ', E.Message);
