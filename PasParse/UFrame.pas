@@ -44,7 +44,8 @@ end;
 constructor TFrame.Create(AToken: TToken);
 begin
   FNext := nil;
-  FToken := AToken;
+  FToken := AToken.Clone;
+end;
 
 destructor TFrame.Destroy;
 begin
