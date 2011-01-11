@@ -371,6 +371,9 @@ begin
     Dec(AOffset);
   end;
   Result := AFrame.TokenType;
+
+  if (AFrame <> FNextFrame) and (AFrame.IsEOF) then
+    AFrame.Free;
 end;
 
 function TParser.TryParseToken(ATokenType: TTokenType): TToken;
