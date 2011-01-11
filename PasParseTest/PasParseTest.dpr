@@ -29,6 +29,7 @@ uses
   UTestAssemblerStatement in 'UTestAssemblerStatement.pas',
   UTestAlternator in 'UTestAlternator.pas',
   UTestLabelId in 'UTestLabelId.pas',
+  UTestVisibility in 'UTestVisibility.pas',
   UTestGotoStatement in 'UTestGotoStatement.pas';
 
 begin
@@ -57,6 +58,7 @@ begin
     TTestUnaryOperator.Test;
     TTestUsedUnit.Test;
     TTestUsesClause.Test;
+    TTestVisibility.Test;
   except
     on E:Exception do
       Writeln(E.Classname, ': ', E.Message);

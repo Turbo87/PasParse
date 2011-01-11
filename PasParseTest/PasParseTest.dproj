@@ -61,5 +61,6 @@
     <DCCReference Include="UTestUnaryOperator.pas" />
     <DCCReference Include="UTestUsedUnit.pas" />
     <DCCReference Include="UTestUsesClause.pas" />
+    <DCCReference Include="UTestVisibility.pas" />
   </ItemGroup>
 </Project>

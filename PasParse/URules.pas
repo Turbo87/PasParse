@@ -1779,12 +1779,19 @@ end;
 
 function TVisibilityRule.CanParse: Boolean;
 begin
-  Result := False;
+  Result := FParser.CanParseToken(TTokenSets.TSVisibility);
 end;
 
 function TVisibilityRule.Evaluate: TASTNode;
+var
+  AStrict, AVisibility: TToken;
 begin
-  Result := nil;
+  AStrict := nil;
+  if FParser.CanParseToken(TTStrictSemikeyword) then
+    AStrict := FParser.ParseToken(TTStrictSemikeyword);
+
+  AVisibility := FParser.ParseToken(TTokenSets.TSVisibilitySingleWord);
+  Result := TVisibilityNode.Create(AStrict, AVisibility);
 end;
 
 { TVisibilitySectionRule }
