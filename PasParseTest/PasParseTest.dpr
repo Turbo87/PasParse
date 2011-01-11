@@ -23,7 +23,8 @@ uses
   UTestFileType in 'UTestFileType.pas',
   UTestIdentList in 'UTestIdentList.pas',
   UTestUsedUnit in 'UTestUsedUnit.pas',
-  UTestUsesClause in 'UTestUsesClause.pas';
+  UTestUsesClause in 'UTestUsesClause.pas',
+  UTestClassOf in 'UTestClassOf.pas';
 
 begin
   try
@@ -33,6 +34,7 @@ begin
     TTestCompilerDefines.Test;
 
     TTestAddOp.Test;
+    TTestClassOf.Test;
     TTestExtendedIdent.Test;
     TTestFileType.Test;
     TTestIdent.Test;

@@ -711,12 +711,19 @@ end;
 
 function TClassOfTypeRule.CanParse: Boolean;
 begin
-  Result := False;
+  Result := (FParser.Peek(0) = TTClassKeyword) and
+    (FParser.Peek(1) = TTOfKeyword);
 end;
 
 function TClassOfTypeRule.Evaluate: TASTNode;
+var
+  AClass, AOf: TToken;
+  AType: TASTNode;
 begin
-  Result := nil;
+  AClass := FParser.ParseToken(TTClassKeyword);
+  AOf := FParser.ParseToken(TTOfKeyword);
+  AType := FParser.ParseRuleInternal(RTQualifiedIdent);
+  Result := TClassOfNode.Create(AClass, AOf, AType);
 end;
 
 { TClassTypeRule }
