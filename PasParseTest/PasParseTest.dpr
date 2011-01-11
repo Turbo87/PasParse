@@ -15,7 +15,8 @@ uses
   UTestParser in 'UTestParser.pas',
   UTestAddOp in 'UTestAddOp.pas',
   UTestMulOp in 'UTestMulOp.pas',
-  UTestPortabilityDirective in 'UTestPortabilityDirective.pas';
+  UTestPortabilityDirective in 'UTestPortabilityDirective.pas',
+  UTestUnaryOperator in 'UTestUnaryOperator.pas';
 
 begin
   try
@@ -28,6 +29,7 @@ begin
     TTestMulOp.Test;
     TTestPortabilityDirective.Test;
     TTestRelOp.Test;
+    TTestUnaryOperator.Test;
   except
     on E:Exception do
       Writeln(E.Classname, ': ', E.Message);

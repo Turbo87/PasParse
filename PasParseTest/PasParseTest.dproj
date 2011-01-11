@@ -47,5 +47,6 @@
     <DCCReference Include="UTestParser.pas" />
     <DCCReference Include="UTestPortabilityDirective.pas" />
     <DCCReference Include="UTestRelOp.pas" />
+    <DCCReference Include="UTestUnaryOperator.pas" />
   </ItemGroup>
 </Project>
