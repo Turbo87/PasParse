@@ -1011,7 +1011,15 @@ begin
   if FParser.CanParseRule(RTUnaryOperator) then
   begin
     AOperator := FParser.ParseRuleInternal(RTUnaryOperator) as TToken;
-    AOperand := FParser.ParseRuleInternal(RTFactor);
+    try
+      AOperand := FParser.ParseRuleInternal(RTFactor);
+    except
+      on EParseException do
+      begin
+        AOperator.Free;
+        raise;
+      end;
+    end;
     Result := TUnaryOperationNode.Create(AOperator, AOperand);
   end
   else
