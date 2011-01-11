@@ -12,8 +12,6 @@ type
     function ParseTokenList(ATokenSet: ITokenSet): TListNode; virtual; abstract;
     function TryParseToken(ATokenType: TTokenType): TToken; virtual; abstract;
 
-    function Peek(AOffset: Integer): TTokenType; virtual; abstract;
-
     procedure MoveNext; virtual; abstract;
 
   public
@@ -27,6 +25,8 @@ type
     function ParseRuleInternal(ARuleType: TRuleType): TASTNode; virtual; abstract;
 
     function CreateEmptyListNode: TListNode; virtual; abstract;
+
+    function Peek(AOffset: Integer): TTokenType; virtual; abstract;
 
     function Failure(AExpected: string): EParseException; virtual; abstract;
   end;

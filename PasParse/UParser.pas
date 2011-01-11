@@ -28,8 +28,6 @@ type
     function ParseTokenList(ATokenSet: ITokenSet): TListNode; override;
     function TryParseToken(ATokenType: TTokenType): TToken; override;
 
-    function Peek(AOffset: Integer): TTokenType; override;
-
     procedure MoveNext; override;
 
   public
@@ -52,6 +50,8 @@ type
     function ParseRuleInternal(ARuleType: TRuleType): TASTNode; override;
 
     function CreateEmptyListNode: TListNode; override;
+
+    function Peek(AOffset: Integer): TTokenType; override;
 
     function Failure(AExpected: string): EParseException; override;
   end;
