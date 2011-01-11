@@ -45,6 +45,7 @@
     <DCCReference Include="UTestExtendedIdent.pas" />
     <DCCReference Include="UTestFileType.pas" />
     <DCCReference Include="UTestIdent.pas" />
+    <DCCReference Include="UTestIdentList.pas" />
     <DCCReference Include="UTestLexScanner.pas" />
     <DCCReference Include="UTestMulOp.pas" />
     <DCCReference Include="UTestParser.pas" />

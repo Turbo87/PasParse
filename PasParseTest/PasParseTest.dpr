@@ -20,7 +20,8 @@ uses
   UTestExtendedIdent in 'UTestExtendedIdent.pas',
   UTestQualifiedIdent in 'UTestQualifiedIdent.pas',
   UTestIdent in 'UTestIdent.pas',
-  UTestFileType in 'UTestFileType.pas';
+  UTestFileType in 'UTestFileType.pas',
+  UTestIdentList in 'UTestIdentList.pas';
 
 begin
   try
@@ -33,6 +34,7 @@ begin
     TTestExtendedIdent.Test;
     TTestFileType.Test;
     TTestIdent.Test;
+    TTestIdentList.Test;
     TTestMulOp.Test;
     TTestPortabilityDirective.Test;
     TTestQualifiedIdent.Test;

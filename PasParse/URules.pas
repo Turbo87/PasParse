@@ -1043,12 +1043,12 @@ end;
 
 function TIdentListRule.CanParse: Boolean;
 begin
-  Result := False;
+  Result := FParser.CanParseToken(TTokenSets.TSIdent);
 end;
 
 function TIdentListRule.Evaluate: TASTNode;
 begin
-  Result := nil;
+  Result := FParser.ParseDelimitedList(RTIdent, TTComma);
 end;
 
 { TIfStatementRule }
