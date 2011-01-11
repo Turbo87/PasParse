@@ -91,11 +91,16 @@ end;
 class function TTest.Test: Integer;
 begin
   Reset;
-  WriteLn('');
-  WriteLn('Test: ' + GetName);
+  WriteLn('--------------------------');
+  WriteLn('# Test: ' + GetName);
   WriteLn('');
   TestAll;
-  Result := ReturnCode
+  Result := ReturnCode;
+  WriteLn('');
+  if ReturnCode = 0 then
+    WriteLn('All tests passed!')
+  else
+    WriteLn(IntToStr(ReturnCode) + ' tests failed!')
 end;
 
 end.
