@@ -12,6 +12,9 @@ type
     FTokenSet: set of TTokenType;
     FName: string;
 
+  protected
+    function GetName: string; override;
+
   public
     /// Standard constructor. Creates an empty set.
     constructor Create(AName: string);
@@ -23,7 +26,6 @@ type
     /// Checks whether the set contains the given token type
     function Contains(ATokenType: TTokenType): Boolean; override;
 
-    function GetName: string; override;
   end;
 
 implementation
