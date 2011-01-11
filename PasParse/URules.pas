@@ -940,12 +940,22 @@ end;
 
 function TFactorRule.CanParse: Boolean;
 begin
-  Result := False;
+  Result := FParser.CanParseToken(TTokenSets.TSExpression);
 end;
 
 function TFactorRule.Evaluate: TASTNode;
+var
+  AOperator: TToken;
+  AOperand: TASTNode;
 begin
-  Result := nil;
+  if FParser.CanParseRule(RTUnaryOperator) then
+  begin
+    AOperator := FParser.ParseRuleInternal(RTUnaryOperator) as TToken;
+    AOperand := FParser.ParseRuleInternal(RTFactor);
+    Result := TUnaryOperationNode.Create(AOperator, AOperand);
+  end
+  else
+    Result := FParser.ParseRuleInternal(RTAtom);
 end;
 
 { TFancyBlockRule }
