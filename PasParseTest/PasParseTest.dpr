@@ -14,7 +14,8 @@ uses
   UTestRelOp in 'UTestRelOp.pas',
   UTestParser in 'UTestParser.pas',
   UTestAddOp in 'UTestAddOp.pas',
-  UTestMulOp in 'UTestMulOp.pas';
+  UTestMulOp in 'UTestMulOp.pas',
+  UTestPortabilityDirective in 'UTestPortabilityDirective.pas';
 
 begin
   try
@@ -25,6 +26,7 @@ begin
 
     TTestAddOp.Test;
     TTestMulOp.Test;
+    TTestPortabilityDirective.Test;
     TTestRelOp.Test;
   except
     on E:Exception do

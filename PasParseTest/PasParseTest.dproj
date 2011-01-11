@@ -45,6 +45,7 @@
     <DCCReference Include="UTestLexScanner.pas" />
     <DCCReference Include="UTestMulOp.pas" />
     <DCCReference Include="UTestParser.pas" />
+    <DCCReference Include="UTestPortabilityDirective.pas" />
     <DCCReference Include="UTestRelOp.pas" />
   </ItemGroup>
 </Project>
