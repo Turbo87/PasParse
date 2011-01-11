@@ -967,12 +967,24 @@ end;
 
 function TFileTypeRule.CanParse: Boolean;
 begin
-  Result := False;
+  Result := FParser.CanParseToken(TTFileKeyword);
 end;
 
 function TFileTypeRule.Evaluate: TASTNode;
+var
+  AFile: TToken;
+  AOf: TToken;
+  AType: TASTNode;
 begin
-  Result := nil;
+  AFile := FParser.ParseToken(TTFileKeyword);
+  AOf := nil;
+  AType := nil;
+  if FParser.CanParseToken(TTOfKeyword) then
+  begin
+    AOf := FParser.ParseToken(TTOfKeyword);
+    AType := FParser.ParseRuleInternal(RTQualifiedIdent);
+  end;
+  Result := TFileTypeNode.Create(AFile, AOf, AType);
 end;
 
 { TForStatementRule }

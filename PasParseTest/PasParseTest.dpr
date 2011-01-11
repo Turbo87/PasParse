@@ -19,7 +19,8 @@ uses
   UTestUnaryOperator in 'UTestUnaryOperator.pas',
   UTestExtendedIdent in 'UTestExtendedIdent.pas',
   UTestQualifiedIdent in 'UTestQualifiedIdent.pas',
-  UTestIdent in 'UTestIdent.pas';
+  UTestIdent in 'UTestIdent.pas',
+  UTestFileType in 'UTestFileType.pas';
 
 begin
   try
@@ -30,6 +31,7 @@ begin
 
     TTestAddOp.Test;
     TTestExtendedIdent.Test;
+    TTestFileType.Test;
     TTestIdent.Test;
     TTestMulOp.Test;
     TTestPortabilityDirective.Test;
