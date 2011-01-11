@@ -270,8 +270,12 @@ begin
 end;
 
 procedure TParser.MoveNext;
+var
+  ALastFrame: IFrame;
 begin
+  ALastFrame := FNextFrame;
   FNextFrame := FNextFrame.Next;
+  ALastFrame.Free;
 end;
 
 function TParser.ParseToken(ATokenType: TTokenType): TToken;
