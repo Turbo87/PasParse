@@ -26,14 +26,17 @@ uses
   UTestUsesClause in 'UTestUsesClause.pas',
   UTestClassOf in 'UTestClassOf.pas',
   UTestBareInherited in 'UTestBareInherited.pas',
-  UTestAssemblerStatement in 'UTestAssemblerStatement.pas';
+  UTestAssemblerStatement in 'UTestAssemblerStatement.pas',
+  UTestAlternator in 'UTestAlternator.pas';
 
 begin
   try
     TTestDictionary.Test;
+
     TTestASTNode.Test;
     TTestLexScanner.Test;
     TTestCompilerDefines.Test;
+    TTestAlternator.Test;
 
     TTestAddOp.Test;
     TTestAssemblerStatement.Test;

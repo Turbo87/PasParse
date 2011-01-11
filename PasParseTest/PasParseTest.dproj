@@ -39,6 +39,7 @@
     <DCCReference Include="..\FastMM\FastMM4Messages.pas" />
     <DCCReference Include="UTest.pas" />
     <DCCReference Include="UTestAddOp.pas" />
+    <DCCReference Include="UTestAlternator.pas" />
     <DCCReference Include="UTestAssemblerStatement.pas" />
     <DCCReference Include="UTestASTNode.pas" />
     <DCCReference Include="UTestBareInherited.pas" />

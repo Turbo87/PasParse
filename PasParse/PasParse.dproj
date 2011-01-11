@@ -30,6 +30,7 @@
       <MainSource>MainSource</MainSource>
     </DelphiCompile>
     <DCCReference Include="rtl.dcp" />
+    <DCCReference Include="UAlternator.pas" />
     <DCCReference Include="UASTNode.pas" />
     <DCCReference Include="UBaseException.pas" />
     <DCCReference Include="UCompilerDefines.pas" />
