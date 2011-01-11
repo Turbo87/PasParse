@@ -28,7 +28,8 @@ uses
   UTestBareInherited in 'UTestBareInherited.pas',
   UTestAssemblerStatement in 'UTestAssemblerStatement.pas',
   UTestAlternator in 'UTestAlternator.pas',
-  UTestLabelId in 'UTestLabelId.pas';
+  UTestLabelId in 'UTestLabelId.pas',
+  UTestGotoStatement in 'UTestGotoStatement.pas';
 
 begin
   try
@@ -45,6 +46,7 @@ begin
     TTestClassOf.Test;
     TTestExtendedIdent.Test;
     TTestFileType.Test;
+    TTestGotoStatement.Test;
     TTestIdent.Test;
     TTestIdentList.Test;
     TTestLabelId.Test;
