@@ -30,7 +30,8 @@ uses
   UTestAlternator in 'UTestAlternator.pas',
   UTestLabelId in 'UTestLabelId.pas',
   UTestVisibility in 'UTestVisibility.pas',
-  UTestGotoStatement in 'UTestGotoStatement.pas';
+  UTestGotoStatement in 'UTestGotoStatement.pas',
+  UTestParticle in 'UTestParticle.pas';
 
 begin
   try
@@ -52,6 +53,7 @@ begin
     TTestIdentList.Test;
     TTestLabelId.Test;
     TTestMulOp.Test;
+    TTestParticle.Test;
     TTestPortabilityDirective.Test;
     TTestQualifiedIdent.Test;
     TTestRelOp.Test;

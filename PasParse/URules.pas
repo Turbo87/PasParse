@@ -349,7 +349,13 @@ type
   end;
   
   TParticleRule = class(TRule)
+  private
+    FAlternator: TAlternator;
+
   public
+    constructor Create(AParser: IParser; ARuleType: TRuleType); override;
+    destructor Destroy; override;
+
     function CanParse: Boolean; override;
     function Evaluate: TASTNode; override;
   end;
@@ -1357,12 +1363,32 @@ end;
 
 function TParticleRule.CanParse: Boolean;
 begin
-  Result := False;
+  Result := FAlternator.LookAhead(FParser);
+end;
+
+constructor TParticleRule.Create(AParser: IParser; ARuleType: TRuleType);
+begin
+  inherited Create(AParser, ARuleType);
+  FAlternator := TAlternator.Create;
+  FAlternator.AddToken(TTFileKeyword);
+  FAlternator.AddToken(TTNilKeyword);
+  FAlternator.AddToken(TTNumber);
+  FAlternator.AddToken(TTStringKeyword);
+  FAlternator.AddToken(TTStringLiteral);
+  FAlternator.AddRule(RTIdent);
+  FAlternator.AddRule(RTParenthesizedExpression);
+  FAlternator.AddRule(RTSetLiteral);
+end;
+
+destructor TParticleRule.Destroy;
+begin
+  FAlternator.Free;
+  inherited;
 end;
 
 function TParticleRule.Evaluate: TASTNode;
 begin
-  Result := nil;
+  Result := FAlternator.Execute(FParser);
 end;
 
 { TPointerTypeRule }
