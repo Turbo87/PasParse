@@ -24,7 +24,8 @@ uses
   UTestIdentList in 'UTestIdentList.pas',
   UTestUsedUnit in 'UTestUsedUnit.pas',
   UTestUsesClause in 'UTestUsesClause.pas',
-  UTestClassOf in 'UTestClassOf.pas';
+  UTestClassOf in 'UTestClassOf.pas',
+  UTestBareInherited in 'UTestBareInherited.pas';
 
 begin
   try
@@ -34,6 +35,7 @@ begin
     TTestCompilerDefines.Test;
 
     TTestAddOp.Test;
+    TTestBareInherited.Test;
     TTestClassOf.Test;
     TTestExtendedIdent.Test;
     TTestFileType.Test;

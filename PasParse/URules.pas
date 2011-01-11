@@ -651,12 +651,13 @@ end;
 
 function TBareInheritedRule.CanParse: Boolean;
 begin
-  Result := False;
+  Result := (FParser.Peek(0) = TTInheritedKeyword) and
+    (not TTokenSets.TSExpression.Contains(FParser.Peek(1)));
 end;
 
 function TBareInheritedRule.Evaluate: TASTNode;
 begin
-  Result := nil;
+  Result := FParser.ParseToken(TTInheritedKeyword);
 end;
 
 { TBlockRule }
