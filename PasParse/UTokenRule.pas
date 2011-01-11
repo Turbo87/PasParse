@@ -12,7 +12,7 @@ type
 
   public
     constructor Create(AParser: IParser; ARuleType: TRuleType;
-      ATokenSet: ITokenSet);
+      ATokenSet: ITokenSet); reintroduce;
 
     function CanParse: Boolean; override;
     function Evaluate: TASTNode; override;
