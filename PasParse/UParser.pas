@@ -228,6 +228,10 @@ begin
     FRules[I].Free;
 
   SetLength(FRules, 0);
+
+  while not FNextFrame.IsEOF do
+    MoveNext;
+
   FNextFrame.Free;
   inherited;
 end;

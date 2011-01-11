@@ -49,7 +49,6 @@ end;
 
 destructor TFrame.Destroy;
 begin
-  FNext.Free;
   FToken.Free;
   inherited;
 end;
