@@ -1651,12 +1651,19 @@ end;
 
 function TUsesClauseRule.CanParse: Boolean;
 begin
-  Result := False;
+  Result := FParser.CanParseToken(TTokenSets.TSUses);
 end;
 
 function TUsesClauseRule.Evaluate: TASTNode;
+var
+  AUses: TToken;
+  AUnitList: TListNode;
+  ASemicolon: TToken;
 begin
-  Result := nil;
+  AUses := FParser.ParseToken(TTokenSets.TSUses);
+  AUnitList := FParser.ParseDelimitedList(RTUsedUnit, TTComma);
+  ASemicolon := FParser.ParseToken(TTSemicolon);
+  Result := TUsesClauseNode.Create(AUses, AUnitList, ASemicolon);
 end;
 
 { TVarDeclRule }

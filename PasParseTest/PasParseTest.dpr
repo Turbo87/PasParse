@@ -22,7 +22,8 @@ uses
   UTestIdent in 'UTestIdent.pas',
   UTestFileType in 'UTestFileType.pas',
   UTestIdentList in 'UTestIdentList.pas',
-  UTestUsedUnit in 'UTestUsedUnit.pas';
+  UTestUsedUnit in 'UTestUsedUnit.pas',
+  UTestUsesClause in 'UTestUsesClause.pas';
 
 begin
   try
@@ -42,6 +43,7 @@ begin
     TTestRelOp.Test;
     TTestUnaryOperator.Test;
     TTestUsedUnit.Test;
+    TTestUsesClause.Test;
   except
     on E:Exception do
       Writeln(E.Classname, ': ', E.Message);
