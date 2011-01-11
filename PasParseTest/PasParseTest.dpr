@@ -17,7 +17,8 @@ uses
   UTestMulOp in 'UTestMulOp.pas',
   UTestPortabilityDirective in 'UTestPortabilityDirective.pas',
   UTestUnaryOperator in 'UTestUnaryOperator.pas',
-  UTestExtendedIdent in 'UTestExtendedIdent.pas';
+  UTestExtendedIdent in 'UTestExtendedIdent.pas',
+  UTestIdent in 'UTestIdent.pas';
 
 begin
   try
@@ -28,6 +29,7 @@ begin
 
     TTestAddOp.Test;
     TTestExtendedIdent.Test;
+    TTestIdent.Test;
     TTestMulOp.Test;
     TTestPortabilityDirective.Test;
     TTestRelOp.Test;

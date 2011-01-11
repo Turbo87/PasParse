@@ -1015,12 +1015,16 @@ end;
 
 function TIdentRule.CanParse: Boolean;
 begin
-  Result := False;
+  Result := FParser.CanParseToken(TTokenSets.TSIdent);
 end;
 
 function TIdentRule.Evaluate: TASTNode;
+var
+  AToken: TToken;
 begin
-  Result := nil;
+  AToken := FParser.ParseToken(TTokenSets.TSIdent);
+  Result := AToken.WithTokenType(TTIdentifier);
+  AToken.Free;
 end;
 
 { TIdentListRule }
