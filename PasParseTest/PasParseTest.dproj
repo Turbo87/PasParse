@@ -42,5 +42,7 @@
     <DCCReference Include="UTestCompilerDefines.pas" />
     <DCCReference Include="UTestDictionary.pas" />
     <DCCReference Include="UTestLexScanner.pas" />
+    <DCCReference Include="UTestParser.pas" />
+    <DCCReference Include="UTestRelOp.pas" />
   </ItemGroup>
 </Project>

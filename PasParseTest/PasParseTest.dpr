@@ -10,7 +10,9 @@ uses
   UTest in 'UTest.pas',
   UTestDictionary in 'UTestDictionary.pas',
   UTestCompilerDefines in 'UTestCompilerDefines.pas',
-  UTestASTNode in 'UTestASTNode.pas';
+  UTestASTNode in 'UTestASTNode.pas',
+  UTestRelOp in 'UTestRelOp.pas',
+  UTestParser in 'UTestParser.pas';
 
 begin
   try
@@ -18,6 +20,7 @@ begin
     TTestASTNode.Test;
     TTestLexScanner.Test;
     TTestCompilerDefines.Test;
+    TTestRelOp.Test;
   except
     on E:Exception do
       Writeln(E.Classname, ': ', E.Message);
