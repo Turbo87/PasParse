@@ -26,7 +26,6 @@ end;
 
 class procedure TTestExtendedIdent.TestAll;
 var
-  I: Integer;
   AWord: string;
   ATokenType: TTokenType;
 begin
