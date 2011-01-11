@@ -574,7 +574,7 @@ type
 implementation
 
 uses
-  UTokenType, UToken, UListNode, UGeneratedNodes;
+  UTokenType, UToken, UListNode, UGeneratedNodes, UTokenSets;
 
 { TArrayTypeRule }
 
@@ -903,12 +903,16 @@ end;
 
 function TExtendedIdentRule.CanParse: Boolean;
 begin
-  Result := False;
+  Result := FParser.CanParseToken(TTokenSets.TSExtendedIdent);
 end;
 
 function TExtendedIdentRule.Evaluate: TASTNode;
+var
+  AToken: TToken;
 begin
-  Result := nil;
+  AToken := FParser.ParseToken(TTokenSets.TSExtendedIdent);
+  Result := AToken.WithTokenType(TTIdentifier);
+  AToken.Free;
 end;
 
 { TFactorRule }
