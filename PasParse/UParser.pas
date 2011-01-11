@@ -28,8 +28,6 @@ type
     function ParseTokenList(ATokenSet: ITokenSet): TListNode; override;
     function TryParseToken(ATokenType: TTokenType): TToken; override;
 
-    procedure MoveNext; override;
-
   public
     constructor CreateFromText(AText, AFileName: string;
       ACompilerDefines: TCompilerDefines; AFileLoader: TFileLoader);
@@ -52,6 +50,7 @@ type
     function CreateEmptyListNode: TListNode; override;
 
     function Peek(AOffset: Integer): TTokenType; override;
+    procedure MoveNext; override;
 
     function Failure(AExpected: string): EParseException; override;
   end;
