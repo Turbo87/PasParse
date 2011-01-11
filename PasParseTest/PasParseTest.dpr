@@ -27,7 +27,8 @@ uses
   UTestClassOf in 'UTestClassOf.pas',
   UTestBareInherited in 'UTestBareInherited.pas',
   UTestAssemblerStatement in 'UTestAssemblerStatement.pas',
-  UTestAlternator in 'UTestAlternator.pas';
+  UTestAlternator in 'UTestAlternator.pas',
+  UTestLabelId in 'UTestLabelId.pas';
 
 begin
   try
@@ -46,6 +47,7 @@ begin
     TTestFileType.Test;
     TTestIdent.Test;
     TTestIdentList.Test;
+    TTestLabelId.Test;
     TTestMulOp.Test;
     TTestPortabilityDirective.Test;
     TTestQualifiedIdent.Test;

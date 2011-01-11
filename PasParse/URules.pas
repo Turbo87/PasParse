@@ -3,7 +3,7 @@ unit URules;
 interface
 
 uses
-  URule, UASTNode, UIParser, URuleType, UITokenSet;
+  URule, UASTNode, UIParser, URuleType, UITokenSet, UAlternator;
 
 type
   TArrayTypeRule = class(TRule)
@@ -271,7 +271,13 @@ type
   end;
   
   TLabelIdRule = class(TRule)
+  private
+    FAlternator: TAlternator;
+
   public
+    constructor Create(AParser: IParser; ARuleType: TRuleType); override;
+    destructor Destroy; override;
+
     function CanParse: Boolean; override;
     function Evaluate: TASTNode; override;
   end;
@@ -1187,12 +1193,26 @@ end;
 
 function TLabelIdRule.CanParse: Boolean;
 begin
-  Result := False;
+  Result := FAlternator.LookAhead(FParser);
+end;
+
+constructor TLabelIdRule.Create(AParser: IParser; ARuleType: TRuleType);
+begin
+  inherited Create(AParser, ARuleType);
+  FAlternator := TAlternator.Create;
+  FAlternator.AddToken(TTNumber);
+  FAlternator.AddRule(RTIdent);
+end;
+
+destructor TLabelIdRule.Destroy;
+begin
+  FAlternator.Free;
+  inherited;
 end;
 
 function TLabelIdRule.Evaluate: TASTNode;
 begin
-  Result := nil;
+  Result := FAlternator.Execute(FParser);
 end;
 
 { TMethodHeadingRule }
