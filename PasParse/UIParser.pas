@@ -22,6 +22,7 @@ type
     function CanParseToken(ATokenSet: ITokenSet): Boolean; overload; virtual; abstract;
     function CanParseToken(ATokenType: TTokenType): Boolean; overload; virtual; abstract;
     function ParseDelimitedList(AItemRule: TRuleType; ADelimiterType: TTokenType): TListNode; virtual; abstract;
+    function CanParseRule(ARuleType: TRuleType): Boolean; virtual; abstract;
     function ParseRuleInternal(ARuleType: TRuleType): TASTNode; virtual; abstract;
 
     function CreateEmptyListNode: TListNode; virtual; abstract;

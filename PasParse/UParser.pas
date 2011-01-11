@@ -47,7 +47,7 @@ type
     function CanParseToken(ATokenType: TTokenType): Boolean; overload; override;
     function ParseDelimitedList(AItemRule: TRuleType; ADelimiterType: TTokenType): TListNode; override;
     function ParseRule(ARuleType: TRuleType): TASTNode;
-    function CanParseRule(ARuleType: TRuleType): Boolean;
+    function CanParseRule(ARuleType: TRuleType): Boolean; override;
     function ParseRuleInternal(ARuleType: TRuleType): TASTNode; override;
 
     function CreateEmptyListNode: TListNode; override;
