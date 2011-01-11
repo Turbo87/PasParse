@@ -481,7 +481,13 @@ type
   end;
   
   TTypeRule = class(TRule)
+  private
+    FAlternator: TAlternator;
+
   public
+    constructor Create(AParser: IParser; ARuleType: TRuleType); override;
+    destructor Destroy; override;
+
     function CanParse: Boolean; override;
     function Evaluate: TASTNode; override;
   end;
@@ -1624,12 +1630,39 @@ end;
 
 function TTypeRule.CanParse: Boolean;
 begin
-  Result := False;
+  Result := FAlternator.LookAhead(FParser);
+end;
+
+constructor TTypeRule.Create(AParser: IParser; ARuleType: TRuleType);
+begin
+  inherited Create(AParser, ARuleType);
+  FAlternator := TAlternator.Create;
+  FAlternator.AddRule(RTFileType);
+  FAlternator.AddRule(RTStringType);
+  FAlternator.AddRule(RTArrayType);
+  FAlternator.AddRule(RTClassHelperType);
+  FAlternator.AddRule(RTClassOfType);
+  FAlternator.AddRule(RTClassType);
+  FAlternator.AddRule(RTEnumeratedType);
+  FAlternator.AddRule(RTExpressionOrRange);
+  FAlternator.AddRule(RTInterfaceType);
+  FAlternator.AddRule(RTPackedType);
+  FAlternator.AddRule(RTPointerType);
+  FAlternator.AddRule(RTProcedureType);
+  FAlternator.AddRule(RTRecordHelperType);
+  FAlternator.AddRule(RTRecordType);
+  FAlternator.AddRule(RTSetType);
+end;
+
+destructor TTypeRule.Destroy;
+begin
+  FAlternator.Free;
+  inherited;
 end;
 
 function TTypeRule.Evaluate: TASTNode;
 begin
-  Result := nil;
+  Result := FAlternator.Execute(FParser);
 end;
 
 { TTypedConstantRule }
