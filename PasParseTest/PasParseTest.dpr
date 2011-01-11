@@ -22,6 +22,7 @@ uses
   UTestIdent in 'UTestIdent.pas',
   UTestFileType in 'UTestFileType.pas',
   UTestIdentList in 'UTestIdentList.pas',
+  UTestFactor in 'UTestFactor.pas',
   UTestUsedUnit in 'UTestUsedUnit.pas',
   UTestUsesClause in 'UTestUsesClause.pas',
   UTestClassOf in 'UTestClassOf.pas',
@@ -49,6 +50,7 @@ begin
     TTestBareInherited.Test;
     TTestClassOf.Test;
     TTestExtendedIdent.Test;
+    TTestFactor.Test;
     TTestFileType.Test;
     TTestGotoStatement.Test;
     TTestIdent.Test;
