@@ -12,7 +12,7 @@ type
     FRuleType: TRuleType;
 
   public
-    constructor Create(AParser: IParser; ARuleType: TRuleType);
+    constructor Create(AParser: IParser; ARuleType: TRuleType); virtual; 
 
     function CanParse: Boolean; virtual; abstract;
     function Evaluate: TASTNode; virtual; abstract;
