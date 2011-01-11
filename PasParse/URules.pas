@@ -1355,12 +1355,21 @@ end;
 
 function TQualifiedIdentRule.CanParse: Boolean;
 begin
-  Result := False;
+  Result := FParser.CanParseToken(TTokenSets.TSIdent);
 end;
 
 function TQualifiedIdentRule.Evaluate: TASTNode;
+var
+  ADot: TToken;
+  ARight: TASTNode;
 begin
-  Result := nil;
+  Result := FParser.ParseRuleInternal(RTIdent);
+  while FParser.CanParseToken(TTDot) do
+  begin
+    ADot := FParser.ParseToken(TTDot);
+    ARight := FParser.ParseRuleInternal(RTExtendedIdent);
+    Result := TBinaryOperationNode.Create(Result, ADot, ARight);
+  end;
 end;
 
 { TRaiseStatementRule }

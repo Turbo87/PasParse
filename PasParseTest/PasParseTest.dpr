@@ -18,6 +18,7 @@ uses
   UTestPortabilityDirective in 'UTestPortabilityDirective.pas',
   UTestUnaryOperator in 'UTestUnaryOperator.pas',
   UTestExtendedIdent in 'UTestExtendedIdent.pas',
+  UTestQualifiedIdent in 'UTestQualifiedIdent.pas',
   UTestIdent in 'UTestIdent.pas';
 
 begin
@@ -32,6 +33,7 @@ begin
     TTestIdent.Test;
     TTestMulOp.Test;
     TTestPortabilityDirective.Test;
+    TTestQualifiedIdent.Test;
     TTestRelOp.Test;
     TTestUnaryOperator.Test;
   except
