@@ -1688,12 +1688,17 @@ end;
 
 function TVarSectionRule.CanParse: Boolean;
 begin
-  Result := False;
+  Result := FParser.CanParseToken(TTokenSets.TSVarHeader);
 end;
 
 function TVarSectionRule.Evaluate: TASTNode;
+var
+  AVar: TToken;
+  AVarList: TListNode;
 begin
-  Result := nil;
+  AVar := FParser.ParseToken(TTokenSets.TSVarHeader);
+  AVarList := FParser.ParseRequiredRuleList(RTVarDecl);
+  Result := TVarSectionNode.Create(AVar, AVarList);
 end;
 
 { TVisibilityRule }
