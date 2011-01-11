@@ -88,7 +88,7 @@ begin
     Result := FToken.Clone
   else
     raise EParseException.Create('Expected ' + ATokenSet.Name + ' but found ' +
-      DisplayName, Location);
+      DisplayName, Location.Clone);
 end;
 
 procedure TFrame.SetNext(const Value: IFrame);
