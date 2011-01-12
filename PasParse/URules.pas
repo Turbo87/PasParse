@@ -1693,12 +1693,21 @@ end;
 
 function TTermRule.CanParse: Boolean;
 begin
-  Result := False;
+  Result := FParser.CanParseToken(TTokenSets.TSExpression);
 end;
 
 function TTermRule.Evaluate: TASTNode;
+var
+  AOperator: TToken;
+  ARight: TASTNode;
 begin
-  Result := nil;
+  Result := FParser.ParseRuleInternal(RTFactor);
+  while FParser.CanParseRule(RTMulOp) do
+  begin
+    AOperator := FParser.ParseRuleInternal(RTMulOp) as TToken;
+    ARight := FParser.ParseRuleInternal(RTFactor);
+    Result := TBinaryOperationNode.Create(Result, AOperator, ARight);
+  end;
 end;
 
 { TTryStatementRule }
