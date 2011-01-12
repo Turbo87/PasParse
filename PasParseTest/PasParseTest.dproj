@@ -75,6 +75,7 @@
     <DCCReference Include="UTestQualifiedIdent.pas" />
     <DCCReference Include="UTestRaiseStatement.pas" />
     <DCCReference Include="UTestRelOp.pas" />
+    <DCCReference Include="UTestRepeatStatement.pas" />
     <DCCReference Include="UTestSetLiteral.pas" />
     <DCCReference Include="UTestSetType.pas" />
     <DCCReference Include="UTestSimpleExpression.pas" />

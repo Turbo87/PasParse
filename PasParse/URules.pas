@@ -1741,12 +1741,20 @@ end;
 
 function TRepeatStatementRule.CanParse: Boolean;
 begin
-  Result := False;
+  Result := FParser.CanParseToken(TTRepeatKeyword);
 end;
 
 function TRepeatStatementRule.Evaluate: TASTNode;
+var
+  ARepeat, AUntil: TToken;
+  AList: TListNode;
+  ACondition: TASTNode;
 begin
-  Result := nil;
+  ARepeat := FParser.ParseToken(TTRepeatKeyword);
+  AList := FParser.ParseOptionalStatementList;
+  AUntil := FParser.ParseToken(TTUntilKeyword);
+  ACondition := FParser.ParseRuleInternal(RTExpression);
+  Result := TRepeatStatementNode.Create(ARepeat, AList, AUntil, ACondition);
 end;
 
 { TRequiresClauseRule }

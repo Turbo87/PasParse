@@ -55,7 +55,8 @@ uses
   UTestCaseStatement in 'UTestCaseStatement.pas',
   UTestExceptionItem in 'UTestExceptionItem.pas',
   UTestRaiseStatement in 'UTestRaiseStatement.pas',
-  UTestParameterExpression in 'UTestParameterExpression.pas';
+  UTestParameterExpression in 'UTestParameterExpression.pas',
+  UTestRepeatStatement in 'UTestRepeatStatement.pas';
 
 begin
   try
@@ -97,6 +98,7 @@ begin
     TTestQualifiedIdent.Test;
     TTestRaiseStatement.Test;
     TTestRelOp.Test;
+    TTestRepeatStatement.Test;
     TTestSetLiteral.Test;
     TTestSetType.Test;
     TTestSimpleExpression.Test;
