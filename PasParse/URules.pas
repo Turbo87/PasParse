@@ -1735,12 +1735,27 @@ end;
 
 function TStatementRule.CanParse: Boolean;
 begin
-  Result := False;
+  Result := FParser.CanParseRule(RTSimpleStatement);
 end;
 
 function TStatementRule.Evaluate: TASTNode;
+var
+  ALabel, AColon: TToken;
+  AStatement: TASTNode;
 begin
-  Result := nil;
+  if (TTokenSets.TSLabelId.Contains(FParser.Peek(0))) and
+    (FParser.Peek(1) = TTColon) then
+  begin
+    ALabel := FParser.ParseRuleInternal(RTLabelId) as TToken;
+    AColon := FParser.ParseToken(TTColon);
+    AStatement := nil;
+    if FParser.CanParseRule(RTSimpleStatement) then
+      AStatement := FParser.ParseRuleInternal(RTSimpleStatement);
+
+    Result := TLabeledStatementNode.Create(ALabel, AColon, AStatement);
+  end
+  else
+    Result := FParser.ParseRuleInternal(RTSimpleStatement);
 end;
 
 { TStatementListRule }
