@@ -924,12 +924,21 @@ end;
 
 function TExpressionRule.CanParse: Boolean;
 begin
-  Result := False;
+  Result := FParser.CanParseToken(TTokenSets.TSExpression);
 end;
 
 function TExpressionRule.Evaluate: TASTNode;
+var
+  AOperator: TToken;
+  ARight: TASTNode;
 begin
-  Result := nil;
+  Result := FParser.ParseRuleInternal(RTSimpleExpression);
+  while FParser.CanParseRule(RTRelOp) do
+  begin
+    AOperator := FParser.ParseRuleInternal(RTRelOp) as TToken;
+    ARight := FParser.ParseRuleInternal(RTSimpleExpression);
+    Result := TBinaryOperationNode.Create(Result, AOperator, ARight);
+  end;
 end;
 
 { TExpressionListRule }

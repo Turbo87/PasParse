@@ -47,6 +47,7 @@
     <DCCReference Include="UTestClassOf.pas" />
     <DCCReference Include="UTestCompilerDefines.pas" />
     <DCCReference Include="UTestDictionary.pas" />
+    <DCCReference Include="UTestExpression.pas" />
     <DCCReference Include="UTestExtendedIdent.pas" />
     <DCCReference Include="UTestFactor.pas" />
     <DCCReference Include="UTestFileType.pas" />

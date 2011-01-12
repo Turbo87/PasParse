@@ -35,7 +35,8 @@ uses
   UTestParticle in 'UTestParticle.pas',
   UTestAtom in 'UTestAtom.pas',
   UTestTerm in 'UTestTerm.pas',
-  UTestSimpleExpression in 'UTestSimpleExpression.pas';
+  UTestSimpleExpression in 'UTestSimpleExpression.pas',
+  UTestExpression in 'UTestExpression.pas';
 
 begin
   try
@@ -51,6 +52,7 @@ begin
     TTestAtom.Test;
     TTestBareInherited.Test;
     TTestClassOf.Test;
+    TTestExpression.Test;
     TTestExtendedIdent.Test;
     TTestFactor.Test;
     TTestFileType.Test;
