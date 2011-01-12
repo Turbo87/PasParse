@@ -1631,12 +1631,23 @@ end;
 
 function TSetLiteralRule.CanParse: Boolean;
 begin
-  Result := False;
+  Result := FParser.CanParseToken(TTOpenBracket);
 end;
 
 function TSetLiteralRule.Evaluate: TASTNode;
+var
+  AOpen, AClose: TToken;
+  AList: TListNode;
 begin
-  Result := nil;
+  AOpen := FParser.ParseToken(TTOpenBracket);
+  
+  if FParser.CanParseRule(RTExpressionOrRangeList) then
+    AList := FParser.ParseRuleInternal(RTExpressionOrRangeList) as TListNode
+  else
+    AList := FParser.CreateEmptyListNode;
+    
+  AClose := FParser.ParseToken(TTCloseBracket);
+  Result := TSetLiteralNode.Create(AOpen, AList, AClose);
 end;
 
 { TSetTypeRule }

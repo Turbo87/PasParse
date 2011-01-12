@@ -43,7 +43,8 @@ uses
   UTestExpressionOrAssignment in 'UTestExpressionOrAssignment.pas',
   UTestExpressionOrRange in 'UTestExpressionOrRange.pas',
   UTestExpressionOrRangeList in 'UTestExpressionOrRangeList.pas',
-  UTestSetType in 'UTestSetType.pas';
+  UTestSetType in 'UTestSetType.pas',
+  UTestSetLiteral in 'UTestSetLiteral.pas';
 
 begin
   try
@@ -78,6 +79,7 @@ begin
     TTestPortabilityDirective.Test;
     TTestQualifiedIdent.Test;
     TTestRelOp.Test;
+    TTestSetLiteral.Test;
     TTestSetType.Test;
     TTestSimpleExpression.Test;
     TTestTerm.Test;
