@@ -65,7 +65,8 @@ uses
   UTestParameter in 'UTestParameter.pas',
   UTestEnumeratedTypeElement in 'UTestEnumeratedTypeElement.pas',
   UTestEnumeratedType in 'UTestEnumeratedType.pas',
-  UTestMethodReturnType in 'UTestMethodReturnType.pas';
+  UTestMethodReturnType in 'UTestMethodReturnType.pas',
+  UTestExportsSpecifier in 'UTestExportsSpecifier.pas';
 
 begin
   try
@@ -88,6 +89,7 @@ begin
     TTestEnumeratedType.Test;
     TTestEnumeratedTypeElement.Test;
     TTestExceptionItem.Test;
+    TTestExportsSpecifier.Test;
     TTestExpression.Test;
     TTestExpressionList.Test;
     TTestExpressionOrAssignment.Test;

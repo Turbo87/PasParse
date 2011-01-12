@@ -1023,12 +1023,17 @@ end;
 
 function TExportsSpecifierRule.CanParse: Boolean;
 begin
-  Result := False;
+  Result := FParser.CanParseToken(TTokenSets.TSExportsSpecifier);
 end;
 
 function TExportsSpecifierRule.Evaluate: TASTNode;
+var
+  AKeyword: TToken;
+  AValue: TASTNode;
 begin
-  Result := nil;
+  AKeyword := FParser.ParseToken(TTokenSets.TSExportsSpecifier);
+  AValue := FParser.ParseRuleInternal(RTExpression);
+  Result := TExportsSpecifierNode.Create(AKeyword, AValue);
 end;
 
 { TExportsStatementRule }

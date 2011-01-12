@@ -54,6 +54,7 @@
     <DCCReference Include="UTestEnumeratedType.pas" />
     <DCCReference Include="UTestEnumeratedTypeElement.pas" />
     <DCCReference Include="UTestExceptionItem.pas" />
+    <DCCReference Include="UTestExportsSpecifier.pas" />
     <DCCReference Include="UTestExpression.pas" />
     <DCCReference Include="UTestExpressionList.pas" />
     <DCCReference Include="UTestExpressionOrAssignment.pas" />
