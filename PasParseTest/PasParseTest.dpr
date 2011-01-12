@@ -53,7 +53,8 @@ uses
   UTestStatementList in 'UTestStatementList.pas',
   UTestCaseSelector in 'UTestCaseSelector.pas',
   UTestCaseStatement in 'UTestCaseStatement.pas',
-  UTestExceptionItem in 'UTestExceptionItem.pas';
+  UTestExceptionItem in 'UTestExceptionItem.pas',
+  UTestRaiseStatement in 'UTestRaiseStatement.pas';
 
 begin
   try
@@ -92,6 +93,7 @@ begin
     TTestParticle.Test;
     TTestPortabilityDirective.Test;
     TTestQualifiedIdent.Test;
+    TTestRaiseStatement.Test;
     TTestRelOp.Test;
     TTestSetLiteral.Test;
     TTestSetType.Test;

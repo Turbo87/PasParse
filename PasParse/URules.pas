@@ -1656,12 +1656,29 @@ end;
 
 function TRaiseStatementRule.CanParse: Boolean;
 begin
-  Result := False;
+  Result := FParser.CanParseToken(TTRaiseKeyword);
 end;
 
 function TRaiseStatementRule.Evaluate: TASTNode;
+var
+  ARaise, AAt: TToken;
+  AException, AAddress: TASTNode;
 begin
-  Result := nil;
+  ARaise := FParser.ParseToken(TTRaiseKeyword);
+  AException := nil;
+  AAt := nil;
+  AAddress := nil;
+  if FParser.CanParseRule(RTExpression) then
+  begin
+    AException := FParser.ParseRuleInternal(RTExpression);
+    if FParser.CanParseToken(TTAtSemikeyword) then
+    begin
+      AAt := FParser.ParseToken(TTAtSemikeyword);
+      AAddress := FParser.ParseRuleInternal(RTExpression);
+    end;
+  end;
+
+  Result := TRaiseStatementNode.Create(ARaise, AException, AAt, AAddress);
 end;
 
 { TRecordFieldConstantRule }
