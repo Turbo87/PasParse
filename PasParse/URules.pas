@@ -999,12 +999,12 @@ end;
 
 function TExpressionOrRangeListRule.CanParse: Boolean;
 begin
-  Result := False;
+  Result := FParser.CanParseToken(TTokenSets.TSExpression);
 end;
 
 function TExpressionOrRangeListRule.Evaluate: TASTNode;
 begin
-  Result := nil;
+  Result := FParser.ParseDelimitedList(RTExpressionOrRange, TTComma);
 end;
 
 { TExtendedIdentRule }

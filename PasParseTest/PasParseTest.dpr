@@ -40,7 +40,8 @@ uses
   UTestParenthesizedExpression in 'UTestParenthesizedExpression.pas',
   UTestExpressionList in 'UTestExpressionList.pas',
   UTestExpressionOrAssignment in 'UTestExpressionOrAssignment.pas',
-  UTestExpressionOrRange in 'UTestExpressionOrRange.pas';
+  UTestExpressionOrRange in 'UTestExpressionOrRange.pas',
+  UTestExpressionOrRangeList in 'UTestExpressionOrRangeList.pas';
 
 begin
   try
@@ -60,6 +61,7 @@ begin
     TTestExpressionList.Test;
     TTestExpressionOrAssignment.Test;
     TTestExpressionOrRange.Test;
+    TTestExpressionOrRangeList.Test;
     TTestExtendedIdent.Test;
     TTestFactor.Test;
     TTestFileType.Test;
