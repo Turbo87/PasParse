@@ -50,7 +50,8 @@ uses
   UTestWhileStatement in 'UTestWhileStatement.pas',
   UTestWithStatement in 'UTestWithStatement.pas',
   UTestBlock in 'UTestBlock.pas',
-  UTestStatementList in 'UTestStatementList.pas';
+  UTestStatementList in 'UTestStatementList.pas',
+  UTestCaseSelector in 'UTestCaseSelector.pas';
 
 begin
   try
@@ -67,6 +68,7 @@ begin
     TTestAtom.Test;
     TTestBareInherited.Test;
     TTestBlock.Test;
+    TTestCaseSelector.Test;
     TTestClassOf.Test;
     TTestExpression.Test;
     TTestExpressionList.Test;

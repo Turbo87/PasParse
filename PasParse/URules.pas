@@ -772,12 +772,27 @@ end;
 
 function TCaseSelectorRule.CanParse: Boolean;
 begin
-  Result := False;
+  Result := FParser.CanParseRule(RTExpressionOrRangeList);
 end;
 
 function TCaseSelectorRule.Evaluate: TASTNode;
+var
+  AValues: TListNode;
+  AColon, ASemicolon: TToken;
+  AStatement: TASTNode;
 begin
-  Result := nil;
+  AValues := FParser.ParseDelimitedList(RTExpressionOrRange, TTComma);
+  AColon := FParser.ParseToken(TTColon);
+
+  AStatement := nil;
+  if FParser.CanParseRule(RTStatement) then
+    AStatement := FParser.ParseRuleInternal(RTStatement);
+
+  ASemicolon := nil;
+  if FParser.CanParseToken(TTSemicolon) then
+    ASemicolon := FParser.ParseToken(TTSemicolon);
+
+  Result := TCaseSelectorNode.Create(AValues, AColon, AStatement, ASemicolon);
 end;
 
 { TCaseStatementRule }

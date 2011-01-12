@@ -46,6 +46,7 @@
     <DCCReference Include="UTestAtom.pas" />
     <DCCReference Include="UTestBareInherited.pas" />
     <DCCReference Include="UTestBlock.pas" />
+    <DCCReference Include="UTestCaseSelector.pas" />
     <DCCReference Include="UTestClassOf.pas" />
     <DCCReference Include="UTestCompilerDefines.pas" />
     <DCCReference Include="UTestDictionary.pas" />
