@@ -957,12 +957,21 @@ end;
 
 function TExpressionOrAssignmentRule.CanParse: Boolean;
 begin
-  Result := False;
+  Result := FParser.CanParseToken(TTokenSets.TSExpression);
 end;
 
 function TExpressionOrAssignmentRule.Evaluate: TASTNode;
+var
+  AOperator: TToken;
+  ARight: TASTNode;
 begin
-  Result := nil;
+  Result := FParser.ParseRuleInternal(RTExpression);
+  if FParser.CanParseToken(TTColonEquals) then
+  begin
+    AOperator := FParser.ParseToken(TTColonEquals);
+    ARight := FParser.ParseRuleInternal(RTExpression);
+    Result := TBinaryOperationNode.Create(Result, AOperator, ARight);
+  end;
 end;
 
 { TExpressionOrRangeRule }

@@ -38,7 +38,8 @@ uses
   UTestSimpleExpression in 'UTestSimpleExpression.pas',
   UTestExpression in 'UTestExpression.pas',
   UTestParenthesizedExpression in 'UTestParenthesizedExpression.pas',
-  UTestExpressionList in 'UTestExpressionList.pas';
+  UTestExpressionList in 'UTestExpressionList.pas',
+  UTestExpressionOrAssignment in 'UTestExpressionOrAssignment.pas';
 
 begin
   try
@@ -56,6 +57,7 @@ begin
     TTestClassOf.Test;
     TTestExpression.Test;
     TTestExpressionList.Test;
+    TTestExpressionOrAssignment.Test;
     TTestExtendedIdent.Test;
     TTestFactor.Test;
     TTestFileType.Test;
