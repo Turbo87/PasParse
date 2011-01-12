@@ -36,7 +36,8 @@ uses
   UTestAtom in 'UTestAtom.pas',
   UTestTerm in 'UTestTerm.pas',
   UTestSimpleExpression in 'UTestSimpleExpression.pas',
-  UTestExpression in 'UTestExpression.pas';
+  UTestExpression in 'UTestExpression.pas',
+  UTestParenthesizedExpression in 'UTestParenthesizedExpression.pas';
 
 begin
   try
@@ -61,6 +62,7 @@ begin
     TTestIdentList.Test;
     TTestLabelId.Test;
     TTestMulOp.Test;
+    TTestParenthesizedExpression.Test;
     TTestParticle.Test;
     TTestPortabilityDirective.Test;
     TTestQualifiedIdent.Test;

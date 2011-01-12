@@ -1410,12 +1410,18 @@ end;
 
 function TParenthesizedExpressionRule.CanParse: Boolean;
 begin
-  Result := False;
+  Result := FParser.CanParseToken(TTOpenParenthesis);
 end;
 
 function TParenthesizedExpressionRule.Evaluate: TASTNode;
+var
+  AOpen, AClose: TToken;
+  AExpression: TASTNode;
 begin
-  Result := nil;
+  AOpen := FParser.ParseToken(TTOpenParenthesis);
+  AExpression := FParser.ParseRuleInternal(RTExpression);
+  AClose := FParser.ParseToken(TTCloseParenthesis);
+  Result := TParenthesizedExpressionNode.Create(AOpen, AExpression, AClose);
 end;
 
 { TParticleRule }
