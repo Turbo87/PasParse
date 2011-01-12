@@ -73,6 +73,7 @@
     <DCCReference Include="UTestSetType.pas" />
     <DCCReference Include="UTestSimpleExpression.pas" />
     <DCCReference Include="UTestStatement.pas" />
+    <DCCReference Include="UTestStatementList.pas" />
     <DCCReference Include="UTestTerm.pas" />
     <DCCReference Include="UTestUnaryOperator.pas" />
     <DCCReference Include="UTestUsedUnit.pas" />

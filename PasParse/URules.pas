@@ -311,7 +311,7 @@ type
     function CanParse: Boolean; override;
     function Evaluate: TASTNode; override;
   end;
-  
+
   TPackageRule = class(TRule)
   public
     function CanParse: Boolean; override;
@@ -395,7 +395,7 @@ type
     function CanParse: Boolean; override;
     function Evaluate: TASTNode; override;
   end;
-  
+
   TRaiseStatementRule = class(TRule)
   public
     function CanParse: Boolean; override;
@@ -587,18 +587,19 @@ type
     function CanParse: Boolean; override;
     function Evaluate: TASTNode; override;
   end;
-  
+
   TWithStatementRule = class(TRule)
   public
     function CanParse: Boolean; override;
     function Evaluate: TASTNode; override;
   end;
-  
+
 
 implementation
 
 uses
-  UTokenType, UToken, UListNode, UGeneratedNodes, UTokenSets, UParseException;
+  UTokenType, UToken, UListNode, UGeneratedNodes, UTokenSets, UParseException,
+  UDelimitedItemNode, Contnrs;
 
 { TArrayTypeRule }
 
@@ -1783,12 +1784,32 @@ end;
 
 function TStatementListRule.CanParse: Boolean;
 begin
-  Result := False;
+  Result := (FParser.CanParseRule(RTStatement)) or
+    (FParser.CanParseToken(TTSemicolon));
 end;
 
 function TStatementListRule.Evaluate: TASTNode;
+var
+  AItems: TObjectList;
+  AItem: TASTNode;
+  ADelimiter: TToken;
 begin
-  Result := nil;
+  AItems := TObjectList.Create(False);
+  while (FParser.CanParseRule(RTStatement)) or
+    (FParser.CanParseToken(TTSemicolon)) do
+  begin
+    AItem := nil;
+    if FParser.CanParseRule(RTStatement) then
+      AItem := FParser.ParseRuleInternal(RTStatement);
+
+    ADelimiter := nil;
+    if FParser.CanParseToken(TTSemicolon) then
+      ADelimiter := FParser.ParseToken(TTSemicolon);
+
+    AItems.Add(TDelimitedItemNode.Create(AItem, ADelimiter));
+  end;
+  Result := TListNode.Create(AItems);
+  AItems.Free;
 end;
 
 { TStringTypeRule }

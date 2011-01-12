@@ -48,7 +48,8 @@ uses
   UTestIfStatement in 'UTestIfStatement.pas',
   UTestStatement in 'UTestStatement.pas',
   UTestWhileStatement in 'UTestWhileStatement.pas',
-  UTestWithStatement in 'UTestWithStatement.pas';
+  UTestWithStatement in 'UTestWithStatement.pas',
+  UTestStatementList in 'UTestStatementList.pas';
 
 begin
   try
@@ -88,6 +89,7 @@ begin
     TTestSetType.Test;
     TTestSimpleExpression.Test;
     TTestStatement.Test;
+    TTestStatementList.Test;
     TTestTerm.Test;
     TTestUnaryOperator.Test;
     TTestUsedUnit.Test;
