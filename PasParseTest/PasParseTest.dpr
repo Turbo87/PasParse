@@ -46,7 +46,8 @@ uses
   UTestSetType in 'UTestSetType.pas',
   UTestSetLiteral in 'UTestSetLiteral.pas',
   UTestIfStatement in 'UTestIfStatement.pas',
-  UTestStatement in 'UTestStatement.pas';
+  UTestStatement in 'UTestStatement.pas',
+  UTestWhileStatement in 'UTestWhileStatement.pas';
 
 begin
   try
@@ -91,6 +92,7 @@ begin
     TTestUsedUnit.Test;
     TTestUsesClause.Test;
     TTestVisibility.Test;
+    TTestWhileStatement.Test;
   except
     on E:Exception do
       Writeln(E.Classname, ': ', E.Message);
