@@ -80,6 +80,7 @@
     <DCCReference Include="UTestSetLiteral.pas" />
     <DCCReference Include="UTestSetType.pas" />
     <DCCReference Include="UTestSimpleExpression.pas" />
+    <DCCReference Include="UTestSimpleStatement.pas" />
     <DCCReference Include="UTestStatement.pas" />
     <DCCReference Include="UTestStatementList.pas" />
     <DCCReference Include="UTestTerm.pas" />
