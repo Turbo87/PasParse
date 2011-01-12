@@ -47,7 +47,8 @@ uses
   UTestSetLiteral in 'UTestSetLiteral.pas',
   UTestIfStatement in 'UTestIfStatement.pas',
   UTestStatement in 'UTestStatement.pas',
-  UTestWhileStatement in 'UTestWhileStatement.pas';
+  UTestWhileStatement in 'UTestWhileStatement.pas',
+  UTestWithStatement in 'UTestWithStatement.pas';
 
 begin
   try
@@ -93,6 +94,7 @@ begin
     TTestUsesClause.Test;
     TTestVisibility.Test;
     TTestWhileStatement.Test;
+    TTestWithStatement.Test;
   except
     on E:Exception do
     begin

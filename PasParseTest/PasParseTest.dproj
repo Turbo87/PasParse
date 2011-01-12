@@ -79,5 +79,6 @@
     <DCCReference Include="UTestUsesClause.pas" />
     <DCCReference Include="UTestVisibility.pas" />
     <DCCReference Include="UTestWhileStatement.pas" />
+    <DCCReference Include="UTestWithStatement.pas" />
   </ItemGroup>
 </Project>
