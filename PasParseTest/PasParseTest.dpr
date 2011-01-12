@@ -66,7 +66,8 @@ uses
   UTestEnumeratedTypeElement in 'UTestEnumeratedTypeElement.pas',
   UTestEnumeratedType in 'UTestEnumeratedType.pas',
   UTestMethodReturnType in 'UTestMethodReturnType.pas',
-  UTestExportsSpecifier in 'UTestExportsSpecifier.pas';
+  UTestExportsSpecifier in 'UTestExportsSpecifier.pas',
+  UTestDirective in 'UTestDirective.pas';
 
 begin
   try
@@ -86,6 +87,7 @@ begin
     TTestCaseSelector.Test;
     TTestCaseStatement.Test;
     TTestClassOf.Test;
+    TTestDirective.Test;
     TTestEnumeratedType.Test;
     TTestEnumeratedTypeElement.Test;
     TTestExceptionItem.Test;

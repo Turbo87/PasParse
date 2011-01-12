@@ -617,7 +617,7 @@ implementation
 
 uses
   UTokenType, UToken, UListNode, UGeneratedNodes, UTokenSets, UParseException,
-  UDelimitedItemNode, Contnrs;
+  UDelimitedItemNode, UTokenSet, Contnrs;
 
 { TArrayTypeRule }
 
@@ -909,12 +909,58 @@ end;
 
 function TDirectiveRule.CanParse: Boolean;
 begin
-  Result := False;
+  Result := TTokenSets.TSDirective.Contains(FParser.Peek(0)) or
+    ((FParser.Peek(0) = TTSemicolon) and
+    TTokenSets.TSDirective.Contains(FParser.Peek(1)));
 end;
 
 function TDirectiveRule.Evaluate: TASTNode;
+var
+  AParameterizedDirectives: TTokenSet;
+  ASemicolon, ADirective: TToken;
+  AValue, AData: TASTNode;
 begin
   Result := nil;
+  AParameterizedDirectives := TTokenSet.Create('''dispid'' or ''message''');
+  try
+    AParameterizedDirectives.Add(TTDispIdSemikeyword);
+    AParameterizedDirectives.Add(TTMessageSemikeyword);
+
+    ASemicolon := nil;
+    if FParser.CanParseToken(TTSemicolon) then
+      ASemicolon := FParser.ParseToken(TTSemicolon);
+
+    AValue := nil;
+    AData := FParser.CreateEmptyListNode;
+    if FParser.CanParseToken(AParameterizedDirectives) then
+    begin
+      ADirective := FParser.ParseToken(AParameterizedDirectives);
+      try
+        AValue := FParser.ParseRuleInternal(RTExpression);
+      except
+        ASemicolon.Free;
+        AData.Free;
+        ADirective.Free;
+        raise;
+      end;
+    end
+    else if FParser.CanParseToken(TTExternalSemikeyword) then
+    begin
+      ADirective := FParser.ParseToken(TTExternalSemikeyword);
+      if FParser.CanParseRule(RTExpression) then
+      begin
+        AValue := FParser.ParseRuleInternal(RTExpression);
+        AData.Free;
+        AData := FParser.ParseOptionalRuleList(RTExportsSpecifier);
+      end;
+    end
+    else
+      ADirective := FParser.ParseToken(TTokenSets.TSDirective);
+
+    Result := TDirectiveNode.Create(ASemicolon, ADirective, AValue, AData);
+  finally
+    AParameterizedDirectives.Free;
+  end;
 end;
 
 { TEnumeratedTypeRule }
