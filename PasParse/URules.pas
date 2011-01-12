@@ -343,7 +343,13 @@ type
   end;
   
   TParameterTypeRule = class(TRule)
+  private
+    FAlternator: TAlternator;
+
   public
+    constructor Create(AParser: IParser; ARuleType: TRuleType); override;
+    destructor Destroy; override;
+
     function CanParse: Boolean; override;
     function Evaluate: TASTNode; override;
   end;
@@ -1592,12 +1598,28 @@ end;
 
 function TParameterTypeRule.CanParse: Boolean;
 begin
-  Result := False;
+  Result := FAlternator.LookAhead(FParser);
+end;
+
+constructor TParameterTypeRule.Create(AParser: IParser; ARuleType: TRuleType);
+begin
+  inherited Create(AParser, ARuleType);
+  FAlternator := TAlternator.Create;
+  FAlternator.AddRule(RTQualifiedIdent);
+  FAlternator.AddRule(RTOpenArray);
+  FAlternator.AddToken(TTFileKeyword);
+  FAlternator.AddToken(TTStringKeyword);
+end;
+
+destructor TParameterTypeRule.Destroy;
+begin
+  FAlternator.Free;
+  inherited;
 end;
 
 function TParameterTypeRule.Evaluate: TASTNode;
 begin
-  Result := nil;
+  Result := FAlternator.Execute(FParser);
 end;
 
 { TParenthesizedExpressionRule }

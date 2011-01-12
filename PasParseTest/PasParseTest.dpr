@@ -60,7 +60,8 @@ uses
   UTestForStatement in 'UTestForStatement.pas',
   UTestTryStatement in 'UTestTryStatement.pas',
   UTestSimpleStatement in 'UTestSimpleStatement.pas',
-  UTestOpenArray in 'UTestOpenArray.pas';
+  UTestOpenArray in 'UTestOpenArray.pas',
+  UTestParameterType in 'UTestParameterType.pas';
 
 begin
   try
@@ -98,6 +99,7 @@ begin
     TTestMulOp.Test;
     TTestOpenArray.Test;
     TTestParameterExpression.Test;
+    TTestParameterType.Test;
     TTestParenthesizedExpression.Test;
     TTestParticle.Test;
     TTestPortabilityDirective.Test;

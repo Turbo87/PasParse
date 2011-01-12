@@ -70,6 +70,7 @@
     <DCCReference Include="UTestMulOp.pas" />
     <DCCReference Include="UTestOpenArray.pas" />
     <DCCReference Include="UTestParameterExpression.pas" />
+    <DCCReference Include="UTestParameterType.pas" />
     <DCCReference Include="UTestParenthesizedExpression.pas" />
     <DCCReference Include="UTestParser.pas" />
     <DCCReference Include="UTestParticle.pas" />
