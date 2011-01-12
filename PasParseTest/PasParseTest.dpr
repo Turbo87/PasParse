@@ -42,7 +42,8 @@ uses
   UTestExpressionList in 'UTestExpressionList.pas',
   UTestExpressionOrAssignment in 'UTestExpressionOrAssignment.pas',
   UTestExpressionOrRange in 'UTestExpressionOrRange.pas',
-  UTestExpressionOrRangeList in 'UTestExpressionOrRangeList.pas';
+  UTestExpressionOrRangeList in 'UTestExpressionOrRangeList.pas',
+  UTestSetType in 'UTestSetType.pas';
 
 begin
   try
@@ -77,6 +78,7 @@ begin
     TTestPortabilityDirective.Test;
     TTestQualifiedIdent.Test;
     TTestRelOp.Test;
+    TTestSetType.Test;
     TTestSimpleExpression.Test;
     TTestTerm.Test;
     TTestUnaryOperator.Test;

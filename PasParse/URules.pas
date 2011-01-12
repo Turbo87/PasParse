@@ -1643,12 +1643,18 @@ end;
 
 function TSetTypeRule.CanParse: Boolean;
 begin
-  Result := False;
+  Result := FParser.CanParseToken(TTSetKeyword);
 end;
 
 function TSetTypeRule.Evaluate: TASTNode;
+var
+  ASet, AOf: TToken;
+  AType: TASTNode;
 begin
-  Result := nil;
+  ASet := FParser.ParseToken(TTSetKeyword);
+  AOf := FParser.ParseToken(TTOfKeyword);
+  AType := FParser.ParseRuleInternal(RTType);
+  Result := TSetOfNode.Create(ASet, AOf, AType);
 end;
 
 { TSimpleExpressionRule }
