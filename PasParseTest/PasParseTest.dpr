@@ -34,7 +34,8 @@ uses
   UTestGotoStatement in 'UTestGotoStatement.pas',
   UTestParticle in 'UTestParticle.pas',
   UTestAtom in 'UTestAtom.pas',
-  UTestTerm in 'UTestTerm.pas';
+  UTestTerm in 'UTestTerm.pas',
+  UTestSimpleExpression in 'UTestSimpleExpression.pas';
 
 begin
   try
@@ -62,6 +63,7 @@ begin
     TTestPortabilityDirective.Test;
     TTestQualifiedIdent.Test;
     TTestRelOp.Test;
+    TTestSimpleExpression.Test;
     TTestTerm.Test;
     TTestUnaryOperator.Test;
     TTestUsedUnit.Test;

@@ -1622,12 +1622,21 @@ end;
 
 function TSimpleExpressionRule.CanParse: Boolean;
 begin
-  Result := False;
+  Result := FParser.CanParseToken(TTokenSets.TSExpression);
 end;
 
 function TSimpleExpressionRule.Evaluate: TASTNode;
+var
+  AOperator: TToken;
+  ARight: TASTNode;
 begin
-  Result := nil;
+  Result := FParser.ParseRuleInternal(RTTerm);
+  while FParser.CanParseRule(RTAddOp) do
+  begin
+    AOperator := FParser.ParseRuleInternal(RTAddOp) as TToken;
+    ARight := FParser.ParseRuleInternal(RTTerm);
+    Result := TBinaryOperationNode.Create(Result, AOperator, ARight);
+  end;
 end;
 
 { TSimpleStatementRule }

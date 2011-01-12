@@ -61,6 +61,7 @@
     <DCCReference Include="UTestPortabilityDirective.pas" />
     <DCCReference Include="UTestQualifiedIdent.pas" />
     <DCCReference Include="UTestRelOp.pas" />
+    <DCCReference Include="UTestSimpleExpression.pas" />
     <DCCReference Include="UTestTerm.pas" />
     <DCCReference Include="UTestUnaryOperator.pas" />
     <DCCReference Include="UTestUsedUnit.pas" />
