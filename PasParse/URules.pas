@@ -1534,12 +1534,67 @@ end;
 
 function TMethodHeadingRule.CanParse: Boolean;
 begin
-  Result := False;
+  Result := ((FParser.Peek(0) = TTClassKeyword) and
+    (TTokenSets.TSMethodType.Contains(FParser.Peek(1))) or
+    (FParser.CanParseToken(TTokenSets.TSMethodType)));
 end;
 
 function TMethodHeadingRule.Evaluate: TASTNode;
+var
+  AClass, AMethodType, AEquals, AImplementationMethod, ASemicolon,
+  AOpen, AClose, AColon: TToken;
+  AName, AInterfaceMethod, AReturnType: TASTNode;
+  AParameterList, ADirectiveList: TListNode;
 begin
-  Result := nil;
+  AClass := nil;
+  if FParser.CanParseToken(TTClassKeyword) then
+    AClass := FParser.ParseToken(TTClassKeyword);
+
+  AMethodType := FParser.ParseToken(TTokenSets.TSMethodType);
+  AName := FParser.ParseRuleInternal(RTQualifiedIdent);
+
+  if FParser.CanParseToken(TTEqualSign) then
+  begin
+    AInterfaceMethod := AName;
+    AEquals := FParser.ParseToken(TTEqualSign);
+    AImplementationMethod := FParser.ParseRuleInternal(RTIdent) as TToken;
+    ASemicolon := FParser.ParseToken(TTSemicolon);
+    Result := TMethodResolutionNode.Create(AMethodType, AInterfaceMethod,
+      AEquals, AImplementationMethod, ASemicolon);
+  end
+  else
+  begin
+    AOpen := nil;
+    AParameterList := FParser.CreateEmptyListNode;
+    AClose := nil;
+    if FParser.CanParseToken(TTOpenParenthesis) then
+    begin
+      AOpen := FParser.ParseToken(TTOpenParenthesis);
+      if FParser.CanParseRule(RTParameter) then
+      begin
+        AParameterList.Free;
+        AParameterList := FParser.ParseDelimitedList(RTParameter, TTSemicolon);
+      end;
+      AClose := FParser.ParseToken(TTCloseParenthesis);
+    end;
+
+    AColon := nil;
+    AReturnType := nil;
+    if FParser.CanParseToken(TTColon) then
+    begin
+      AColon := FParser.ParseToken(TTColon);
+      AReturnType := FParser.ParseRuleInternal(RTMethodReturnType);
+    end;
+
+    ADirectiveList := FParser.ParseOptionalRuleList(RTDirective);
+
+    ASemicolon := nil;
+    if FParser.CanParseToken(TTSemicolon) then
+      ASemicolon := FParser.ParseToken(TTSemicolon);
+
+    Result := TMethodHeadingNode.Create(AClass, AMethodType, AName, AOpen,
+      AParameterList, AClose, AColon, AReturnType, ADirectiveList, ASemicolon);
+  end;
 end;
 
 { TMethodImplementationRule }

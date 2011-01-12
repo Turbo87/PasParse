@@ -66,6 +66,7 @@ uses
   UTestEnumeratedTypeElement in 'UTestEnumeratedTypeElement.pas',
   UTestEnumeratedType in 'UTestEnumeratedType.pas',
   UTestMethodReturnType in 'UTestMethodReturnType.pas',
+  UTestMethodHeading in 'UTestMethodHeading.pas',
   UTestExportsSpecifier in 'UTestExportsSpecifier.pas',
   UTestDirective in 'UTestDirective.pas';
 
@@ -106,6 +107,7 @@ begin
     TTestIdentList.Test;
     TTestIfStatement.Test;
     TTestLabelId.Test;
+    TTestMethodHeading.Test;
     TTestMethodReturnType.Test;
     TTestMulOp.Test;
     TTestOpenArray.Test;
