@@ -60,6 +60,7 @@
     <DCCReference Include="UTestExtendedIdent.pas" />
     <DCCReference Include="UTestFactor.pas" />
     <DCCReference Include="UTestFileType.pas" />
+    <DCCReference Include="UTestForStatement.pas" />
     <DCCReference Include="UTestGotoStatement.pas" />
     <DCCReference Include="UTestIdent.pas" />
     <DCCReference Include="UTestIdentList.pas" />

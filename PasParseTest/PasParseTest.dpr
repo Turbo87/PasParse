@@ -56,7 +56,8 @@ uses
   UTestExceptionItem in 'UTestExceptionItem.pas',
   UTestRaiseStatement in 'UTestRaiseStatement.pas',
   UTestParameterExpression in 'UTestParameterExpression.pas',
-  UTestRepeatStatement in 'UTestRepeatStatement.pas';
+  UTestRepeatStatement in 'UTestRepeatStatement.pas',
+  UTestForStatement in 'UTestForStatement.pas';
 
 begin
   try
@@ -85,6 +86,7 @@ begin
     TTestExtendedIdent.Test;
     TTestFactor.Test;
     TTestFileType.Test;
+    TTestForStatement.Test;
     TTestGotoStatement.Test;
     TTestIdent.Test;
     TTestIdentList.Test;

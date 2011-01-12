@@ -1193,12 +1193,43 @@ end;
 
 function TForStatementRule.CanParse: Boolean;
 begin
-  Result := False;
+  Result := FParser.CanParseToken(TTForKeyword);
 end;
 
 function TForStatementRule.Evaluate: TASTNode;
+var
+  AFor, ALoopVariable, AIn, ADo, AColonEquals, ADirection: TToken;
+  AExpression, AStatement, AStartingValue, AEndingValue: TASTNode;
 begin
-  Result := nil;
+  AFor := FParser.ParseToken(TTForKeyword);
+  ALoopVariable := FParser.ParseRuleInternal(RTIdent) as TToken;
+
+  if FParser.CanParseToken(TTInKeyword) then
+  begin
+    AIn := FParser.ParseToken(TTInKeyword);
+    AExpression := FParser.ParseRuleInternal(RTExpression);
+    ADo := FParser.ParseToken(TTDoKeyword);
+    AStatement := nil;
+    if FParser.CanParseRule(RTStatement) then
+      AStatement := FParser.ParseRuleInternal(RTStatement);
+
+    Result := TForInStatementNode.Create(AFor, ALoopVariable, AIn, AExpression,
+      ADo, AStatement);
+  end
+  else
+  begin
+    AColonEquals := FParser.ParseToken(TTColonEquals);
+    AStartingValue := FParser.ParseRuleInternal(RTExpression);
+    ADirection := FParser.ParseToken(TTokenSets.TSForDirection);
+    AEndingValue := FParser.ParseRuleInternal(RTExpression);
+    ADo := FParser.ParseToken(TTDoKeyword);
+    AStatement := nil;
+    if FParser.CanParseRule(RTStatement) then
+      AStatement := FParser.ParseRuleInternal(RTStatement);
+
+    Result := TForStatementNode.Create(AFor, ALoopVariable, AColonEquals,
+      AStartingValue, ADirection, AEndingValue, ADo, AStatement);
+  end;
 end;
 
 { TGoalRule }
