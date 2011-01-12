@@ -799,12 +799,33 @@ end;
 
 function TCaseStatementRule.CanParse: Boolean;
 begin
-  Result := False;
+  Result := FParser.CanParseToken(TTCaseKeyword);
 end;
 
 function TCaseStatementRule.Evaluate: TASTNode;
+var
+  ACase, AOf, AElse, AEnd: TToken;
+  AExpression: TASTNode;
+  ASelectorList, AElseStatements: TListNode;
 begin
-  Result := nil;
+  ACase := FParser.ParseToken(TTCaseKeyword);
+  AExpression := FParser.ParseRuleInternal(RTExpression);
+  AOf := FParser.ParseToken(TTOfKeyword);
+  ASelectorList := FParser.ParseRequiredRuleList(RTCaseSelector);
+  AElse := nil;
+  if FParser.CanParseToken(TTElseKeyword) then
+  begin
+    AElse := FParser.ParseToken(TTElseKeyword);
+    if FParser.CanParseRule(RTStatementList) then
+      AElseStatements := FParser.ParseRuleInternal(RTStatementList) as TListNode
+    else
+      AElseStatements := FParser.CreateEmptyListNode;
+  end
+  else
+    AElseStatements := FParser.CreateEmptyListNode;
+  AEnd := FParser.ParseToken(TTEndKeyword);
+  Result := TCaseStatementNode.Create(ACase, AExpression, AOf, ASelectorList,
+    AElse, AElseStatements, AEnd);
 end;
 
 { TClassHelperTypeRule }
