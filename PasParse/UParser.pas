@@ -89,8 +89,12 @@ begin
 end;
 
 function TParser.CreateEmptyListNode: TListNode;
+var
+  AList: TObjectList;
 begin
-  Result := TListNode.Create(TObjectList.Create(False));
+  AList := TObjectList.Create;
+  Result := TListNode.Create(AList);
+  AList.Free;
 end;
 
 constructor TParser.CreateFromFrame(AFrame: IFrame);
