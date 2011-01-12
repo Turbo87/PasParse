@@ -19,6 +19,7 @@ type
     function CanParseToken(ATokenType: TTokenType): Boolean; overload; virtual; abstract;
     function ParseDelimitedList(AItemRule: TRuleType; ADelimiterType: TTokenType): TListNode; virtual; abstract;
     function ParseRequiredRuleList(ARuleType: TRuleType): TListNode; virtual; abstract;
+    function ParseOptionalRuleList(ARuleType: TRuleType): TListNode; virtual; abstract;
     function ParseOptionalStatementList: TListNode; virtual; abstract;
     function CanParseRule(ARuleType: TRuleType): Boolean; virtual; abstract;
     function ParseRuleInternal(ARuleType: TRuleType): TASTNode; virtual; abstract;
