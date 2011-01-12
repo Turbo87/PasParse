@@ -2055,12 +2055,22 @@ end;
 
 function TWhileStatementRule.CanParse: Boolean;
 begin
-  Result := False;
+  Result := FParser.CanParseToken(TTWhileKeyword);
 end;
 
 function TWhileStatementRule.Evaluate: TASTNode;
+var
+  AWhile, ADo: TToken;
+  ACondition, AStatement: TASTNode;
 begin
-  Result := nil;
+  AWhile := FParser.ParseToken(TTWhileKeyword);
+  ACondition := FParser.ParseRuleInternal(RTExpression);
+  ADo := FParser.ParseToken(TTDoKeyword);
+  AStatement := nil;
+  if FParser.CanParseRule(RTStatement) then
+    AStatement := FParser.ParseRuleInternal(RTStatement);
+
+  Result := TWhileStatementNode.Create(AWhile, ACondition, ADo, AStatement);
 end;
 
 { TWithStatementRule }
