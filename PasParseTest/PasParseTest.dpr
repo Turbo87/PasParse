@@ -13,6 +13,7 @@ uses
   UTestASTNode in 'UTestASTNode.pas',
   UTestRelOp in 'UTestRelOp.pas',
   UTestParser in 'UTestParser.pas',
+  UTestArrayType in 'UTestArrayType.pas',
   UTestAddOp in 'UTestAddOp.pas',
   UTestMulOp in 'UTestMulOp.pas',
   UTestPortabilityDirective in 'UTestPortabilityDirective.pas',
@@ -53,6 +54,7 @@ begin
     TTestAlternator.Test;
 
     TTestAddOp.Test;
+    TTestArrayType.Test;
     TTestAssemblerStatement.Test;
     TTestAtom.Test;
     TTestBareInherited.Test;
