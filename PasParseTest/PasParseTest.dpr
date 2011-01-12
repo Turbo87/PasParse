@@ -61,7 +61,8 @@ uses
   UTestTryStatement in 'UTestTryStatement.pas',
   UTestSimpleStatement in 'UTestSimpleStatement.pas',
   UTestOpenArray in 'UTestOpenArray.pas',
-  UTestParameterType in 'UTestParameterType.pas';
+  UTestParameterType in 'UTestParameterType.pas',
+  UTestParameter in 'UTestParameter.pas';
 
 begin
   try
@@ -99,6 +100,7 @@ begin
     TTestMulOp.Test;
     TTestOpenArray.Test;
     TTestParameterExpression.Test;
+    TTestParameter.Test;
     TTestParameterType.Test;
     TTestParenthesizedExpression.Test;
     TTestParticle.Test;

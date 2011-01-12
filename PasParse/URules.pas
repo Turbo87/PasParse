@@ -1554,12 +1554,39 @@ end;
 
 function TParameterRule.CanParse: Boolean;
 begin
-  Result := False;
+  Result := FParser.CanParseToken(TTokenSets.TSParameter);
 end;
 
 function TParameterRule.Evaluate: TASTNode;
+var
+  AModifier, AColon, AEqualSign: TToken;
+  ANames: TListNode;
+  AType, ADefault: TASTNode;
 begin
-  Result := nil;
+  AModifier := nil;
+  if FParser.CanParseToken(TTokenSets.TSParameterModifier) then
+    AModifier := FParser.ParseToken(TTokenSets.TSParameterModifier);
+
+  ANames := FParser.ParseRuleInternal(RTIdentList) as TListNode;
+
+  AColon := nil;
+  AType := nil;
+  if FParser.CanParseToken(TTColon) then
+  begin
+    AColon := FParser.ParseToken(TTColon);
+    AType := FParser.ParseRuleInternal(RTParameterType);
+  end;
+
+  AEqualSign := nil;
+  ADefault := nil;
+  if FParser.CanParseToken(TTEqualSign) then
+  begin
+    AEqualSign := FParser.ParseToken(TTEqualSign);
+    ADefault := FParser.ParseRuleInternal(RTExpression);
+  end;
+
+  Result := TParameterNode.Create(AModifier, ANames, AColon, AType,
+    AEqualSign, ADefault);
 end;
 
 { TParameterExpressionRule }

@@ -69,6 +69,7 @@
     <DCCReference Include="UTestLexScanner.pas" />
     <DCCReference Include="UTestMulOp.pas" />
     <DCCReference Include="UTestOpenArray.pas" />
+    <DCCReference Include="UTestParameter.pas" />
     <DCCReference Include="UTestParameterExpression.pas" />
     <DCCReference Include="UTestParameterType.pas" />
     <DCCReference Include="UTestParenthesizedExpression.pas" />
