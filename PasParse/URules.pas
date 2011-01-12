@@ -233,7 +233,7 @@ type
     function CanParse: Boolean; override;
     function Evaluate: TASTNode; override;
   end;
-  
+
   TImplementationSectionRule = class(TRule)
   public
     function CanParse: Boolean; override;
@@ -307,7 +307,13 @@ type
   end;
   
   TOpenArrayRule = class(TRule)
+  private
+    FAlternator: TAlternator;
+
   public
+    constructor Create(AParser: IParser; ARuleType: TRuleType); override;
+    destructor Destroy; override;
+
     function CanParse: Boolean; override;
     function Evaluate: TASTNode; override;
   end;
@@ -1484,12 +1490,34 @@ end;
 
 function TOpenArrayRule.CanParse: Boolean;
 begin
-  Result := False;
+  Result := FParser.CanParseToken(TTArrayKeyword);
+end;
+
+constructor TOpenArrayRule.Create(AParser: IParser; ARuleType: TRuleType);
+begin
+  inherited Create(AParser, ARuleType);
+  FAlternator := TAlternator.Create;
+  FAlternator.AddRule(RTQualifiedIdent);
+  FAlternator.AddToken(TTConstKeyword);
+  FAlternator.AddToken(TTFileKeyword);
+  FAlternator.AddToken(TTStringKeyword);
+end;
+
+destructor TOpenArrayRule.Destroy;
+begin
+  FAlternator.Free;
+  inherited;
 end;
 
 function TOpenArrayRule.Evaluate: TASTNode;
+var
+  AArray, AOf: TToken;
+  AType: TASTNode;
 begin
-  Result := nil;
+  AArray := FParser.ParseToken(TTArrayKeyword);
+  AOf := FParser.ParseToken(TTOfKeyword);
+  AType := FAlternator.Execute(FParser);
+  Result := TOpenArrayNode.Create(AArray, AOf, AType);
 end;
 
 { TPackageRule }

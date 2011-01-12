@@ -59,7 +59,8 @@ uses
   UTestRepeatStatement in 'UTestRepeatStatement.pas',
   UTestForStatement in 'UTestForStatement.pas',
   UTestTryStatement in 'UTestTryStatement.pas',
-  UTestSimpleStatement in 'UTestSimpleStatement.pas';
+  UTestSimpleStatement in 'UTestSimpleStatement.pas',
+  UTestOpenArray in 'UTestOpenArray.pas';
 
 begin
   try
@@ -95,6 +96,7 @@ begin
     TTestIfStatement.Test;
     TTestLabelId.Test;
     TTestMulOp.Test;
+    TTestOpenArray.Test;
     TTestParameterExpression.Test;
     TTestParenthesizedExpression.Test;
     TTestParticle.Test;
