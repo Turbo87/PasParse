@@ -978,12 +978,21 @@ end;
 
 function TExpressionOrRangeRule.CanParse: Boolean;
 begin
-  Result := False;
+  Result := FParser.CanParseToken(TTokenSets.TSExpression);
 end;
 
 function TExpressionOrRangeRule.Evaluate: TASTNode;
+var
+  ADotDot: TToken;
+  ARight: TASTNode;
 begin
-  Result := nil;
+  Result := FParser.ParseRuleInternal(RTSimpleExpression);
+  if FParser.CanParseToken(TTDotDot) then
+  begin
+    ADotDot := FParser.ParseToken(TTDotDot);
+    ARight := FParser.ParseRuleInternal(RTSimpleExpression);
+    Result := TBinaryOperationNode.Create(Result, ADotDot, ARight);
+  end;
 end;
 
 { TExpressionOrRangeListRule }

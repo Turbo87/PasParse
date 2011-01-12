@@ -50,6 +50,7 @@
     <DCCReference Include="UTestExpression.pas" />
     <DCCReference Include="UTestExpressionList.pas" />
     <DCCReference Include="UTestExpressionOrAssignment.pas" />
+    <DCCReference Include="UTestExpressionOrRange.pas" />
     <DCCReference Include="UTestExtendedIdent.pas" />
     <DCCReference Include="UTestFactor.pas" />
     <DCCReference Include="UTestFileType.pas" />
