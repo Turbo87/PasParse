@@ -52,7 +52,8 @@ uses
   UTestBlock in 'UTestBlock.pas',
   UTestStatementList in 'UTestStatementList.pas',
   UTestCaseSelector in 'UTestCaseSelector.pas',
-  UTestCaseStatement in 'UTestCaseStatement.pas';
+  UTestCaseStatement in 'UTestCaseStatement.pas',
+  UTestExceptionItem in 'UTestExceptionItem.pas';
 
 begin
   try
@@ -72,6 +73,7 @@ begin
     TTestCaseSelector.Test;
     TTestCaseStatement.Test;
     TTestClassOf.Test;
+    TTestExceptionItem.Test;
     TTestExpression.Test;
     TTestExpressionList.Test;
     TTestExpressionOrAssignment.Test;

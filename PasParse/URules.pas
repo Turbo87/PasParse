@@ -927,12 +927,37 @@ end;
 
 function TExceptionItemRule.CanParse: Boolean;
 begin
-  Result := False;
+  Result := FParser.CanParseToken(TTOnSemikeyword);
 end;
 
 function TExceptionItemRule.Evaluate: TASTNode;
+var
+  AOn, AName, AColon, ADo, ASemicolon: TToken;
+  AType, AStatement: TASTNode;
 begin
-  Result := nil;
+  AOn := FParser.ParseToken(TTOnSemikeyword);
+
+  AName := nil;
+  AColon := nil;
+  if FParser.Peek(1) = TTColon then
+  begin
+    AName := FParser.ParseRuleInternal(RTIdent) as TToken;
+    AColon := FParser.ParseToken(TTColon);
+  end;
+
+  AType := FParser.ParseRuleInternal(RTQualifiedIdent);
+  ADo := FParser.ParseToken(TTDoKeyword);
+
+  AStatement := nil;
+  if FParser.CanParseRule(RTStatement) then
+    AStatement := FParser.ParseRuleInternal(RTStatement);
+
+  ASemicolon := nil;
+  if FParser.CanParseToken(TTSemicolon) then
+    ASemicolon := FParser.ParseToken(TTSemicolon);
+
+  Result := TExceptionItemNode.Create(AOn, AName, AColon, AType, ADo,
+    AStatement, ASemicolon);
 end;
 
 { TExportsItemRule }
