@@ -2067,12 +2067,23 @@ end;
 
 function TWithStatementRule.CanParse: Boolean;
 begin
-  Result := False;
+  Result := FParser.CanParseToken(TTWithKeyword);
 end;
 
 function TWithStatementRule.Evaluate: TASTNode;
+var
+  AWith, ADo: TToken;
+  AList: TListNode;
+  AStatement: TASTNode;
 begin
-  Result := nil;
+  AWith := FParser.ParseToken(TTWithKeyword);
+  AList := FParser.ParseDelimitedList(RTExpression, TTComma);
+  ADo := FParser.ParseToken(TTDoKeyword);
+  AStatement := nil;
+  if FParser.CanParseRule(RTStatement) then
+    AStatement := FParser.ParseRuleInternal(RTStatement);
+
+  Result := TWithStatementNode.Create(AWith, AList, ADo, AStatement);
 end;
 
 end.
