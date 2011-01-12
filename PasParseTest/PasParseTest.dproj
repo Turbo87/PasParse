@@ -59,6 +59,7 @@
     <DCCReference Include="UTestGotoStatement.pas" />
     <DCCReference Include="UTestIdent.pas" />
     <DCCReference Include="UTestIdentList.pas" />
+    <DCCReference Include="UTestIfStatement.pas" />
     <DCCReference Include="UTestLabelId.pas" />
     <DCCReference Include="UTestLexScanner.pas" />
     <DCCReference Include="UTestMulOp.pas" />

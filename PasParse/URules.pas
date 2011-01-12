@@ -1192,12 +1192,33 @@ end;
 
 function TIfStatementRule.CanParse: Boolean;
 begin
-  Result := False;
+  Result := FParser.CanParseToken(TTIfKeyword);
 end;
 
 function TIfStatementRule.Evaluate: TASTNode;
+var
+  AIf, AThen, AElse: TToken;
+  ACondition, AThenStatement, AElseStatement: TASTNode;
 begin
-  Result := nil;
+  AIf := FParser.ParseToken(TTIfKeyword);
+  ACondition := FParser.ParseRuleInternal(RTExpression);
+  AThen := FParser.ParseToken(TTThenKeyword);
+  AThenStatement := nil;
+  if FParser.CanParseRule(RTStatement) then
+    AThenStatement := FParser.ParseRuleInternal(RTStatement);
+
+  AElse := nil;
+  AElseStatement := nil;
+
+  if FParser.CanParseToken(TTElseKeyword) then
+  begin
+    AElse := FParser.ParseToken(TTElseKeyword);
+    if FParser.CanParseRule(RTStatement) then
+      AElseStatement := FParser.ParseRuleInternal(RTStatement);
+  end;
+
+  Result := TIfStatementNode.Create(AIf, ACondition, AThen, AThenStatement,
+    AElse, AElseStatement);
 end;
 
 { TImplementationDeclRule }
