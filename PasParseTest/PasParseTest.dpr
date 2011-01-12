@@ -45,7 +45,8 @@ uses
   UTestExpressionOrRangeList in 'UTestExpressionOrRangeList.pas',
   UTestSetType in 'UTestSetType.pas',
   UTestSetLiteral in 'UTestSetLiteral.pas',
-  UTestIfStatement in 'UTestIfStatement.pas';
+  UTestIfStatement in 'UTestIfStatement.pas',
+  UTestStatement in 'UTestStatement.pas';
 
 begin
   try
@@ -84,6 +85,7 @@ begin
     TTestSetLiteral.Test;
     TTestSetType.Test;
     TTestSimpleExpression.Test;
+    TTestStatement.Test;
     TTestTerm.Test;
     TTestUnaryOperator.Test;
     TTestUsedUnit.Test;
