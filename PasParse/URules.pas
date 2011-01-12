@@ -301,7 +301,13 @@ type
   end;
   
   TMethodReturnTypeRule = class(TRule)
+  private
+    FAlternator: TAlternator;
+
   public
+    constructor Create(AParser: IParser; ARuleType: TRuleType); override;
+    destructor Destroy; override;
+
     function CanParse: Boolean; override;
     function Evaluate: TASTNode; override;
   end;
@@ -1513,12 +1519,27 @@ end;
 
 function TMethodReturnTypeRule.CanParse: Boolean;
 begin
-  Result := False;
+  Result := FAlternator.LookAhead(FParser);
+end;
+
+constructor TMethodReturnTypeRule.Create(AParser: IParser;
+  ARuleType: TRuleType);
+begin
+  inherited Create(AParser, ARuleType);
+  FAlternator := TAlternator.Create;
+  FAlternator.AddToken(TTStringKeyword);
+  FAlternator.AddRule(RTQualifiedIdent);
+end;
+
+destructor TMethodReturnTypeRule.Destroy;
+begin
+  FAlternator.Free;
+  inherited;
 end;
 
 function TMethodReturnTypeRule.Evaluate: TASTNode;
 begin
-  Result := nil;
+  Result := FAlternator.Execute(FParser);
 end;
 
 { TOpenArrayRule }

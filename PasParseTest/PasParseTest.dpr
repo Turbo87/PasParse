@@ -64,7 +64,8 @@ uses
   UTestParameterType in 'UTestParameterType.pas',
   UTestParameter in 'UTestParameter.pas',
   UTestEnumeratedTypeElement in 'UTestEnumeratedTypeElement.pas',
-  UTestEnumeratedType in 'UTestEnumeratedType.pas';
+  UTestEnumeratedType in 'UTestEnumeratedType.pas',
+  UTestMethodReturnType in 'UTestMethodReturnType.pas';
 
 begin
   try
@@ -101,6 +102,7 @@ begin
     TTestIdentList.Test;
     TTestIfStatement.Test;
     TTestLabelId.Test;
+    TTestMethodReturnType.Test;
     TTestMulOp.Test;
     TTestOpenArray.Test;
     TTestParameterExpression.Test;
