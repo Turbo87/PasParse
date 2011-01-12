@@ -57,7 +57,8 @@ uses
   UTestRaiseStatement in 'UTestRaiseStatement.pas',
   UTestParameterExpression in 'UTestParameterExpression.pas',
   UTestRepeatStatement in 'UTestRepeatStatement.pas',
-  UTestForStatement in 'UTestForStatement.pas';
+  UTestForStatement in 'UTestForStatement.pas',
+  UTestTryStatement in 'UTestTryStatement.pas';
 
 begin
   try
@@ -107,6 +108,7 @@ begin
     TTestStatement.Test;
     TTestStatementList.Test;
     TTestTerm.Test;
+    TTestTryStatement.Test;
     TTestUnaryOperator.Test;
     TTestUsedUnit.Test;
     TTestUsesClause.Test;

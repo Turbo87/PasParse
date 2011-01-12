@@ -2005,12 +2005,60 @@ end;
 
 function TTryStatementRule.CanParse: Boolean;
 begin
-  Result := False;
+  Result := FParser.CanParseToken(TTTryKeyword);
 end;
 
 function TTryStatementRule.Evaluate: TASTNode;
+var
+  ATry, AExcept, AElse, AEnd, AFinally: TToken;
+  ATryStatements, AExceptionItemList: TListNode;
+  AElseStatements, AFinallyStatements: TListNode;
 begin
-  Result := nil;
+  ATry := FParser.ParseToken(TTTryKeyword);
+  ATryStatements := FParser.ParseOptionalStatementList;
+
+  if FParser.CanParseToken(TTExceptKeyword) then
+  begin
+    AExcept := FParser.ParseToken(TTExceptKeyword);
+
+    AExceptionItemList := FParser.CreateEmptyListNode;
+    AElse := nil;
+    AElseStatements := FParser.CreateEmptyListNode;
+
+    if (FParser.CanParseRule(RTExceptionItem)) or
+      (FParser.CanParseToken(TTElseKeyword)) then
+    begin
+      if FParser.CanParseRule(RTExceptionItem) then
+      begin
+        AExceptionItemList.Free;
+        AExceptionItemList := FParser.ParseRequiredRuleList(RTExceptionItem);
+      end;
+
+      if FParser.CanParseToken(TTElseKeyword) then
+      begin
+        AElse := FParser.ParseToken(TTElseKeyword);
+        AElseStatements.Free;
+        AElseStatements := FParser.ParseOptionalStatementList;
+      end;
+    end
+    else
+    begin
+      AElseStatements.Free;
+      AElseStatements := FParser.ParseOptionalStatementList;
+    end;
+
+    AEnd := FParser.ParseToken(TTEndKeyword);
+    Result := TTryExceptNode.Create(ATry, ATryStatements, AExcept,
+      AExceptionItemList, AElse, AElseStatements, AEnd);
+  end
+  else
+  begin
+    AFinally := FParser.ParseToken(TTFinallyKeyword);
+    AFinallyStatements := FParser.ParseOptionalStatementList;
+    AEnd := FParser.ParseToken(TTEndKeyword);
+    Result := TTryFinallyNode.Create(ATry, ATryStatements, AFinally,
+      AFinallyStatements, AEnd);
+  end;
 end;
 
 { TTypeRule }
