@@ -37,7 +37,8 @@ uses
   UTestTerm in 'UTestTerm.pas',
   UTestSimpleExpression in 'UTestSimpleExpression.pas',
   UTestExpression in 'UTestExpression.pas',
-  UTestParenthesizedExpression in 'UTestParenthesizedExpression.pas';
+  UTestParenthesizedExpression in 'UTestParenthesizedExpression.pas',
+  UTestExpressionList in 'UTestExpressionList.pas';
 
 begin
   try
@@ -54,6 +55,7 @@ begin
     TTestBareInherited.Test;
     TTestClassOf.Test;
     TTestExpression.Test;
+    TTestExpressionList.Test;
     TTestExtendedIdent.Test;
     TTestFactor.Test;
     TTestFileType.Test;

@@ -945,12 +945,12 @@ end;
 
 function TExpressionListRule.CanParse: Boolean;
 begin
-  Result := False;
+  Result := FParser.CanParseToken(TTokenSets.TSExpression);
 end;
 
 function TExpressionListRule.Evaluate: TASTNode;
 begin
-  Result := nil;
+  Result := FParser.ParseDelimitedList(RTExpression, TTComma);
 end;
 
 { TExpressionOrAssignmentRule }
