@@ -927,12 +927,25 @@ end;
 
 function TEnumeratedTypeElementRule.CanParse: Boolean;
 begin
-  Result := False;
+  Result := FParser.CanParseToken(TTokenSets.TSIdent);
 end;
 
 function TEnumeratedTypeElementRule.Evaluate: TASTNode;
+var
+  AName, AEquals: TToken;
+  AValue: TASTNode;
 begin
-  Result := nil;
+  AName := FParser.ParseRuleInternal(RTIdent) as TToken;
+
+  AEquals := nil;
+  AValue := nil;
+  if FParser.CanParseToken(TTEqualSign) then
+  begin
+    AEquals := FParser.ParseToken(TTEqualSign);
+    AValue := FParser.ParseRuleInternal(RTExpression);
+  end;
+
+  Result := TEnumeratedTypeElementNode.Create(AName, AEquals, AValue);
 end;
 
 { TExceptionItemRule }
