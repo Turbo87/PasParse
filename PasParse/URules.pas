@@ -1501,12 +1501,32 @@ end;
 
 function TParameterExpressionRule.CanParse: Boolean;
 begin
-  Result := False;
+  Result := FParser.CanParseRule(RTExpression);
 end;
 
 function TParameterExpressionRule.Evaluate: TASTNode;
+var
+  ASizeColon, APrecisionColon: TToken;
+  ASize, APrecision: TASTNode;
 begin
-  Result := nil;
+  Result := FParser.ParseRuleInternal(RTExpression);
+  if FParser.CanParseToken(TTColon) then
+  begin
+    ASizeColon := FParser.ParseToken(TTColon);
+    ASize := FParser.ParseRuleInternal(RTExpression);
+
+    APrecisionColon := nil;
+    APrecision := nil;
+
+    if FParser.CanParseToken(TTColon) then
+    begin
+      APrecisionColon := FParser.ParseToken(TTColon);
+      APrecision := FParser.ParseRuleInternal(RTExpression);
+    end;
+
+    Result := TNumberFormatNode.Create(Result, ASizeColon, ASize,
+      APrecisionColon, APrecision);
+  end;
 end;
 
 { TParameterTypeRule }

@@ -54,7 +54,8 @@ uses
   UTestCaseSelector in 'UTestCaseSelector.pas',
   UTestCaseStatement in 'UTestCaseStatement.pas',
   UTestExceptionItem in 'UTestExceptionItem.pas',
-  UTestRaiseStatement in 'UTestRaiseStatement.pas';
+  UTestRaiseStatement in 'UTestRaiseStatement.pas',
+  UTestParameterExpression in 'UTestParameterExpression.pas';
 
 begin
   try
@@ -89,6 +90,7 @@ begin
     TTestIfStatement.Test;
     TTestLabelId.Test;
     TTestMulOp.Test;
+    TTestParameterExpression.Test;
     TTestParenthesizedExpression.Test;
     TTestParticle.Test;
     TTestPortabilityDirective.Test;
