@@ -39,13 +39,12 @@ begin
     '  ExceptionNode: Identifier |E|' + #13#10 +
     '  AtSemikeywordNode: (none)' + #13#10 +
     '  AddressNode: (none)', RTRaiseStatement));
-  // TODO
-  {
+
   OK('raise Exception.Create(''Foo'')',
     TTestParser.ParsesAs('raise Exception.Create(''Foo'')',
     'RaiseStatementNode' + #13#10 +
     '  RaiseKeywordNode: RaiseKeyword |raise|' + #13#10 +
-    '  ExceptionNode: ParametrizedNode' + #13#10 +
+    '  ExceptionNode: ParameterizedNode' + #13#10 +
     '    LeftNode: BinaryOperationNode' + #13#10 +
     '      LeftNode: Identifier |Exception|' + #13#10 +
     '      OperatorNode: Dot |.|' + #13#10 +
@@ -58,7 +57,7 @@ begin
     '    CloseDelimiterNode: CloseParenthesis |)|' + #13#10 +
     '  AtSemikeywordNode: (none)' + #13#10 +
     '  AddressNode: (none)', RTRaiseStatement));
-  }
+  
   OK('raise E at Address', TTestParser.ParsesAs('raise E at Address',
     'RaiseStatementNode' + #13#10 +
     '  RaiseKeywordNode: RaiseKeyword |raise|' + #13#10 +
