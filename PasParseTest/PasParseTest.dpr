@@ -63,7 +63,8 @@ uses
   UTestOpenArray in 'UTestOpenArray.pas',
   UTestParameterType in 'UTestParameterType.pas',
   UTestParameter in 'UTestParameter.pas',
-  UTestEnumeratedTypeElement in 'UTestEnumeratedTypeElement.pas';
+  UTestEnumeratedTypeElement in 'UTestEnumeratedTypeElement.pas',
+  UTestEnumeratedType in 'UTestEnumeratedType.pas';
 
 begin
   try
@@ -83,6 +84,7 @@ begin
     TTestCaseSelector.Test;
     TTestCaseStatement.Test;
     TTestClassOf.Test;
+    TTestEnumeratedType.Test;
     TTestEnumeratedTypeElement.Test;
     TTestExceptionItem.Test;
     TTestExpression.Test;

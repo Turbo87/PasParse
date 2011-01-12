@@ -915,12 +915,28 @@ end;
 
 function TEnumeratedTypeRule.CanParse: Boolean;
 begin
-  Result := False;
+  Result := FParser.CanParseToken(TTOpenParenthesis);
 end;
 
 function TEnumeratedTypeRule.Evaluate: TASTNode;
+var
+  AOpen, AClose: TToken;
+  AItemList: TListNode;
 begin
-  Result := nil;
+  AOpen := FParser.ParseToken(TTOpenParenthesis);
+  try
+    AItemList := FParser.ParseDelimitedList(RTEnumeratedTypeElement, TTComma);
+    try
+      AClose := FParser.ParseToken(TTCloseParenthesis);
+      Result := TEnumeratedTypeNode.Create(AOpen, AItemList, AClose);
+    except
+      AItemList.Free;
+      raise;
+    end;
+  except
+    AOpen.Free;
+    raise;
+  end;
 end;
 
 { TEnumeratedTypeElementRule }
