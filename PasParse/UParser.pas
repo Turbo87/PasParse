@@ -305,17 +305,20 @@ var
 begin
   AItems := TObjectList.Create(False);
 
-  repeat
-    AItem := ParseRuleInternal(AItemRule);
-    ADelimiter := nil;
-    if CanParseToken(ADelimiterType) then
-      ADelimiter := ParseToken(ADelimiterType);
+  try
+    repeat
+      AItem := ParseRuleInternal(AItemRule);
+      ADelimiter := nil;
+      if CanParseToken(ADelimiterType) then
+        ADelimiter := ParseToken(ADelimiterType);
 
-    AItems.Add(TDelimitedItemNode.Create(AItem, ADelimiter));
-  until (not CanParseRule(AItemRule));
+      AItems.Add(TDelimitedItemNode.Create(AItem, ADelimiter));
+    until (not CanParseRule(AItemRule));
 
-  Result := TListNode.Create(AItems);
-  AItems.Free;
+    Result := TListNode.Create(AItems);
+  finally
+    AItems.Free;
+  end;
 end;
 
 function TParser.ParseOptionalStatementList: TListNode;
