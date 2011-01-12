@@ -95,6 +95,9 @@ begin
     TTestWhileStatement.Test;
   except
     on E:Exception do
+    begin
       Writeln(E.Classname, ': ', E.Message);
+      Readln;
+    end;
   end;
 end.
