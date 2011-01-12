@@ -68,7 +68,8 @@ uses
   UTestMethodReturnType in 'UTestMethodReturnType.pas',
   UTestMethodHeading in 'UTestMethodHeading.pas',
   UTestExportsSpecifier in 'UTestExportsSpecifier.pas',
-  UTestDirective in 'UTestDirective.pas';
+  UTestDirective in 'UTestDirective.pas',
+  UTestPropertyDirective in 'UTestPropertyDirective.pas';
 
 begin
   try
@@ -117,6 +118,7 @@ begin
     TTestParenthesizedExpression.Test;
     TTestParticle.Test;
     TTestPortabilityDirective.Test;
+    TTestPropertyDirective.Test;
     TTestQualifiedIdent.Test;
     TTestRaiseStatement.Test;
     TTestRelOp.Test;

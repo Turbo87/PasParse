@@ -1907,12 +1907,40 @@ end;
 
 function TPropertyDirectiveRule.CanParse: Boolean;
 begin
-  Result := False;
+  Result := FParser.CanParseToken(TTokenSets.TSParameterizedPropertyDirective) or
+    FParser.CanParseToken(TTokenSets.TSParameterlessPropertyDirective) or
+    ((FParser.Peek(0) = TTSemicolon) and (FParser.Peek(1) = TTDefaultSemikeyword));
 end;
 
 function TPropertyDirectiveRule.Evaluate: TASTNode;
+var
+  ASemicolon, ADirective: TToken;
+  AValue: TASTNode;
+  AData: TListNode;
 begin
-  Result := nil;
+  ASemicolon := nil;
+  AValue := nil;
+  AData := FParser.CreateEmptyListNode;
+
+  if FParser.CanParseToken(TTSemicolon) then
+  begin
+    ASemicolon := FParser.ParseToken(TTSemicolon);
+    ADirective := FParser.ParseToken(TTDefaultSemikeyword);
+  end
+  else if FParser.CanParseToken(TTImplementsSemikeyword) then
+  begin
+    ADirective := FParser.ParseToken(TTImplementsSemikeyword);
+    AValue := FParser.ParseDelimitedList(RTQualifiedIdent, TTComma);
+  end
+  else if FParser.CanParseToken(TTokenSets.TSParameterizedPropertyDirective) then
+  begin
+    ADirective := FParser.ParseToken(TTokenSets.TSParameterizedPropertyDirective);
+    AValue := FParser.ParseRuleInternal(RTExpression);
+  end
+  else
+    ADirective := FParser.ParseToken(TTokenSets.TSParameterlessPropertyDirective);
+
+  Result := TDirectiveNode.Create(ASemicolon, ADirective, AValue, AData);
 end;
 
 { TQualifiedIdentRule }
