@@ -43,6 +43,7 @@ type
     function CanParseToken(ATokenType: TTokenType): Boolean; overload; override;
     function ParseDelimitedList(AItemRule: TRuleType; ADelimiterType: TTokenType): TListNode; override;
     function ParseRequiredRuleList(ARuleType: TRuleType): TListNode; override;
+    function ParseOptionalStatementList: TListNode; override;
     function ParseRule(ARuleType: TRuleType): TASTNode;
     function CanParseRule(ARuleType: TRuleType): Boolean; override;
     function ParseRuleInternal(ARuleType: TRuleType): TASTNode; override;
@@ -315,6 +316,14 @@ begin
 
   Result := TListNode.Create(AItems);
   AItems.Free;
+end;
+
+function TParser.ParseOptionalStatementList: TListNode;
+begin
+  if CanParseRule(RTStatementList) then
+    Result := ParseRuleInternal(RTStatementList) as TListNode
+  else
+    Result := CreateEmptyListNode;
 end;
 
 function TParser.ParseRequiredRuleList(ARuleType: TRuleType): TListNode;

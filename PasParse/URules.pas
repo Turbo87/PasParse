@@ -757,12 +757,7 @@ begin
   else
   begin
     ABegin := FParser.ParseToken(TTBeginKeyword);
-
-    if FParser.CanParseRule(RTStatementList) then
-      AList := FParser.ParseRuleInternal(RTStatementList) as TListNode
-    else
-      AList := FParser.CreateEmptyListNode;
-      
+    AList := FParser.ParseOptionalStatementList;
     AEnd := FParser.ParseToken(TTEndKeyword);
     Result := TBlockNode.Create(ABegin, AList, AEnd);
   end;
@@ -816,10 +811,7 @@ begin
   if FParser.CanParseToken(TTElseKeyword) then
   begin
     AElse := FParser.ParseToken(TTElseKeyword);
-    if FParser.CanParseRule(RTStatementList) then
-      AElseStatements := FParser.ParseRuleInternal(RTStatementList) as TListNode
-    else
-      AElseStatements := FParser.CreateEmptyListNode;
+    AElseStatements := FParser.ParseOptionalStatementList;
   end
   else
     AElseStatements := FParser.CreateEmptyListNode;
