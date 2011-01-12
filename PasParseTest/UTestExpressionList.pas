@@ -86,7 +86,20 @@ begin
     '      CloseParenthesisNode: CloseParenthesis |)|' + #13#10 +
     '    DelimiterNode: (none)', RTExpressionList));
 
-  // TODO SetLiteral
+  OK('[], []', TTestParser.ParsesAs('[], []',
+    'ListNode' + #13#10 +
+    '  Items[0]: DelimitedItemNode' + #13#10 +
+    '    ItemNode: SetLiteralNode' + #13#10 +
+    '      OpenBracketNode: OpenBracket |[|' + #13#10 +
+    '      ItemListNode: ListNode' + #13#10 +
+    '      CloseBracketNode: CloseBracket |]|' + #13#10 +
+    '    DelimiterNode: Comma |,|' + #13#10 +
+    '  Items[1]: DelimitedItemNode' + #13#10 +
+    '    ItemNode: SetLiteralNode' + #13#10 +
+    '      OpenBracketNode: OpenBracket |[|' + #13#10 +
+    '      ItemListNode: ListNode' + #13#10 +
+    '      CloseBracketNode: CloseBracket |]|' + #13#10 +
+    '    DelimiterNode: (none)', RTExpressionList));
 end;
 
 end.
