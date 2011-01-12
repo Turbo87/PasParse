@@ -451,7 +451,13 @@ type
   end;
   
   TSimpleStatementRule = class(TRule)
+  private
+    FAlternator: TAlternator;
+
   public
+    constructor Create(AParser: IParser; ARuleType: TRuleType); override;
+    destructor Destroy; override;
+
     function CanParse: Boolean; override;
     function Evaluate: TASTNode; override;
   end;
@@ -1693,12 +1699,36 @@ end;
 
 function TSimpleStatementRule.CanParse: Boolean;
 begin
-  Result := False;
+  Result := FAlternator.LookAhead(FParser);
+end;
+
+constructor TSimpleStatementRule.Create(AParser: IParser; ARuleType: TRuleType);
+begin
+  inherited Create(AParser, ARuleType);
+  FAlternator := TAlternator.Create;
+  FAlternator.AddRule(RTBareInherited);
+  FAlternator.AddRule(RTBlock);
+  FAlternator.AddRule(RTCaseStatement);
+  FAlternator.AddRule(RTExpressionOrAssignment);
+  FAlternator.AddRule(RTForStatement);
+  FAlternator.AddRule(RTGotoStatement);
+  FAlternator.AddRule(RTIfStatement);
+  FAlternator.AddRule(RTRaiseStatement);
+  FAlternator.AddRule(RTRepeatStatement);
+  FAlternator.AddRule(RTTryStatement);
+  FAlternator.AddRule(RTWhileStatement);
+  FAlternator.AddRule(RTWithStatement);
+end;
+
+destructor TSimpleStatementRule.Destroy;
+begin
+  FAlternator.Free;
+  inherited;
 end;
 
 function TSimpleStatementRule.Evaluate: TASTNode;
 begin
-  Result := nil;
+  Result := FAlternator.Execute(FParser);
 end;
 
 { TStatementRule }
