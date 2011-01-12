@@ -744,12 +744,28 @@ end;
 
 function TBlockRule.CanParse: Boolean;
 begin
-  Result := False;
+  Result := FParser.CanParseToken(TTokenSets.TSBlock);
 end;
 
 function TBlockRule.Evaluate: TASTNode;
+var
+  ABegin, AEnd: TToken;
+  AList: TListNode;
 begin
-  Result := nil;
+  if FParser.CanParseRule(RTAssemblerStatement) then
+    Result := FParser.ParseRuleInternal(RTAssemblerStatement)
+  else
+  begin
+    ABegin := FParser.ParseToken(TTBeginKeyword);
+
+    if FParser.CanParseRule(RTStatementList) then
+      AList := FParser.ParseRuleInternal(RTStatementList) as TListNode
+    else
+      AList := FParser.CreateEmptyListNode;
+      
+    AEnd := FParser.ParseToken(TTEndKeyword);
+    Result := TBlockNode.Create(ABegin, AList, AEnd);
+  end;
 end;
 
 { TCaseSelectorRule }

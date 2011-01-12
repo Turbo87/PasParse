@@ -49,6 +49,7 @@ uses
   UTestStatement in 'UTestStatement.pas',
   UTestWhileStatement in 'UTestWhileStatement.pas',
   UTestWithStatement in 'UTestWithStatement.pas',
+  UTestBlock in 'UTestBlock.pas',
   UTestStatementList in 'UTestStatementList.pas';
 
 begin
@@ -65,6 +66,7 @@ begin
     TTestAssemblerStatement.Test;
     TTestAtom.Test;
     TTestBareInherited.Test;
+    TTestBlock.Test;
     TTestClassOf.Test;
     TTestExpression.Test;
     TTestExpressionList.Test;
