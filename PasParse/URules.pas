@@ -711,14 +711,14 @@ begin
     end
     else if FParser.CanParseToken(TTOpenParenthesis) then
     begin
-      AOpenDelimiter := FParser.ParseToken(TTOpenBracket);
+      AOpenDelimiter := FParser.ParseToken(TTOpenParenthesis);
       if FParser.CanParseRule(RTExpressionList) then
         AParameterList :=
           FParser.ParseDelimitedList(RTParameterExpression, TTComma)
       else
         AParameterList := FParser.CreateEmptyListNode;
 
-      ACloseDelimiter := FParser.ParseToken(TTCloseBracket);
+      ACloseDelimiter := FParser.ParseToken(TTCloseParenthesis);
       Result := TParameterizedNode.Create(Result, AOpenDelimiter,
         AParameterList, ACloseDelimiter);
     end
