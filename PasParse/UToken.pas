@@ -38,7 +38,7 @@ type
     ///  The caller has to destroy the resulting object again!
     function WithTokenType(ATokenType: TTokenType): TToken;
 
-    function Clone: TToken;
+    function Clone: TToken; reintroduce;
   end;
 
 implementation

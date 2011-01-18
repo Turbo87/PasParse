@@ -46,6 +46,8 @@ type
 
     function InspectTo(AIndentCount: Integer): string; virtual; abstract;
 
+    function Clone: TASTNode; virtual; abstract;
+
     procedure BuildParentReferences(AASTNode: TASTNode);
     property ParentNode: TASTNode read FParentNode;
 
