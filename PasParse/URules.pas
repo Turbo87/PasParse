@@ -2661,18 +2661,24 @@ begin
   if Result = nil then
   begin
     AOpen := FParser.ParseToken(TTOpenParenthesis);
+    AOriginalFrame := FParser.NextFrame;
+    AItems := nil;
     try
       AItems := FParser.ParseDelimitedList(RTTypedConstant, TTComma);
+      AClose := FParser.ParseToken(TTCloseParenthesis);
     except
       on EParseException do
       begin
+        AItems.Free;
+        FParser.NextFrame := AOriginalFrame;
         if not FParser.CanParseToken(TTCloseParenthesis) then
           AItems := FParser.ParseDelimitedList(RTRecordFieldConstant, TTSemicolon)
         else
           AItems := FParser.CreateEmptyListNode;
+          
+        AClose := FParser.ParseToken(TTCloseParenthesis);
       end;
     end;
-    AClose := FParser.ParseToken(TTCloseParenthesis);
     Result := TConstantListNode.Create(AOpen, AItems, AClose);
   end;
 end;
