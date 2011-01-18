@@ -923,12 +923,33 @@ end;
 
 function TConstantDeclRule.CanParse: Boolean;
 begin
-  Result := False;
+  Result := FParser.CanParseRule(RTIdent) and
+    not FParser.CanParseRule(RTVisibility);
 end;
 
 function TConstantDeclRule.Evaluate: TASTNode;
+var
+  AName, AColon, AEqual, ASemicolon: TToken;
+  AType, AValue: TASTNode;
+  ADirectives: TListNode;
 begin
-  Result := nil;
+  AName := FParser.ParseRuleInternal(RTIdent) as TToken;
+
+  AColon := nil;
+  AType := nil;
+  if FParser.CanParseToken(TTColon) then
+  begin
+    AColon := FParser.ParseToken(TTColon);
+    AType := FParser.ParseRuleInternal(RTType);
+  end;
+
+  AEqual := FParser.ParseToken(TTEqualSign);
+  AValue := FParser.ParseRuleInternal(RTTypedConstant);
+  ADirectives := FParser.ParseOptionalRuleList(RTPortabilityDirective);
+  ASemicolon := FParser.ParseToken(TTSemicolon);
+  
+  Result := TConstantDeclNode.Create(AName, AColon, AType, AEqual, AValue,
+    ADirectives, ASemicolon);
 end;
 
 { TConstSectionRule }

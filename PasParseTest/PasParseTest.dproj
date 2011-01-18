@@ -51,6 +51,7 @@
     <DCCReference Include="UTestCaseStatement.pas" />
     <DCCReference Include="UTestClassOf.pas" />
     <DCCReference Include="UTestCompilerDefines.pas" />
+    <DCCReference Include="UTestConstantDecl.pas" />
     <DCCReference Include="UTestDictionary.pas" />
     <DCCReference Include="UTestDirective.pas" />
     <DCCReference Include="UTestEnumeratedType.pas" />

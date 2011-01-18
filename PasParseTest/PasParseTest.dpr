@@ -85,7 +85,8 @@ uses
   UTestPointerType in 'UTestPointerType.pas',
   UTestTypedConstant in 'UTestTypedConstant.pas',
   UTestRecordFieldConstant in 'UTestRecordFieldConstant.pas',
-  UTestVarDecl in 'UTestVarDecl.pas';
+  UTestVarDecl in 'UTestVarDecl.pas',
+  UTestConstantDecl in 'UTestConstantDecl.pas';
 
 begin
   try
@@ -106,6 +107,7 @@ begin
     TTestCaseSelector.Test;
     TTestCaseStatement.Test;
     TTestClassOf.Test;
+    TTestConstantDecl.Test;
     TTestDirective.Test;
     TTestEnumeratedType.Test;
     TTestEnumeratedTypeElement.Test;
