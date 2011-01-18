@@ -44,7 +44,7 @@ end;
 constructor TFrame.Create(AToken: TToken);
 begin
   FNext := nil;
-  FToken := AToken.Clone;
+  FToken := AToken.Clone as TToken;
 end;
 
 destructor TFrame.Destroy;
@@ -84,7 +84,7 @@ end;
 function TFrame.ParseToken(ATokenSet: ITokenSet): TToken;
 begin
   if CanParseToken(ATokenSet) then
-    Result := FToken.Clone
+    Result := FToken.Clone as TToken
   else
     raise EParseException.Create('Expected ' + ATokenSet.Name + ' but found ' +
       DisplayName, Location.Clone);

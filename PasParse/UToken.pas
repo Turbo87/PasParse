@@ -38,7 +38,7 @@ type
     ///  The caller has to destroy the resulting object again!
     function WithTokenType(ATokenType: TTokenType): TToken;
 
-    function Clone: TToken; reintroduce;
+    function Clone: TASTNode; override;
   end;
 
 implementation
@@ -48,7 +48,7 @@ uses
 
 { TToken }
 
-function TToken.Clone: TToken;
+function TToken.Clone: TASTNode;
 begin
   Result := TToken.Create(FTokenType, FLocation.Clone, FText, FParsedText);
 end;

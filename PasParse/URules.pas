@@ -1519,10 +1519,10 @@ begin
   if FParser.CanParseToken(TTBeginKeyword) then
   begin
     ABlock := FParser.ParseRuleInternal(RTBlock) as TBlockNode;
-    AInitHeader := ABlock.BeginKeywordNode.Clone;
+    AInitHeader := ABlock.BeginKeywordNode.Clone as TToken;
     AInitStatements.Free;
     //AInitStatements := ABlock.StatementListNode.Clone;
-    AEnd := ABlock.EndKeywordNode.Clone; 
+    AEnd := ABlock.EndKeywordNode.Clone as TToken; 
   end
   else if FParser.CanParseToken(TTAsmKeyword) then
   begin
