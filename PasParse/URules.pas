@@ -956,12 +956,24 @@ end;
 
 function TConstSectionRule.CanParse: Boolean;
 begin
-  Result := False;
+  Result := FParser.CanParseToken(TTokenSets.TSConstHeader);
 end;
 
 function TConstSectionRule.Evaluate: TASTNode;
+var
+  AConst: TToken;
+  AConstList: TListNode;
 begin
-  Result := nil;
+  AConst := FParser.ParseToken(TTokenSets.TSConstHeader);
+  
+  try
+    AConstList := FParser.ParseRequiredRuleList(RTConstantDecl);
+  except
+    AConst.Free;
+    raise
+  end;
+  
+  Result := TConstSectionNode.Create(AConst, AConstList);
 end;
 
 { TDirectiveRule }

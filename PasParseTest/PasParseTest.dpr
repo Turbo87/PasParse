@@ -87,7 +87,8 @@ uses
   UTestRecordFieldConstant in 'UTestRecordFieldConstant.pas',
   UTestVarDecl in 'UTestVarDecl.pas',
   UTestConstantDecl in 'UTestConstantDecl.pas',
-  UTestVarSection in 'UTestVarSection.pas';
+  UTestVarSection in 'UTestVarSection.pas',
+  UTestConstSection in 'UTestConstSection.pas';
 
 begin
   try
@@ -109,6 +110,7 @@ begin
     TTestCaseStatement.Test;
     TTestClassOf.Test;
     TTestConstantDecl.Test;
+    TTestConstSection.Test;
     TTestDirective.Test;
     TTestEnumeratedType.Test;
     TTestEnumeratedTypeElement.Test;
