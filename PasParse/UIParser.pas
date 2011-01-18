@@ -4,13 +4,16 @@ interface
 
 uses
   UToken, UITokenSet, UTokenType, UListNode, UParseException,
-  URuleType, UASTNode;
+  URuleType, UASTNode, UIFrame;
 
 type
   IParser = class
   protected
     function ParseTokenList(ATokenSet: ITokenSet): TListNode; virtual; abstract;
     function TryParseToken(ATokenType: TTokenType): TToken; virtual; abstract;
+
+    function GetNextFrame: IFrame; virtual; abstract;
+    procedure SetNextFrame(const Value: IFrame); virtual; abstract;
 
   public
     function ParseToken(ATokenSet: ITokenSet): TToken; overload; virtual; abstract;
@@ -28,6 +31,8 @@ type
 
     function Peek(AOffset: Integer): TTokenType; virtual; abstract;
     procedure MoveNext; virtual; abstract;
+
+    property NextFrame: IFrame read GetNextFrame write SetNextFrame;
 
     function Failure(AExpected: string): EParseException; virtual; abstract;
   end;

@@ -29,6 +29,9 @@ type
     function ParseTokenList(ATokenSet: ITokenSet): TListNode; override;
     function TryParseToken(ATokenType: TTokenType): TToken; override;
 
+    function GetNextFrame: IFrame; override;
+    procedure SetNextFrame(const Value: IFrame); override;
+
   public
     constructor CreateFromText(AText, AFileName: string;
       ACompilerDefines: TCompilerDefines; AFileLoader: TFileLoader);
@@ -290,6 +293,11 @@ begin
   Result := FNextFrame.IsEOF;
 end;
 
+function TParser.GetNextFrame: IFrame;
+begin
+  Result := FNextFrame;
+end;
+
 procedure TParser.MoveNext;
 begin
   FNextFrame := FNextFrame.Next;
@@ -413,6 +421,11 @@ begin
 
   if (AFrame <> FNextFrame) and (AFrame.IsEOF) then
     AFrame.Free;
+end;
+
+procedure TParser.SetNextFrame(const Value: IFrame);
+begin
+  FNextFrame := Value;
 end;
 
 function TParser.TryParseToken(ATokenType: TTokenType): TToken;
