@@ -1895,12 +1895,47 @@ end;
 
 function TPropertyRule.CanParse: Boolean;
 begin
-  Result := False;
+  Result := (FParser.Peek(0) = TTPropertyKeyword) or
+            ((FParser.Peek(0) = TTClassKeyword) and
+             (FParser.Peek(1) = TTPropertyKeyword));
 end;
 
 function TPropertyRule.Evaluate: TASTNode;
+var
+  AClass, AProperty, AName, AOpen, AClose, AColon, ASemicolon: TToken;
+  AParameterList, ADirectiveList: TListNode;
+  AType: TASTNode;
 begin
-  Result := nil;
+  AClass := nil;
+  if FParser.CanParseToken(TTClassKeyword) then
+    AClass := FParser.ParseToken(TTClassKeyword);
+
+  AProperty := FParser.ParseToken(TTPropertyKeyword);
+  AName := FParser.ParseRuleInternal(RTIdent) as TToken;
+
+  AOpen := nil;
+  AParameterList := FParser.CreateEmptyListNode;
+  AClose := nil;
+  if FParser.CanParseToken(TTOpenBracket) then
+  begin
+    AOpen := FParser.ParseToken(TTOpenBracket);
+    AParameterList.Free;
+    AParameterList := FParser.ParseDelimitedList(RTParameter, TTSemicolon);
+    AClose := FParser.ParseToken(TTCloseBracket);
+  end;
+
+  AColon := nil;
+  AType := nil;
+  if FParser.CanParseToken(TTColon) then
+  begin
+    AColon := FParser.ParseToken(TTColon);
+    AType := FParser.ParseRuleInternal(RTMethodReturnType);
+  end;
+
+  ADirectiveList := FParser.ParseOptionalRuleList(RTPropertyDirective);
+  ASemicolon := FParser.ParseToken(TTSemicolon);
+  Result := TPropertyNode.Create(AClass, AProperty, AName, AOpen, AParameterList,
+    AClose, AColon, AType, ADirectiveList, ASemicolon);
 end;
 
 { TPropertyDirectiveRule }

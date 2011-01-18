@@ -69,7 +69,8 @@ uses
   UTestMethodHeading in 'UTestMethodHeading.pas',
   UTestExportsSpecifier in 'UTestExportsSpecifier.pas',
   UTestDirective in 'UTestDirective.pas',
-  UTestPropertyDirective in 'UTestPropertyDirective.pas';
+  UTestPropertyDirective in 'UTestPropertyDirective.pas',
+  UTestProperty in 'UTestProperty.pas';
 
 begin
   try
@@ -118,6 +119,7 @@ begin
     TTestParenthesizedExpression.Test;
     TTestParticle.Test;
     TTestPortabilityDirective.Test;
+    TTestProperty.Test;
     TTestPropertyDirective.Test;
     TTestQualifiedIdent.Test;
     TTestRaiseStatement.Test;
