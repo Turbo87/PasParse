@@ -70,7 +70,7 @@ begin
     '  FileKeywordNode: FileKeyword |file|' + #13#10 +
     '  OfKeywordNode: (none)' + #13#10 +
     '  TypeNode: (none)', RTType));
-  {
+
   OK('record helper for TPoint end',
     TTestParser.ParsesAs('record helper for TPoint end',
     'TypeHelperNode' + #13#10 +
@@ -90,7 +90,7 @@ begin
     '  ContentListNode: ListNode' + #13#10 +
     '  VariantSectionNode: (none)' + #13#10 +
     '  EndKeywordNode: EndKeyword |end|', RTType));
-  }
+  
   OK('^TFoo', TTestParser.ParsesAs('^TFoo',
     'PointerTypeNode' + #13#10 +
     '  CaretNode: Caret |^|' + #13#10 +
