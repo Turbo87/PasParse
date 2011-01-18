@@ -2240,12 +2240,25 @@ end;
 
 function TRecordHelperTypeRule.CanParse: Boolean;
 begin
-  Result := False;
+  Result := (FParser.Peek(0) = TTRecordKeyword) and
+    (FParser.Peek(1) = TTHelperSemikeyword);
 end;
 
 function TRecordHelperTypeRule.Evaluate: TASTNode;
+var
+  ATypeKeyword, AHelper, AFor, AEnd: TToken;
+  AType: TASTNode;
+  AContents: TListNode;
 begin
-  Result := nil;
+  ATypeKeyword := FParser.ParseToken(TTRecordKeyword);
+  AHelper := FParser.ParseToken(TTHelperSemikeyword);
+  AFor := FParser.ParseToken(TTForKeyword);
+  AType := FParser.ParseRuleInternal(RTQualifiedIdent);
+  AContents := FParser.ParseOptionalRuleList(RTVisibilitySection);
+  AEnd := FParser.ParseToken(TTEndKeyword);
+  
+  Result := TTypeHelperNode.Create(ATypeKeyword, AHelper, nil, nil, nil, AFor,
+    AType, AContents, AEnd);
 end;
 
 { TRecordTypeRule }

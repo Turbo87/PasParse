@@ -78,7 +78,8 @@ uses
   UTestExportsStatement in 'UTestExportsStatement.pas',
   UTestInitSection in 'UTestInitSection.pas',
   UTestLabelDeclSection in 'UTestLabelDeclSection.pas',
-  UTestProcedureType in 'UTestProcedureType.pas';
+  UTestProcedureType in 'UTestProcedureType.pas',
+  UTestRecordHelperType in 'UTestRecordHelperType.pas';
 
 begin
   try
@@ -139,6 +140,7 @@ begin
     TTestPropertyDirective.Test;
     TTestQualifiedIdent.Test;
     TTestRaiseStatement.Test;
+    TTestRecordHelperType.Test;
     TTestRelOp.Test;
     TTestRepeatStatement.Test;
     TTestSetLiteral.Test;

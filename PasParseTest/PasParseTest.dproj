@@ -94,6 +94,7 @@
     <DCCReference Include="UTestPropertyDirective.pas" />
     <DCCReference Include="UTestQualifiedIdent.pas" />
     <DCCReference Include="UTestRaiseStatement.pas" />
+    <DCCReference Include="UTestRecordHelperType.pas" />
     <DCCReference Include="UTestRelOp.pas" />
     <DCCReference Include="UTestRepeatStatement.pas" />
     <DCCReference Include="UTestSetLiteral.pas" />
