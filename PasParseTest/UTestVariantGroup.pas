@@ -143,7 +143,7 @@ begin
     '  VariantSectionNode: (none)' + #13#10 +
     '  CloseParenthesisNode: CloseParenthesis |)|' + #13#10 +
     '  SemicolonNode: (none)', RTVariantGroup));
-  {
+
   OK('1: (Foo: Integer; case Byte of 1: ())',
     TTestParser.ParsesAs('1: (Foo: Integer; case Byte of 1: ())',
     'VariantGroupNode' + #13#10 +
@@ -183,7 +183,6 @@ begin
     '        SemicolonNode: (none)' + #13#10 +
     '  CloseParenthesisNode: CloseParenthesis |)|' + #13#10 +
     '  SemicolonNode: (none)', RTVariantGroup));
-    }
 end;
 
 end.
