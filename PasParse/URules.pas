@@ -1978,8 +1978,22 @@ var
   AExpression: TASTNode;
 begin
   AOpen := FParser.ParseToken(TTOpenParenthesis);
-  AExpression := FParser.ParseRuleInternal(RTExpression);
-  AClose := FParser.ParseToken(TTCloseParenthesis);
+  
+  try
+    AExpression := FParser.ParseRuleInternal(RTExpression);
+  except
+    AOpen.Free;
+    raise;
+  end;
+  
+  try
+    AClose := FParser.ParseToken(TTCloseParenthesis);
+  except
+    AOpen.Free;
+    AExpression.Free;
+    raise;
+  end;
+  
   Result := TParenthesizedExpressionNode.Create(AOpen, AExpression, AClose);
 end;
 
