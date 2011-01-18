@@ -14,6 +14,8 @@ type
   public
     constructor Create(AItems: TObjectList);
 
+    function Clone: TASTNode; override;
+
     property Items[const AIndex: Integer]: TASTNode read GetItem;
     property ItemsCount: Integer read GetCount;
   end;
@@ -24,6 +26,20 @@ uses
   SysUtils;
 
 { TListNode }
+
+function TListNode.Clone: TASTNode;
+var
+  AList: TObjectList;
+  I: Integer;
+begin
+  AList := TObjectList.Create(False);
+
+  for I := 0 to FChildNodes.Count - 1 do
+    AList.Add((FChildNodes[I] as TASTNode).Clone);
+
+  Result := TListNode.Create(AList);
+  AList.Free;
+end;
 
 constructor TListNode.Create(AItems: TObjectList);
 var
