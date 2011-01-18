@@ -2922,12 +2922,33 @@ end;
 
 function TVariantGroupRule.CanParse: Boolean;
 begin
-  Result := False;
+  Result := FParser.CanParseRule(RTExpressionList);
 end;
 
 function TVariantGroupRule.Evaluate: TASTNode;
+var
+  AValues, AFieldDeclList: TListNode;
+  AColon, AOpen, AClose, ASemicolon: TToken;
+  AVariantSection: TVariantSectionNode;
 begin
-  Result := nil;
+  AValues := FParser.ParseRuleInternal(RTExpressionList) as TListNode;
+  AColon := FParser.ParseToken(TTColon);
+  AOpen := FParser.ParseToken(TTOpenParenthesis);
+  AFieldDeclList := FParser.ParseOptionalRuleList(RTFieldDecl);
+
+  AVariantSection := nil;
+  if FParser.CanParseRule(RTVariantSection) then
+    AVariantSection := FParser.ParseRuleInternal(RTVariantSection)
+      as TVariantSectionNode;
+
+  AClose := FParser.ParseToken(TTCloseParenthesis);
+
+  ASemicolon := nil;
+  if FParser.CanParseToken(TTSemicolon) then
+    ASemicolon := FParser.ParseToken(TTSemicolon);
+
+  Result := TVariantGroupNode.Create(AValues, AColon, AOpen, AFieldDeclList,
+    AVariantSection, AClose, ASemicolon);
 end;
 
 { TVariantSectionRule }

@@ -94,7 +94,8 @@ uses
   UTestTypeDecl in 'UTestTypeDecl.pas',
   UTestTypeSection in 'UTestTypeSection.pas',
   UTestVisibilitySectionContent in 'UTestVisibilitySectionContent.pas',
-  UTestVisibilitySection in 'UTestVisibilitySection.pas';
+  UTestVisibilitySection in 'UTestVisibilitySection.pas',
+  UTestVariantGroup in 'UTestVariantGroup.pas';
 
 begin
   try
@@ -181,6 +182,7 @@ begin
     TTestUsedUnit.Test;
     TTestUsesClause.Test;
     TTestVarDecl.Test;
+    TTestVariantGroup.Test;
     TTestVarSection.Test;
     TTestVisibility.Test;
     TTestVisibilitySection.Test;
