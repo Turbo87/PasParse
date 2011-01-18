@@ -93,7 +93,8 @@ uses
   UTestFieldSection in 'UTestFieldSection.pas',
   UTestTypeDecl in 'UTestTypeDecl.pas',
   UTestTypeSection in 'UTestTypeSection.pas',
-  UTestVisibilitySectionContent in 'UTestVisibilitySectionContent.pas';
+  UTestVisibilitySectionContent in 'UTestVisibilitySectionContent.pas',
+  UTestVisibilitySection in 'UTestVisibilitySection.pas';
 
 begin
   try
@@ -182,6 +183,7 @@ begin
     TTestVarDecl.Test;
     TTestVarSection.Test;
     TTestVisibility.Test;
+    TTestVisibilitySection.Test;
     TTestVisibilitySectionContent.Test;
     TTestWhileStatement.Test;
     TTestWithStatement.Test;

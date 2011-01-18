@@ -2976,12 +2976,21 @@ end;
 
 function TVisibilitySectionRule.CanParse: Boolean;
 begin
-  Result := False;
+  Result := FParser.CanParseRule(RTVisibility) or
+    FParser.CanParseRule(RTVisibilitySectionContent);
 end;
 
 function TVisibilitySectionRule.Evaluate: TASTNode;
+var
+  AVisibility: TVisibilityNode;
+  AContents: TListNode;
 begin
-  Result := nil;
+  AVisibility := nil;
+  if FParser.CanParseRule(RTVisibility) then
+    AVisibility := FParser.ParseRuleInternal(RTVisibility) as TVisibilityNode;
+
+  AContents := FParser.ParseOptionalRuleList(RTVisibilitySectionContent);
+  Result := TVisibilitySectionNode.Create(AVisibility, AContents);
 end;
 
 { TVisibilitySectionContentRule }
