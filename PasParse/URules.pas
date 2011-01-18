@@ -856,12 +856,36 @@ end;
 
 function TClassHelperTypeRule.CanParse: Boolean;
 begin
-  Result := False;
+  Result := (FParser.Peek(0) = TTClassKeyword) and
+    (FParser.Peek(1) = TTHelperSemikeyword);
 end;
 
 function TClassHelperTypeRule.Evaluate: TASTNode;
+var
+  ATypeKeyword, AHelper, AOpen, AClose, AFor, AEnd: TToken;
+  ABaseHelper, AType: TASTNode;
+  AContents: TListNode;
 begin
-  Result := nil;
+  ATypeKeyword := FParser.ParseToken(TTClassKeyword);
+  AHelper := FParser.ParseToken(TTHelperSemikeyword);
+
+  AOpen := nil;
+  ABaseHelper := nil;
+  AClose := nil;
+  if FParser.CanParseToken(TTOpenParenthesis) then
+  begin
+    AOpen := FParser.ParseToken(TTOpenParenthesis);
+    ABaseHelper := FParser.ParseRuleInternal(RTQualifiedIdent);
+    AClose := FParser.ParseToken(TTCloseParenthesis);
+  end;
+
+  AFor := FParser.ParseToken(TTForKeyword);
+  AType := FParser.ParseRuleInternal(RTQualifiedIdent);
+  AContents := FParser.ParseOptionalRuleList(RTVisibilitySection);
+  AEnd := FParser.ParseToken(TTEndKeyword);
+
+  Result := TTypeHelperNode.Create(ATypeKeyword, AHelper, AOpen, ABaseHelper,
+    AClose, AFor, AType, AContents, AEnd);
 end;
 
 { TClassOfTypeRule }
