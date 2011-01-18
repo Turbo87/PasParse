@@ -416,6 +416,7 @@ begin
     AList.Add(ParseToken(ATokenSet));
 
   Result := TListNode.Create(AList);
+  AList.Free;
 end;
 
 function TParser.Peek(AOffset: Integer): TTokenType;
