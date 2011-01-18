@@ -90,7 +90,8 @@ uses
   UTestVarSection in 'UTestVarSection.pas',
   UTestConstSection in 'UTestConstSection.pas',
   UTestFieldDecl in 'UTestFieldDecl.pas',
-  UTestFieldSection in 'UTestFieldSection.pas';
+  UTestFieldSection in 'UTestFieldSection.pas',
+  UTestTypeDecl in 'UTestTypeDecl.pas';
 
 begin
   try
@@ -171,6 +172,7 @@ begin
     TTestTryStatement.Test;
     TTestType.Test;
     TTestTypedConstant.Test;
+    TTestTypeDecl.Test;
     TTestUnaryOperator.Test;
     TTestUsedUnit.Test;
     TTestUsesClause.Test;

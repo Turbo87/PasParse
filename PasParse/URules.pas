@@ -2750,12 +2750,35 @@ end;
 
 function TTypeDeclRule.CanParse: Boolean;
 begin
-  Result := False;
+  Result := FParser.CanParseToken(TTokenSets.TSIdent);
 end;
 
 function TTypeDeclRule.Evaluate: TASTNode;
+var
+  AName, AEqual, AForwardableType, ASemicolon, ATypeKeyword: TToken;
+  AType: TASTNode;
+  ADirectives: TListNode;
 begin
-  Result := nil;
+  AName := FParser.ParseRuleInternal(RTIdent) as TToken;
+  AEqual := FParser.ParseToken(TTEqualSign);
+
+  if TTokenSets.TSForwardableType.Contains(FParser.Peek(0)) and 
+    (FParser.Peek(1) = TTSemicolon) then
+  begin
+    AForwardableType := FParser.ParseToken(TTokenSets.TSForwardableType);
+    ASemicolon := FParser.ParseToken(TTSemicolon);
+    Result := TTypeForwardDeclarationNode.Create(AName, AEqual,
+      AForwardableType, ASemicolon);
+  end
+  else
+  begin
+    ATypeKeyword := FParser.TryParseToken(TTTypeKeyword);
+    AType := FParser.ParseRuleInternal(RTType);
+    ADirectives := FParser.ParseOptionalRuleList(RTPortabilityDirective);
+    ASemicolon := FParser.ParseToken(TTSemicolon);
+    Result := TTypeDeclNode.Create(AName, AEqual, ATypeKeyword, AType,
+      ADirectives, ASemicolon);
+  end;
 end;
 
 { TTypeSectionRule }
