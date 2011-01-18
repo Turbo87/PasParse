@@ -2019,12 +2019,17 @@ end;
 
 function TPointerTypeRule.CanParse: Boolean;
 begin
-  Result := False;
+  Result := FParser.CanParseToken(TTCaret);
 end;
 
 function TPointerTypeRule.Evaluate: TASTNode;
+var
+  ACaret: TToken;
+  AType: TASTNode;
 begin
-  Result := nil;
+  ACaret := FParser.ParseToken(TTCaret);
+  AType := FParser.ParseRuleInternal(RTType);
+  Result := TPointerTypeNode.Create(ACaret, AType);
 end;
 
 { TProcedureTypeRule }

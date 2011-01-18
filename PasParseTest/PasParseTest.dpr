@@ -81,7 +81,8 @@ uses
   UTestProcedureType in 'UTestProcedureType.pas',
   UTestRecordHelperType in 'UTestRecordHelperType.pas',
   UTestType in 'UTestType.pas',
-  UTestPackedType in 'UTestPackedType.pas';
+  UTestPackedType in 'UTestPackedType.pas',
+  UTestPointerType in 'UTestPointerType.pas';
 
 begin
   try
@@ -137,6 +138,7 @@ begin
     TTestParameterType.Test;
     TTestParenthesizedExpression.Test;
     TTestParticle.Test;
+    TTestPointerType.Test;
     TTestPortabilityDirective.Test;
     TTestProcedureType.Test;
     TTestProperty.Test;
