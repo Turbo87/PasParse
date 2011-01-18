@@ -86,7 +86,7 @@ begin
     '      ItemNode: Identifier |Quux|' + #13#10 +
     '      DelimiterNode: Semicolon |;|' + #13#10 +
     '  EndKeywordNode: EndKeyword |end|', RTInitSection));
-  {
+
   OK('begin end', TTestParser.ParsesAs('begin end',
     'InitSectionNode' + #13#10 +
     '  InitializationKeywordNode: BeginKeyword |begin|' + #13#10 +
@@ -108,7 +108,7 @@ begin
     '  FinalizationKeywordNode: (none)' + #13#10 +
     '  FinalizationStatementListNode: ListNode' + #13#10 +
     '  EndKeywordNode: EndKeyword |end|', RTInitSection));
-  }
+  
   OK('asm end', TTestParser.ParsesAs('asm end',
     'InitSectionNode' + #13#10 +
     '  InitializationKeywordNode: (none)' + #13#10 +
