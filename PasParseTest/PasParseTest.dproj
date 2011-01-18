@@ -121,6 +121,7 @@
     <DCCReference Include="UTestUsesClause.pas" />
     <DCCReference Include="UTestVarDecl.pas" />
     <DCCReference Include="UTestVariantGroup.pas" />
+    <DCCReference Include="UTestVariantSection.pas" />
     <DCCReference Include="UTestVarSection.pas" />
     <DCCReference Include="UTestVisibility.pas" />
     <DCCReference Include="UTestVisibilitySection.pas" />

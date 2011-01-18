@@ -2955,12 +2955,41 @@ end;
 
 function TVariantSectionRule.CanParse: Boolean;
 begin
-  Result := False;
+  Result := FParser.CanParseToken(TTCaseKeyword);
 end;
 
 function TVariantSectionRule.Evaluate: TASTNode;
+var
+  ACase, AName, AColon, AOf: TToken;
+  AType: TASTNode;
+  AVariantGroupList: TListNode;
 begin
-  Result := nil;
+  ACase := FParser.ParseToken(TTCaseKeyword);
+
+  AName := nil;
+  AColon := nil;
+  if (FParser.Peek(1) = TTColon) then
+  begin
+    AName := FParser.ParseRuleInternal(RTIdent) as TToken;
+    AColon := FParser.ParseToken(TTColon);
+  end;
+
+  AType := FParser.ParseRuleInternal(RTQualifiedIdent);
+  AOf := FParser.ParseToken(TTOfKeyword);
+  
+  try
+    AVariantGroupList := FParser.ParseRequiredRuleList(RTVariantGroup);
+  except
+    ACase.Free;
+    AName.Free;
+    AColon.Free;
+    AType.Free;
+    AOf.Free;
+    raise;
+  end;
+
+  Result := TVariantSectionNode.Create(ACase, AName, AColon, AType, AOf,
+    AVariantGroupList);
 end;
 
 { TVarSectionRule }
