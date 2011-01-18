@@ -688,12 +688,20 @@ end;
 
 function TAssemblyAttributeRule.CanParse: Boolean;
 begin
-  Result := False;
+  Result := FParser.CanParseToken(TTOpenBracket);
 end;
 
 function TAssemblyAttributeRule.Evaluate: TASTNode;
+var
+  AOpen, AScope, AColon, AClose: TToken;
+  AValue: TASTNode;
 begin
-  Result := nil;
+  AOpen := FParser.ParseToken(TTOpenBracket);
+  AScope := FParser.ParseToken(TTAssemblySemikeyword);
+  AColon := FParser.ParseToken(TTColon);
+  AValue := FParser.ParseRuleInternal(RTExpression);
+  AClose := FParser.ParseToken(TTCloseBracket);
+  Result := TAttributeNode.Create(AOpen, AScope, AColon, AValue, AClose);
 end;
 
 { TAtomRule }

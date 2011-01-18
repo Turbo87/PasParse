@@ -72,7 +72,8 @@ uses
   UTestPropertyDirective in 'UTestPropertyDirective.pas',
   UTestProperty in 'UTestProperty.pas',
   UTestMethodOrProperty in 'UTestMethodOrProperty.pas',
-  UTestInterfaceType in 'UTestInterfaceType.pas';
+  UTestInterfaceType in 'UTestInterfaceType.pas',
+  UTestAssemblyAttribute in 'UTestAssemblyAttribute.pas';
 
 begin
   try
@@ -86,6 +87,7 @@ begin
     TTestAddOp.Test;
     TTestArrayType.Test;
     TTestAssemblerStatement.Test;
+    TTestAssemblyAttribute.Test;
     TTestAtom.Test;
     TTestBareInherited.Test;
     TTestBlock.Test;

@@ -42,6 +42,7 @@
     <DCCReference Include="UTestAlternator.pas" />
     <DCCReference Include="UTestArrayType.pas" />
     <DCCReference Include="UTestAssemblerStatement.pas" />
+    <DCCReference Include="UTestAssemblyAttribute.pas" />
     <DCCReference Include="UTestASTNode.pas" />
     <DCCReference Include="UTestAtom.pas" />
     <DCCReference Include="UTestBareInherited.pas" />
