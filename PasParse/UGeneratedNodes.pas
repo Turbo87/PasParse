@@ -8,7 +8,7 @@ interface
 
 uses
   UNonTerminalNode, UASTNode, UToken, UListNode;
-                                   
+
 type
   // Forward declarations
   TArrayTypeNode = class;
@@ -98,6 +98,8 @@ type
   public
     constructor Create(AArrayKeywordNode: TToken; AOpenBracketNode: TToken; AIndexListNode: TListNode; ACloseBracketNode: TToken; AOfKeywordNode: TToken; ATypeNode: TASTNode);
 
+    function Clone: TASTNode; override;
+
     property ArrayKeywordNode: TToken read FArrayKeywordNode;
     property OpenBracketNode: TToken read FOpenBracketNode;
     property IndexListNode: TListNode read FIndexListNode;
@@ -114,6 +116,8 @@ type
   public
     constructor Create(AAsmKeywordNode: TToken; AEndKeywordNode: TToken);
 
+    function Clone: TASTNode; override;
+
     property AsmKeywordNode: TToken read FAsmKeywordNode;
     property EndKeywordNode: TToken read FEndKeywordNode;
   end;
@@ -128,6 +132,8 @@ type
 
   public
     constructor Create(AOpenBracketNode: TToken; AScopeNode: TToken; AColonNode: TToken; AValueNode: TASTNode; ACloseBracketNode: TToken);
+
+    function Clone: TASTNode; override;
 
     property OpenBracketNode: TToken read FOpenBracketNode;
     property ScopeNode: TToken read FScopeNode;
@@ -145,6 +151,8 @@ type
   public
     constructor Create(ALeftNode: TASTNode; AOperatorNode: TToken; ARightNode: TASTNode);
 
+    function Clone: TASTNode; override;
+
     property LeftNode: TASTNode read FLeftNode;
     property OperatorNode: TToken read FOperatorNode;
     property RightNode: TASTNode read FRightNode;
@@ -158,6 +166,8 @@ type
 
   public
     constructor Create(ABeginKeywordNode: TToken; AStatementListNode: TListNode; AEndKeywordNode: TToken);
+
+    function Clone: TASTNode; override;
 
     property BeginKeywordNode: TToken read FBeginKeywordNode;
     property StatementListNode: TListNode read FStatementListNode;
@@ -173,6 +183,8 @@ type
 
   public
     constructor Create(AValueListNode: TListNode; AColonNode: TToken; AStatementNode: TASTNode; ASemicolonNode: TToken);
+
+    function Clone: TASTNode; override;
 
     property ValueListNode: TListNode read FValueListNode;
     property ColonNode: TToken read FColonNode;
@@ -193,6 +205,8 @@ type
   public
     constructor Create(ACaseKeywordNode: TToken; AExpressionNode: TASTNode; AOfKeywordNode: TToken; ASelectorListNode: TListNode; AElseKeywordNode: TToken; AElseStatementListNode: TListNode; AEndKeywordNode: TToken);
 
+    function Clone: TASTNode; override;
+
     property CaseKeywordNode: TToken read FCaseKeywordNode;
     property ExpressionNode: TASTNode read FExpressionNode;
     property OfKeywordNode: TToken read FOfKeywordNode;
@@ -210,6 +224,8 @@ type
 
   public
     constructor Create(AClassKeywordNode: TToken; AOfKeywordNode: TToken; ATypeNode: TASTNode);
+
+    function Clone: TASTNode; override;
 
     property ClassKeywordNode: TToken read FClassKeywordNode;
     property OfKeywordNode: TToken read FOfKeywordNode;
@@ -229,6 +245,8 @@ type
   public
     constructor Create(AClassKeywordNode: TToken; ADispositionNode: TToken; AOpenParenthesisNode: TToken; AInheritanceListNode: TListNode; ACloseParenthesisNode: TToken; AContentListNode: TListNode; AEndKeywordNode: TToken);
 
+    function Clone: TASTNode; override;
+
     property ClassKeywordNode: TToken read FClassKeywordNode;
     property DispositionNode: TToken read FDispositionNode;
     property OpenParenthesisNode: TToken read FOpenParenthesisNode;
@@ -246,6 +264,8 @@ type
   public
     constructor Create(AConstKeywordNode: TToken; AConstListNode: TListNode);
 
+    function Clone: TASTNode; override;
+
     property ConstKeywordNode: TToken read FConstKeywordNode;
     property ConstListNode: TListNode read FConstListNode;
   end;
@@ -262,6 +282,8 @@ type
 
   public
     constructor Create(ANameNode: TToken; AColonNode: TToken; ATypeNode: TASTNode; AEqualSignNode: TToken; AValueNode: TASTNode; APortabilityDirectiveListNode: TListNode; ASemicolonNode: TToken);
+
+    function Clone: TASTNode; override;
 
     property NameNode: TToken read FNameNode;
     property ColonNode: TToken read FColonNode;
@@ -281,6 +303,8 @@ type
   public
     constructor Create(AOpenParenthesisNode: TToken; AItemListNode: TListNode; ACloseParenthesisNode: TToken);
 
+    function Clone: TASTNode; override;
+
     property OpenParenthesisNode: TToken read FOpenParenthesisNode;
     property ItemListNode: TListNode read FItemListNode;
     property CloseParenthesisNode: TToken read FCloseParenthesisNode;
@@ -295,6 +319,8 @@ type
 
   public
     constructor Create(ASemicolonNode: TToken; AKeywordNode: TToken; AValueNode: TASTNode; ADataNode: TASTNode);
+
+    function Clone: TASTNode; override;
 
     property SemicolonNode: TToken read FSemicolonNode;
     property KeywordNode: TToken read FKeywordNode;
@@ -311,6 +337,8 @@ type
   public
     constructor Create(ANameNode: TToken; AEqualSignNode: TToken; AValueNode: TASTNode);
 
+    function Clone: TASTNode; override;
+
     property NameNode: TToken read FNameNode;
     property EqualSignNode: TToken read FEqualSignNode;
     property ValueNode: TASTNode read FValueNode;
@@ -324,6 +352,8 @@ type
 
   public
     constructor Create(AOpenParenthesisNode: TToken; AItemListNode: TListNode; ACloseParenthesisNode: TToken);
+
+    function Clone: TASTNode; override;
 
     property OpenParenthesisNode: TToken read FOpenParenthesisNode;
     property ItemListNode: TListNode read FItemListNode;
@@ -343,6 +373,8 @@ type
   public
     constructor Create(AOnSemikeywordNode: TToken; ANameNode: TToken; AColonNode: TToken; ATypeNode: TASTNode; ADoKeywordNode: TToken; AStatementNode: TASTNode; ASemicolonNode: TToken);
 
+    function Clone: TASTNode; override;
+
     property OnSemikeywordNode: TToken read FOnSemikeywordNode;
     property NameNode: TToken read FNameNode;
     property ColonNode: TToken read FColonNode;
@@ -360,6 +392,8 @@ type
   public
     constructor Create(ANameNode: TASTNode; ASpecifierListNode: TListNode);
 
+    function Clone: TASTNode; override;
+
     property NameNode: TASTNode read FNameNode;
     property SpecifierListNode: TListNode read FSpecifierListNode;
   end;
@@ -371,6 +405,8 @@ type
 
   public
     constructor Create(AKeywordNode: TToken; AValueNode: TASTNode);
+
+    function Clone: TASTNode; override;
 
     property KeywordNode: TToken read FKeywordNode;
     property ValueNode: TASTNode read FValueNode;
@@ -385,6 +421,8 @@ type
   public
     constructor Create(AExportsKeywordNode: TToken; AItemListNode: TListNode; ASemicolonNode: TToken);
 
+    function Clone: TASTNode; override;
+
     property ExportsKeywordNode: TToken read FExportsKeywordNode;
     property ItemListNode: TListNode read FItemListNode;
     property SemicolonNode: TToken read FSemicolonNode;
@@ -397,6 +435,8 @@ type
 
   public
     constructor Create(ADeclListNode: TListNode; ABlockNode: TASTNode);
+
+    function Clone: TASTNode; override;
 
     property DeclListNode: TListNode read FDeclListNode;
     property BlockNode: TASTNode read FBlockNode;
@@ -412,6 +452,8 @@ type
 
   public
     constructor Create(ANameListNode: TListNode; AColonNode: TToken; ATypeNode: TASTNode; APortabilityDirectiveListNode: TListNode; ASemicolonNode: TToken);
+
+    function Clone: TASTNode; override;
 
     property NameListNode: TListNode read FNameListNode;
     property ColonNode: TToken read FColonNode;
@@ -429,6 +471,8 @@ type
   public
     constructor Create(AClassKeywordNode: TToken; AVarKeywordNode: TToken; AFieldListNode: TListNode);
 
+    function Clone: TASTNode; override;
+
     property ClassKeywordNode: TToken read FClassKeywordNode;
     property VarKeywordNode: TToken read FVarKeywordNode;
     property FieldListNode: TListNode read FFieldListNode;
@@ -442,6 +486,8 @@ type
 
   public
     constructor Create(AFileKeywordNode: TToken; AOfKeywordNode: TToken; ATypeNode: TASTNode);
+
+    function Clone: TASTNode; override;
 
     property FileKeywordNode: TToken read FFileKeywordNode;
     property OfKeywordNode: TToken read FOfKeywordNode;
@@ -459,6 +505,8 @@ type
 
   public
     constructor Create(AForKeywordNode: TToken; ALoopVariableNode: TToken; AInKeywordNode: TToken; AExpressionNode: TASTNode; ADoKeywordNode: TToken; AStatementNode: TASTNode);
+
+    function Clone: TASTNode; override;
 
     property ForKeywordNode: TToken read FForKeywordNode;
     property LoopVariableNode: TToken read FLoopVariableNode;
@@ -482,6 +530,8 @@ type
   public
     constructor Create(AForKeywordNode: TToken; ALoopVariableNode: TToken; AColonEqualsNode: TToken; AStartingValueNode: TASTNode; ADirectionNode: TToken; AEndingValueNode: TASTNode; ADoKeywordNode: TToken; AStatementNode: TASTNode);
 
+    function Clone: TASTNode; override;
+
     property ForKeywordNode: TToken read FForKeywordNode;
     property LoopVariableNode: TToken read FLoopVariableNode;
     property ColonEqualsNode: TToken read FColonEqualsNode;
@@ -500,6 +550,8 @@ type
   public
     constructor Create(AGotoKeywordNode: TToken; ALabelIdNode: TToken);
 
+    function Clone: TASTNode; override;
+
     property GotoKeywordNode: TToken read FGotoKeywordNode;
     property LabelIdNode: TToken read FLabelIdNode;
   end;
@@ -515,6 +567,8 @@ type
 
   public
     constructor Create(AIfKeywordNode: TToken; AConditionNode: TASTNode; AThenKeywordNode: TToken; AThenStatementNode: TASTNode; AElseKeywordNode: TToken; AElseStatementNode: TASTNode);
+
+    function Clone: TASTNode; override;
 
     property IfKeywordNode: TToken read FIfKeywordNode;
     property ConditionNode: TASTNode read FConditionNode;
@@ -534,6 +588,8 @@ type
 
   public
     constructor Create(AInitializationKeywordNode: TToken; AInitializationStatementListNode: TListNode; AFinalizationKeywordNode: TToken; AFinalizationStatementListNode: TListNode; AEndKeywordNode: TToken);
+
+    function Clone: TASTNode; override;
 
     property InitializationKeywordNode: TToken read FInitializationKeywordNode;
     property InitializationStatementListNode: TListNode read FInitializationStatementListNode;
@@ -557,6 +613,8 @@ type
   public
     constructor Create(AInterfaceKeywordNode: TToken; AOpenParenthesisNode: TToken; ABaseInterfaceNode: TASTNode; ACloseParenthesisNode: TToken; AOpenBracketNode: TToken; AGuidNode: TASTNode; ACloseBracketNode: TToken; AMethodAndPropertyListNode: TListNode; AEndKeywordNode: TToken);
 
+    function Clone: TASTNode; override;
+
     property InterfaceKeywordNode: TToken read FInterfaceKeywordNode;
     property OpenParenthesisNode: TToken read FOpenParenthesisNode;
     property BaseInterfaceNode: TASTNode read FBaseInterfaceNode;
@@ -577,6 +635,8 @@ type
   public
     constructor Create(ALabelKeywordNode: TToken; ALabelListNode: TListNode; ASemicolonNode: TToken);
 
+    function Clone: TASTNode; override;
+
     property LabelKeywordNode: TToken read FLabelKeywordNode;
     property LabelListNode: TListNode read FLabelListNode;
     property SemicolonNode: TToken read FSemicolonNode;
@@ -590,6 +650,8 @@ type
 
   public
     constructor Create(ALabelIdNode: TToken; AColonNode: TToken; AStatementNode: TASTNode);
+
+    function Clone: TASTNode; override;
 
     property LabelIdNode: TToken read FLabelIdNode;
     property ColonNode: TToken read FColonNode;
@@ -612,6 +674,8 @@ type
   public
     constructor Create(AClassKeywordNode: TToken; AMethodTypeNode: TToken; ANameNode: TASTNode; AOpenParenthesisNode: TToken; AParameterListNode: TListNode; ACloseParenthesisNode: TToken; AColonNode: TToken; AReturnTypeNode: TASTNode; ADirectiveListNode: TListNode; ASemicolonNode: TToken);
 
+    function Clone: TASTNode; override;
+
     property ClassKeywordNode: TToken read FClassKeywordNode;
     property MethodTypeNode: TToken read FMethodTypeNode;
     property NameNode: TASTNode read FNameNode;
@@ -633,6 +697,8 @@ type
   public
     constructor Create(AMethodHeadingNode: TMethodHeadingNode; AFancyBlockNode: TFancyBlockNode; ASemicolonNode: TToken);
 
+    function Clone: TASTNode; override;
+
     property MethodHeadingNode: TMethodHeadingNode read FMethodHeadingNode;
     property FancyBlockNode: TFancyBlockNode read FFancyBlockNode;
     property SemicolonNode: TToken read FSemicolonNode;
@@ -648,6 +714,8 @@ type
 
   public
     constructor Create(AMethodTypeNode: TToken; AInterfaceMethodNode: TASTNode; AEqualSignNode: TToken; AImplementationMethodNode: TToken; ASemicolonNode: TToken);
+
+    function Clone: TASTNode; override;
 
     property MethodTypeNode: TToken read FMethodTypeNode;
     property InterfaceMethodNode: TASTNode read FInterfaceMethodNode;
@@ -667,6 +735,8 @@ type
   public
     constructor Create(AValueNode: TASTNode; ASizeColonNode: TToken; ASizeNode: TASTNode; APrecisionColonNode: TToken; APrecisionNode: TASTNode);
 
+    function Clone: TASTNode; override;
+
     property ValueNode: TASTNode read FValueNode;
     property SizeColonNode: TToken read FSizeColonNode;
     property SizeNode: TASTNode read FSizeNode;
@@ -682,6 +752,8 @@ type
 
   public
     constructor Create(AArrayKeywordNode: TToken; AOfKeywordNode: TToken; ATypeNode: TASTNode);
+
+    function Clone: TASTNode; override;
 
     property ArrayKeywordNode: TToken read FArrayKeywordNode;
     property OfKeywordNode: TToken read FOfKeywordNode;
@@ -702,6 +774,8 @@ type
   public
     constructor Create(APackageKeywordNode: TToken; ANameNode: TASTNode; ASemicolonNode: TToken; ARequiresClauseNode: TRequiresClauseNode; AContainsClauseNode: TUsesClauseNode; AAttributeListNode: TListNode; AEndKeywordNode: TToken; ADotNode: TToken);
 
+    function Clone: TASTNode; override;
+
     property PackageKeywordNode: TToken read FPackageKeywordNode;
     property NameNode: TASTNode read FNameNode;
     property SemicolonNode: TToken read FSemicolonNode;
@@ -720,6 +794,8 @@ type
   public
     constructor Create(APackedKeywordNode: TToken; ATypeNode: TASTNode);
 
+    function Clone: TASTNode; override;
+
     property PackedKeywordNode: TToken read FPackedKeywordNode;
     property TypeNode: TASTNode read FTypeNode;
   end;
@@ -735,6 +811,8 @@ type
 
   public
     constructor Create(AModifierNode: TToken; ANameListNode: TListNode; AColonNode: TToken; ATypeNode: TASTNode; AEqualSignNode: TToken; ADefaultValueNode: TASTNode);
+
+    function Clone: TASTNode; override;
 
     property ModifierNode: TToken read FModifierNode;
     property NameListNode: TListNode read FNameListNode;
@@ -754,6 +832,8 @@ type
   public
     constructor Create(ALeftNode: TASTNode; AOpenDelimiterNode: TToken; AParameterListNode: TListNode; ACloseDelimiterNode: TToken);
 
+    function Clone: TASTNode; override;
+
     property LeftNode: TASTNode read FLeftNode;
     property OpenDelimiterNode: TToken read FOpenDelimiterNode;
     property ParameterListNode: TListNode read FParameterListNode;
@@ -769,6 +849,8 @@ type
   public
     constructor Create(AOpenParenthesisNode: TToken; AExpressionNode: TASTNode; ACloseParenthesisNode: TToken);
 
+    function Clone: TASTNode; override;
+
     property OpenParenthesisNode: TToken read FOpenParenthesisNode;
     property ExpressionNode: TASTNode read FExpressionNode;
     property CloseParenthesisNode: TToken read FCloseParenthesisNode;
@@ -782,6 +864,8 @@ type
   public
     constructor Create(AOperandNode: TASTNode; ACaretNode: TToken);
 
+    function Clone: TASTNode; override;
+
     property OperandNode: TASTNode read FOperandNode;
     property CaretNode: TToken read FCaretNode;
   end;
@@ -793,6 +877,8 @@ type
 
   public
     constructor Create(ACaretNode: TToken; ATypeNode: TASTNode);
+
+    function Clone: TASTNode; override;
 
     property CaretNode: TToken read FCaretNode;
     property TypeNode: TASTNode read FTypeNode;
@@ -813,6 +899,8 @@ type
 
   public
     constructor Create(AMethodTypeNode: TToken; AOpenParenthesisNode: TToken; AParameterListNode: TListNode; ACloseParenthesisNode: TToken; AColonNode: TToken; AReturnTypeNode: TASTNode; AFirstDirectiveListNode: TListNode; AOfKeywordNode: TToken; AObjectKeywordNode: TToken; ASecondDirectiveListNode: TListNode);
+
+    function Clone: TASTNode; override;
 
     property MethodTypeNode: TToken read FMethodTypeNode;
     property OpenParenthesisNode: TToken read FOpenParenthesisNode;
@@ -842,6 +930,8 @@ type
   public
     constructor Create(AProgramKeywordNode: TToken; ANameNode: TToken; ANoiseOpenParenthesisNode: TToken; ANoiseContentListNode: TListNode; ANoiseCloseParenthesisNode: TToken; ASemicolonNode: TToken; AUsesClauseNode: TUsesClauseNode; ADeclarationListNode: TListNode; AInitSectionNode: TInitSectionNode; ADotNode: TToken);
 
+    function Clone: TASTNode; override;
+
     property ProgramKeywordNode: TToken read FProgramKeywordNode;
     property NameNode: TToken read FNameNode;
     property NoiseOpenParenthesisNode: TToken read FNoiseOpenParenthesisNode;
@@ -870,6 +960,8 @@ type
   public
     constructor Create(AClassKeywordNode: TToken; APropertyKeywordNode: TToken; ANameNode: TToken; AOpenBracketNode: TToken; AParameterListNode: TListNode; ACloseBracketNode: TToken; AColonNode: TToken; ATypeNode: TASTNode; ADirectiveListNode: TListNode; ASemicolonNode: TToken);
 
+    function Clone: TASTNode; override;
+
     property ClassKeywordNode: TToken read FClassKeywordNode;
     property PropertyKeywordNode: TToken read FPropertyKeywordNode;
     property NameNode: TToken read FNameNode;
@@ -892,6 +984,8 @@ type
   public
     constructor Create(ARaiseKeywordNode: TToken; AExceptionNode: TASTNode; AAtSemikeywordNode: TToken; AAddressNode: TASTNode);
 
+    function Clone: TASTNode; override;
+
     property RaiseKeywordNode: TToken read FRaiseKeywordNode;
     property ExceptionNode: TASTNode read FExceptionNode;
     property AtSemikeywordNode: TToken read FAtSemikeywordNode;
@@ -907,6 +1001,8 @@ type
   public
     constructor Create(ANameNode: TASTNode; AColonNode: TToken; AValueNode: TASTNode);
 
+    function Clone: TASTNode; override;
+
     property NameNode: TASTNode read FNameNode;
     property ColonNode: TToken read FColonNode;
     property ValueNode: TASTNode read FValueNode;
@@ -921,6 +1017,8 @@ type
 
   public
     constructor Create(ARecordKeywordNode: TToken; AContentListNode: TListNode; AVariantSectionNode: TVariantSectionNode; AEndKeywordNode: TToken);
+
+    function Clone: TASTNode; override;
 
     property RecordKeywordNode: TToken read FRecordKeywordNode;
     property ContentListNode: TListNode read FContentListNode;
@@ -938,6 +1036,8 @@ type
   public
     constructor Create(ARepeatKeywordNode: TToken; AStatementListNode: TListNode; AUntilKeywordNode: TToken; AConditionNode: TASTNode);
 
+    function Clone: TASTNode; override;
+
     property RepeatKeywordNode: TToken read FRepeatKeywordNode;
     property StatementListNode: TListNode read FStatementListNode;
     property UntilKeywordNode: TToken read FUntilKeywordNode;
@@ -953,6 +1053,8 @@ type
   public
     constructor Create(ARequiresSemikeywordNode: TToken; APackageListNode: TListNode; ASemicolonNode: TToken);
 
+    function Clone: TASTNode; override;
+
     property RequiresSemikeywordNode: TToken read FRequiresSemikeywordNode;
     property PackageListNode: TListNode read FPackageListNode;
     property SemicolonNode: TToken read FSemicolonNode;
@@ -966,6 +1068,8 @@ type
 
   public
     constructor Create(AOpenBracketNode: TToken; AItemListNode: TListNode; ACloseBracketNode: TToken);
+
+    function Clone: TASTNode; override;
 
     property OpenBracketNode: TToken read FOpenBracketNode;
     property ItemListNode: TListNode read FItemListNode;
@@ -981,6 +1085,8 @@ type
   public
     constructor Create(ASetKeywordNode: TToken; AOfKeywordNode: TToken; ATypeNode: TASTNode);
 
+    function Clone: TASTNode; override;
+
     property SetKeywordNode: TToken read FSetKeywordNode;
     property OfKeywordNode: TToken read FOfKeywordNode;
     property TypeNode: TASTNode read FTypeNode;
@@ -995,6 +1101,8 @@ type
 
   public
     constructor Create(AStringKeywordNode: TToken; AOpenBracketNode: TToken; ALengthNode: TASTNode; ACloseBracketNode: TToken);
+
+    function Clone: TASTNode; override;
 
     property StringKeywordNode: TToken read FStringKeywordNode;
     property OpenBracketNode: TToken read FOpenBracketNode;
@@ -1014,6 +1122,8 @@ type
 
   public
     constructor Create(ATryKeywordNode: TToken; ATryStatementListNode: TListNode; AExceptKeywordNode: TToken; AExceptionItemListNode: TListNode; AElseKeywordNode: TToken; AElseStatementListNode: TListNode; AEndKeywordNode: TToken);
+
+    function Clone: TASTNode; override;
 
     property TryKeywordNode: TToken read FTryKeywordNode;
     property TryStatementListNode: TListNode read FTryStatementListNode;
@@ -1035,6 +1145,8 @@ type
   public
     constructor Create(ATryKeywordNode: TToken; ATryStatementListNode: TListNode; AFinallyKeywordNode: TToken; AFinallyStatementListNode: TListNode; AEndKeywordNode: TToken);
 
+    function Clone: TASTNode; override;
+
     property TryKeywordNode: TToken read FTryKeywordNode;
     property TryStatementListNode: TListNode read FTryStatementListNode;
     property FinallyKeywordNode: TToken read FFinallyKeywordNode;
@@ -1054,6 +1166,8 @@ type
   public
     constructor Create(ANameNode: TToken; AEqualSignNode: TToken; ATypeKeywordNode: TToken; ATypeNode: TASTNode; APortabilityDirectiveListNode: TListNode; ASemicolonNode: TToken);
 
+    function Clone: TASTNode; override;
+
     property NameNode: TToken read FNameNode;
     property EqualSignNode: TToken read FEqualSignNode;
     property TypeKeywordNode: TToken read FTypeKeywordNode;
@@ -1071,6 +1185,8 @@ type
 
   public
     constructor Create(ANameNode: TToken; AEqualSignNode: TToken; ATypeNode: TToken; ASemicolonNode: TToken);
+
+    function Clone: TASTNode; override;
 
     property NameNode: TToken read FNameNode;
     property EqualSignNode: TToken read FEqualSignNode;
@@ -1093,6 +1209,8 @@ type
   public
     constructor Create(ATypeKeywordNode: TToken; AHelperSemikeywordNode: TToken; AOpenParenthesisNode: TToken; ABaseHelperTypeNode: TASTNode; ACloseParenthesisNode: TToken; AForKeywordNode: TToken; ATypeNode: TASTNode; AContentListNode: TListNode; AEndKeywordNode: TToken);
 
+    function Clone: TASTNode; override;
+
     property TypeKeywordNode: TToken read FTypeKeywordNode;
     property HelperSemikeywordNode: TToken read FHelperSemikeywordNode;
     property OpenParenthesisNode: TToken read FOpenParenthesisNode;
@@ -1112,6 +1230,8 @@ type
   public
     constructor Create(ATypeKeywordNode: TToken; ATypeListNode: TListNode);
 
+    function Clone: TASTNode; override;
+
     property TypeKeywordNode: TToken read FTypeKeywordNode;
     property TypeListNode: TListNode read FTypeListNode;
   end;
@@ -1123,6 +1243,8 @@ type
 
   public
     constructor Create(AOperatorNode: TToken; AOperandNode: TASTNode);
+
+    function Clone: TASTNode; override;
 
     property OperatorNode: TToken read FOperatorNode;
     property OperandNode: TASTNode read FOperandNode;
@@ -1141,6 +1263,8 @@ type
 
   public
     constructor Create(AUnitKeywordNode: TToken; AUnitNameNode: TToken; APortabilityDirectiveListNode: TListNode; ASemicolonNode: TToken; AInterfaceSectionNode: TUnitSectionNode; AImplementationSectionNode: TUnitSectionNode; AInitSectionNode: TInitSectionNode; ADotNode: TToken);
+
+    function Clone: TASTNode; override;
 
     property UnitKeywordNode: TToken read FUnitKeywordNode;
     property UnitNameNode: TToken read FUnitNameNode;
@@ -1161,6 +1285,8 @@ type
   public
     constructor Create(AHeaderKeywordNode: TToken; AUsesClauseNode: TUsesClauseNode; AContentListNode: TListNode);
 
+    function Clone: TASTNode; override;
+
     property HeaderKeywordNode: TToken read FHeaderKeywordNode;
     property UsesClauseNode: TUsesClauseNode read FUsesClauseNode;
     property ContentListNode: TListNode read FContentListNode;
@@ -1175,6 +1301,8 @@ type
   public
     constructor Create(ANameNode: TASTNode; AInKeywordNode: TToken; AFileNameNode: TToken);
 
+    function Clone: TASTNode; override;
+
     property NameNode: TASTNode read FNameNode;
     property InKeywordNode: TToken read FInKeywordNode;
     property FileNameNode: TToken read FFileNameNode;
@@ -1188,6 +1316,8 @@ type
 
   public
     constructor Create(AUsesKeywordNode: TToken; AUnitListNode: TListNode; ASemicolonNode: TToken);
+
+    function Clone: TASTNode; override;
 
     property UsesKeywordNode: TToken read FUsesKeywordNode;
     property UnitListNode: TListNode read FUnitListNode;
@@ -1210,6 +1340,8 @@ type
   public
     constructor Create(ANameListNode: TListNode; AColonNode: TToken; ATypeNode: TASTNode; AFirstPortabilityDirectiveListNode: TListNode; AAbsoluteSemikeywordNode: TToken; AAbsoluteAddressNode: TASTNode; AEqualSignNode: TToken; AValueNode: TASTNode; ASecondPortabilityDirectiveListNode: TListNode; ASemicolonNode: TToken);
 
+    function Clone: TASTNode; override;
+
     property NameListNode: TListNode read FNameListNode;
     property ColonNode: TToken read FColonNode;
     property TypeNode: TASTNode read FTypeNode;
@@ -1230,6 +1362,8 @@ type
   public
     constructor Create(AVarKeywordNode: TToken; AVarListNode: TListNode);
 
+    function Clone: TASTNode; override;
+
     property VarKeywordNode: TToken read FVarKeywordNode;
     property VarListNode: TListNode read FVarListNode;
   end;
@@ -1246,6 +1380,8 @@ type
 
   public
     constructor Create(AValueListNode: TListNode; AColonNode: TToken; AOpenParenthesisNode: TToken; AFieldDeclListNode: TListNode; AVariantSectionNode: TVariantSectionNode; ACloseParenthesisNode: TToken; ASemicolonNode: TToken);
+
+    function Clone: TASTNode; override;
 
     property ValueListNode: TListNode read FValueListNode;
     property ColonNode: TToken read FColonNode;
@@ -1268,6 +1404,8 @@ type
   public
     constructor Create(ACaseKeywordNode: TToken; ANameNode: TToken; AColonNode: TToken; ATypeNode: TASTNode; AOfKeywordNode: TToken; AVariantGroupListNode: TListNode);
 
+    function Clone: TASTNode; override;
+
     property CaseKeywordNode: TToken read FCaseKeywordNode;
     property NameNode: TToken read FNameNode;
     property ColonNode: TToken read FColonNode;
@@ -1284,6 +1422,8 @@ type
   public
     constructor Create(AStrictSemikeywordNode: TToken; AVisibilityKeywordNode: TToken);
 
+    function Clone: TASTNode; override;
+
     property StrictSemikeywordNode: TToken read FStrictSemikeywordNode;
     property VisibilityKeywordNode: TToken read FVisibilityKeywordNode;
   end;
@@ -1295,6 +1435,8 @@ type
 
   public
     constructor Create(AVisibilityNode: TVisibilityNode; AContentListNode: TListNode);
+
+    function Clone: TASTNode; override;
 
     property VisibilityNode: TVisibilityNode read FVisibilityNode;
     property ContentListNode: TListNode read FContentListNode;
@@ -1309,6 +1451,8 @@ type
 
   public
     constructor Create(AWhileKeywordNode: TToken; AConditionNode: TASTNode; ADoKeywordNode: TToken; AStatementNode: TASTNode);
+
+    function Clone: TASTNode; override;
 
     property WhileKeywordNode: TToken read FWhileKeywordNode;
     property ConditionNode: TASTNode read FConditionNode;
@@ -1326,6 +1470,8 @@ type
   public
     constructor Create(AWithKeywordNode: TToken; AExpressionListNode: TListNode; ADoKeywordNode: TToken; AStatementNode: TASTNode);
 
+    function Clone: TASTNode; override;
+
     property WithKeywordNode: TToken read FWithKeywordNode;
     property ExpressionListNode: TListNode read FExpressionListNode;
     property DoKeywordNode: TToken read FDoKeywordNode;
@@ -1335,6 +1481,17 @@ type
 implementation
 
 { TArrayTypeNode }
+
+function TArrayTypeNode.Clone: TASTNode;
+begin
+  Result := TArrayTypeNode.Create(
+    FArrayKeywordNode.Clone as TToken,
+    FOpenBracketNode.Clone as TToken,
+    FIndexListNode.Clone as TListNode,
+    FCloseBracketNode.Clone as TToken,
+    FOfKeywordNode.Clone as TToken,
+    FTypeNode.Clone as TASTNode);
+end;
 
 constructor TArrayTypeNode.Create(AArrayKeywordNode: TToken; AOpenBracketNode: TToken; AIndexListNode: TListNode; ACloseBracketNode: TToken; AOfKeywordNode: TToken; ATypeNode: TASTNode);
 begin
@@ -1363,6 +1520,13 @@ end;
 
 { TAssemblerStatementNode }
 
+function TAssemblerStatementNode.Clone: TASTNode;
+begin
+  Result := TAssemblerStatementNode.Create(
+    FAsmKeywordNode.Clone as TToken,
+    FEndKeywordNode.Clone as TToken);
+end;
+
 constructor TAssemblerStatementNode.Create(AAsmKeywordNode: TToken; AEndKeywordNode: TToken);
 begin
   inherited Create;
@@ -1377,6 +1541,16 @@ begin
 end;
 
 { TAttributeNode }
+
+function TAttributeNode.Clone: TASTNode;
+begin
+  Result := TAttributeNode.Create(
+    FOpenBracketNode.Clone as TToken,
+    FScopeNode.Clone as TToken,
+    FColonNode.Clone as TToken,
+    FValueNode.Clone as TASTNode,
+    FCloseBracketNode.Clone as TToken);
+end;
 
 constructor TAttributeNode.Create(AOpenBracketNode: TToken; AScopeNode: TToken; AColonNode: TToken; AValueNode: TASTNode; ACloseBracketNode: TToken);
 begin
@@ -1402,6 +1576,14 @@ end;
 
 { TBinaryOperationNode }
 
+function TBinaryOperationNode.Clone: TASTNode;
+begin
+  Result := TBinaryOperationNode.Create(
+    FLeftNode.Clone as TASTNode,
+    FOperatorNode.Clone as TToken,
+    FRightNode.Clone as TASTNode);
+end;
+
 constructor TBinaryOperationNode.Create(ALeftNode: TASTNode; AOperatorNode: TToken; ARightNode: TASTNode);
 begin
   inherited Create;
@@ -1420,6 +1602,14 @@ end;
 
 { TBlockNode }
 
+function TBlockNode.Clone: TASTNode;
+begin
+  Result := TBlockNode.Create(
+    FBeginKeywordNode.Clone as TToken,
+    FStatementListNode.Clone as TListNode,
+    FEndKeywordNode.Clone as TToken);
+end;
+
 constructor TBlockNode.Create(ABeginKeywordNode: TToken; AStatementListNode: TListNode; AEndKeywordNode: TToken);
 begin
   inherited Create;
@@ -1437,6 +1627,15 @@ begin
 end;
 
 { TCaseSelectorNode }
+
+function TCaseSelectorNode.Clone: TASTNode;
+begin
+  Result := TCaseSelectorNode.Create(
+    FValueListNode.Clone as TListNode,
+    FColonNode.Clone as TToken,
+    FStatementNode.Clone as TASTNode,
+    FSemicolonNode.Clone as TToken);
+end;
 
 constructor TCaseSelectorNode.Create(AValueListNode: TListNode; AColonNode: TToken; AStatementNode: TASTNode; ASemicolonNode: TToken);
 begin
@@ -1458,6 +1657,18 @@ begin
 end;
 
 { TCaseStatementNode }
+
+function TCaseStatementNode.Clone: TASTNode;
+begin
+  Result := TCaseStatementNode.Create(
+    FCaseKeywordNode.Clone as TToken,
+    FExpressionNode.Clone as TASTNode,
+    FOfKeywordNode.Clone as TToken,
+    FSelectorListNode.Clone as TListNode,
+    FElseKeywordNode.Clone as TToken,
+    FElseStatementListNode.Clone as TListNode,
+    FEndKeywordNode.Clone as TToken);
+end;
 
 constructor TCaseStatementNode.Create(ACaseKeywordNode: TToken; AExpressionNode: TASTNode; AOfKeywordNode: TToken; ASelectorListNode: TListNode; AElseKeywordNode: TToken; AElseStatementListNode: TListNode; AEndKeywordNode: TToken);
 begin
@@ -1489,6 +1700,14 @@ end;
 
 { TClassOfNode }
 
+function TClassOfNode.Clone: TASTNode;
+begin
+  Result := TClassOfNode.Create(
+    FClassKeywordNode.Clone as TToken,
+    FOfKeywordNode.Clone as TToken,
+    FTypeNode.Clone as TASTNode);
+end;
+
 constructor TClassOfNode.Create(AClassKeywordNode: TToken; AOfKeywordNode: TToken; ATypeNode: TASTNode);
 begin
   inherited Create;
@@ -1506,6 +1725,18 @@ begin
 end;
 
 { TClassTypeNode }
+
+function TClassTypeNode.Clone: TASTNode;
+begin
+  Result := TClassTypeNode.Create(
+    FClassKeywordNode.Clone as TToken,
+    FDispositionNode.Clone as TToken,
+    FOpenParenthesisNode.Clone as TToken,
+    FInheritanceListNode.Clone as TListNode,
+    FCloseParenthesisNode.Clone as TToken,
+    FContentListNode.Clone as TListNode,
+    FEndKeywordNode.Clone as TToken);
+end;
 
 constructor TClassTypeNode.Create(AClassKeywordNode: TToken; ADispositionNode: TToken; AOpenParenthesisNode: TToken; AInheritanceListNode: TListNode; ACloseParenthesisNode: TToken; AContentListNode: TListNode; AEndKeywordNode: TToken);
 begin
@@ -1537,6 +1768,13 @@ end;
 
 { TConstSectionNode }
 
+function TConstSectionNode.Clone: TASTNode;
+begin
+  Result := TConstSectionNode.Create(
+    FConstKeywordNode.Clone as TToken,
+    FConstListNode.Clone as TListNode);
+end;
+
 constructor TConstSectionNode.Create(AConstKeywordNode: TToken; AConstListNode: TListNode);
 begin
   inherited Create;
@@ -1551,6 +1789,18 @@ begin
 end;
 
 { TConstantDeclNode }
+
+function TConstantDeclNode.Clone: TASTNode;
+begin
+  Result := TConstantDeclNode.Create(
+    FNameNode.Clone as TToken,
+    FColonNode.Clone as TToken,
+    FTypeNode.Clone as TASTNode,
+    FEqualSignNode.Clone as TToken,
+    FValueNode.Clone as TASTNode,
+    FPortabilityDirectiveListNode.Clone as TListNode,
+    FSemicolonNode.Clone as TToken);
+end;
 
 constructor TConstantDeclNode.Create(ANameNode: TToken; AColonNode: TToken; ATypeNode: TASTNode; AEqualSignNode: TToken; AValueNode: TASTNode; APortabilityDirectiveListNode: TListNode; ASemicolonNode: TToken);
 begin
@@ -1582,6 +1832,14 @@ end;
 
 { TConstantListNode }
 
+function TConstantListNode.Clone: TASTNode;
+begin
+  Result := TConstantListNode.Create(
+    FOpenParenthesisNode.Clone as TToken,
+    FItemListNode.Clone as TListNode,
+    FCloseParenthesisNode.Clone as TToken);
+end;
+
 constructor TConstantListNode.Create(AOpenParenthesisNode: TToken; AItemListNode: TListNode; ACloseParenthesisNode: TToken);
 begin
   inherited Create;
@@ -1599,6 +1857,15 @@ begin
 end;
 
 { TDirectiveNode }
+
+function TDirectiveNode.Clone: TASTNode;
+begin
+  Result := TDirectiveNode.Create(
+    FSemicolonNode.Clone as TToken,
+    FKeywordNode.Clone as TToken,
+    FValueNode.Clone as TASTNode,
+    FDataNode.Clone as TASTNode);
+end;
 
 constructor TDirectiveNode.Create(ASemicolonNode: TToken; AKeywordNode: TToken; AValueNode: TASTNode; ADataNode: TASTNode);
 begin
@@ -1621,6 +1888,14 @@ end;
 
 { TEnumeratedTypeElementNode }
 
+function TEnumeratedTypeElementNode.Clone: TASTNode;
+begin
+  Result := TEnumeratedTypeElementNode.Create(
+    FNameNode.Clone as TToken,
+    FEqualSignNode.Clone as TToken,
+    FValueNode.Clone as TASTNode);
+end;
+
 constructor TEnumeratedTypeElementNode.Create(ANameNode: TToken; AEqualSignNode: TToken; AValueNode: TASTNode);
 begin
   inherited Create;
@@ -1639,6 +1914,14 @@ end;
 
 { TEnumeratedTypeNode }
 
+function TEnumeratedTypeNode.Clone: TASTNode;
+begin
+  Result := TEnumeratedTypeNode.Create(
+    FOpenParenthesisNode.Clone as TToken,
+    FItemListNode.Clone as TListNode,
+    FCloseParenthesisNode.Clone as TToken);
+end;
+
 constructor TEnumeratedTypeNode.Create(AOpenParenthesisNode: TToken; AItemListNode: TListNode; ACloseParenthesisNode: TToken);
 begin
   inherited Create;
@@ -1656,6 +1939,18 @@ begin
 end;
 
 { TExceptionItemNode }
+
+function TExceptionItemNode.Clone: TASTNode;
+begin
+  Result := TExceptionItemNode.Create(
+    FOnSemikeywordNode.Clone as TToken,
+    FNameNode.Clone as TToken,
+    FColonNode.Clone as TToken,
+    FTypeNode.Clone as TASTNode,
+    FDoKeywordNode.Clone as TToken,
+    FStatementNode.Clone as TASTNode,
+    FSemicolonNode.Clone as TToken);
+end;
 
 constructor TExceptionItemNode.Create(AOnSemikeywordNode: TToken; ANameNode: TToken; AColonNode: TToken; ATypeNode: TASTNode; ADoKeywordNode: TToken; AStatementNode: TASTNode; ASemicolonNode: TToken);
 begin
@@ -1687,6 +1982,13 @@ end;
 
 { TExportsItemNode }
 
+function TExportsItemNode.Clone: TASTNode;
+begin
+  Result := TExportsItemNode.Create(
+    FNameNode.Clone as TASTNode,
+    FSpecifierListNode.Clone as TListNode);
+end;
+
 constructor TExportsItemNode.Create(ANameNode: TASTNode; ASpecifierListNode: TListNode);
 begin
   inherited Create;
@@ -1702,6 +2004,13 @@ end;
 
 { TExportsSpecifierNode }
 
+function TExportsSpecifierNode.Clone: TASTNode;
+begin
+  Result := TExportsSpecifierNode.Create(
+    FKeywordNode.Clone as TToken,
+    FValueNode.Clone as TASTNode);
+end;
+
 constructor TExportsSpecifierNode.Create(AKeywordNode: TToken; AValueNode: TASTNode);
 begin
   inherited Create;
@@ -1716,6 +2025,14 @@ begin
 end;
 
 { TExportsStatementNode }
+
+function TExportsStatementNode.Clone: TASTNode;
+begin
+  Result := TExportsStatementNode.Create(
+    FExportsKeywordNode.Clone as TToken,
+    FItemListNode.Clone as TListNode,
+    FSemicolonNode.Clone as TToken);
+end;
 
 constructor TExportsStatementNode.Create(AExportsKeywordNode: TToken; AItemListNode: TListNode; ASemicolonNode: TToken);
 begin
@@ -1735,6 +2052,13 @@ end;
 
 { TFancyBlockNode }
 
+function TFancyBlockNode.Clone: TASTNode;
+begin
+  Result := TFancyBlockNode.Create(
+    FDeclListNode.Clone as TListNode,
+    FBlockNode.Clone as TASTNode);
+end;
+
 constructor TFancyBlockNode.Create(ADeclListNode: TListNode; ABlockNode: TASTNode);
 begin
   inherited Create;
@@ -1749,6 +2073,16 @@ begin
 end;
 
 { TFieldDeclNode }
+
+function TFieldDeclNode.Clone: TASTNode;
+begin
+  Result := TFieldDeclNode.Create(
+    FNameListNode.Clone as TListNode,
+    FColonNode.Clone as TToken,
+    FTypeNode.Clone as TASTNode,
+    FPortabilityDirectiveListNode.Clone as TListNode,
+    FSemicolonNode.Clone as TToken);
+end;
 
 constructor TFieldDeclNode.Create(ANameListNode: TListNode; AColonNode: TToken; ATypeNode: TASTNode; APortabilityDirectiveListNode: TListNode; ASemicolonNode: TToken);
 begin
@@ -1774,6 +2108,14 @@ end;
 
 { TFieldSectionNode }
 
+function TFieldSectionNode.Clone: TASTNode;
+begin
+  Result := TFieldSectionNode.Create(
+    FClassKeywordNode.Clone as TToken,
+    FVarKeywordNode.Clone as TToken,
+    FFieldListNode.Clone as TListNode);
+end;
+
 constructor TFieldSectionNode.Create(AClassKeywordNode: TToken; AVarKeywordNode: TToken; AFieldListNode: TListNode);
 begin
   inherited Create;
@@ -1792,6 +2134,14 @@ end;
 
 { TFileTypeNode }
 
+function TFileTypeNode.Clone: TASTNode;
+begin
+  Result := TFileTypeNode.Create(
+    FFileKeywordNode.Clone as TToken,
+    FOfKeywordNode.Clone as TToken,
+    FTypeNode.Clone as TASTNode);
+end;
+
 constructor TFileTypeNode.Create(AFileKeywordNode: TToken; AOfKeywordNode: TToken; ATypeNode: TASTNode);
 begin
   inherited Create;
@@ -1809,6 +2159,17 @@ begin
 end;
 
 { TForInStatementNode }
+
+function TForInStatementNode.Clone: TASTNode;
+begin
+  Result := TForInStatementNode.Create(
+    FForKeywordNode.Clone as TToken,
+    FLoopVariableNode.Clone as TToken,
+    FInKeywordNode.Clone as TToken,
+    FExpressionNode.Clone as TASTNode,
+    FDoKeywordNode.Clone as TToken,
+    FStatementNode.Clone as TASTNode);
+end;
 
 constructor TForInStatementNode.Create(AForKeywordNode: TToken; ALoopVariableNode: TToken; AInKeywordNode: TToken; AExpressionNode: TASTNode; ADoKeywordNode: TToken; AStatementNode: TASTNode);
 begin
@@ -1836,6 +2197,19 @@ begin
 end;
 
 { TForStatementNode }
+
+function TForStatementNode.Clone: TASTNode;
+begin
+  Result := TForStatementNode.Create(
+    FForKeywordNode.Clone as TToken,
+    FLoopVariableNode.Clone as TToken,
+    FColonEqualsNode.Clone as TToken,
+    FStartingValueNode.Clone as TASTNode,
+    FDirectionNode.Clone as TToken,
+    FEndingValueNode.Clone as TASTNode,
+    FDoKeywordNode.Clone as TToken,
+    FStatementNode.Clone as TASTNode);
+end;
 
 constructor TForStatementNode.Create(AForKeywordNode: TToken; ALoopVariableNode: TToken; AColonEqualsNode: TToken; AStartingValueNode: TASTNode; ADirectionNode: TToken; AEndingValueNode: TASTNode; ADoKeywordNode: TToken; AStatementNode: TASTNode);
 begin
@@ -1870,6 +2244,13 @@ end;
 
 { TGotoStatementNode }
 
+function TGotoStatementNode.Clone: TASTNode;
+begin
+  Result := TGotoStatementNode.Create(
+    FGotoKeywordNode.Clone as TToken,
+    FLabelIdNode.Clone as TToken);
+end;
+
 constructor TGotoStatementNode.Create(AGotoKeywordNode: TToken; ALabelIdNode: TToken);
 begin
   inherited Create;
@@ -1884,6 +2265,17 @@ begin
 end;
 
 { TIfStatementNode }
+
+function TIfStatementNode.Clone: TASTNode;
+begin
+  Result := TIfStatementNode.Create(
+    FIfKeywordNode.Clone as TToken,
+    FConditionNode.Clone as TASTNode,
+    FThenKeywordNode.Clone as TToken,
+    FThenStatementNode.Clone as TASTNode,
+    FElseKeywordNode.Clone as TToken,
+    FElseStatementNode.Clone as TASTNode);
+end;
 
 constructor TIfStatementNode.Create(AIfKeywordNode: TToken; AConditionNode: TASTNode; AThenKeywordNode: TToken; AThenStatementNode: TASTNode; AElseKeywordNode: TToken; AElseStatementNode: TASTNode);
 begin
@@ -1912,6 +2304,16 @@ end;
 
 { TInitSectionNode }
 
+function TInitSectionNode.Clone: TASTNode;
+begin
+  Result := TInitSectionNode.Create(
+    FInitializationKeywordNode.Clone as TToken,
+    FInitializationStatementListNode.Clone as TListNode,
+    FFinalizationKeywordNode.Clone as TToken,
+    FFinalizationStatementListNode.Clone as TListNode,
+    FEndKeywordNode.Clone as TToken);
+end;
+
 constructor TInitSectionNode.Create(AInitializationKeywordNode: TToken; AInitializationStatementListNode: TListNode; AFinalizationKeywordNode: TToken; AFinalizationStatementListNode: TListNode; AEndKeywordNode: TToken);
 begin
   inherited Create;
@@ -1935,6 +2337,20 @@ begin
 end;
 
 { TInterfaceTypeNode }
+
+function TInterfaceTypeNode.Clone: TASTNode;
+begin
+  Result := TInterfaceTypeNode.Create(
+    FInterfaceKeywordNode.Clone as TToken,
+    FOpenParenthesisNode.Clone as TToken,
+    FBaseInterfaceNode.Clone as TASTNode,
+    FCloseParenthesisNode.Clone as TToken,
+    FOpenBracketNode.Clone as TToken,
+    FGuidNode.Clone as TASTNode,
+    FCloseBracketNode.Clone as TToken,
+    FMethodAndPropertyListNode.Clone as TListNode,
+    FEndKeywordNode.Clone as TToken);
+end;
 
 constructor TInterfaceTypeNode.Create(AInterfaceKeywordNode: TToken; AOpenParenthesisNode: TToken; ABaseInterfaceNode: TASTNode; ACloseParenthesisNode: TToken; AOpenBracketNode: TToken; AGuidNode: TASTNode; ACloseBracketNode: TToken; AMethodAndPropertyListNode: TListNode; AEndKeywordNode: TToken);
 begin
@@ -1972,6 +2388,14 @@ end;
 
 { TLabelDeclSectionNode }
 
+function TLabelDeclSectionNode.Clone: TASTNode;
+begin
+  Result := TLabelDeclSectionNode.Create(
+    FLabelKeywordNode.Clone as TToken,
+    FLabelListNode.Clone as TListNode,
+    FSemicolonNode.Clone as TToken);
+end;
+
 constructor TLabelDeclSectionNode.Create(ALabelKeywordNode: TToken; ALabelListNode: TListNode; ASemicolonNode: TToken);
 begin
   inherited Create;
@@ -1990,6 +2414,14 @@ end;
 
 { TLabeledStatementNode }
 
+function TLabeledStatementNode.Clone: TASTNode;
+begin
+  Result := TLabeledStatementNode.Create(
+    FLabelIdNode.Clone as TToken,
+    FColonNode.Clone as TToken,
+    FStatementNode.Clone as TASTNode);
+end;
+
 constructor TLabeledStatementNode.Create(ALabelIdNode: TToken; AColonNode: TToken; AStatementNode: TASTNode);
 begin
   inherited Create;
@@ -2007,6 +2439,21 @@ begin
 end;
 
 { TMethodHeadingNode }
+
+function TMethodHeadingNode.Clone: TASTNode;
+begin
+  Result := TMethodHeadingNode.Create(
+    FClassKeywordNode.Clone as TToken,
+    FMethodTypeNode.Clone as TToken,
+    FNameNode.Clone as TASTNode,
+    FOpenParenthesisNode.Clone as TToken,
+    FParameterListNode.Clone as TListNode,
+    FCloseParenthesisNode.Clone as TToken,
+    FColonNode.Clone as TToken,
+    FReturnTypeNode.Clone as TASTNode,
+    FDirectiveListNode.Clone as TListNode,
+    FSemicolonNode.Clone as TToken);
+end;
 
 constructor TMethodHeadingNode.Create(AClassKeywordNode: TToken; AMethodTypeNode: TToken; ANameNode: TASTNode; AOpenParenthesisNode: TToken; AParameterListNode: TListNode; ACloseParenthesisNode: TToken; AColonNode: TToken; AReturnTypeNode: TASTNode; ADirectiveListNode: TListNode; ASemicolonNode: TToken);
 begin
@@ -2047,6 +2494,14 @@ end;
 
 { TMethodImplementationNode }
 
+function TMethodImplementationNode.Clone: TASTNode;
+begin
+  Result := TMethodImplementationNode.Create(
+    FMethodHeadingNode.Clone as TMethodHeadingNode,
+    FFancyBlockNode.Clone as TFancyBlockNode,
+    FSemicolonNode.Clone as TToken);
+end;
+
 constructor TMethodImplementationNode.Create(AMethodHeadingNode: TMethodHeadingNode; AFancyBlockNode: TFancyBlockNode; ASemicolonNode: TToken);
 begin
   inherited Create;
@@ -2064,6 +2519,16 @@ begin
 end;
 
 { TMethodResolutionNode }
+
+function TMethodResolutionNode.Clone: TASTNode;
+begin
+  Result := TMethodResolutionNode.Create(
+    FMethodTypeNode.Clone as TToken,
+    FInterfaceMethodNode.Clone as TASTNode,
+    FEqualSignNode.Clone as TToken,
+    FImplementationMethodNode.Clone as TToken,
+    FSemicolonNode.Clone as TToken);
+end;
 
 constructor TMethodResolutionNode.Create(AMethodTypeNode: TToken; AInterfaceMethodNode: TASTNode; AEqualSignNode: TToken; AImplementationMethodNode: TToken; ASemicolonNode: TToken);
 begin
@@ -2089,6 +2554,16 @@ end;
 
 { TNumberFormatNode }
 
+function TNumberFormatNode.Clone: TASTNode;
+begin
+  Result := TNumberFormatNode.Create(
+    FValueNode.Clone as TASTNode,
+    FSizeColonNode.Clone as TToken,
+    FSizeNode.Clone as TASTNode,
+    FPrecisionColonNode.Clone as TToken,
+    FPrecisionNode.Clone as TASTNode);
+end;
+
 constructor TNumberFormatNode.Create(AValueNode: TASTNode; ASizeColonNode: TToken; ASizeNode: TASTNode; APrecisionColonNode: TToken; APrecisionNode: TASTNode);
 begin
   inherited Create;
@@ -2113,6 +2588,14 @@ end;
 
 { TOpenArrayNode }
 
+function TOpenArrayNode.Clone: TASTNode;
+begin
+  Result := TOpenArrayNode.Create(
+    FArrayKeywordNode.Clone as TToken,
+    FOfKeywordNode.Clone as TToken,
+    FTypeNode.Clone as TASTNode);
+end;
+
 constructor TOpenArrayNode.Create(AArrayKeywordNode: TToken; AOfKeywordNode: TToken; ATypeNode: TASTNode);
 begin
   inherited Create;
@@ -2130,6 +2613,19 @@ begin
 end;
 
 { TPackageNode }
+
+function TPackageNode.Clone: TASTNode;
+begin
+  Result := TPackageNode.Create(
+    FPackageKeywordNode.Clone as TToken,
+    FNameNode.Clone as TASTNode,
+    FSemicolonNode.Clone as TToken,
+    FRequiresClauseNode.Clone as TRequiresClauseNode,
+    FContainsClauseNode.Clone as TUsesClauseNode,
+    FAttributeListNode.Clone as TListNode,
+    FEndKeywordNode.Clone as TToken,
+    FDotNode.Clone as TToken);
+end;
 
 constructor TPackageNode.Create(APackageKeywordNode: TToken; ANameNode: TASTNode; ASemicolonNode: TToken; ARequiresClauseNode: TRequiresClauseNode; AContainsClauseNode: TUsesClauseNode; AAttributeListNode: TListNode; AEndKeywordNode: TToken; ADotNode: TToken);
 begin
@@ -2164,6 +2660,13 @@ end;
 
 { TPackedTypeNode }
 
+function TPackedTypeNode.Clone: TASTNode;
+begin
+  Result := TPackedTypeNode.Create(
+    FPackedKeywordNode.Clone as TToken,
+    FTypeNode.Clone as TASTNode);
+end;
+
 constructor TPackedTypeNode.Create(APackedKeywordNode: TToken; ATypeNode: TASTNode);
 begin
   inherited Create;
@@ -2178,6 +2681,17 @@ begin
 end;
 
 { TParameterNode }
+
+function TParameterNode.Clone: TASTNode;
+begin
+  Result := TParameterNode.Create(
+    FModifierNode.Clone as TToken,
+    FNameListNode.Clone as TListNode,
+    FColonNode.Clone as TToken,
+    FTypeNode.Clone as TASTNode,
+    FEqualSignNode.Clone as TToken,
+    FDefaultValueNode.Clone as TASTNode);
+end;
 
 constructor TParameterNode.Create(AModifierNode: TToken; ANameListNode: TListNode; AColonNode: TToken; ATypeNode: TASTNode; AEqualSignNode: TToken; ADefaultValueNode: TASTNode);
 begin
@@ -2206,6 +2720,15 @@ end;
 
 { TParameterizedNode }
 
+function TParameterizedNode.Clone: TASTNode;
+begin
+  Result := TParameterizedNode.Create(
+    FLeftNode.Clone as TASTNode,
+    FOpenDelimiterNode.Clone as TToken,
+    FParameterListNode.Clone as TListNode,
+    FCloseDelimiterNode.Clone as TToken);
+end;
+
 constructor TParameterizedNode.Create(ALeftNode: TASTNode; AOpenDelimiterNode: TToken; AParameterListNode: TListNode; ACloseDelimiterNode: TToken);
 begin
   inherited Create;
@@ -2227,6 +2750,14 @@ end;
 
 { TParenthesizedExpressionNode }
 
+function TParenthesizedExpressionNode.Clone: TASTNode;
+begin
+  Result := TParenthesizedExpressionNode.Create(
+    FOpenParenthesisNode.Clone as TToken,
+    FExpressionNode.Clone as TASTNode,
+    FCloseParenthesisNode.Clone as TToken);
+end;
+
 constructor TParenthesizedExpressionNode.Create(AOpenParenthesisNode: TToken; AExpressionNode: TASTNode; ACloseParenthesisNode: TToken);
 begin
   inherited Create;
@@ -2245,6 +2776,13 @@ end;
 
 { TPointerDereferenceNode }
 
+function TPointerDereferenceNode.Clone: TASTNode;
+begin
+  Result := TPointerDereferenceNode.Create(
+    FOperandNode.Clone as TASTNode,
+    FCaretNode.Clone as TToken);
+end;
+
 constructor TPointerDereferenceNode.Create(AOperandNode: TASTNode; ACaretNode: TToken);
 begin
   inherited Create;
@@ -2260,6 +2798,13 @@ end;
 
 { TPointerTypeNode }
 
+function TPointerTypeNode.Clone: TASTNode;
+begin
+  Result := TPointerTypeNode.Create(
+    FCaretNode.Clone as TToken,
+    FTypeNode.Clone as TASTNode);
+end;
+
 constructor TPointerTypeNode.Create(ACaretNode: TToken; ATypeNode: TASTNode);
 begin
   inherited Create;
@@ -2274,6 +2819,21 @@ begin
 end;
 
 { TProcedureTypeNode }
+
+function TProcedureTypeNode.Clone: TASTNode;
+begin
+  Result := TProcedureTypeNode.Create(
+    FMethodTypeNode.Clone as TToken,
+    FOpenParenthesisNode.Clone as TToken,
+    FParameterListNode.Clone as TListNode,
+    FCloseParenthesisNode.Clone as TToken,
+    FColonNode.Clone as TToken,
+    FReturnTypeNode.Clone as TASTNode,
+    FFirstDirectiveListNode.Clone as TListNode,
+    FOfKeywordNode.Clone as TToken,
+    FObjectKeywordNode.Clone as TToken,
+    FSecondDirectiveListNode.Clone as TListNode);
+end;
 
 constructor TProcedureTypeNode.Create(AMethodTypeNode: TToken; AOpenParenthesisNode: TToken; AParameterListNode: TListNode; ACloseParenthesisNode: TToken; AColonNode: TToken; AReturnTypeNode: TASTNode; AFirstDirectiveListNode: TListNode; AOfKeywordNode: TToken; AObjectKeywordNode: TToken; ASecondDirectiveListNode: TListNode);
 begin
@@ -2314,6 +2874,21 @@ end;
 
 { TProgramNode }
 
+function TProgramNode.Clone: TASTNode;
+begin
+  Result := TProgramNode.Create(
+    FProgramKeywordNode.Clone as TToken,
+    FNameNode.Clone as TToken,
+    FNoiseOpenParenthesisNode.Clone as TToken,
+    FNoiseContentListNode.Clone as TListNode,
+    FNoiseCloseParenthesisNode.Clone as TToken,
+    FSemicolonNode.Clone as TToken,
+    FUsesClauseNode.Clone as TUsesClauseNode,
+    FDeclarationListNode.Clone as TListNode,
+    FInitSectionNode.Clone as TInitSectionNode,
+    FDotNode.Clone as TToken);
+end;
+
 constructor TProgramNode.Create(AProgramKeywordNode: TToken; ANameNode: TToken; ANoiseOpenParenthesisNode: TToken; ANoiseContentListNode: TListNode; ANoiseCloseParenthesisNode: TToken; ASemicolonNode: TToken; AUsesClauseNode: TUsesClauseNode; ADeclarationListNode: TListNode; AInitSectionNode: TInitSectionNode; ADotNode: TToken);
 begin
   inherited Create;
@@ -2352,6 +2927,21 @@ begin
 end;
 
 { TPropertyNode }
+
+function TPropertyNode.Clone: TASTNode;
+begin
+  Result := TPropertyNode.Create(
+    FClassKeywordNode.Clone as TToken,
+    FPropertyKeywordNode.Clone as TToken,
+    FNameNode.Clone as TToken,
+    FOpenBracketNode.Clone as TToken,
+    FParameterListNode.Clone as TListNode,
+    FCloseBracketNode.Clone as TToken,
+    FColonNode.Clone as TToken,
+    FTypeNode.Clone as TASTNode,
+    FDirectiveListNode.Clone as TListNode,
+    FSemicolonNode.Clone as TToken);
+end;
 
 constructor TPropertyNode.Create(AClassKeywordNode: TToken; APropertyKeywordNode: TToken; ANameNode: TToken; AOpenBracketNode: TToken; AParameterListNode: TListNode; ACloseBracketNode: TToken; AColonNode: TToken; ATypeNode: TASTNode; ADirectiveListNode: TListNode; ASemicolonNode: TToken);
 begin
@@ -2392,6 +2982,15 @@ end;
 
 { TRaiseStatementNode }
 
+function TRaiseStatementNode.Clone: TASTNode;
+begin
+  Result := TRaiseStatementNode.Create(
+    FRaiseKeywordNode.Clone as TToken,
+    FExceptionNode.Clone as TASTNode,
+    FAtSemikeywordNode.Clone as TToken,
+    FAddressNode.Clone as TASTNode);
+end;
+
 constructor TRaiseStatementNode.Create(ARaiseKeywordNode: TToken; AExceptionNode: TASTNode; AAtSemikeywordNode: TToken; AAddressNode: TASTNode);
 begin
   inherited Create;
@@ -2413,6 +3012,14 @@ end;
 
 { TRecordFieldConstantNode }
 
+function TRecordFieldConstantNode.Clone: TASTNode;
+begin
+  Result := TRecordFieldConstantNode.Create(
+    FNameNode.Clone as TASTNode,
+    FColonNode.Clone as TToken,
+    FValueNode.Clone as TASTNode);
+end;
+
 constructor TRecordFieldConstantNode.Create(ANameNode: TASTNode; AColonNode: TToken; AValueNode: TASTNode);
 begin
   inherited Create;
@@ -2430,6 +3037,15 @@ begin
 end;
 
 { TRecordTypeNode }
+
+function TRecordTypeNode.Clone: TASTNode;
+begin
+  Result := TRecordTypeNode.Create(
+    FRecordKeywordNode.Clone as TToken,
+    FContentListNode.Clone as TListNode,
+    FVariantSectionNode.Clone as TVariantSectionNode,
+    FEndKeywordNode.Clone as TToken);
+end;
 
 constructor TRecordTypeNode.Create(ARecordKeywordNode: TToken; AContentListNode: TListNode; AVariantSectionNode: TVariantSectionNode; AEndKeywordNode: TToken);
 begin
@@ -2452,6 +3068,15 @@ end;
 
 { TRepeatStatementNode }
 
+function TRepeatStatementNode.Clone: TASTNode;
+begin
+  Result := TRepeatStatementNode.Create(
+    FRepeatKeywordNode.Clone as TToken,
+    FStatementListNode.Clone as TListNode,
+    FUntilKeywordNode.Clone as TToken,
+    FConditionNode.Clone as TASTNode);
+end;
+
 constructor TRepeatStatementNode.Create(ARepeatKeywordNode: TToken; AStatementListNode: TListNode; AUntilKeywordNode: TToken; AConditionNode: TASTNode);
 begin
   inherited Create;
@@ -2473,6 +3098,14 @@ end;
 
 { TRequiresClauseNode }
 
+function TRequiresClauseNode.Clone: TASTNode;
+begin
+  Result := TRequiresClauseNode.Create(
+    FRequiresSemikeywordNode.Clone as TToken,
+    FPackageListNode.Clone as TListNode,
+    FSemicolonNode.Clone as TToken);
+end;
+
 constructor TRequiresClauseNode.Create(ARequiresSemikeywordNode: TToken; APackageListNode: TListNode; ASemicolonNode: TToken);
 begin
   inherited Create;
@@ -2490,6 +3123,14 @@ begin
 end;
 
 { TSetLiteralNode }
+
+function TSetLiteralNode.Clone: TASTNode;
+begin
+  Result := TSetLiteralNode.Create(
+    FOpenBracketNode.Clone as TToken,
+    FItemListNode.Clone as TListNode,
+    FCloseBracketNode.Clone as TToken);
+end;
 
 constructor TSetLiteralNode.Create(AOpenBracketNode: TToken; AItemListNode: TListNode; ACloseBracketNode: TToken);
 begin
@@ -2509,6 +3150,14 @@ end;
 
 { TSetOfNode }
 
+function TSetOfNode.Clone: TASTNode;
+begin
+  Result := TSetOfNode.Create(
+    FSetKeywordNode.Clone as TToken,
+    FOfKeywordNode.Clone as TToken,
+    FTypeNode.Clone as TASTNode);
+end;
+
 constructor TSetOfNode.Create(ASetKeywordNode: TToken; AOfKeywordNode: TToken; ATypeNode: TASTNode);
 begin
   inherited Create;
@@ -2526,6 +3175,15 @@ begin
 end;
 
 { TStringOfLengthNode }
+
+function TStringOfLengthNode.Clone: TASTNode;
+begin
+  Result := TStringOfLengthNode.Create(
+    FStringKeywordNode.Clone as TToken,
+    FOpenBracketNode.Clone as TToken,
+    FLengthNode.Clone as TASTNode,
+    FCloseBracketNode.Clone as TToken);
+end;
 
 constructor TStringOfLengthNode.Create(AStringKeywordNode: TToken; AOpenBracketNode: TToken; ALengthNode: TASTNode; ACloseBracketNode: TToken);
 begin
@@ -2547,6 +3205,18 @@ begin
 end;
 
 { TTryExceptNode }
+
+function TTryExceptNode.Clone: TASTNode;
+begin
+  Result := TTryExceptNode.Create(
+    FTryKeywordNode.Clone as TToken,
+    FTryStatementListNode.Clone as TListNode,
+    FExceptKeywordNode.Clone as TToken,
+    FExceptionItemListNode.Clone as TListNode,
+    FElseKeywordNode.Clone as TToken,
+    FElseStatementListNode.Clone as TListNode,
+    FEndKeywordNode.Clone as TToken);
+end;
 
 constructor TTryExceptNode.Create(ATryKeywordNode: TToken; ATryStatementListNode: TListNode; AExceptKeywordNode: TToken; AExceptionItemListNode: TListNode; AElseKeywordNode: TToken; AElseStatementListNode: TListNode; AEndKeywordNode: TToken);
 begin
@@ -2578,6 +3248,16 @@ end;
 
 { TTryFinallyNode }
 
+function TTryFinallyNode.Clone: TASTNode;
+begin
+  Result := TTryFinallyNode.Create(
+    FTryKeywordNode.Clone as TToken,
+    FTryStatementListNode.Clone as TListNode,
+    FFinallyKeywordNode.Clone as TToken,
+    FFinallyStatementListNode.Clone as TListNode,
+    FEndKeywordNode.Clone as TToken);
+end;
+
 constructor TTryFinallyNode.Create(ATryKeywordNode: TToken; ATryStatementListNode: TListNode; AFinallyKeywordNode: TToken; AFinallyStatementListNode: TListNode; AEndKeywordNode: TToken);
 begin
   inherited Create;
@@ -2601,6 +3281,17 @@ begin
 end;
 
 { TTypeDeclNode }
+
+function TTypeDeclNode.Clone: TASTNode;
+begin
+  Result := TTypeDeclNode.Create(
+    FNameNode.Clone as TToken,
+    FEqualSignNode.Clone as TToken,
+    FTypeKeywordNode.Clone as TToken,
+    FTypeNode.Clone as TASTNode,
+    FPortabilityDirectiveListNode.Clone as TListNode,
+    FSemicolonNode.Clone as TToken);
+end;
 
 constructor TTypeDeclNode.Create(ANameNode: TToken; AEqualSignNode: TToken; ATypeKeywordNode: TToken; ATypeNode: TASTNode; APortabilityDirectiveListNode: TListNode; ASemicolonNode: TToken);
 begin
@@ -2629,6 +3320,15 @@ end;
 
 { TTypeForwardDeclarationNode }
 
+function TTypeForwardDeclarationNode.Clone: TASTNode;
+begin
+  Result := TTypeForwardDeclarationNode.Create(
+    FNameNode.Clone as TToken,
+    FEqualSignNode.Clone as TToken,
+    FTypeNode.Clone as TToken,
+    FSemicolonNode.Clone as TToken);
+end;
+
 constructor TTypeForwardDeclarationNode.Create(ANameNode: TToken; AEqualSignNode: TToken; ATypeNode: TToken; ASemicolonNode: TToken);
 begin
   inherited Create;
@@ -2649,6 +3349,20 @@ begin
 end;
 
 { TTypeHelperNode }
+
+function TTypeHelperNode.Clone: TASTNode;
+begin
+  Result := TTypeHelperNode.Create(
+    FTypeKeywordNode.Clone as TToken,
+    FHelperSemikeywordNode.Clone as TToken,
+    FOpenParenthesisNode.Clone as TToken,
+    FBaseHelperTypeNode.Clone as TASTNode,
+    FCloseParenthesisNode.Clone as TToken,
+    FForKeywordNode.Clone as TToken,
+    FTypeNode.Clone as TASTNode,
+    FContentListNode.Clone as TListNode,
+    FEndKeywordNode.Clone as TToken);
+end;
 
 constructor TTypeHelperNode.Create(ATypeKeywordNode: TToken; AHelperSemikeywordNode: TToken; AOpenParenthesisNode: TToken; ABaseHelperTypeNode: TASTNode; ACloseParenthesisNode: TToken; AForKeywordNode: TToken; ATypeNode: TASTNode; AContentListNode: TListNode; AEndKeywordNode: TToken);
 begin
@@ -2686,6 +3400,13 @@ end;
 
 { TTypeSectionNode }
 
+function TTypeSectionNode.Clone: TASTNode;
+begin
+  Result := TTypeSectionNode.Create(
+    FTypeKeywordNode.Clone as TToken,
+    FTypeListNode.Clone as TListNode);
+end;
+
 constructor TTypeSectionNode.Create(ATypeKeywordNode: TToken; ATypeListNode: TListNode);
 begin
   inherited Create;
@@ -2701,6 +3422,13 @@ end;
 
 { TUnaryOperationNode }
 
+function TUnaryOperationNode.Clone: TASTNode;
+begin
+  Result := TUnaryOperationNode.Create(
+    FOperatorNode.Clone as TToken,
+    FOperandNode.Clone as TASTNode);
+end;
+
 constructor TUnaryOperationNode.Create(AOperatorNode: TToken; AOperandNode: TASTNode);
 begin
   inherited Create;
@@ -2715,6 +3443,19 @@ begin
 end;
 
 { TUnitNode }
+
+function TUnitNode.Clone: TASTNode;
+begin
+  Result := TUnitNode.Create(
+    FUnitKeywordNode.Clone as TToken,
+    FUnitNameNode.Clone as TToken,
+    FPortabilityDirectiveListNode.Clone as TListNode,
+    FSemicolonNode.Clone as TToken,
+    FInterfaceSectionNode.Clone as TUnitSectionNode,
+    FImplementationSectionNode.Clone as TUnitSectionNode,
+    FInitSectionNode.Clone as TInitSectionNode,
+    FDotNode.Clone as TToken);
+end;
 
 constructor TUnitNode.Create(AUnitKeywordNode: TToken; AUnitNameNode: TToken; APortabilityDirectiveListNode: TListNode; ASemicolonNode: TToken; AInterfaceSectionNode: TUnitSectionNode; AImplementationSectionNode: TUnitSectionNode; AInitSectionNode: TInitSectionNode; ADotNode: TToken);
 begin
@@ -2749,6 +3490,14 @@ end;
 
 { TUnitSectionNode }
 
+function TUnitSectionNode.Clone: TASTNode;
+begin
+  Result := TUnitSectionNode.Create(
+    FHeaderKeywordNode.Clone as TToken,
+    FUsesClauseNode.Clone as TUsesClauseNode,
+    FContentListNode.Clone as TListNode);
+end;
+
 constructor TUnitSectionNode.Create(AHeaderKeywordNode: TToken; AUsesClauseNode: TUsesClauseNode; AContentListNode: TListNode);
 begin
   inherited Create;
@@ -2766,6 +3515,14 @@ begin
 end;
 
 { TUsedUnitNode }
+
+function TUsedUnitNode.Clone: TASTNode;
+begin
+  Result := TUsedUnitNode.Create(
+    FNameNode.Clone as TASTNode,
+    FInKeywordNode.Clone as TToken,
+    FFileNameNode.Clone as TToken);
+end;
 
 constructor TUsedUnitNode.Create(ANameNode: TASTNode; AInKeywordNode: TToken; AFileNameNode: TToken);
 begin
@@ -2785,6 +3542,14 @@ end;
 
 { TUsesClauseNode }
 
+function TUsesClauseNode.Clone: TASTNode;
+begin
+  Result := TUsesClauseNode.Create(
+    FUsesKeywordNode.Clone as TToken,
+    FUnitListNode.Clone as TListNode,
+    FSemicolonNode.Clone as TToken);
+end;
+
 constructor TUsesClauseNode.Create(AUsesKeywordNode: TToken; AUnitListNode: TListNode; ASemicolonNode: TToken);
 begin
   inherited Create;
@@ -2802,6 +3567,21 @@ begin
 end;
 
 { TVarDeclNode }
+
+function TVarDeclNode.Clone: TASTNode;
+begin
+  Result := TVarDeclNode.Create(
+    FNameListNode.Clone as TListNode,
+    FColonNode.Clone as TToken,
+    FTypeNode.Clone as TASTNode,
+    FFirstPortabilityDirectiveListNode.Clone as TListNode,
+    FAbsoluteSemikeywordNode.Clone as TToken,
+    FAbsoluteAddressNode.Clone as TASTNode,
+    FEqualSignNode.Clone as TToken,
+    FValueNode.Clone as TASTNode,
+    FSecondPortabilityDirectiveListNode.Clone as TListNode,
+    FSemicolonNode.Clone as TToken);
+end;
 
 constructor TVarDeclNode.Create(ANameListNode: TListNode; AColonNode: TToken; ATypeNode: TASTNode; AFirstPortabilityDirectiveListNode: TListNode; AAbsoluteSemikeywordNode: TToken; AAbsoluteAddressNode: TASTNode; AEqualSignNode: TToken; AValueNode: TASTNode; ASecondPortabilityDirectiveListNode: TListNode; ASemicolonNode: TToken);
 begin
@@ -2842,6 +3622,13 @@ end;
 
 { TVarSectionNode }
 
+function TVarSectionNode.Clone: TASTNode;
+begin
+  Result := TVarSectionNode.Create(
+    FVarKeywordNode.Clone as TToken,
+    FVarListNode.Clone as TListNode);
+end;
+
 constructor TVarSectionNode.Create(AVarKeywordNode: TToken; AVarListNode: TListNode);
 begin
   inherited Create;
@@ -2856,6 +3643,18 @@ begin
 end;
 
 { TVariantGroupNode }
+
+function TVariantGroupNode.Clone: TASTNode;
+begin
+  Result := TVariantGroupNode.Create(
+    FValueListNode.Clone as TListNode,
+    FColonNode.Clone as TToken,
+    FOpenParenthesisNode.Clone as TToken,
+    FFieldDeclListNode.Clone as TListNode,
+    FVariantSectionNode.Clone as TVariantSectionNode,
+    FCloseParenthesisNode.Clone as TToken,
+    FSemicolonNode.Clone as TToken);
+end;
 
 constructor TVariantGroupNode.Create(AValueListNode: TListNode; AColonNode: TToken; AOpenParenthesisNode: TToken; AFieldDeclListNode: TListNode; AVariantSectionNode: TVariantSectionNode; ACloseParenthesisNode: TToken; ASemicolonNode: TToken);
 begin
@@ -2887,6 +3686,17 @@ end;
 
 { TVariantSectionNode }
 
+function TVariantSectionNode.Clone: TASTNode;
+begin
+  Result := TVariantSectionNode.Create(
+    FCaseKeywordNode.Clone as TToken,
+    FNameNode.Clone as TToken,
+    FColonNode.Clone as TToken,
+    FTypeNode.Clone as TASTNode,
+    FOfKeywordNode.Clone as TToken,
+    FVariantGroupListNode.Clone as TListNode);
+end;
+
 constructor TVariantSectionNode.Create(ACaseKeywordNode: TToken; ANameNode: TToken; AColonNode: TToken; ATypeNode: TASTNode; AOfKeywordNode: TToken; AVariantGroupListNode: TListNode);
 begin
   inherited Create;
@@ -2914,6 +3724,13 @@ end;
 
 { TVisibilityNode }
 
+function TVisibilityNode.Clone: TASTNode;
+begin
+  Result := TVisibilityNode.Create(
+    FStrictSemikeywordNode.Clone as TToken,
+    FVisibilityKeywordNode.Clone as TToken);
+end;
+
 constructor TVisibilityNode.Create(AStrictSemikeywordNode: TToken; AVisibilityKeywordNode: TToken);
 begin
   inherited Create;
@@ -2929,6 +3746,13 @@ end;
 
 { TVisibilitySectionNode }
 
+function TVisibilitySectionNode.Clone: TASTNode;
+begin
+  Result := TVisibilitySectionNode.Create(
+    FVisibilityNode.Clone as TVisibilityNode,
+    FContentListNode.Clone as TListNode);
+end;
+
 constructor TVisibilitySectionNode.Create(AVisibilityNode: TVisibilityNode; AContentListNode: TListNode);
 begin
   inherited Create;
@@ -2943,6 +3767,15 @@ begin
 end;
 
 { TWhileStatementNode }
+
+function TWhileStatementNode.Clone: TASTNode;
+begin
+  Result := TWhileStatementNode.Create(
+    FWhileKeywordNode.Clone as TToken,
+    FConditionNode.Clone as TASTNode,
+    FDoKeywordNode.Clone as TToken,
+    FStatementNode.Clone as TASTNode);
+end;
 
 constructor TWhileStatementNode.Create(AWhileKeywordNode: TToken; AConditionNode: TASTNode; ADoKeywordNode: TToken; AStatementNode: TASTNode);
 begin
@@ -2964,6 +3797,15 @@ begin
 end;
 
 { TWithStatementNode }
+
+function TWithStatementNode.Clone: TASTNode;
+begin
+  Result := TWithStatementNode.Create(
+    FWithKeywordNode.Clone as TToken,
+    FExpressionListNode.Clone as TListNode,
+    FDoKeywordNode.Clone as TToken,
+    FStatementNode.Clone as TASTNode);
+end;
 
 constructor TWithStatementNode.Create(AWithKeywordNode: TToken; AExpressionListNode: TListNode; ADoKeywordNode: TToken; AStatementNode: TASTNode);
 begin

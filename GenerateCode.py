@@ -43,6 +43,9 @@ def generate_nodes(yaml_content):
     cs += "    constructor Create(" + '; '.join(params) + ");\n"
     cs += "\n"
 
+    cs += "    function Clone: TASTNode; override;\n"
+    cs += "\n"
+
     for property in properties:
       cs += "    property " + property.get('Name') + ": T" + replace_types(property.get('Type')) + " read F" + property.get('Name') + ";\n"
 
@@ -56,6 +59,16 @@ def generate_nodes(yaml_content):
     properties = node_type[1]
     
     cs += "{ T" + node_type_name + " }\n\n"
+
+    cs += "function T" + node_type_name + ".Clone: TASTNode;\n"
+    cs += "begin\n"
+
+    params = []
+    for property in properties:
+      params.append("F" + property.get('Name') + ".Clone as T" + replace_types(property.get('Type')));
+
+    cs += "  Result := T" + node_type_name + ".Create(\n    " + ',\n    '.join(params) + ");\n"
+    cs += "end;\n\n"
 
     params = []
     for property in properties:
