@@ -90,12 +90,12 @@ begin
     '  ContentListNode: ListNode' + #13#10 +
     '  VariantSectionNode: (none)' + #13#10 +
     '  EndKeywordNode: EndKeyword |end|', RTType));
-
+  }
   OK('^TFoo', TTestParser.ParsesAs('^TFoo',
     'PointerTypeNode' + #13#10 +
     '  CaretNode: Caret |^|' + #13#10 +
     '  TypeNode: Identifier |TFoo|', RTType));
-  }
+
   OK('string[42]', TTestParser.ParsesAs('string[42]',
     'StringOfLengthNode' + #13#10 +
     '  StringKeywordNode: StringKeyword |string|' + #13#10 +
