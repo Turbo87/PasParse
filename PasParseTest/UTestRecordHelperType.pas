@@ -38,7 +38,7 @@ begin
     '  TypeNode: Identifier |TPoint|' + #13#10 +
     '  ContentListNode: ListNode' + #13#10 +
     '  EndKeywordNode: EndKeyword |end|', RTRecordHelperType));
-  {
+
   OK('record helper for TObject procedure Foo; end', 
     TTestParser.ParsesAs('record helper for TObject procedure Foo; end',
     'TypeHelperNode' + #13#10 +
@@ -65,7 +65,6 @@ begin
     '          DirectiveListNode: ListNode' + #13#10 +
     '          SemicolonNode: Semicolon |;|' + #13#10 +
     '  EndKeywordNode: EndKeyword |end|', RTRecordHelperType));
-    }
 end;
 
 end.
