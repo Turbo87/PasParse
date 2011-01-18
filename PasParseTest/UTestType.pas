@@ -156,7 +156,7 @@ begin
     '  CloseBracketNode: (none)' + #13#10 +
     '  MethodAndPropertyListNode: ListNode' + #13#10 +
     '  EndKeywordNode: EndKeyword |end|', RTType));
-  {
+  
   OK('packed array of Byte', TTestParser.ParsesAs('packed array of Byte',
     'PackedTypeNode' + #13#10 +
     '  PackedKeywordNode: PackedKeyword |packed|' + #13#10 +
@@ -167,7 +167,6 @@ begin
     '    CloseBracketNode: (none)' + #13#10 +
     '    OfKeywordNode: OfKeyword |of|' + #13#10 +
     '    TypeNode: Identifier |Byte|', RTType));
-  }
 end;
 
 end.
