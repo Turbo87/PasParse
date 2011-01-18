@@ -2785,12 +2785,24 @@ end;
 
 function TTypeSectionRule.CanParse: Boolean;
 begin
-  Result := False;
+  Result := FParser.CanParseToken(TTTypeKeyword);
 end;
 
 function TTypeSectionRule.Evaluate: TASTNode;
+var
+  AType: TToken;
+  ATypeList: TListNode;
 begin
-  Result := nil;
+  AType := FParser.ParseToken(TTTypeKeyword);
+  
+  try
+    ATypeList := FParser.ParseRequiredRuleList(RTTypeDecl);
+  except
+    AType.Free;
+    raise
+  end;
+  
+  Result := TTypeSectionNode.Create(AType, ATypeList);
 end;
 
 { TUnitRule }

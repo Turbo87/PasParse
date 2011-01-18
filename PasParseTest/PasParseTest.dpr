@@ -91,7 +91,8 @@ uses
   UTestConstSection in 'UTestConstSection.pas',
   UTestFieldDecl in 'UTestFieldDecl.pas',
   UTestFieldSection in 'UTestFieldSection.pas',
-  UTestTypeDecl in 'UTestTypeDecl.pas';
+  UTestTypeDecl in 'UTestTypeDecl.pas',
+  UTestTypeSection in 'UTestTypeSection.pas';
 
 begin
   try
@@ -173,6 +174,7 @@ begin
     TTestType.Test;
     TTestTypedConstant.Test;
     TTestTypeDecl.Test;
+    TTestTypeSection.Test;
     TTestUnaryOperator.Test;
     TTestUsedUnit.Test;
     TTestUsesClause.Test;
