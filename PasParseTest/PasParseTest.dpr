@@ -86,7 +86,8 @@ uses
   UTestTypedConstant in 'UTestTypedConstant.pas',
   UTestRecordFieldConstant in 'UTestRecordFieldConstant.pas',
   UTestVarDecl in 'UTestVarDecl.pas',
-  UTestConstantDecl in 'UTestConstantDecl.pas';
+  UTestConstantDecl in 'UTestConstantDecl.pas',
+  UTestVarSection in 'UTestVarSection.pas';
 
 begin
   try
@@ -168,6 +169,7 @@ begin
     TTestUsedUnit.Test;
     TTestUsesClause.Test;
     TTestVarDecl.Test;
+    TTestVarSection.Test;
     TTestVisibility.Test;
     TTestWhileStatement.Test;
     TTestWithStatement.Test;
