@@ -2364,12 +2364,25 @@ end;
 
 function TRecordTypeRule.CanParse: Boolean;
 begin
-  Result := False;
+  Result := FParser.CanParseToken(TTRecordKeyword);
 end;
 
 function TRecordTypeRule.Evaluate: TASTNode;
+var
+  ARecord, AEnd: TToken;
+  AContents: TListNode;
+  AVariantSection: TVariantSectionNode;
 begin
-  Result := nil;
+  ARecord := FParser.ParseToken(TTRecordKeyword);
+  AContents := FParser.ParseOptionalRuleList(RTVisibilitySection);
+
+  AVariantSection := nil;
+  if FParser.CanParseRule(RTVariantSection) then
+    AVariantSection := FParser.ParseRuleInternal(RTVariantSection)
+      as TVariantSectionNode;
+
+  AEnd := FParser.ParseToken(TTEndKeyword);
+  Result := TRecordTypeNode.Create(ARecord, AContents, AVariantSection, AEnd);
 end;
 
 { TRepeatStatementRule }
