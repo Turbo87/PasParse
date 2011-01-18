@@ -1629,12 +1629,19 @@ end;
 
 function TLabelDeclSectionRule.CanParse: Boolean;
 begin
-  Result := False;
+  Result := FParser.CanParseToken(TTLabelKeyword);
 end;
 
 function TLabelDeclSectionRule.Evaluate: TASTNode;
+var
+  ALabel, ASemicolon: TToken;
+  ALabelList: TListNode;
 begin
-  Result := nil;
+  ALabel := FParser.ParseToken(TTLabelKeyword);
+  ALabelList := FParser.ParseDelimitedList(RTLabelId, TTComma);
+  ASemicolon := FParser.ParseToken(TTSemicolon);
+
+  Result := TLabelDeclSectionNode.Create(ALabel, ALabelList, ASemicolon);
 end;
 
 { TLabelIdRule }
