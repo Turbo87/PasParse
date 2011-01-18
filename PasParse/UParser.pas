@@ -308,8 +308,11 @@ var
   ASingleTokenTokenSet: TSingleTokenTokenSet;
 begin
   ASingleTokenTokenSet := TSingleTokenTokenSet.Create(ATokenType);
-  Result := ParseToken(ASingleTokenTokenSet);
-  ASingleTokenTokenSet.Free;
+  try
+    Result := ParseToken(ASingleTokenTokenSet);
+  finally
+    ASingleTokenTokenSet.Free;
+  end;
 end;
 
 function TParser.ParseDelimitedList(AItemRule: TRuleType;
