@@ -2765,12 +2765,40 @@ end;
 
 function TVarDeclRule.CanParse: Boolean;
 begin
-  Result := False;
+  Result := FParser.CanParseToken(TTokenSets.TSIdent);
 end;
 
 function TVarDeclRule.Evaluate: TASTNode;
+var
+  ANames, AFirstDirectives, ASecondDirectives: TListNode;
+  AColon, AAbsolute, AEqual, ASemicolon: TToken;
+  AType, AAbsoluteAddress, AValue: TASTNode;
 begin
-  Result := nil;
+  ANames := FParser.ParseDelimitedList(RTIdent, TTComma);
+  AColon := FParser.ParseToken(TTColon);
+  AType := FParser.ParseRuleInternal(RTType);
+  AFirstDirectives := FParser.ParseOptionalRuleList(RTPortabilityDirective);
+
+  AAbsolute := nil;
+  AAbsoluteAddress := nil;
+  AEqual := nil;
+  AValue := nil;
+  if FParser.CanParseToken(TTAbsoluteSemikeyword) then
+  begin
+    AAbsolute := FParser.ParseToken(TTAbsoluteSemikeyword);
+    AAbsoluteAddress := FParser.ParseRuleInternal(RTExpression);
+  end
+  else if FParser.CanParseToken(TTEqualSign) then
+  begin
+    AEqual := FParser.ParseToken(TTEqualSign);
+    AValue := FParser.ParseRuleInternal(RTTypedConstant);
+  end;
+
+  ASecondDirectives := FParser.ParseOptionalRuleList(RTPortabilityDirective);
+  ASemicolon := FParser.ParseToken(TTSemicolon);
+  
+  Result := TVarDeclNode.Create(ANames, AColon, AType, AFirstDirectives,
+    AAbsolute, AAbsoluteAddress, AEqual, AValue, ASecondDirectives, ASemicolon);
 end;
 
 { TVariantGroupRule }

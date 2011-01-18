@@ -113,6 +113,7 @@
     <DCCReference Include="UTestUnaryOperator.pas" />
     <DCCReference Include="UTestUsedUnit.pas" />
     <DCCReference Include="UTestUsesClause.pas" />
+    <DCCReference Include="UTestVarDecl.pas" />
     <DCCReference Include="UTestVisibility.pas" />
     <DCCReference Include="UTestWhileStatement.pas" />
     <DCCReference Include="UTestWithStatement.pas" />

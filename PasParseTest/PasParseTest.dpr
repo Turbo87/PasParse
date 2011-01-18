@@ -84,7 +84,8 @@ uses
   UTestPackedType in 'UTestPackedType.pas',
   UTestPointerType in 'UTestPointerType.pas',
   UTestTypedConstant in 'UTestTypedConstant.pas',
-  UTestRecordFieldConstant in 'UTestRecordFieldConstant.pas';
+  UTestRecordFieldConstant in 'UTestRecordFieldConstant.pas',
+  UTestVarDecl in 'UTestVarDecl.pas';
 
 begin
   try
@@ -164,6 +165,7 @@ begin
     TTestUnaryOperator.Test;
     TTestUsedUnit.Test;
     TTestUsesClause.Test;
+    TTestVarDecl.Test;
     TTestVisibility.Test;
     TTestWhileStatement.Test;
     TTestWithStatement.Test;
