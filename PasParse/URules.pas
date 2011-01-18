@@ -742,7 +742,13 @@ begin
     else if FParser.CanParseToken(TTOpenBracket) then
     begin
       AOpenDelimiter := FParser.ParseToken(TTOpenBracket);
-      AParameterList := FParser.ParseRuleInternal(RTExpressionList) as TListNode;
+      try
+        AParameterList := FParser.ParseRuleInternal(RTExpressionList) as TListNode;
+      except
+        AOpenDelimiter.Free;
+        Result.Free;
+        raise;
+      end;
       ACloseDelimiter := FParser.ParseToken(TTCloseBracket);
       Result := TParameterizedNode.Create(Result, AOpenDelimiter,
         AParameterList, ACloseDelimiter);
