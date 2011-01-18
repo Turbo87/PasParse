@@ -26,7 +26,6 @@ type
     procedure AddRule(ARuleType: TRuleType; ARuleClass: TRuleClass);
 
   protected
-    function ParseTokenList(ATokenSet: ITokenSet): TListNode; override;
     function TryParseToken(ATokenType: TTokenType): TToken; override;
 
     function GetNextFrame: IFrame; override;
@@ -43,6 +42,7 @@ type
 
     function ParseToken(ATokenSet: ITokenSet): TToken; overload; override;
     function ParseToken(ATokenType: TTokenType): TToken; overload; override;
+    function ParseTokenList(ATokenSet: ITokenSet): TListNode; override;
     function CanParseToken(ATokenSet: ITokenSet): Boolean; overload; override;
     function CanParseToken(ATokenType: TTokenType): Boolean; overload; override;
     function ParseDelimitedList(AItemRule: TRuleType; ADelimiterType: TTokenType): TListNode; override;

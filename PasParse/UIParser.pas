@@ -9,7 +9,6 @@ uses
 type
   IParser = class
   protected
-    function ParseTokenList(ATokenSet: ITokenSet): TListNode; virtual; abstract;
     function TryParseToken(ATokenType: TTokenType): TToken; virtual; abstract;
 
     function GetNextFrame: IFrame; virtual; abstract;
@@ -18,6 +17,7 @@ type
   public
     function ParseToken(ATokenSet: ITokenSet): TToken; overload; virtual; abstract;
     function ParseToken(ATokenType: TTokenType): TToken; overload; virtual; abstract;
+    function ParseTokenList(ATokenSet: ITokenSet): TListNode; virtual; abstract;
     function CanParseToken(ATokenSet: ITokenSet): Boolean; overload; virtual; abstract;
     function CanParseToken(ATokenType: TTokenType): Boolean; overload; virtual; abstract;
     function ParseDelimitedList(AItemRule: TRuleType; ADelimiterType: TTokenType): TListNode; virtual; abstract;
