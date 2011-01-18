@@ -75,7 +75,8 @@ uses
   UTestInterfaceType in 'UTestInterfaceType.pas',
   UTestAssemblyAttribute in 'UTestAssemblyAttribute.pas',
   UTestExportsItem in 'UTestExportsItem.pas',
-  UTestExportsStatement in 'UTestExportsStatement.pas';
+  UTestExportsStatement in 'UTestExportsStatement.pas',
+  UTestInitSection in 'UTestInitSection.pas';
 
 begin
   try
@@ -116,6 +117,7 @@ begin
     TTestIdent.Test;
     TTestIdentList.Test;
     TTestIfStatement.Test;
+    TTestInitSection.Test;
     TTestInterfaceType.Test;
     TTestLabelId.Test;
     TTestMethodHeading.Test;

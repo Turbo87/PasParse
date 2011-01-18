@@ -1498,12 +1498,64 @@ end;
 
 function TInitSectionRule.CanParse: Boolean;
 begin
-  Result := False;
+  Result := FParser.CanParseToken(TTokenSets.TSInitSection);
 end;
 
 function TInitSectionRule.Evaluate: TASTNode;
+var
+  AInitHeader, AFinalHeader, AEnd: TToken;
+  AInitStatements, AFinalStatements: TListNode;
+  ABlock: TBlockNode;
+  AASM: TAssemblerStatementNode;
+  AItem: TDelimitedItemNode;
+  AItemList: TObjectList;
 begin
-  Result := nil;
+  AInitHeader := nil;
+  AInitStatements := FParser.CreateEmptyListNode;
+  AFinalHeader := nil;
+  AFinalStatements := FParser.CreateEmptyListNode;
+  AEnd := nil;
+
+  if FParser.CanParseToken(TTBeginKeyword) then
+  begin
+    ABlock := FParser.ParseRuleInternal(RTBlock) as TBlockNode;
+    AInitHeader := ABlock.BeginKeywordNode.Clone;
+    AInitStatements.Free;
+    //AInitStatements := ABlock.StatementListNode.Clone;
+    AEnd := ABlock.EndKeywordNode.Clone; 
+  end
+  else if FParser.CanParseToken(TTAsmKeyword) then
+  begin
+    AASM := FParser.ParseRuleInternal(RTAssemblerStatement)
+      as TAssemblerStatementNode;
+    AItem := TDelimitedItemNode.Create(AASM, nil);
+    AItemList := TObjectList.Create(False);
+    AItemList.Add(AItem);
+    AInitStatements.Free;
+    AInitStatements := TListNode.Create(AItemList);
+    AItemList.Free;
+  end
+  else
+  begin
+    if FParser.CanParseToken(TTInitializationKeyword) then
+    begin
+      AInitHeader := FParser.ParseToken(TTInitializationKeyword);
+      AInitStatements.Free;
+      AInitStatements := FParser.ParseOptionalStatementList;
+
+      if FParser.CanParseToken(TTFinalizationKeyword) then
+      begin
+        AFinalHeader := FParser.ParseToken(TTFinalizationKeyword);
+        AFinalStatements.Free;
+        AFinalStatements := FParser.ParseOptionalStatementList;
+      end;
+    end;
+
+    AEnd := FParser.ParseToken(TTEndKeyword);
+  end;
+
+  Result := TInitSectionNode.Create(AInitHeader, AInitStatements, AFinalHeader,
+    AFinalStatements, AEnd);
 end;
 
 { TInterfaceDeclRule }
