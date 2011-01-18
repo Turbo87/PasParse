@@ -1129,12 +1129,19 @@ end;
 
 function TExportsStatementRule.CanParse: Boolean;
 begin
-  Result := False;
+  Result := FParser.CanParseToken(TTExportsKeyword);
 end;
 
 function TExportsStatementRule.Evaluate: TASTNode;
+var
+  AExports, ASemicolon: TToken;
+  AItemList: TListNode;
 begin
-  Result := nil;
+  AExports := FParser.ParseToken(TTExportsKeyword);
+  AItemList := FParser.ParseDelimitedList(RTExportsItem, TTComma);
+  ASemicolon := FParser.ParseToken(TTSemicolon);
+
+  Result := TExportsStatementNode.Create(AExports, AItemList, ASemicolon);
 end;
 
 { TExpressionRule }

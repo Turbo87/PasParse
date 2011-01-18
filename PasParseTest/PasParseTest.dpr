@@ -74,7 +74,8 @@ uses
   UTestMethodOrProperty in 'UTestMethodOrProperty.pas',
   UTestInterfaceType in 'UTestInterfaceType.pas',
   UTestAssemblyAttribute in 'UTestAssemblyAttribute.pas',
-  UTestExportsItem in 'UTestExportsItem.pas';
+  UTestExportsItem in 'UTestExportsItem.pas',
+  UTestExportsStatement in 'UTestExportsStatement.pas';
 
 begin
   try
@@ -101,6 +102,7 @@ begin
     TTestExceptionItem.Test;
     TTestExportsItem.Test;
     TTestExportsSpecifier.Test;
+    TTestExportsStatement.Test;
     TTestExpression.Test;
     TTestExpressionList.Test;
     TTestExpressionOrAssignment.Test;
