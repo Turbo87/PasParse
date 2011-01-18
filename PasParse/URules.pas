@@ -2026,12 +2026,53 @@ end;
 
 function TProcedureTypeRule.CanParse: Boolean;
 begin
-  Result := False;
+  Result := FParser.CanParseToken(TTokenSets.TSMethodType);
 end;
 
 function TProcedureTypeRule.Evaluate: TASTNode;
+var
+  AMethodType, AOpen, AClose, AColon, AOf, AObject: TToken;
+  AParameters, AFirstDirectives, ASecondDirectives: TListNode;
+  AReturnType: TASTNode;
 begin
-  Result := nil;
+  AMethodType := FParser.ParseToken(TTokenSets.TSMethodType);
+
+  AOpen := nil;
+  AParameters := FParser.CreateEmptyListNode;
+  AClose := nil;
+  if FParser.CanParseToken(TTOpenParenthesis) then
+  begin
+    AOpen := FParser.ParseToken(TTOpenParenthesis);
+    if FParser.CanParseRule(RTParameter) then
+    begin
+      AParameters.Free;
+      AParameters := FParser.ParseDelimitedList(RTParameter, TTSemicolon);
+    end;
+    AClose := FParser.ParseToken(TTCloseParenthesis);
+  end;
+
+  AColon := nil;
+  AReturnType := nil;
+  if FParser.CanParseToken(TTColon) then
+  begin
+    AColon := FParser.ParseToken(TTColon);
+    AReturnType := FParser.ParseRuleInternal(RTMethodReturnType);
+  end;
+
+  AFirstDirectives := FParser.ParseOptionalRuleList(RTDirective);
+
+  AOf := nil;
+  AObject := nil;
+  if FParser.CanParseToken(TTOfKeyword) then
+  begin
+    AOf := FParser.ParseToken(TTOfKeyword);
+    AObject := FParser.ParseToken(TTObjectKeyword);
+  end;
+
+  ASecondDirectives := FParser.ParseOptionalRuleList(RTDirective);
+
+  Result := TProcedureTypeNode.Create(AMethodType, AOpen, AParameters, AClose,
+    AColon, AReturnType, AFirstDirectives, AOf, AObject, ASecondDirectives);
 end;
 
 { TProgramRule }

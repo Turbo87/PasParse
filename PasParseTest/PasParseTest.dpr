@@ -77,7 +77,8 @@ uses
   UTestExportsItem in 'UTestExportsItem.pas',
   UTestExportsStatement in 'UTestExportsStatement.pas',
   UTestInitSection in 'UTestInitSection.pas',
-  UTestLabelDeclSection in 'UTestLabelDeclSection.pas';
+  UTestLabelDeclSection in 'UTestLabelDeclSection.pas',
+  UTestProcedureType in 'UTestProcedureType.pas';
 
 begin
   try
@@ -133,6 +134,7 @@ begin
     TTestParenthesizedExpression.Test;
     TTestParticle.Test;
     TTestPortabilityDirective.Test;
+    TTestProcedureType.Test;
     TTestProperty.Test;
     TTestPropertyDirective.Test;
     TTestQualifiedIdent.Test;

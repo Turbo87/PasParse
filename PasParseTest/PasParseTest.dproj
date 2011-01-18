@@ -89,6 +89,7 @@
     <DCCReference Include="UTestParser.pas" />
     <DCCReference Include="UTestParticle.pas" />
     <DCCReference Include="UTestPortabilityDirective.pas" />
+    <DCCReference Include="UTestProcedureType.pas" />
     <DCCReference Include="UTestProperty.pas" />
     <DCCReference Include="UTestPropertyDirective.pas" />
     <DCCReference Include="UTestQualifiedIdent.pas" />
