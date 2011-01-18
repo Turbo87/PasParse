@@ -599,9 +599,15 @@ type
     function CanParse: Boolean; override;
     function Evaluate: TASTNode; override;
   end;
-  
+
   TVisibilitySectionContentRule = class(TRule)
+  private
+    FAlternator: TAlternator;
+
   public
+    constructor Create(AParser: IParser; ARuleType: TRuleType); override;
+    destructor Destroy; override;
+
     function CanParse: Boolean; override;
     function Evaluate: TASTNode; override;
   end;
@@ -2982,12 +2988,29 @@ end;
 
 function TVisibilitySectionContentRule.CanParse: Boolean;
 begin
-  Result := False;
+  Result := FAlternator.LookAhead(FParser);
+end;
+
+constructor TVisibilitySectionContentRule.Create(AParser: IParser;
+  ARuleType: TRuleType);
+begin
+  inherited Create(AParser, ARuleType);
+  FAlternator := TAlternator.Create;
+  FAlternator.AddRule(RTFieldSection);
+  FAlternator.AddRule(RTMethodOrProperty);
+  FAlternator.AddRule(RTConstSection);
+  FAlternator.AddRule(RTTypeSection);
+end;
+
+destructor TVisibilitySectionContentRule.Destroy;
+begin
+  FAlternator.Free;
+  inherited;
 end;
 
 function TVisibilitySectionContentRule.Evaluate: TASTNode;
 begin
-  Result := nil;
+  Result := FAlternator.Execute(FParser);
 end;
 
 { TWhileStatementRule }
