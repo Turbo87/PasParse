@@ -70,7 +70,8 @@ uses
   UTestExportsSpecifier in 'UTestExportsSpecifier.pas',
   UTestDirective in 'UTestDirective.pas',
   UTestPropertyDirective in 'UTestPropertyDirective.pas',
-  UTestProperty in 'UTestProperty.pas';
+  UTestProperty in 'UTestProperty.pas',
+  UTestMethodOrProperty in 'UTestMethodOrProperty.pas';
 
 begin
   try
@@ -110,6 +111,7 @@ begin
     TTestIfStatement.Test;
     TTestLabelId.Test;
     TTestMethodHeading.Test;
+    TTestMethodOrProperty.Test;
     TTestMethodReturnType.Test;
     TTestMulOp.Test;
     TTestOpenArray.Test;

@@ -295,7 +295,13 @@ type
   end;
   
   TMethodOrPropertyRule = class(TRule)
+  private
+    FAlternator: TAlternator;
+
   public
+    constructor Create(AParser: IParser; ARuleType: TRuleType); override;
+    destructor Destroy; override;
+
     function CanParse: Boolean; override;
     function Evaluate: TASTNode; override;
   end;
@@ -1613,12 +1619,27 @@ end;
 
 function TMethodOrPropertyRule.CanParse: Boolean;
 begin
-  Result := False;
+  Result := FAlternator.LookAhead(FParser);
+end;
+
+constructor TMethodOrPropertyRule.Create(AParser: IParser;
+  ARuleType: TRuleType);
+begin
+  inherited Create(AParser, ARuleType);
+  FAlternator := TAlternator.Create;
+  FAlternator.AddRule(RTMethodHeading);
+  FAlternator.AddRule(RTProperty);
+end;
+
+destructor TMethodOrPropertyRule.Destroy;
+begin
+  FAlternator.Free;
+  inherited;
 end;
 
 function TMethodOrPropertyRule.Evaluate: TASTNode;
 begin
-  Result := nil;
+  Result := FAlternator.Execute(FParser);
 end;
 
 { TMethodReturnTypeRule }
