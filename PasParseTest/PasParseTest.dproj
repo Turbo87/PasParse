@@ -105,6 +105,7 @@
     <DCCReference Include="UTestStatementList.pas" />
     <DCCReference Include="UTestTerm.pas" />
     <DCCReference Include="UTestTryStatement.pas" />
+    <DCCReference Include="UTestType.pas" />
     <DCCReference Include="UTestUnaryOperator.pas" />
     <DCCReference Include="UTestUsedUnit.pas" />
     <DCCReference Include="UTestUsesClause.pas" />

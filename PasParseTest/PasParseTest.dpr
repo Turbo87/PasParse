@@ -79,7 +79,8 @@ uses
   UTestInitSection in 'UTestInitSection.pas',
   UTestLabelDeclSection in 'UTestLabelDeclSection.pas',
   UTestProcedureType in 'UTestProcedureType.pas',
-  UTestRecordHelperType in 'UTestRecordHelperType.pas';
+  UTestRecordHelperType in 'UTestRecordHelperType.pas',
+  UTestType in 'UTestType.pas';
 
 begin
   try
@@ -151,6 +152,7 @@ begin
     TTestStatementList.Test;
     TTestTerm.Test;
     TTestTryStatement.Test;
+    TTestType.Test;
     TTestUnaryOperator.Test;
     TTestUsedUnit.Test;
     TTestUsesClause.Test;
