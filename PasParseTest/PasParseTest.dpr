@@ -88,7 +88,8 @@ uses
   UTestVarDecl in 'UTestVarDecl.pas',
   UTestConstantDecl in 'UTestConstantDecl.pas',
   UTestVarSection in 'UTestVarSection.pas',
-  UTestConstSection in 'UTestConstSection.pas';
+  UTestConstSection in 'UTestConstSection.pas',
+  UTestFieldDecl in 'UTestFieldDecl.pas';
 
 begin
   try
@@ -125,6 +126,7 @@ begin
     TTestExpressionOrRangeList.Test;
     TTestExtendedIdent.Test;
     TTestFactor.Test;
+    TTestFieldDecl.Test;
     TTestFileType.Test;
     TTestForStatement.Test;
     TTestGotoStatement.Test;

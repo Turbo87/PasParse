@@ -1326,12 +1326,25 @@ end;
 
 function TFieldDeclRule.CanParse: Boolean;
 begin
-  Result := False;
+  Result := FParser.CanParseRule(RTIdentList) and 
+    not FParser.CanParseRule(RTVisibility);
 end;
 
 function TFieldDeclRule.Evaluate: TASTNode;
+var
+  ANames, ADirectives: TListNode;
+  AColon, ASemicolon: TToken;
+  AType: TASTNode;
 begin
-  Result := nil;
+  ANames := FParser.ParseRuleInternal(RTIdentList) as TListNode;
+  AColon := FParser.ParseToken(TTColon);
+  AType := FParser.ParseRuleInternal(RTType);
+  ADirectives := FParser.ParseTokenList(TTokenSets.TSPortabilityDirective);
+  ASemicolon := nil;
+  if FParser.CanParseToken(TTSemicolon) then
+    ASemicolon := FParser.ParseToken(TTSemicolon);
+  
+  Result := TFieldDeclNode.Create(ANames, AColon, AType, ADirectives, ASemicolon);
 end;
 
 { TFieldSectionRule }
