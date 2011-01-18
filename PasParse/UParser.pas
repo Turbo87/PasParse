@@ -15,6 +15,7 @@ type
 
   TParser = class(IParser)
   private
+    FFirstFrame: IFrame;
     FNextFrame: IFrame;
     FRules: array of TRule;
 
@@ -102,6 +103,7 @@ end;
 constructor TParser.CreateFromFrame(AFrame: IFrame);
 begin
   inherited Create;
+  FFirstFrame := AFrame;
   FNextFrame := AFrame;
   SetLength(FRules, Integer(High(TRuleType)) + 1);
 
@@ -228,6 +230,7 @@ end;
 
 destructor TParser.Destroy;
 var
+  AFrame: IFrame;
   I: Integer;
 begin
   for I := 0 to High(FRules) do
@@ -235,8 +238,16 @@ begin
 
   SetLength(FRules, 0);
 
+  if FNextFrame.IsEOF and (FNextFrame <> FFirstFrame) then
+    FNextFrame.Free;
+
+  FNextFrame := FFirstFrame;
   while not FNextFrame.IsEOF do
-    MoveNext;
+  begin
+    AFrame := FNextFrame;
+    FNextFrame := FNextFrame.Next;
+    AFrame.Free;
+  end;
 
   FNextFrame.Free;
   inherited;
@@ -280,12 +291,8 @@ begin
 end;
 
 procedure TParser.MoveNext;
-var
-  ALastFrame: IFrame;
 begin
-  ALastFrame := FNextFrame;
   FNextFrame := FNextFrame.Next;
-  ALastFrame.Free;
 end;
 
 function TParser.ParseToken(ATokenType: TTokenType): TToken;
