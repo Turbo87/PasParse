@@ -2859,7 +2859,14 @@ var
   AVarList: TListNode;
 begin
   AVar := FParser.ParseToken(TTokenSets.TSVarHeader);
-  AVarList := FParser.ParseRequiredRuleList(RTVarDecl);
+  
+  try
+    AVarList := FParser.ParseRequiredRuleList(RTVarDecl);
+  except
+    AVar.Free;
+    raise
+  end;
+  
   Result := TVarSectionNode.Create(AVar, AVarList);
 end;
 
