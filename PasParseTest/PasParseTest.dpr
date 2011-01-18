@@ -71,7 +71,8 @@ uses
   UTestDirective in 'UTestDirective.pas',
   UTestPropertyDirective in 'UTestPropertyDirective.pas',
   UTestProperty in 'UTestProperty.pas',
-  UTestMethodOrProperty in 'UTestMethodOrProperty.pas';
+  UTestMethodOrProperty in 'UTestMethodOrProperty.pas',
+  UTestInterfaceType in 'UTestInterfaceType.pas';
 
 begin
   try
@@ -109,6 +110,7 @@ begin
     TTestIdent.Test;
     TTestIdentList.Test;
     TTestIfStatement.Test;
+    TTestInterfaceType.Test;
     TTestLabelId.Test;
     TTestMethodHeading.Test;
     TTestMethodOrProperty.Test;

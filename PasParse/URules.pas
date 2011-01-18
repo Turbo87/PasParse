@@ -1490,12 +1490,42 @@ end;
 
 function TInterfaceTypeRule.CanParse: Boolean;
 begin
-  Result := False;
+  Result := FParser.CanParseToken(TTokenSets.TSInterfaceType);
 end;
 
 function TInterfaceTypeRule.Evaluate: TASTNode;
+var
+  AInterface, AOpenP, ACloseP, AOpenB, ACloseB, AEnd: TToken;
+  ABaseInterface, AGUID: TASTNode;
+  AMethodAndPropertyList: TListNode;
 begin
-  Result := nil;
+  AInterface := FParser.ParseToken(TTokenSets.TSInterfaceType);
+
+  AOpenP := nil;
+  ABaseInterface := nil;
+  ACloseP := nil;
+  if FParser.CanParseToken(TTOpenParenthesis) then
+  begin
+    AOpenP := FParser.ParseToken(TTOpenParenthesis);
+    ABaseInterface := FParser.ParseRuleInternal(RTQualifiedIdent);
+    ACloseP := FParser.ParseToken(TTCloseParenthesis);
+  end;
+
+  AOpenB := nil;
+  AGUID := nil;
+  ACloseB := nil;
+  if FParser.CanParseToken(TTOpenBracket) then
+  begin
+    AOpenB := FParser.ParseToken(TTOpenBracket);
+    AGUID := FParser.ParseRuleInternal(RTExpression);
+    ACloseB := FParser.ParseToken(TTCloseBracket);
+  end;
+
+  AMethodAndPropertyList := FParser.ParseOptionalRuleList(RTMethodOrProperty);
+  AEnd := FParser.ParseToken(TTEndKeyword);
+
+  Result := TInterfaceTypeNode.Create(AInterface, AOpenP, ABaseInterface,
+    ACloseP, AOpenB, AGUID, ACloseB, AMethodAndPropertyList, AEnd);
 end;
 
 { TLabelDeclSectionRule }
