@@ -1,0 +1,1 @@
+PasParseTest.exe > ..\results.txt
