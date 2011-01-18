@@ -48,7 +48,7 @@ begin
     '      ItemNode: Number |9|' + #13#10 +
     '      DelimiterNode: (none)' + #13#10 +
     '  CloseParenthesisNode: CloseParenthesis |)|', RTTypedConstant));
-  {
+
   OK('(Foo: 24; Bar.Baz: 42)', TTestParser.ParsesAs('(Foo: 24; Bar.Baz: 42)',
     'ConstantListNode' + #13#10 +
     '  OpenParenthesisNode: OpenParenthesis |(|' + #13#10 +
@@ -69,7 +69,7 @@ begin
     '        ValueNode: Number |42|' + #13#10 +
     '      DelimiterNode: (none)' + #13#10 +
     '  CloseParenthesisNode: CloseParenthesis |)|', RTTypedConstant));
-  }
+  
   OK('((6), (9))', TTestParser.ParsesAs('((6), (9))',
     'ConstantListNode' + #13#10 +
     '  OpenParenthesisNode: OpenParenthesis |(|' + #13#10 +
@@ -105,7 +105,7 @@ begin
     '        CloseParenthesisNode: CloseParenthesis |)|' + #13#10 +
     '      DelimiterNode: (none)' + #13#10 +
     '  CloseParenthesisNode: CloseParenthesis |)|', RTTypedConstant));
-  {
+
   OK('((Foo: 42))', TTestParser.ParsesAs('((Foo: 42))',
     'ConstantListNode' + #13#10 +
     '  OpenParenthesisNode: OpenParenthesis |(|' + #13#10 +
@@ -180,7 +180,7 @@ begin
     '          CloseParenthesisNode: CloseParenthesis |)|' + #13#10 +
     '      DelimiterNode: (none)' + #13#10 +
     '  CloseParenthesisNode: CloseParenthesis |)|', RTTypedConstant));
-  }
+  
   OK('()', TTestParser.ParsesAs('()',
     'ConstantListNode' + #13#10 +
     '  OpenParenthesisNode: OpenParenthesis |(|' + #13#10 +
