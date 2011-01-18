@@ -1853,12 +1853,17 @@ end;
 
 function TPackedTypeRule.CanParse: Boolean;
 begin
-  Result := False;
+  Result := FParser.CanParseToken(TTPackedKeyword);
 end;
 
 function TPackedTypeRule.Evaluate: TASTNode;
+var
+  APacked: TToken;
+  AType: TASTNode;
 begin
-  Result := nil;
+  APacked := FParser.ParseToken(TTPackedKeyword);
+  AType := FParser.ParseRuleInternal(RTType);
+  Result := TPackedTypeNode.Create(APacked, AType);
 end;
 
 { TParameterRule }

@@ -80,7 +80,8 @@ uses
   UTestLabelDeclSection in 'UTestLabelDeclSection.pas',
   UTestProcedureType in 'UTestProcedureType.pas',
   UTestRecordHelperType in 'UTestRecordHelperType.pas',
-  UTestType in 'UTestType.pas';
+  UTestType in 'UTestType.pas',
+  UTestPackedType in 'UTestPackedType.pas';
 
 begin
   try
@@ -130,6 +131,7 @@ begin
     TTestMethodReturnType.Test;
     TTestMulOp.Test;
     TTestOpenArray.Test;
+    TTestPackedType.Test;
     TTestParameterExpression.Test;
     TTestParameter.Test;
     TTestParameterType.Test;
