@@ -82,7 +82,8 @@ uses
   UTestRecordHelperType in 'UTestRecordHelperType.pas',
   UTestType in 'UTestType.pas',
   UTestPackedType in 'UTestPackedType.pas',
-  UTestPointerType in 'UTestPointerType.pas';
+  UTestPointerType in 'UTestPointerType.pas',
+  UTestTypedConstant in 'UTestTypedConstant.pas';
 
 begin
   try
@@ -157,6 +158,7 @@ begin
     TTestTerm.Test;
     TTestTryStatement.Test;
     TTestType.Test;
+    TTestTypedConstant.Test;
     TTestUnaryOperator.Test;
     TTestUsedUnit.Test;
     TTestUsesClause.Test;

@@ -623,7 +623,7 @@ implementation
 
 uses
   UTokenType, UToken, UListNode, UGeneratedNodes, UTokenSets, UParseException,
-  UDelimitedItemNode, UTokenSet, Contnrs;
+  UDelimitedItemNode, UTokenSet, Contnrs, UIFrame;
 
 { TArrayTypeRule }
 
@@ -2633,12 +2633,42 @@ end;
 
 function TTypedConstantRule.CanParse: Boolean;
 begin
-  Result := False;
+  Result := FParser.CanParseToken(TTokenSets.TSExpression);
 end;
 
 function TTypedConstantRule.Evaluate: TASTNode;
+var
+  AOpen, AClose: TToken;
+  AItems: TListNode;
+  AOriginalFrame: IFrame;
 begin
   Result := nil;
+  AOriginalFrame := FParser.NextFrame;
+
+  try
+    Result := FParser.ParseRuleInternal(RTExpression)
+  except
+    on EParseException do
+      FParser.NextFrame := AOriginalFrame;
+  end;
+
+  if Result = nil then
+  begin
+    AOpen := FParser.ParseToken(TTOpenParenthesis);
+    try
+      AItems := FParser.ParseDelimitedList(RTTypedConstant, TTComma);
+    except
+      on EParseException do
+      begin
+        if not FParser.CanParseToken(TTCloseParenthesis) then
+          AItems := FParser.ParseDelimitedList(RTRecordFieldConstant, TTSemicolon)
+        else
+          AItems := FParser.CreateEmptyListNode;
+      end;
+    end;
+    AClose := FParser.ParseToken(TTCloseParenthesis);
+    Result := TConstantListNode.Create(AOpen, AItems, AClose);
+  end;
 end;
 
 { TTypeDeclRule }
