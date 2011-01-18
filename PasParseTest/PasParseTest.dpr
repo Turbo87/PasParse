@@ -96,7 +96,8 @@ uses
   UTestVisibilitySectionContent in 'UTestVisibilitySectionContent.pas',
   UTestVisibilitySection in 'UTestVisibilitySection.pas',
   UTestVariantGroup in 'UTestVariantGroup.pas',
-  UTestVariantSection in 'UTestVariantSection.pas';
+  UTestVariantSection in 'UTestVariantSection.pas',
+  UTestRecordType in 'UTestRecordType.pas';
 
 begin
   try
@@ -165,6 +166,7 @@ begin
     TTestRaiseStatement.Test;
     TTestRecordFieldConstant.Test;
     TTestRecordHelperType.Test;
+    TTestRecordType.Test;
     TTestRelOp.Test;
     TTestRepeatStatement.Test;
     TTestSetLiteral.Test;
