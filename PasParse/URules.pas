@@ -1095,12 +1095,17 @@ end;
 
 function TExportsItemRule.CanParse: Boolean;
 begin
-  Result := False;
+  Result := FParser.CanParseToken(TTokenSets.TSIdent);
 end;
 
 function TExportsItemRule.Evaluate: TASTNode;
+var
+  AName: TASTNode;
+  ASpecifierList: TListNode;
 begin
-  Result := nil;
+  AName := FParser.ParseRuleInternal(RTQualifiedIdent);
+  ASpecifierList := FParser.ParseOptionalRuleList(RTExportsSpecifier);
+  Result := TExportsItemNode.Create(AName, ASpecifierList);
 end;
 
 { TExportsSpecifierRule }

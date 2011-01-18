@@ -73,7 +73,8 @@ uses
   UTestProperty in 'UTestProperty.pas',
   UTestMethodOrProperty in 'UTestMethodOrProperty.pas',
   UTestInterfaceType in 'UTestInterfaceType.pas',
-  UTestAssemblyAttribute in 'UTestAssemblyAttribute.pas';
+  UTestAssemblyAttribute in 'UTestAssemblyAttribute.pas',
+  UTestExportsItem in 'UTestExportsItem.pas';
 
 begin
   try
@@ -98,6 +99,7 @@ begin
     TTestEnumeratedType.Test;
     TTestEnumeratedTypeElement.Test;
     TTestExceptionItem.Test;
+    TTestExportsItem.Test;
     TTestExportsSpecifier.Test;
     TTestExpression.Test;
     TTestExpressionList.Test;
