@@ -2252,12 +2252,18 @@ end;
 
 function TRecordFieldConstantRule.CanParse: Boolean;
 begin
-  Result := False;
+  Result := FParser.CanParseRule(RTQualifiedIdent);
 end;
 
 function TRecordFieldConstantRule.Evaluate: TASTNode;
+var
+  AName, AValue: TASTNode;
+  AColon: TToken;
 begin
-  Result := nil;
+  AName := FParser.ParseRuleInternal(RTQualifiedIdent);
+  AColon := FParser.ParseToken(TTColon);
+  AValue := FParser.ParseRuleInternal(RTTypedConstant);
+  Result := TRecordFieldConstantNode.Create(AName, AColon, AValue);
 end;
 
 { TRecordHelperTypeRule }

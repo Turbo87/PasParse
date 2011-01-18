@@ -83,7 +83,8 @@ uses
   UTestType in 'UTestType.pas',
   UTestPackedType in 'UTestPackedType.pas',
   UTestPointerType in 'UTestPointerType.pas',
-  UTestTypedConstant in 'UTestTypedConstant.pas';
+  UTestTypedConstant in 'UTestTypedConstant.pas',
+  UTestRecordFieldConstant in 'UTestRecordFieldConstant.pas';
 
 begin
   try
@@ -146,6 +147,7 @@ begin
     TTestPropertyDirective.Test;
     TTestQualifiedIdent.Test;
     TTestRaiseStatement.Test;
+    TTestRecordFieldConstant.Test;
     TTestRecordHelperType.Test;
     TTestRelOp.Test;
     TTestRepeatStatement.Test;
