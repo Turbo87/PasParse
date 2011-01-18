@@ -1351,12 +1351,29 @@ end;
 
 function TFieldSectionRule.CanParse: Boolean;
 begin
-  Result := False;
+  Result := (FParser.Peek(0) = TTVarKeyword) or
+            FParser.CanParseRule(RTFieldDecl) or
+            ((FParser.Peek(0) = TTClassKeyword) and
+             (FParser.Peek(1) = TTVarKeyword));
 end;
 
 function TFieldSectionRule.Evaluate: TASTNode;
+var
+  AClass, AVar: TToken;
+  AFields: TListNode;
 begin
-  Result := nil;
+  AClass := nil;
+  AVar := nil;
+  if FParser.CanParseToken(TTClassKeyword) then
+  begin
+    AClass := FParser.ParseToken(TTClassKeyword);
+    AVar := FParser.ParseToken(TTVarKeyword);
+  end
+  else if FParser.CanParseToken(TTVarKeyword) then
+    AVar := FParser.ParseToken(TTVarKeyword);
+
+  AFields := FParser.ParseOptionalRuleList(RTFieldDecl);
+  Result := TFieldSectionNode.Create(AClass, AVar, AFields);
 end;
 
 { TFileTypeRule }
