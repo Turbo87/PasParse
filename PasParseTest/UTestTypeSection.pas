@@ -58,7 +58,7 @@ begin
 
   try
     TTestParser.ParsesAs('type', '', RTTypeSection);
-    OK(False, 'typeexception');
+    OK(False, 'type exception');
   except
     on ETestException do;
     on EParseException do
