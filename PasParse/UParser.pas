@@ -371,12 +371,20 @@ var
   AItem: TASTNode;
 begin
   AItems := TObjectList.Create(False);
-
-  repeat
-    AItem := ParseRuleInternal(ARuleType);
-    AItems.Add(AItem);
-  until (not CanParseRule(ARuleType));
-
+  
+  try
+    repeat
+      AItem := ParseRuleInternal(ARuleType);
+      AItems.Add(AItem);
+    until (not CanParseRule(ARuleType));
+  except
+    // Free all objects that are listed already
+    AItems.OwnsObjects := true;
+    AItems.Free;
+    // And raise exception again
+    raise;
+  end;
+  
   Result := TListNode.Create(AItems);
   AItems.Free;
 end;
