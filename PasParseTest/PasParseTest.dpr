@@ -97,7 +97,8 @@ uses
   UTestVisibilitySection in 'UTestVisibilitySection.pas',
   UTestVariantGroup in 'UTestVariantGroup.pas',
   UTestVariantSection in 'UTestVariantSection.pas',
-  UTestRecordType in 'UTestRecordType.pas';
+  UTestRecordType in 'UTestRecordType.pas',
+  UTestClassHelperType in 'UTestClassHelperType.pas';
 
 begin
   try
@@ -117,6 +118,7 @@ begin
     TTestBlock.Test;
     TTestCaseSelector.Test;
     TTestCaseStatement.Test;
+    TTestClassHelperType.Test;
     TTestClassOf.Test;
     TTestConstantDecl.Test;
     TTestConstSection.Test;
