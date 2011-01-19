@@ -98,7 +98,8 @@ uses
   UTestVariantGroup in 'UTestVariantGroup.pas',
   UTestVariantSection in 'UTestVariantSection.pas',
   UTestRecordType in 'UTestRecordType.pas',
-  UTestClassHelperType in 'UTestClassHelperType.pas';
+  UTestClassHelperType in 'UTestClassHelperType.pas',
+  UTestStringType in 'UTestStringType.pas';
 
 begin
   try
@@ -177,6 +178,7 @@ begin
     TTestSimpleStatement.Test;
     TTestStatement.Test;
     TTestStatementList.Test;
+    TTestStringType.Test;
     TTestTerm.Test;
     TTestTryStatement.Test;
     TTestType.Test;
