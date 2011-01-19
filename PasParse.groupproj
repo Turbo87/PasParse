@@ -7,6 +7,9 @@
     <Projects Include="PasLexConsole\PasLexConsole.dproj">
       <Dependencies>PasParse\PasParse.dproj</Dependencies>
     </Projects>
+    <Projects Include="PasParseConsole\PasParseConsole.dproj">
+      <Dependencies>PasParse\PasParse.dproj</Dependencies>
+    </Projects>
     <Projects Include="PasParseTest\PasParseTest.dproj">
       <Dependencies>PasParse\PasParse.dproj</Dependencies>
     </Projects>
@@ -45,14 +48,23 @@
   <Target Name="PasParseTest:Make" DependsOnTargets="PasParse:Make">
     <MSBuild Projects="PasParseTest\PasParseTest.dproj" Targets="Make" />
   </Target>
+  <Target Name="PasParseConsole" DependsOnTargets="PasParse">
+    <MSBuild Projects="PasParseConsole\PasParseConsole.dproj" Targets="" />
+  </Target>
+  <Target Name="PasParseConsole:Clean" DependsOnTargets="PasParse:Clean">
+    <MSBuild Projects="PasParseConsole\PasParseConsole.dproj" Targets="Clean" />
+  </Target>
+  <Target Name="PasParseConsole:Make" DependsOnTargets="PasParse:Make">
+    <MSBuild Projects="PasParseConsole\PasParseConsole.dproj" Targets="Make" />
+  </Target>
   <Target Name="Build">
-    <CallTarget Targets="PasParse;PasLexConsole;PasParseTest" />
+    <CallTarget Targets="PasParse;PasLexConsole;PasParseTest;PasParseConsole" />
   </Target>
   <Target Name="Clean">
-    <CallTarget Targets="PasParse:Clean;PasLexConsole:Clean;PasParseTest:Clean" />
+    <CallTarget Targets="PasParse:Clean;PasLexConsole:Clean;PasParseTest:Clean;PasParseConsole:Clean" />
   </Target>
   <Target Name="Make">
-    <CallTarget Targets="PasParse:Make;PasLexConsole:Make;PasParseTest:Make" />
+    <CallTarget Targets="PasParse:Make;PasLexConsole:Make;PasParseTest:Make;PasParseConsole:Make" />
   </Target>
   <Import Condition="Exists('$(MSBuildBinPath)\Borland.Group.Targets')" Project="$(MSBuildBinPath)\Borland.Group.Targets" />
 </Project>
