@@ -94,7 +94,7 @@ begin
     '      ValueNode: (none)' + #13#10 +
     '      SecondPortabilityDirectiveListNode: ListNode' + #13#10 +
     '      SemicolonNode: Semicolon |;|', RTImplementationDecl));
-  {
+  
   OK('procedure Foo; begin end;', TTestParser.ParsesAs('procedure Foo; begin end;',
     'MethodImplementationNode' + #13#10 +
     '  MethodHeadingNode: MethodHeadingNode' + #13#10 +
@@ -115,7 +115,7 @@ begin
     '      StatementListNode: ListNode' + #13#10 +
     '      EndKeywordNode: EndKeyword |end|' + #13#10 +
     '  SemicolonNode: Semicolon |;|', RTImplementationDecl));
-  }
+
   OK('exports Foo;', TTestParser.ParsesAs('exports Foo;',
     'ExportsStatementNode' + #13#10 +
     '  ExportsKeywordNode: ExportsKeyword |exports|' + #13#10 +
