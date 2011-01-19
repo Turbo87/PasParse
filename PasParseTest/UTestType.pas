@@ -134,7 +134,7 @@ begin
     '  ClassKeywordNode: ClassKeyword |class|' + #13#10 +
     '  OfKeywordNode: OfKeyword |of|' + #13#10 +
     '  TypeNode: Identifier |TObject|', RTType));
-  {
+
   OK('class end', TTestParser.ParsesAs('class end',
     'ClassTypeNode' + #13#10 +
     '  ClassKeywordNode: ClassKeyword |class|' + #13#10 +
@@ -144,7 +144,7 @@ begin
     '  CloseParenthesisNode: (none)' + #13#10 +
     '  ContentListNode: ListNode' + #13#10 +
     '  EndKeywordNode: EndKeyword |end|', RTType));
-  }
+  
   OK('interface end', TTestParser.ParsesAs('interface end',
     'InterfaceTypeNode' + #13#10 +
     '  InterfaceKeywordNode: InterfaceKeyword |interface|' + #13#10 +
