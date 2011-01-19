@@ -115,7 +115,7 @@ begin
     '  OfKeywordNode: OfKeyword |of|' + #13#10 +
     '  ObjectKeywordNode: ObjectKeyword |object|' + #13#10 +
     '  SecondDirectiveListNode: ListNode', RTType));
-  {
+
   OK('class helper for TObject end',
     TTestParser.ParsesAs('class helper for TObject end',
     'TypeHelperNode' + #13#10 +
@@ -134,7 +134,7 @@ begin
     '  ClassKeywordNode: ClassKeyword |class|' + #13#10 +
     '  OfKeywordNode: OfKeyword |of|' + #13#10 +
     '  TypeNode: Identifier |TObject|', RTType));
-
+  {
   OK('class end', TTestParser.ParsesAs('class end',
     'ClassTypeNode' + #13#10 +
     '  ClassKeywordNode: ClassKeyword |class|' + #13#10 +
