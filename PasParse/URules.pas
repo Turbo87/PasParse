@@ -1919,8 +1919,7 @@ var
 begin
   AMethodHeading := FParser.ParseRuleInternal(RTMethodHeading)
     as TMethodHeadingNode;
-  if False then
-  //if not AMethodHeading.RequiresBody then
+  if not AMethodHeading.RequiresBody then
     Result := AMethodHeading
   else
   begin
