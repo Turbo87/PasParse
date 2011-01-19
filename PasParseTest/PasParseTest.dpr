@@ -107,7 +107,8 @@ uses
   UTestFancyBlock in 'UTestFancyBlock.pas',
   UTestMethodImplementation in 'UTestMethodImplementation.pas',
   UTestImplementationSection in 'UTestImplementationSection.pas',
-  UTestUnit in 'UTestUnit.pas';
+  UTestUnit in 'UTestUnit.pas',
+  UTestRequiresClause in 'UTestRequiresClause.pas';
 
 begin
   try
@@ -187,6 +188,7 @@ begin
     TTestRecordType.Test;
     TTestRelOp.Test;
     TTestRepeatStatement.Test;
+    TTestRequiresClause.Test;
     TTestSetLiteral.Test;
     TTestSetType.Test;
     TTestSimpleExpression.Test;

@@ -2530,12 +2530,18 @@ end;
 
 function TRequiresClauseRule.CanParse: Boolean;
 begin
-  Result := False;
+  Result := FParser.CanParseToken(TTRequiresSemikeyword);
 end;
 
 function TRequiresClauseRule.Evaluate: TASTNode;
+var
+  ARequires, ASemicolon: TToken;
+  APackageList: TListNode;
 begin
-  Result := nil;
+  ARequires := FParser.ParseToken(TTRequiresSemikeyword);
+  APackageList := FParser.ParseDelimitedList(RTQualifiedIdent, TTComma);
+  ASemicolon := FParser.ParseToken(TTSemicolon);
+  Result := TRequiresClauseNode.Create(ARequires, APackageList, ASemicolon);
 end;
 
 { TSetLiteralRule }

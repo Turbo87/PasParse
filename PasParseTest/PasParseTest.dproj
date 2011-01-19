@@ -113,6 +113,7 @@
     <DCCReference Include="UTestRecordType.pas" />
     <DCCReference Include="UTestRelOp.pas" />
     <DCCReference Include="UTestRepeatStatement.pas" />
+    <DCCReference Include="UTestRequiresClause.pas" />
     <DCCReference Include="UTestSetLiteral.pas" />
     <DCCReference Include="UTestSetType.pas" />
     <DCCReference Include="UTestSimpleExpression.pas" />
