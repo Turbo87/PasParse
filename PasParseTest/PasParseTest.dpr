@@ -104,7 +104,8 @@ uses
   UTestInterfaceDecl in 'UTestInterfaceDecl.pas',
   UTestInterfaceSection in 'UTestInterfaceSection.pas',
   UTestImplementationDecl in 'UTestImplementationDecl.pas',
-  UTestFancyBlock in 'UTestFancyBlock.pas';
+  UTestFancyBlock in 'UTestFancyBlock.pas',
+  UTestMethodImplementation in 'UTestMethodImplementation.pas';
 
 begin
   try
@@ -160,6 +161,7 @@ begin
     TTestLabelDeclSection.Test;
     TTestLabelId.Test;
     TTestMethodHeading.Test;
+    TTestMethodImplementation.Test;
     TTestMethodOrProperty.Test;
     TTestMethodReturnType.Test;
     TTestMulOp.Test;

@@ -1908,12 +1908,27 @@ end;
 
 function TMethodImplementationRule.CanParse: Boolean;
 begin
-  Result := False;
+  Result := FParser.CanParseRule(RTMethodHeading);
 end;
 
 function TMethodImplementationRule.Evaluate: TASTNode;
+var
+  AMethodHeading: TMethodHeadingNode;
+  AFancyBlock: TFancyBlockNode;
+  ASemicolon: TToken;
 begin
-  Result := nil;
+  AMethodHeading := FParser.ParseRuleInternal(RTMethodHeading)
+    as TMethodHeadingNode;
+  if False then
+  //if not AMethodHeading.RequiresBody then
+    Result := AMethodHeading
+  else
+  begin
+    AFancyBlock := FParser.ParseRuleInternal(RTFancyBlock) as TFancyBlockNode;
+    ASemicolon := FParser.ParseToken(TTSemicolon);
+    Result := TMethodImplementationNode.Create(AMethodHeading, AFancyBlock,
+      ASemicolon);
+  end;
 end;
 
 { TMethodOrPropertyRule }
