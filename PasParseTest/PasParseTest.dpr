@@ -101,7 +101,8 @@ uses
   UTestClassHelperType in 'UTestClassHelperType.pas',
   UTestStringType in 'UTestStringType.pas',
   UTestClassType in 'UTestClassType.pas',
-  UTestInterfaceDecl in 'UTestInterfaceDecl.pas';
+  UTestInterfaceDecl in 'UTestInterfaceDecl.pas',
+  UTestInterfaceSection in 'UTestInterfaceSection.pas';
 
 begin
   try
@@ -150,6 +151,7 @@ begin
     TTestIfStatement.Test;
     TTestInitSection.Test;
     TTestInterfaceDecl.Test;
+    TTestInterfaceSection.Test;
     TTestInterfaceType.Test;
     TTestLabelDeclSection.Test;
     TTestLabelId.Test;

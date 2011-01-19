@@ -1702,12 +1702,21 @@ end;
 
 function TInterfaceSectionRule.CanParse: Boolean;
 begin
-  Result := False;
+  Result := FParser.CanParseToken(TTInterfaceKeyword);
 end;
 
 function TInterfaceSectionRule.Evaluate: TASTNode;
+var
+  AInterface: TToken;
+  AUsesClause: TUsesClauseNode;
+  AContents: TListNode;
 begin
-  Result := nil;
+  AInterface := FParser.ParseToken(TTInterfaceKeyword);
+  AUsesClause := nil;
+  if FParser.CanParseRule(RTUsesClause) then
+    AUsesClause := FParser.ParseRuleInternal(RTUsesClause) as TUsesClauseNode;
+  AContents := FParser.ParseOptionalRuleList(RTInterfaceDecl);
+  Result := TUnitSectionNode.Create(AInterface, AUsesClause, AContents);
 end;
 
 { TInterfaceTypeRule }

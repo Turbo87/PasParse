@@ -80,6 +80,7 @@
     <DCCReference Include="UTestIfStatement.pas" />
     <DCCReference Include="UTestInitSection.pas" />
     <DCCReference Include="UTestInterfaceDecl.pas" />
+    <DCCReference Include="UTestInterfaceSection.pas" />
     <DCCReference Include="UTestInterfaceType.pas" />
     <DCCReference Include="UTestLabelDeclSection.pas" />
     <DCCReference Include="UTestLabelId.pas" />
