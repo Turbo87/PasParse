@@ -104,6 +104,7 @@
     <DCCReference Include="UTestPointerType.pas" />
     <DCCReference Include="UTestPortabilityDirective.pas" />
     <DCCReference Include="UTestProcedureType.pas" />
+    <DCCReference Include="UTestProgram.pas" />
     <DCCReference Include="UTestProperty.pas" />
     <DCCReference Include="UTestPropertyDirective.pas" />
     <DCCReference Include="UTestQualifiedIdent.pas" />

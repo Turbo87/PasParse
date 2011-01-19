@@ -2293,12 +2293,42 @@ end;
 
 function TProgramRule.CanParse: Boolean;
 begin
-  Result := False;
+  Result := FParser.CanParseToken(TTokenSets.TSProgram);
 end;
 
 function TProgramRule.Evaluate: TASTNode;
+var
+  AProgram, AName, AOpen, AClose, ASemicolon, ADot: TToken;
+  ANoise, ADeclarationList: TListNode;
+  AUsesClause: TUsesClauseNode;
+  AInit: TInitSectionNode;
 begin
-  Result := nil;
+  AProgram := FParser.ParseToken(TTokenSets.TSProgram);
+  AName := FParser.ParseRuleInternal(RTIdent) as TToken;
+
+  AOpen := nil;
+  ANoise := FParser.CreateEmptyListNode;
+  AClose := nil;
+  if FParser.CanParseToken(TTOpenParenthesis) then
+  begin
+    AOpen := FParser.ParseToken(TTOpenParenthesis);
+    ANoise.Free;
+    ANoise := FParser.ParseDelimitedList(RTIdent, TTComma);
+    AClose := FParser.ParseToken(TTCloseParenthesis);
+  end;
+
+  ASemicolon := FParser.ParseToken(TTSemicolon);
+
+  AUsesClause := nil;
+  if FParser.CanParseRule(RTUsesClause) then
+    AUsesClause := FParser.ParseRuleInternal(RTUsesClause) as TUsesClauseNode;
+
+  ADeclarationList := FParser.ParseOptionalRuleList(RTImplementationDecl);
+  AInit := FParser.ParseRuleInternal(RTInitSection) as TInitSectionNode;
+  ADot := FParser.ParseToken(TTDot);
+
+  Result := TProgramNode.Create(AProgram, AName, AOpen, ANoise, AClose,
+    ASemicolon, AUsesClause, ADeclarationList, AInit, ADot);
 end;
 
 { TPropertyRule }

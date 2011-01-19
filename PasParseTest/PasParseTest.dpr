@@ -108,7 +108,8 @@ uses
   UTestMethodImplementation in 'UTestMethodImplementation.pas',
   UTestImplementationSection in 'UTestImplementationSection.pas',
   UTestUnit in 'UTestUnit.pas',
-  UTestRequiresClause in 'UTestRequiresClause.pas';
+  UTestRequiresClause in 'UTestRequiresClause.pas',
+  UTestProgram in 'UTestProgram.pas';
 
 begin
   try
@@ -179,6 +180,7 @@ begin
     TTestPointerType.Test;
     TTestPortabilityDirective.Test;
     TTestProcedureType.Test;
+    TTestProgram.Test;
     TTestProperty.Test;
     TTestPropertyDirective.Test;
     TTestQualifiedIdent.Test;
