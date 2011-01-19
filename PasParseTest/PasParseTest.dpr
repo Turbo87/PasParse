@@ -109,7 +109,8 @@ uses
   UTestImplementationSection in 'UTestImplementationSection.pas',
   UTestUnit in 'UTestUnit.pas',
   UTestRequiresClause in 'UTestRequiresClause.pas',
-  UTestProgram in 'UTestProgram.pas';
+  UTestProgram in 'UTestProgram.pas',
+  UTestPackage in 'UTestPackage.pas';
 
 begin
   try
@@ -171,6 +172,7 @@ begin
     TTestMethodReturnType.Test;
     TTestMulOp.Test;
     TTestOpenArray.Test;
+    TTestPackage.Test;
     TTestPackedType.Test;
     TTestParameterExpression.Test;
     TTestParameter.Test;

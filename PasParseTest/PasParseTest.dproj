@@ -94,6 +94,7 @@
     <DCCReference Include="UTestMethodReturnType.pas" />
     <DCCReference Include="UTestMulOp.pas" />
     <DCCReference Include="UTestOpenArray.pas" />
+    <DCCReference Include="UTestPackage.pas" />
     <DCCReference Include="UTestPackedType.pas" />
     <DCCReference Include="UTestParameter.pas" />
     <DCCReference Include="UTestParameterExpression.pas" />

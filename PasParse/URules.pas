@@ -2031,12 +2031,36 @@ end;
 
 function TPackageRule.CanParse: Boolean;
 begin
-  Result := False;
+  Result := FParser.CanParseToken(TTPackageSemikeyword);
 end;
 
 function TPackageRule.Evaluate: TASTNode;
+var
+  APackage, ASemicolon, AEnd, ADot: TToken;
+  AName: TASTNode;
+  ARequiresClause: TRequiresClauseNode;
+  AContainsClause: TUsesClauseNode;
+  AAttributeList: TListNode;
 begin
-  Result := nil;
+  APackage := FParser.ParseToken(TTPackageSemikeyword);
+  AName := FParser.ParseRuleInternal(RTQualifiedIdent);
+  ASemicolon := FParser.ParseToken(TTSemicolon);
+
+  ARequiresClause := nil;
+  if FParser.CanParseRule(RTRequiresClause) then
+    ARequiresClause := FParser.ParseRuleInternal(RTRequiresClause)
+      as TRequiresClauseNode;
+
+  AContainsClause := nil;
+  if FParser.CanParseRule(RTUsesClause) then
+    AContainsClause := FParser.ParseRuleInternal(RTUsesClause)
+      as TUsesClauseNode;
+
+  AAttributeList := FParser.ParseOptionalRuleList(RTAssemblyAttribute);
+  AEnd := FParser.ParseToken(TTEndKeyword);
+  ADot := FParser.ParseToken(TTDot);
+  Result := TPackageNode.Create(APackage, AName, ASemicolon, ARequiresClause,
+    AContainsClause, AAttributeList, AEnd, ADot);
 end;
 
 { TPackedTypeRule }
