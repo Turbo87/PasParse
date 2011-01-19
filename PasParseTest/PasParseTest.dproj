@@ -70,6 +70,7 @@
     <DCCReference Include="UTestExpressionOrRangeList.pas" />
     <DCCReference Include="UTestExtendedIdent.pas" />
     <DCCReference Include="UTestFactor.pas" />
+    <DCCReference Include="UTestFancyBlock.pas" />
     <DCCReference Include="UTestFieldDecl.pas" />
     <DCCReference Include="UTestFieldSection.pas" />
     <DCCReference Include="UTestFileType.pas" />

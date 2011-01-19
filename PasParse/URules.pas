@@ -1367,12 +1367,18 @@ end;
 
 function TFancyBlockRule.CanParse: Boolean;
 begin
-  Result := False;
+  Result := FParser.CanParseRule(RTBlock) or
+    FParser.CanParseRule(RTImplementationDecl);
 end;
 
 function TFancyBlockRule.Evaluate: TASTNode;
+var
+  ADeclList: TListNode;
+  ABlock: TASTNode;
 begin
-  Result := nil;
+  ADeclList := FParser.ParseOptionalRuleList(RTImplementationDecl);
+  ABlock := FParser.ParseRuleInternal(RTBlock);
+  Result := TFancyBlockNode.Create(ADeclList, ABlock);
 end;
 
 { TFieldDeclRule }

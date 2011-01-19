@@ -103,7 +103,8 @@ uses
   UTestClassType in 'UTestClassType.pas',
   UTestInterfaceDecl in 'UTestInterfaceDecl.pas',
   UTestInterfaceSection in 'UTestInterfaceSection.pas',
-  UTestImplementationDecl in 'UTestImplementationDecl.pas';
+  UTestImplementationDecl in 'UTestImplementationDecl.pas',
+  UTestFancyBlock in 'UTestFancyBlock.pas';
 
 begin
   try
@@ -142,6 +143,7 @@ begin
     TTestExpressionOrRangeList.Test;
     TTestExtendedIdent.Test;
     TTestFactor.Test;
+    TTestFancyBlock.Test;
     TTestFieldDecl.Test;
     TTestFieldSection.Test;
     TTestFileType.Test;
