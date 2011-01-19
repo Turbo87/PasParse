@@ -46,7 +46,7 @@ begin
     '      StatementListNode: ListNode' + #13#10 +
     '      EndKeywordNode: EndKeyword |end|' + #13#10 +
     '  SemicolonNode: Semicolon |;|', RTMethodImplementation));
-  {
+
   OK('procedure Foo; forward;', TTestParser.ParsesAs('procedure Foo; forward;',
     'MethodHeadingNode' + #13#10 +
     '  ClassKeywordNode: (none)' + #13#10 +
@@ -83,7 +83,6 @@ begin
     '      ValueNode: StringLiteral |''Foo''|' + #13#10 +
     '      DataNode: ListNode' + #13#10 +
     '  SemicolonNode: Semicolon |;|', RTMethodImplementation));
-  }
 end;
 
 end.
