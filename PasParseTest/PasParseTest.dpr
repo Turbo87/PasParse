@@ -105,7 +105,8 @@ uses
   UTestInterfaceSection in 'UTestInterfaceSection.pas',
   UTestImplementationDecl in 'UTestImplementationDecl.pas',
   UTestFancyBlock in 'UTestFancyBlock.pas',
-  UTestMethodImplementation in 'UTestMethodImplementation.pas';
+  UTestMethodImplementation in 'UTestMethodImplementation.pas',
+  UTestImplementationSection in 'UTestImplementationSection.pas';
 
 begin
   try
@@ -154,6 +155,7 @@ begin
     TTestIdentList.Test;
     TTestIfStatement.Test;
     TTestImplementationDecl.Test;
+    TTestImplementationSection.Test;
     TTestInitSection.Test;
     TTestInterfaceDecl.Test;
     TTestInterfaceSection.Test;

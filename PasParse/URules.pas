@@ -1628,12 +1628,21 @@ end;
 
 function TImplementationSectionRule.CanParse: Boolean;
 begin
-  Result := False;
+  Result := FParser.CanParseToken(TTImplementationKeyword);
 end;
 
 function TImplementationSectionRule.Evaluate: TASTNode;
+var
+  AImplementation: TToken;
+  AUsesClause: TUsesClauseNode;
+  AContents: TListNode;
 begin
-  Result := nil;
+  AImplementation := FParser.ParseToken(TTImplementationKeyword);
+  AUsesClause := nil;
+  if FParser.CanParseRule(RTUsesClause) then
+    AUsesClause := FParser.ParseRuleInternal(RTUsesClause) as TUsesClauseNode;
+  AContents := FParser.ParseOptionalRuleList(RTImplementationDecl);
+  Result := TUnitSectionNode.Create(AImplementation, AUsesClause, AContents);
 end;
 
 { TInitSectionRule }
