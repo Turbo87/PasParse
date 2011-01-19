@@ -106,7 +106,8 @@ uses
   UTestImplementationDecl in 'UTestImplementationDecl.pas',
   UTestFancyBlock in 'UTestFancyBlock.pas',
   UTestMethodImplementation in 'UTestMethodImplementation.pas',
-  UTestImplementationSection in 'UTestImplementationSection.pas';
+  UTestImplementationSection in 'UTestImplementationSection.pas',
+  UTestUnit in 'UTestUnit.pas';
 
 begin
   try
@@ -200,6 +201,7 @@ begin
     TTestTypeDecl.Test;
     TTestTypeSection.Test;
     TTestUnaryOperator.Test;
+    TTestUnit.Test;
     TTestUsedUnit.Test;
     TTestUsesClause.Test;
     TTestVarDecl.Test;

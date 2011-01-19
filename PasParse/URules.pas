@@ -2949,12 +2949,28 @@ end;
 
 function TUnitRule.CanParse: Boolean;
 begin
-  Result := False;
+  Result := FParser.CanParseToken(TTUnitKeyword);
 end;
 
 function TUnitRule.Evaluate: TASTNode;
+var
+  AUnit, AUnitName, ASemicolon, ADot: TToken;
+  ADirectives: TListNode;
+  AInterface, AImplementation: TUnitSectionNode;
+  AInit: TInitSectionNode;
 begin
-  Result := nil;
+  AUnit := FParser.ParseToken(TTUnitKeyword);
+  AUnitName := FParser.ParseRuleInternal(RTIdent) as TToken;
+  ADirectives := FParser.ParseTokenList(TTokenSets.TSPortabilityDirective);
+  ASemicolon := FParser.ParseToken(TTSemicolon);
+  AInterface := FParser.ParseRuleInternal(RTInterfaceSection)
+    as TUnitSectionNode;
+  AImplementation := FParser.ParseRuleInternal(RTImplementationSection)
+    as TUnitSectionNode;
+  AInit := FParser.ParseRuleInternal(RTInitSection) as TInitSectionNode;
+  ADot := FParser.ParseToken(TTDot);
+  Result := TUnitNode.Create(AUnit, AUnitName, ADirectives, ASemicolon,
+    AInterface, AImplementation, AInit, ADot);
 end;
 
 { TUsedUnitRule }
