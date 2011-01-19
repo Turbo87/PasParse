@@ -326,6 +326,9 @@ type
     property KeywordNode: TToken read FKeywordNode;
     property ValueNode: TASTNode read FValueNode;
     property DataNode: TASTNode read FDataNode;
+
+    // Additional method(s)
+    function ForbidsBody: Boolean;
   end;
 
   TEnumeratedTypeElementNode = class(TNonTerminalNode)
@@ -686,6 +689,9 @@ type
     property ReturnTypeNode: TASTNode read FReturnTypeNode;
     property DirectiveListNode: TListNode read FDirectiveListNode;
     property SemicolonNode: TToken read FSemicolonNode;
+
+    // Additional method(s)
+    function RequiresBody: Boolean;
   end;
 
   TMethodImplementationNode = class(TNonTerminalNode)
@@ -1480,6 +1486,9 @@ type
 
 implementation
 
+uses
+  UTokenType;
+
 { TArrayTypeNode }
 
 function TArrayTypeNode.Clone: TASTNode;
@@ -1884,6 +1893,12 @@ begin
   FProperties.Add(TASTNode.TProperty.Create('KeywordNode', AKeywordNode));
   FProperties.Add(TASTNode.TProperty.Create('ValueNode', AValueNode));
   FProperties.Add(TASTNode.TProperty.Create('DataNode', ADataNode));
+end;
+
+function TDirectiveNode.ForbidsBody: Boolean;
+begin
+  Result := (FKeywordNode.TokenType = TTForwardSemikeyword) or
+    (FKeywordNode.TokenType = TTExternalSemikeyword);
 end;
 
 { TEnumeratedTypeElementNode }
@@ -2490,6 +2505,19 @@ begin
   FProperties.Add(TASTNode.TProperty.Create('ReturnTypeNode', AReturnTypeNode));
   FProperties.Add(TASTNode.TProperty.Create('DirectiveListNode', ADirectiveListNode));
   FProperties.Add(TASTNode.TProperty.Create('SemicolonNode', ASemicolonNode));
+end;
+
+function TMethodHeadingNode.RequiresBody: Boolean;
+var
+  I: Integer;
+begin
+  Result := True;
+  for I := 0 to FDirectiveListNode.ItemsCount - 1 do
+    if (FDirectiveListNode.Items[I] as TDirectiveNode).ForbidsBody then
+    begin
+      Result := False;
+      Break;
+    end;
 end;
 
 { TMethodImplementationNode }

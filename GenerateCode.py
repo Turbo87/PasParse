@@ -49,10 +49,24 @@ def generate_nodes(yaml_content):
     for property in properties:
       cs += "    property " + property.get('Name') + ": T" + replace_types(property.get('Type')) + " read F" + property.get('Name') + ";\n"
 
+    # Special case for DirectiveNode
+    if node_type_name == "DirectiveNode":
+      cs += "\n"
+      cs += "    // Additional method(s)\n"
+      cs += "    function ForbidsBody: Boolean;\n"
+
+    # Special case for MethodHeadingNode
+    if node_type_name == "MethodHeadingNode":
+      cs += "\n"
+      cs += "    // Additional method(s)\n"
+      cs += "    function RequiresBody: Boolean;\n"
+
     cs += "  end;\n"
     cs += "\n"
 
   cs += "implementation\n\n"
+  cs += "uses\n"
+  cs += "  UTokenType;\n\n"
 
   for node_type in node_types:
     node_type_name = node_type[0]
@@ -92,6 +106,29 @@ def generate_nodes(yaml_content):
       cs += "  FProperties.Add(TASTNode.TProperty.Create('" + property.get('Name') + "', A" + property.get('Name') + "));\n"
 
     cs += "end;\n\n"
+
+    # Special case for DirectiveNode
+    if node_type_name == "DirectiveNode":
+      cs += "function TDirectiveNode.ForbidsBody: Boolean;\n"
+      cs += "begin\n"
+      cs += "  Result := (FKeywordNode.TokenType = TTForwardSemikeyword) or\n"
+      cs += "    (FKeywordNode.TokenType = TTExternalSemikeyword);\n"
+      cs += "end;\n\n"
+
+    # Special case for MethodHeadingNode
+    if node_type_name == "MethodHeadingNode":
+      cs += "function TMethodHeadingNode.RequiresBody: Boolean;\n"
+      cs += "var\n"
+      cs += "  I: Integer;\n"
+      cs += "begin\n"
+      cs += "  Result := True;\n"
+      cs += "  for I := 0 to FDirectiveListNode.ItemsCount - 1 do\n"
+      cs += "    if (FDirectiveListNode.Items[I] as TDirectiveNode).ForbidsBody then\n"
+      cs += "    begin\n"
+      cs += "      Result := False;\n"
+      cs += "      Break;\n"
+      cs += "    end;\n"
+      cs += "end;\n\n"
 
   cs += "end.\n"
   return cs
