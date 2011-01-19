@@ -100,7 +100,8 @@ uses
   UTestRecordType in 'UTestRecordType.pas',
   UTestClassHelperType in 'UTestClassHelperType.pas',
   UTestStringType in 'UTestStringType.pas',
-  UTestClassType in 'UTestClassType.pas';
+  UTestClassType in 'UTestClassType.pas',
+  UTestInterfaceDecl in 'UTestInterfaceDecl.pas';
 
 begin
   try
@@ -148,6 +149,7 @@ begin
     TTestIdentList.Test;
     TTestIfStatement.Test;
     TTestInitSection.Test;
+    TTestInterfaceDecl.Test;
     TTestInterfaceType.Test;
     TTestLabelDeclSection.Test;
     TTestLabelId.Test;

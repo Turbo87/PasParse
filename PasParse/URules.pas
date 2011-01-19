@@ -247,7 +247,13 @@ type
   end;
   
   TInterfaceDeclRule = class(TRule)
+  private
+    FAlternator: TAlternator;
+
   public
+    constructor Create(AParser: IParser; ARuleType: TRuleType); override;
+    destructor Destroy; override;
+
     function CanParse: Boolean; override;
     function Evaluate: TASTNode; override;
   end;
@@ -1668,12 +1674,28 @@ end;
 
 function TInterfaceDeclRule.CanParse: Boolean;
 begin
-  Result := False;
+  Result := FAlternator.LookAhead(FParser);
+end;
+
+constructor TInterfaceDeclRule.Create(AParser: IParser; ARuleType: TRuleType);
+begin
+  inherited Create(AParser, ARuleType);
+  FAlternator := TAlternator.Create;
+  FAlternator.AddRule(RTConstSection);
+  FAlternator.AddRule(RTTypeSection);
+  FAlternator.AddRule(RTVarSection);
+  FAlternator.AddRule(RTMethodHeading);
+end;
+
+destructor TInterfaceDeclRule.Destroy;
+begin
+  FAlternator.Free;
+  inherited;
 end;
 
 function TInterfaceDeclRule.Evaluate: TASTNode;
 begin
-  Result := nil;
+  Result := FAlternator.Execute(FParser);
 end;
 
 { TInterfaceSectionRule }
