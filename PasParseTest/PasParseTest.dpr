@@ -102,7 +102,8 @@ uses
   UTestStringType in 'UTestStringType.pas',
   UTestClassType in 'UTestClassType.pas',
   UTestInterfaceDecl in 'UTestInterfaceDecl.pas',
-  UTestInterfaceSection in 'UTestInterfaceSection.pas';
+  UTestInterfaceSection in 'UTestInterfaceSection.pas',
+  UTestImplementationDecl in 'UTestImplementationDecl.pas';
 
 begin
   try
@@ -149,6 +150,7 @@ begin
     TTestIdent.Test;
     TTestIdentList.Test;
     TTestIfStatement.Test;
+    TTestImplementationDecl.Test;
     TTestInitSection.Test;
     TTestInterfaceDecl.Test;
     TTestInterfaceSection.Test;

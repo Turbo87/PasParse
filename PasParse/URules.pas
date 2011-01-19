@@ -229,7 +229,12 @@ type
   end;
   
   TImplementationDeclRule = class(TRule)
+    FAlternator: TAlternator;
+
   public
+    constructor Create(AParser: IParser; ARuleType: TRuleType); override;
+    destructor Destroy; override;
+
     function CanParse: Boolean; override;
     function Evaluate: TASTNode; override;
   end;
@@ -1585,12 +1590,32 @@ end;
 
 function TImplementationDeclRule.CanParse: Boolean;
 begin
-  Result := False;
+  Result := FAlternator.LookAhead(FParser);
+end;
+
+constructor TImplementationDeclRule.Create(AParser: IParser;
+  ARuleType: TRuleType);
+begin
+  inherited Create(AParser, ARuleType);
+  FAlternator := TAlternator.Create;
+  FAlternator.AddRule(RTAssemblyAttribute);
+  FAlternator.AddRule(RTConstSection);
+  FAlternator.AddRule(RTExportsStatement);
+  FAlternator.AddRule(RTLabelDeclSection);
+  FAlternator.AddRule(RTMethodImplementation);
+  FAlternator.AddRule(RTTypeSection);
+  FAlternator.AddRule(RTVarSection);
+end;
+
+destructor TImplementationDeclRule.Destroy;
+begin
+  FAlternator.Free;
+  inherited;
 end;
 
 function TImplementationDeclRule.Evaluate: TASTNode;
 begin
-  Result := nil;
+  Result := FAlternator.Execute(FParser);
 end;
 
 { TImplementationSectionRule }

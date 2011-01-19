@@ -78,6 +78,7 @@
     <DCCReference Include="UTestIdent.pas" />
     <DCCReference Include="UTestIdentList.pas" />
     <DCCReference Include="UTestIfStatement.pas" />
+    <DCCReference Include="UTestImplementationDecl.pas" />
     <DCCReference Include="UTestInitSection.pas" />
     <DCCReference Include="UTestInterfaceDecl.pas" />
     <DCCReference Include="UTestInterfaceSection.pas" />
