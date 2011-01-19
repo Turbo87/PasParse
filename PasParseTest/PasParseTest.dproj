@@ -51,6 +51,7 @@
     <DCCReference Include="UTestCaseStatement.pas" />
     <DCCReference Include="UTestClassHelperType.pas" />
     <DCCReference Include="UTestClassOf.pas" />
+    <DCCReference Include="UTestClassType.pas" />
     <DCCReference Include="UTestCompilerDefines.pas" />
     <DCCReference Include="UTestConstantDecl.pas" />
     <DCCReference Include="UTestConstSection.pas" />

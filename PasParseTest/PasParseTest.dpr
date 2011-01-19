@@ -99,7 +99,8 @@ uses
   UTestVariantSection in 'UTestVariantSection.pas',
   UTestRecordType in 'UTestRecordType.pas',
   UTestClassHelperType in 'UTestClassHelperType.pas',
-  UTestStringType in 'UTestStringType.pas';
+  UTestStringType in 'UTestStringType.pas',
+  UTestClassType in 'UTestClassType.pas';
 
 begin
   try
@@ -119,6 +120,7 @@ begin
     TTestBlock.Test;
     TTestCaseSelector.Test;
     TTestCaseStatement.Test;
+    TTestClassType.Test;
     TTestClassHelperType.Test;
     TTestClassOf.Test;
     TTestConstantDecl.Test;

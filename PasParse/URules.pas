@@ -923,12 +923,42 @@ end;
 
 function TClassTypeRule.CanParse: Boolean;
 begin
-  Result := False;
+  Result := FParser.CanParseToken(TTClassKeyword);
 end;
 
 function TClassTypeRule.Evaluate: TASTNode;
+var
+  AClass, ADisposition, AOpen, AClose, AEnd: TToken;
+  AInheritanceList, AContents: TListNode;
 begin
-  Result := nil;
+  AClass := FParser.ParseToken(TTClassKeyword);
+
+  ADisposition := nil;
+  if FParser.CanParseToken(TTokenSets.TSClassDisposition) then
+    ADisposition := FParser.ParseToken(TTokenSets.TSClassDisposition);
+
+  AOpen := nil;
+  AInheritanceList := FParser.CreateEmptyListNode;
+  AClose := nil;
+  if FParser.CanParseToken(TTOpenParenthesis) then
+  begin
+    AOpen := FParser.ParseToken(TTOpenParenthesis);
+    AInheritanceList.Free;
+    AInheritanceList := FParser.ParseDelimitedList(RTQualifiedIdent, TTComma);
+    AClose := FParser.ParseToken(TTCloseParenthesis);
+  end;
+
+  AContents := FParser.CreateEmptyListNode;
+  AEnd := nil;
+  if not FParser.CanParseToken(TTSemicolon) then
+  begin
+    AContents.Free;
+    AContents := FParser.ParseOptionalRuleList(RTVisibilitySection);
+    AEnd := FParser.ParseToken(TTEndKeyword);
+  end;
+
+  Result := TClassTypeNode.Create(AClass, ADisposition, AOpen, AInheritanceList,
+    AClose, AContents, AEnd);
 end;
 
 { TConstantDeclRule }
