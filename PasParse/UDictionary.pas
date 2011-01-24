@@ -40,9 +40,6 @@ type
 
 implementation
 
-uses
-  SysUtils;
-
 { TDictionary }
 
 function TDictionary.Contains(const AKey: string): Boolean;
@@ -69,11 +66,10 @@ begin
     for I := 0 to FList.Count - 1 do
     begin
       FList.Objects[I].Free;
-      FList.Objects[I] := nil;
     end;
   end;
-    
-  FreeAndNil(FList);
+
+  FList.Free;
   inherited;
 end;
 
