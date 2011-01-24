@@ -1505,6 +1505,8 @@ end;
 constructor TArrayTypeNode.Create(AArrayKeywordNode: TToken; AOpenBracketNode: TToken; AIndexListNode: TListNode; ACloseBracketNode: TToken; AOfKeywordNode: TToken; ATypeNode: TASTNode);
 begin
   inherited Create;
+
+  // Assigning private members
   FArrayKeywordNode := AArrayKeywordNode;
   FOpenBracketNode := AOpenBracketNode;
   FIndexListNode := AIndexListNode;
@@ -1512,6 +1514,7 @@ begin
   FOfKeywordNode := AOfKeywordNode;
   FTypeNode := ATypeNode;
 
+  // Adding child nodes
   FChildNodes.Add(AArrayKeywordNode);
   FChildNodes.Add(AOpenBracketNode);
   FChildNodes.Add(AIndexListNode);
@@ -1519,6 +1522,7 @@ begin
   FChildNodes.Add(AOfKeywordNode);
   FChildNodes.Add(ATypeNode);
 
+  // Adding properties
   FProperties.Add(TASTNode.TProperty.Create('ArrayKeywordNode', AArrayKeywordNode));
   FProperties.Add(TASTNode.TProperty.Create('OpenBracketNode', AOpenBracketNode));
   FProperties.Add(TASTNode.TProperty.Create('IndexListNode', AIndexListNode));
@@ -1539,12 +1543,16 @@ end;
 constructor TAssemblerStatementNode.Create(AAsmKeywordNode: TToken; AEndKeywordNode: TToken);
 begin
   inherited Create;
+
+  // Assigning private members
   FAsmKeywordNode := AAsmKeywordNode;
   FEndKeywordNode := AEndKeywordNode;
 
+  // Adding child nodes
   FChildNodes.Add(AAsmKeywordNode);
   FChildNodes.Add(AEndKeywordNode);
 
+  // Adding properties
   FProperties.Add(TASTNode.TProperty.Create('AsmKeywordNode', AAsmKeywordNode));
   FProperties.Add(TASTNode.TProperty.Create('EndKeywordNode', AEndKeywordNode));
 end;
@@ -1564,18 +1572,22 @@ end;
 constructor TAttributeNode.Create(AOpenBracketNode: TToken; AScopeNode: TToken; AColonNode: TToken; AValueNode: TASTNode; ACloseBracketNode: TToken);
 begin
   inherited Create;
+
+  // Assigning private members
   FOpenBracketNode := AOpenBracketNode;
   FScopeNode := AScopeNode;
   FColonNode := AColonNode;
   FValueNode := AValueNode;
   FCloseBracketNode := ACloseBracketNode;
 
+  // Adding child nodes
   FChildNodes.Add(AOpenBracketNode);
   FChildNodes.Add(AScopeNode);
   FChildNodes.Add(AColonNode);
   FChildNodes.Add(AValueNode);
   FChildNodes.Add(ACloseBracketNode);
 
+  // Adding properties
   FProperties.Add(TASTNode.TProperty.Create('OpenBracketNode', AOpenBracketNode));
   FProperties.Add(TASTNode.TProperty.Create('ScopeNode', AScopeNode));
   FProperties.Add(TASTNode.TProperty.Create('ColonNode', AColonNode));
@@ -1596,14 +1608,18 @@ end;
 constructor TBinaryOperationNode.Create(ALeftNode: TASTNode; AOperatorNode: TToken; ARightNode: TASTNode);
 begin
   inherited Create;
+
+  // Assigning private members
   FLeftNode := ALeftNode;
   FOperatorNode := AOperatorNode;
   FRightNode := ARightNode;
 
+  // Adding child nodes
   FChildNodes.Add(ALeftNode);
   FChildNodes.Add(AOperatorNode);
   FChildNodes.Add(ARightNode);
 
+  // Adding properties
   FProperties.Add(TASTNode.TProperty.Create('LeftNode', ALeftNode));
   FProperties.Add(TASTNode.TProperty.Create('OperatorNode', AOperatorNode));
   FProperties.Add(TASTNode.TProperty.Create('RightNode', ARightNode));
@@ -1622,14 +1638,18 @@ end;
 constructor TBlockNode.Create(ABeginKeywordNode: TToken; AStatementListNode: TListNode; AEndKeywordNode: TToken);
 begin
   inherited Create;
+
+  // Assigning private members
   FBeginKeywordNode := ABeginKeywordNode;
   FStatementListNode := AStatementListNode;
   FEndKeywordNode := AEndKeywordNode;
 
+  // Adding child nodes
   FChildNodes.Add(ABeginKeywordNode);
   FChildNodes.Add(AStatementListNode);
   FChildNodes.Add(AEndKeywordNode);
 
+  // Adding properties
   FProperties.Add(TASTNode.TProperty.Create('BeginKeywordNode', ABeginKeywordNode));
   FProperties.Add(TASTNode.TProperty.Create('StatementListNode', AStatementListNode));
   FProperties.Add(TASTNode.TProperty.Create('EndKeywordNode', AEndKeywordNode));
@@ -1649,16 +1669,20 @@ end;
 constructor TCaseSelectorNode.Create(AValueListNode: TListNode; AColonNode: TToken; AStatementNode: TASTNode; ASemicolonNode: TToken);
 begin
   inherited Create;
+
+  // Assigning private members
   FValueListNode := AValueListNode;
   FColonNode := AColonNode;
   FStatementNode := AStatementNode;
   FSemicolonNode := ASemicolonNode;
 
+  // Adding child nodes
   FChildNodes.Add(AValueListNode);
   FChildNodes.Add(AColonNode);
   FChildNodes.Add(AStatementNode);
   FChildNodes.Add(ASemicolonNode);
 
+  // Adding properties
   FProperties.Add(TASTNode.TProperty.Create('ValueListNode', AValueListNode));
   FProperties.Add(TASTNode.TProperty.Create('ColonNode', AColonNode));
   FProperties.Add(TASTNode.TProperty.Create('StatementNode', AStatementNode));
@@ -1682,6 +1706,8 @@ end;
 constructor TCaseStatementNode.Create(ACaseKeywordNode: TToken; AExpressionNode: TASTNode; AOfKeywordNode: TToken; ASelectorListNode: TListNode; AElseKeywordNode: TToken; AElseStatementListNode: TListNode; AEndKeywordNode: TToken);
 begin
   inherited Create;
+
+  // Assigning private members
   FCaseKeywordNode := ACaseKeywordNode;
   FExpressionNode := AExpressionNode;
   FOfKeywordNode := AOfKeywordNode;
@@ -1690,6 +1716,7 @@ begin
   FElseStatementListNode := AElseStatementListNode;
   FEndKeywordNode := AEndKeywordNode;
 
+  // Adding child nodes
   FChildNodes.Add(ACaseKeywordNode);
   FChildNodes.Add(AExpressionNode);
   FChildNodes.Add(AOfKeywordNode);
@@ -1698,6 +1725,7 @@ begin
   FChildNodes.Add(AElseStatementListNode);
   FChildNodes.Add(AEndKeywordNode);
 
+  // Adding properties
   FProperties.Add(TASTNode.TProperty.Create('CaseKeywordNode', ACaseKeywordNode));
   FProperties.Add(TASTNode.TProperty.Create('ExpressionNode', AExpressionNode));
   FProperties.Add(TASTNode.TProperty.Create('OfKeywordNode', AOfKeywordNode));
@@ -1720,14 +1748,18 @@ end;
 constructor TClassOfNode.Create(AClassKeywordNode: TToken; AOfKeywordNode: TToken; ATypeNode: TASTNode);
 begin
   inherited Create;
+
+  // Assigning private members
   FClassKeywordNode := AClassKeywordNode;
   FOfKeywordNode := AOfKeywordNode;
   FTypeNode := ATypeNode;
 
+  // Adding child nodes
   FChildNodes.Add(AClassKeywordNode);
   FChildNodes.Add(AOfKeywordNode);
   FChildNodes.Add(ATypeNode);
 
+  // Adding properties
   FProperties.Add(TASTNode.TProperty.Create('ClassKeywordNode', AClassKeywordNode));
   FProperties.Add(TASTNode.TProperty.Create('OfKeywordNode', AOfKeywordNode));
   FProperties.Add(TASTNode.TProperty.Create('TypeNode', ATypeNode));
@@ -1750,6 +1782,8 @@ end;
 constructor TClassTypeNode.Create(AClassKeywordNode: TToken; ADispositionNode: TToken; AOpenParenthesisNode: TToken; AInheritanceListNode: TListNode; ACloseParenthesisNode: TToken; AContentListNode: TListNode; AEndKeywordNode: TToken);
 begin
   inherited Create;
+
+  // Assigning private members
   FClassKeywordNode := AClassKeywordNode;
   FDispositionNode := ADispositionNode;
   FOpenParenthesisNode := AOpenParenthesisNode;
@@ -1758,6 +1792,7 @@ begin
   FContentListNode := AContentListNode;
   FEndKeywordNode := AEndKeywordNode;
 
+  // Adding child nodes
   FChildNodes.Add(AClassKeywordNode);
   FChildNodes.Add(ADispositionNode);
   FChildNodes.Add(AOpenParenthesisNode);
@@ -1766,6 +1801,7 @@ begin
   FChildNodes.Add(AContentListNode);
   FChildNodes.Add(AEndKeywordNode);
 
+  // Adding properties
   FProperties.Add(TASTNode.TProperty.Create('ClassKeywordNode', AClassKeywordNode));
   FProperties.Add(TASTNode.TProperty.Create('DispositionNode', ADispositionNode));
   FProperties.Add(TASTNode.TProperty.Create('OpenParenthesisNode', AOpenParenthesisNode));
@@ -1787,12 +1823,16 @@ end;
 constructor TConstSectionNode.Create(AConstKeywordNode: TToken; AConstListNode: TListNode);
 begin
   inherited Create;
+
+  // Assigning private members
   FConstKeywordNode := AConstKeywordNode;
   FConstListNode := AConstListNode;
 
+  // Adding child nodes
   FChildNodes.Add(AConstKeywordNode);
   FChildNodes.Add(AConstListNode);
 
+  // Adding properties
   FProperties.Add(TASTNode.TProperty.Create('ConstKeywordNode', AConstKeywordNode));
   FProperties.Add(TASTNode.TProperty.Create('ConstListNode', AConstListNode));
 end;
@@ -1814,6 +1854,8 @@ end;
 constructor TConstantDeclNode.Create(ANameNode: TToken; AColonNode: TToken; ATypeNode: TASTNode; AEqualSignNode: TToken; AValueNode: TASTNode; APortabilityDirectiveListNode: TListNode; ASemicolonNode: TToken);
 begin
   inherited Create;
+
+  // Assigning private members
   FNameNode := ANameNode;
   FColonNode := AColonNode;
   FTypeNode := ATypeNode;
@@ -1822,6 +1864,7 @@ begin
   FPortabilityDirectiveListNode := APortabilityDirectiveListNode;
   FSemicolonNode := ASemicolonNode;
 
+  // Adding child nodes
   FChildNodes.Add(ANameNode);
   FChildNodes.Add(AColonNode);
   FChildNodes.Add(ATypeNode);
@@ -1830,6 +1873,7 @@ begin
   FChildNodes.Add(APortabilityDirectiveListNode);
   FChildNodes.Add(ASemicolonNode);
 
+  // Adding properties
   FProperties.Add(TASTNode.TProperty.Create('NameNode', ANameNode));
   FProperties.Add(TASTNode.TProperty.Create('ColonNode', AColonNode));
   FProperties.Add(TASTNode.TProperty.Create('TypeNode', ATypeNode));
@@ -1852,14 +1896,18 @@ end;
 constructor TConstantListNode.Create(AOpenParenthesisNode: TToken; AItemListNode: TListNode; ACloseParenthesisNode: TToken);
 begin
   inherited Create;
+
+  // Assigning private members
   FOpenParenthesisNode := AOpenParenthesisNode;
   FItemListNode := AItemListNode;
   FCloseParenthesisNode := ACloseParenthesisNode;
 
+  // Adding child nodes
   FChildNodes.Add(AOpenParenthesisNode);
   FChildNodes.Add(AItemListNode);
   FChildNodes.Add(ACloseParenthesisNode);
 
+  // Adding properties
   FProperties.Add(TASTNode.TProperty.Create('OpenParenthesisNode', AOpenParenthesisNode));
   FProperties.Add(TASTNode.TProperty.Create('ItemListNode', AItemListNode));
   FProperties.Add(TASTNode.TProperty.Create('CloseParenthesisNode', ACloseParenthesisNode));
@@ -1879,16 +1927,20 @@ end;
 constructor TDirectiveNode.Create(ASemicolonNode: TToken; AKeywordNode: TToken; AValueNode: TASTNode; ADataNode: TASTNode);
 begin
   inherited Create;
+
+  // Assigning private members
   FSemicolonNode := ASemicolonNode;
   FKeywordNode := AKeywordNode;
   FValueNode := AValueNode;
   FDataNode := ADataNode;
 
+  // Adding child nodes
   FChildNodes.Add(ASemicolonNode);
   FChildNodes.Add(AKeywordNode);
   FChildNodes.Add(AValueNode);
   FChildNodes.Add(ADataNode);
 
+  // Adding properties
   FProperties.Add(TASTNode.TProperty.Create('SemicolonNode', ASemicolonNode));
   FProperties.Add(TASTNode.TProperty.Create('KeywordNode', AKeywordNode));
   FProperties.Add(TASTNode.TProperty.Create('ValueNode', AValueNode));
@@ -1897,6 +1949,7 @@ end;
 
 function TDirectiveNode.ForbidsBody: Boolean;
 begin
+  // Forward or External directives must not have a body!
   Result := (FKeywordNode.TokenType = TTForwardSemikeyword) or
     (FKeywordNode.TokenType = TTExternalSemikeyword);
 end;
@@ -1914,14 +1967,18 @@ end;
 constructor TEnumeratedTypeElementNode.Create(ANameNode: TToken; AEqualSignNode: TToken; AValueNode: TASTNode);
 begin
   inherited Create;
+
+  // Assigning private members
   FNameNode := ANameNode;
   FEqualSignNode := AEqualSignNode;
   FValueNode := AValueNode;
 
+  // Adding child nodes
   FChildNodes.Add(ANameNode);
   FChildNodes.Add(AEqualSignNode);
   FChildNodes.Add(AValueNode);
 
+  // Adding properties
   FProperties.Add(TASTNode.TProperty.Create('NameNode', ANameNode));
   FProperties.Add(TASTNode.TProperty.Create('EqualSignNode', AEqualSignNode));
   FProperties.Add(TASTNode.TProperty.Create('ValueNode', AValueNode));
@@ -1940,14 +1997,18 @@ end;
 constructor TEnumeratedTypeNode.Create(AOpenParenthesisNode: TToken; AItemListNode: TListNode; ACloseParenthesisNode: TToken);
 begin
   inherited Create;
+
+  // Assigning private members
   FOpenParenthesisNode := AOpenParenthesisNode;
   FItemListNode := AItemListNode;
   FCloseParenthesisNode := ACloseParenthesisNode;
 
+  // Adding child nodes
   FChildNodes.Add(AOpenParenthesisNode);
   FChildNodes.Add(AItemListNode);
   FChildNodes.Add(ACloseParenthesisNode);
 
+  // Adding properties
   FProperties.Add(TASTNode.TProperty.Create('OpenParenthesisNode', AOpenParenthesisNode));
   FProperties.Add(TASTNode.TProperty.Create('ItemListNode', AItemListNode));
   FProperties.Add(TASTNode.TProperty.Create('CloseParenthesisNode', ACloseParenthesisNode));
@@ -1970,6 +2031,8 @@ end;
 constructor TExceptionItemNode.Create(AOnSemikeywordNode: TToken; ANameNode: TToken; AColonNode: TToken; ATypeNode: TASTNode; ADoKeywordNode: TToken; AStatementNode: TASTNode; ASemicolonNode: TToken);
 begin
   inherited Create;
+
+  // Assigning private members
   FOnSemikeywordNode := AOnSemikeywordNode;
   FNameNode := ANameNode;
   FColonNode := AColonNode;
@@ -1978,6 +2041,7 @@ begin
   FStatementNode := AStatementNode;
   FSemicolonNode := ASemicolonNode;
 
+  // Adding child nodes
   FChildNodes.Add(AOnSemikeywordNode);
   FChildNodes.Add(ANameNode);
   FChildNodes.Add(AColonNode);
@@ -1986,6 +2050,7 @@ begin
   FChildNodes.Add(AStatementNode);
   FChildNodes.Add(ASemicolonNode);
 
+  // Adding properties
   FProperties.Add(TASTNode.TProperty.Create('OnSemikeywordNode', AOnSemikeywordNode));
   FProperties.Add(TASTNode.TProperty.Create('NameNode', ANameNode));
   FProperties.Add(TASTNode.TProperty.Create('ColonNode', AColonNode));
@@ -2007,12 +2072,16 @@ end;
 constructor TExportsItemNode.Create(ANameNode: TASTNode; ASpecifierListNode: TListNode);
 begin
   inherited Create;
+
+  // Assigning private members
   FNameNode := ANameNode;
   FSpecifierListNode := ASpecifierListNode;
 
+  // Adding child nodes
   FChildNodes.Add(ANameNode);
   FChildNodes.Add(ASpecifierListNode);
 
+  // Adding properties
   FProperties.Add(TASTNode.TProperty.Create('NameNode', ANameNode));
   FProperties.Add(TASTNode.TProperty.Create('SpecifierListNode', ASpecifierListNode));
 end;
@@ -2029,12 +2098,16 @@ end;
 constructor TExportsSpecifierNode.Create(AKeywordNode: TToken; AValueNode: TASTNode);
 begin
   inherited Create;
+
+  // Assigning private members
   FKeywordNode := AKeywordNode;
   FValueNode := AValueNode;
 
+  // Adding child nodes
   FChildNodes.Add(AKeywordNode);
   FChildNodes.Add(AValueNode);
 
+  // Adding properties
   FProperties.Add(TASTNode.TProperty.Create('KeywordNode', AKeywordNode));
   FProperties.Add(TASTNode.TProperty.Create('ValueNode', AValueNode));
 end;
@@ -2052,14 +2125,18 @@ end;
 constructor TExportsStatementNode.Create(AExportsKeywordNode: TToken; AItemListNode: TListNode; ASemicolonNode: TToken);
 begin
   inherited Create;
+
+  // Assigning private members
   FExportsKeywordNode := AExportsKeywordNode;
   FItemListNode := AItemListNode;
   FSemicolonNode := ASemicolonNode;
 
+  // Adding child nodes
   FChildNodes.Add(AExportsKeywordNode);
   FChildNodes.Add(AItemListNode);
   FChildNodes.Add(ASemicolonNode);
 
+  // Adding properties
   FProperties.Add(TASTNode.TProperty.Create('ExportsKeywordNode', AExportsKeywordNode));
   FProperties.Add(TASTNode.TProperty.Create('ItemListNode', AItemListNode));
   FProperties.Add(TASTNode.TProperty.Create('SemicolonNode', ASemicolonNode));
@@ -2077,12 +2154,16 @@ end;
 constructor TFancyBlockNode.Create(ADeclListNode: TListNode; ABlockNode: TASTNode);
 begin
   inherited Create;
+
+  // Assigning private members
   FDeclListNode := ADeclListNode;
   FBlockNode := ABlockNode;
 
+  // Adding child nodes
   FChildNodes.Add(ADeclListNode);
   FChildNodes.Add(ABlockNode);
 
+  // Adding properties
   FProperties.Add(TASTNode.TProperty.Create('DeclListNode', ADeclListNode));
   FProperties.Add(TASTNode.TProperty.Create('BlockNode', ABlockNode));
 end;
@@ -2102,18 +2183,22 @@ end;
 constructor TFieldDeclNode.Create(ANameListNode: TListNode; AColonNode: TToken; ATypeNode: TASTNode; APortabilityDirectiveListNode: TListNode; ASemicolonNode: TToken);
 begin
   inherited Create;
+
+  // Assigning private members
   FNameListNode := ANameListNode;
   FColonNode := AColonNode;
   FTypeNode := ATypeNode;
   FPortabilityDirectiveListNode := APortabilityDirectiveListNode;
   FSemicolonNode := ASemicolonNode;
 
+  // Adding child nodes
   FChildNodes.Add(ANameListNode);
   FChildNodes.Add(AColonNode);
   FChildNodes.Add(ATypeNode);
   FChildNodes.Add(APortabilityDirectiveListNode);
   FChildNodes.Add(ASemicolonNode);
 
+  // Adding properties
   FProperties.Add(TASTNode.TProperty.Create('NameListNode', ANameListNode));
   FProperties.Add(TASTNode.TProperty.Create('ColonNode', AColonNode));
   FProperties.Add(TASTNode.TProperty.Create('TypeNode', ATypeNode));
@@ -2134,14 +2219,18 @@ end;
 constructor TFieldSectionNode.Create(AClassKeywordNode: TToken; AVarKeywordNode: TToken; AFieldListNode: TListNode);
 begin
   inherited Create;
+
+  // Assigning private members
   FClassKeywordNode := AClassKeywordNode;
   FVarKeywordNode := AVarKeywordNode;
   FFieldListNode := AFieldListNode;
 
+  // Adding child nodes
   FChildNodes.Add(AClassKeywordNode);
   FChildNodes.Add(AVarKeywordNode);
   FChildNodes.Add(AFieldListNode);
 
+  // Adding properties
   FProperties.Add(TASTNode.TProperty.Create('ClassKeywordNode', AClassKeywordNode));
   FProperties.Add(TASTNode.TProperty.Create('VarKeywordNode', AVarKeywordNode));
   FProperties.Add(TASTNode.TProperty.Create('FieldListNode', AFieldListNode));
@@ -2160,14 +2249,18 @@ end;
 constructor TFileTypeNode.Create(AFileKeywordNode: TToken; AOfKeywordNode: TToken; ATypeNode: TASTNode);
 begin
   inherited Create;
+
+  // Assigning private members
   FFileKeywordNode := AFileKeywordNode;
   FOfKeywordNode := AOfKeywordNode;
   FTypeNode := ATypeNode;
 
+  // Adding child nodes
   FChildNodes.Add(AFileKeywordNode);
   FChildNodes.Add(AOfKeywordNode);
   FChildNodes.Add(ATypeNode);
 
+  // Adding properties
   FProperties.Add(TASTNode.TProperty.Create('FileKeywordNode', AFileKeywordNode));
   FProperties.Add(TASTNode.TProperty.Create('OfKeywordNode', AOfKeywordNode));
   FProperties.Add(TASTNode.TProperty.Create('TypeNode', ATypeNode));
@@ -2189,6 +2282,8 @@ end;
 constructor TForInStatementNode.Create(AForKeywordNode: TToken; ALoopVariableNode: TToken; AInKeywordNode: TToken; AExpressionNode: TASTNode; ADoKeywordNode: TToken; AStatementNode: TASTNode);
 begin
   inherited Create;
+
+  // Assigning private members
   FForKeywordNode := AForKeywordNode;
   FLoopVariableNode := ALoopVariableNode;
   FInKeywordNode := AInKeywordNode;
@@ -2196,6 +2291,7 @@ begin
   FDoKeywordNode := ADoKeywordNode;
   FStatementNode := AStatementNode;
 
+  // Adding child nodes
   FChildNodes.Add(AForKeywordNode);
   FChildNodes.Add(ALoopVariableNode);
   FChildNodes.Add(AInKeywordNode);
@@ -2203,6 +2299,7 @@ begin
   FChildNodes.Add(ADoKeywordNode);
   FChildNodes.Add(AStatementNode);
 
+  // Adding properties
   FProperties.Add(TASTNode.TProperty.Create('ForKeywordNode', AForKeywordNode));
   FProperties.Add(TASTNode.TProperty.Create('LoopVariableNode', ALoopVariableNode));
   FProperties.Add(TASTNode.TProperty.Create('InKeywordNode', AInKeywordNode));
@@ -2229,6 +2326,8 @@ end;
 constructor TForStatementNode.Create(AForKeywordNode: TToken; ALoopVariableNode: TToken; AColonEqualsNode: TToken; AStartingValueNode: TASTNode; ADirectionNode: TToken; AEndingValueNode: TASTNode; ADoKeywordNode: TToken; AStatementNode: TASTNode);
 begin
   inherited Create;
+
+  // Assigning private members
   FForKeywordNode := AForKeywordNode;
   FLoopVariableNode := ALoopVariableNode;
   FColonEqualsNode := AColonEqualsNode;
@@ -2238,6 +2337,7 @@ begin
   FDoKeywordNode := ADoKeywordNode;
   FStatementNode := AStatementNode;
 
+  // Adding child nodes
   FChildNodes.Add(AForKeywordNode);
   FChildNodes.Add(ALoopVariableNode);
   FChildNodes.Add(AColonEqualsNode);
@@ -2247,6 +2347,7 @@ begin
   FChildNodes.Add(ADoKeywordNode);
   FChildNodes.Add(AStatementNode);
 
+  // Adding properties
   FProperties.Add(TASTNode.TProperty.Create('ForKeywordNode', AForKeywordNode));
   FProperties.Add(TASTNode.TProperty.Create('LoopVariableNode', ALoopVariableNode));
   FProperties.Add(TASTNode.TProperty.Create('ColonEqualsNode', AColonEqualsNode));
@@ -2269,12 +2370,16 @@ end;
 constructor TGotoStatementNode.Create(AGotoKeywordNode: TToken; ALabelIdNode: TToken);
 begin
   inherited Create;
+
+  // Assigning private members
   FGotoKeywordNode := AGotoKeywordNode;
   FLabelIdNode := ALabelIdNode;
 
+  // Adding child nodes
   FChildNodes.Add(AGotoKeywordNode);
   FChildNodes.Add(ALabelIdNode);
 
+  // Adding properties
   FProperties.Add(TASTNode.TProperty.Create('GotoKeywordNode', AGotoKeywordNode));
   FProperties.Add(TASTNode.TProperty.Create('LabelIdNode', ALabelIdNode));
 end;
@@ -2295,6 +2400,8 @@ end;
 constructor TIfStatementNode.Create(AIfKeywordNode: TToken; AConditionNode: TASTNode; AThenKeywordNode: TToken; AThenStatementNode: TASTNode; AElseKeywordNode: TToken; AElseStatementNode: TASTNode);
 begin
   inherited Create;
+
+  // Assigning private members
   FIfKeywordNode := AIfKeywordNode;
   FConditionNode := AConditionNode;
   FThenKeywordNode := AThenKeywordNode;
@@ -2302,6 +2409,7 @@ begin
   FElseKeywordNode := AElseKeywordNode;
   FElseStatementNode := AElseStatementNode;
 
+  // Adding child nodes
   FChildNodes.Add(AIfKeywordNode);
   FChildNodes.Add(AConditionNode);
   FChildNodes.Add(AThenKeywordNode);
@@ -2309,6 +2417,7 @@ begin
   FChildNodes.Add(AElseKeywordNode);
   FChildNodes.Add(AElseStatementNode);
 
+  // Adding properties
   FProperties.Add(TASTNode.TProperty.Create('IfKeywordNode', AIfKeywordNode));
   FProperties.Add(TASTNode.TProperty.Create('ConditionNode', AConditionNode));
   FProperties.Add(TASTNode.TProperty.Create('ThenKeywordNode', AThenKeywordNode));
@@ -2332,18 +2441,22 @@ end;
 constructor TInitSectionNode.Create(AInitializationKeywordNode: TToken; AInitializationStatementListNode: TListNode; AFinalizationKeywordNode: TToken; AFinalizationStatementListNode: TListNode; AEndKeywordNode: TToken);
 begin
   inherited Create;
+
+  // Assigning private members
   FInitializationKeywordNode := AInitializationKeywordNode;
   FInitializationStatementListNode := AInitializationStatementListNode;
   FFinalizationKeywordNode := AFinalizationKeywordNode;
   FFinalizationStatementListNode := AFinalizationStatementListNode;
   FEndKeywordNode := AEndKeywordNode;
 
+  // Adding child nodes
   FChildNodes.Add(AInitializationKeywordNode);
   FChildNodes.Add(AInitializationStatementListNode);
   FChildNodes.Add(AFinalizationKeywordNode);
   FChildNodes.Add(AFinalizationStatementListNode);
   FChildNodes.Add(AEndKeywordNode);
 
+  // Adding properties
   FProperties.Add(TASTNode.TProperty.Create('InitializationKeywordNode', AInitializationKeywordNode));
   FProperties.Add(TASTNode.TProperty.Create('InitializationStatementListNode', AInitializationStatementListNode));
   FProperties.Add(TASTNode.TProperty.Create('FinalizationKeywordNode', AFinalizationKeywordNode));
@@ -2370,6 +2483,8 @@ end;
 constructor TInterfaceTypeNode.Create(AInterfaceKeywordNode: TToken; AOpenParenthesisNode: TToken; ABaseInterfaceNode: TASTNode; ACloseParenthesisNode: TToken; AOpenBracketNode: TToken; AGuidNode: TASTNode; ACloseBracketNode: TToken; AMethodAndPropertyListNode: TListNode; AEndKeywordNode: TToken);
 begin
   inherited Create;
+
+  // Assigning private members
   FInterfaceKeywordNode := AInterfaceKeywordNode;
   FOpenParenthesisNode := AOpenParenthesisNode;
   FBaseInterfaceNode := ABaseInterfaceNode;
@@ -2380,6 +2495,7 @@ begin
   FMethodAndPropertyListNode := AMethodAndPropertyListNode;
   FEndKeywordNode := AEndKeywordNode;
 
+  // Adding child nodes
   FChildNodes.Add(AInterfaceKeywordNode);
   FChildNodes.Add(AOpenParenthesisNode);
   FChildNodes.Add(ABaseInterfaceNode);
@@ -2390,6 +2506,7 @@ begin
   FChildNodes.Add(AMethodAndPropertyListNode);
   FChildNodes.Add(AEndKeywordNode);
 
+  // Adding properties
   FProperties.Add(TASTNode.TProperty.Create('InterfaceKeywordNode', AInterfaceKeywordNode));
   FProperties.Add(TASTNode.TProperty.Create('OpenParenthesisNode', AOpenParenthesisNode));
   FProperties.Add(TASTNode.TProperty.Create('BaseInterfaceNode', ABaseInterfaceNode));
@@ -2414,14 +2531,18 @@ end;
 constructor TLabelDeclSectionNode.Create(ALabelKeywordNode: TToken; ALabelListNode: TListNode; ASemicolonNode: TToken);
 begin
   inherited Create;
+
+  // Assigning private members
   FLabelKeywordNode := ALabelKeywordNode;
   FLabelListNode := ALabelListNode;
   FSemicolonNode := ASemicolonNode;
 
+  // Adding child nodes
   FChildNodes.Add(ALabelKeywordNode);
   FChildNodes.Add(ALabelListNode);
   FChildNodes.Add(ASemicolonNode);
 
+  // Adding properties
   FProperties.Add(TASTNode.TProperty.Create('LabelKeywordNode', ALabelKeywordNode));
   FProperties.Add(TASTNode.TProperty.Create('LabelListNode', ALabelListNode));
   FProperties.Add(TASTNode.TProperty.Create('SemicolonNode', ASemicolonNode));
@@ -2440,14 +2561,18 @@ end;
 constructor TLabeledStatementNode.Create(ALabelIdNode: TToken; AColonNode: TToken; AStatementNode: TASTNode);
 begin
   inherited Create;
+
+  // Assigning private members
   FLabelIdNode := ALabelIdNode;
   FColonNode := AColonNode;
   FStatementNode := AStatementNode;
 
+  // Adding child nodes
   FChildNodes.Add(ALabelIdNode);
   FChildNodes.Add(AColonNode);
   FChildNodes.Add(AStatementNode);
 
+  // Adding properties
   FProperties.Add(TASTNode.TProperty.Create('LabelIdNode', ALabelIdNode));
   FProperties.Add(TASTNode.TProperty.Create('ColonNode', AColonNode));
   FProperties.Add(TASTNode.TProperty.Create('StatementNode', AStatementNode));
@@ -2473,6 +2598,8 @@ end;
 constructor TMethodHeadingNode.Create(AClassKeywordNode: TToken; AMethodTypeNode: TToken; ANameNode: TASTNode; AOpenParenthesisNode: TToken; AParameterListNode: TListNode; ACloseParenthesisNode: TToken; AColonNode: TToken; AReturnTypeNode: TASTNode; ADirectiveListNode: TListNode; ASemicolonNode: TToken);
 begin
   inherited Create;
+
+  // Assigning private members
   FClassKeywordNode := AClassKeywordNode;
   FMethodTypeNode := AMethodTypeNode;
   FNameNode := ANameNode;
@@ -2484,6 +2611,7 @@ begin
   FDirectiveListNode := ADirectiveListNode;
   FSemicolonNode := ASemicolonNode;
 
+  // Adding child nodes
   FChildNodes.Add(AClassKeywordNode);
   FChildNodes.Add(AMethodTypeNode);
   FChildNodes.Add(ANameNode);
@@ -2495,6 +2623,7 @@ begin
   FChildNodes.Add(ADirectiveListNode);
   FChildNodes.Add(ASemicolonNode);
 
+  // Adding properties
   FProperties.Add(TASTNode.TProperty.Create('ClassKeywordNode', AClassKeywordNode));
   FProperties.Add(TASTNode.TProperty.Create('MethodTypeNode', AMethodTypeNode));
   FProperties.Add(TASTNode.TProperty.Create('NameNode', ANameNode));
@@ -2511,10 +2640,13 @@ function TMethodHeadingNode.RequiresBody: Boolean;
 var
   I: Integer;
 begin
+  // Methods that are not Forward or External must have a body!
   Result := True;
+  // Iterate through method directives to find forward/external keyword
   for I := 0 to FDirectiveListNode.ItemsCount - 1 do
     if (FDirectiveListNode.Items[I] as TDirectiveNode).ForbidsBody then
     begin
+      // forward/external keyword found -> stop iterating and return False
       Result := False;
       Break;
     end;
@@ -2533,14 +2665,18 @@ end;
 constructor TMethodImplementationNode.Create(AMethodHeadingNode: TMethodHeadingNode; AFancyBlockNode: TFancyBlockNode; ASemicolonNode: TToken);
 begin
   inherited Create;
+
+  // Assigning private members
   FMethodHeadingNode := AMethodHeadingNode;
   FFancyBlockNode := AFancyBlockNode;
   FSemicolonNode := ASemicolonNode;
 
+  // Adding child nodes
   FChildNodes.Add(AMethodHeadingNode);
   FChildNodes.Add(AFancyBlockNode);
   FChildNodes.Add(ASemicolonNode);
 
+  // Adding properties
   FProperties.Add(TASTNode.TProperty.Create('MethodHeadingNode', AMethodHeadingNode));
   FProperties.Add(TASTNode.TProperty.Create('FancyBlockNode', AFancyBlockNode));
   FProperties.Add(TASTNode.TProperty.Create('SemicolonNode', ASemicolonNode));
@@ -2561,18 +2697,22 @@ end;
 constructor TMethodResolutionNode.Create(AMethodTypeNode: TToken; AInterfaceMethodNode: TASTNode; AEqualSignNode: TToken; AImplementationMethodNode: TToken; ASemicolonNode: TToken);
 begin
   inherited Create;
+
+  // Assigning private members
   FMethodTypeNode := AMethodTypeNode;
   FInterfaceMethodNode := AInterfaceMethodNode;
   FEqualSignNode := AEqualSignNode;
   FImplementationMethodNode := AImplementationMethodNode;
   FSemicolonNode := ASemicolonNode;
 
+  // Adding child nodes
   FChildNodes.Add(AMethodTypeNode);
   FChildNodes.Add(AInterfaceMethodNode);
   FChildNodes.Add(AEqualSignNode);
   FChildNodes.Add(AImplementationMethodNode);
   FChildNodes.Add(ASemicolonNode);
 
+  // Adding properties
   FProperties.Add(TASTNode.TProperty.Create('MethodTypeNode', AMethodTypeNode));
   FProperties.Add(TASTNode.TProperty.Create('InterfaceMethodNode', AInterfaceMethodNode));
   FProperties.Add(TASTNode.TProperty.Create('EqualSignNode', AEqualSignNode));
@@ -2595,18 +2735,22 @@ end;
 constructor TNumberFormatNode.Create(AValueNode: TASTNode; ASizeColonNode: TToken; ASizeNode: TASTNode; APrecisionColonNode: TToken; APrecisionNode: TASTNode);
 begin
   inherited Create;
+
+  // Assigning private members
   FValueNode := AValueNode;
   FSizeColonNode := ASizeColonNode;
   FSizeNode := ASizeNode;
   FPrecisionColonNode := APrecisionColonNode;
   FPrecisionNode := APrecisionNode;
 
+  // Adding child nodes
   FChildNodes.Add(AValueNode);
   FChildNodes.Add(ASizeColonNode);
   FChildNodes.Add(ASizeNode);
   FChildNodes.Add(APrecisionColonNode);
   FChildNodes.Add(APrecisionNode);
 
+  // Adding properties
   FProperties.Add(TASTNode.TProperty.Create('ValueNode', AValueNode));
   FProperties.Add(TASTNode.TProperty.Create('SizeColonNode', ASizeColonNode));
   FProperties.Add(TASTNode.TProperty.Create('SizeNode', ASizeNode));
@@ -2627,14 +2771,18 @@ end;
 constructor TOpenArrayNode.Create(AArrayKeywordNode: TToken; AOfKeywordNode: TToken; ATypeNode: TASTNode);
 begin
   inherited Create;
+
+  // Assigning private members
   FArrayKeywordNode := AArrayKeywordNode;
   FOfKeywordNode := AOfKeywordNode;
   FTypeNode := ATypeNode;
 
+  // Adding child nodes
   FChildNodes.Add(AArrayKeywordNode);
   FChildNodes.Add(AOfKeywordNode);
   FChildNodes.Add(ATypeNode);
 
+  // Adding properties
   FProperties.Add(TASTNode.TProperty.Create('ArrayKeywordNode', AArrayKeywordNode));
   FProperties.Add(TASTNode.TProperty.Create('OfKeywordNode', AOfKeywordNode));
   FProperties.Add(TASTNode.TProperty.Create('TypeNode', ATypeNode));
@@ -2658,6 +2806,8 @@ end;
 constructor TPackageNode.Create(APackageKeywordNode: TToken; ANameNode: TASTNode; ASemicolonNode: TToken; ARequiresClauseNode: TRequiresClauseNode; AContainsClauseNode: TUsesClauseNode; AAttributeListNode: TListNode; AEndKeywordNode: TToken; ADotNode: TToken);
 begin
   inherited Create;
+
+  // Assigning private members
   FPackageKeywordNode := APackageKeywordNode;
   FNameNode := ANameNode;
   FSemicolonNode := ASemicolonNode;
@@ -2667,6 +2817,7 @@ begin
   FEndKeywordNode := AEndKeywordNode;
   FDotNode := ADotNode;
 
+  // Adding child nodes
   FChildNodes.Add(APackageKeywordNode);
   FChildNodes.Add(ANameNode);
   FChildNodes.Add(ASemicolonNode);
@@ -2676,6 +2827,7 @@ begin
   FChildNodes.Add(AEndKeywordNode);
   FChildNodes.Add(ADotNode);
 
+  // Adding properties
   FProperties.Add(TASTNode.TProperty.Create('PackageKeywordNode', APackageKeywordNode));
   FProperties.Add(TASTNode.TProperty.Create('NameNode', ANameNode));
   FProperties.Add(TASTNode.TProperty.Create('SemicolonNode', ASemicolonNode));
@@ -2698,12 +2850,16 @@ end;
 constructor TPackedTypeNode.Create(APackedKeywordNode: TToken; ATypeNode: TASTNode);
 begin
   inherited Create;
+
+  // Assigning private members
   FPackedKeywordNode := APackedKeywordNode;
   FTypeNode := ATypeNode;
 
+  // Adding child nodes
   FChildNodes.Add(APackedKeywordNode);
   FChildNodes.Add(ATypeNode);
 
+  // Adding properties
   FProperties.Add(TASTNode.TProperty.Create('PackedKeywordNode', APackedKeywordNode));
   FProperties.Add(TASTNode.TProperty.Create('TypeNode', ATypeNode));
 end;
@@ -2724,6 +2880,8 @@ end;
 constructor TParameterNode.Create(AModifierNode: TToken; ANameListNode: TListNode; AColonNode: TToken; ATypeNode: TASTNode; AEqualSignNode: TToken; ADefaultValueNode: TASTNode);
 begin
   inherited Create;
+
+  // Assigning private members
   FModifierNode := AModifierNode;
   FNameListNode := ANameListNode;
   FColonNode := AColonNode;
@@ -2731,6 +2889,7 @@ begin
   FEqualSignNode := AEqualSignNode;
   FDefaultValueNode := ADefaultValueNode;
 
+  // Adding child nodes
   FChildNodes.Add(AModifierNode);
   FChildNodes.Add(ANameListNode);
   FChildNodes.Add(AColonNode);
@@ -2738,6 +2897,7 @@ begin
   FChildNodes.Add(AEqualSignNode);
   FChildNodes.Add(ADefaultValueNode);
 
+  // Adding properties
   FProperties.Add(TASTNode.TProperty.Create('ModifierNode', AModifierNode));
   FProperties.Add(TASTNode.TProperty.Create('NameListNode', ANameListNode));
   FProperties.Add(TASTNode.TProperty.Create('ColonNode', AColonNode));
@@ -2760,16 +2920,20 @@ end;
 constructor TParameterizedNode.Create(ALeftNode: TASTNode; AOpenDelimiterNode: TToken; AParameterListNode: TListNode; ACloseDelimiterNode: TToken);
 begin
   inherited Create;
+
+  // Assigning private members
   FLeftNode := ALeftNode;
   FOpenDelimiterNode := AOpenDelimiterNode;
   FParameterListNode := AParameterListNode;
   FCloseDelimiterNode := ACloseDelimiterNode;
 
+  // Adding child nodes
   FChildNodes.Add(ALeftNode);
   FChildNodes.Add(AOpenDelimiterNode);
   FChildNodes.Add(AParameterListNode);
   FChildNodes.Add(ACloseDelimiterNode);
 
+  // Adding properties
   FProperties.Add(TASTNode.TProperty.Create('LeftNode', ALeftNode));
   FProperties.Add(TASTNode.TProperty.Create('OpenDelimiterNode', AOpenDelimiterNode));
   FProperties.Add(TASTNode.TProperty.Create('ParameterListNode', AParameterListNode));
@@ -2789,14 +2953,18 @@ end;
 constructor TParenthesizedExpressionNode.Create(AOpenParenthesisNode: TToken; AExpressionNode: TASTNode; ACloseParenthesisNode: TToken);
 begin
   inherited Create;
+
+  // Assigning private members
   FOpenParenthesisNode := AOpenParenthesisNode;
   FExpressionNode := AExpressionNode;
   FCloseParenthesisNode := ACloseParenthesisNode;
 
+  // Adding child nodes
   FChildNodes.Add(AOpenParenthesisNode);
   FChildNodes.Add(AExpressionNode);
   FChildNodes.Add(ACloseParenthesisNode);
 
+  // Adding properties
   FProperties.Add(TASTNode.TProperty.Create('OpenParenthesisNode', AOpenParenthesisNode));
   FProperties.Add(TASTNode.TProperty.Create('ExpressionNode', AExpressionNode));
   FProperties.Add(TASTNode.TProperty.Create('CloseParenthesisNode', ACloseParenthesisNode));
@@ -2814,12 +2982,16 @@ end;
 constructor TPointerDereferenceNode.Create(AOperandNode: TASTNode; ACaretNode: TToken);
 begin
   inherited Create;
+
+  // Assigning private members
   FOperandNode := AOperandNode;
   FCaretNode := ACaretNode;
 
+  // Adding child nodes
   FChildNodes.Add(AOperandNode);
   FChildNodes.Add(ACaretNode);
 
+  // Adding properties
   FProperties.Add(TASTNode.TProperty.Create('OperandNode', AOperandNode));
   FProperties.Add(TASTNode.TProperty.Create('CaretNode', ACaretNode));
 end;
@@ -2836,12 +3008,16 @@ end;
 constructor TPointerTypeNode.Create(ACaretNode: TToken; ATypeNode: TASTNode);
 begin
   inherited Create;
+
+  // Assigning private members
   FCaretNode := ACaretNode;
   FTypeNode := ATypeNode;
 
+  // Adding child nodes
   FChildNodes.Add(ACaretNode);
   FChildNodes.Add(ATypeNode);
 
+  // Adding properties
   FProperties.Add(TASTNode.TProperty.Create('CaretNode', ACaretNode));
   FProperties.Add(TASTNode.TProperty.Create('TypeNode', ATypeNode));
 end;
@@ -2866,6 +3042,8 @@ end;
 constructor TProcedureTypeNode.Create(AMethodTypeNode: TToken; AOpenParenthesisNode: TToken; AParameterListNode: TListNode; ACloseParenthesisNode: TToken; AColonNode: TToken; AReturnTypeNode: TASTNode; AFirstDirectiveListNode: TListNode; AOfKeywordNode: TToken; AObjectKeywordNode: TToken; ASecondDirectiveListNode: TListNode);
 begin
   inherited Create;
+
+  // Assigning private members
   FMethodTypeNode := AMethodTypeNode;
   FOpenParenthesisNode := AOpenParenthesisNode;
   FParameterListNode := AParameterListNode;
@@ -2877,6 +3055,7 @@ begin
   FObjectKeywordNode := AObjectKeywordNode;
   FSecondDirectiveListNode := ASecondDirectiveListNode;
 
+  // Adding child nodes
   FChildNodes.Add(AMethodTypeNode);
   FChildNodes.Add(AOpenParenthesisNode);
   FChildNodes.Add(AParameterListNode);
@@ -2888,6 +3067,7 @@ begin
   FChildNodes.Add(AObjectKeywordNode);
   FChildNodes.Add(ASecondDirectiveListNode);
 
+  // Adding properties
   FProperties.Add(TASTNode.TProperty.Create('MethodTypeNode', AMethodTypeNode));
   FProperties.Add(TASTNode.TProperty.Create('OpenParenthesisNode', AOpenParenthesisNode));
   FProperties.Add(TASTNode.TProperty.Create('ParameterListNode', AParameterListNode));
@@ -2920,6 +3100,8 @@ end;
 constructor TProgramNode.Create(AProgramKeywordNode: TToken; ANameNode: TToken; ANoiseOpenParenthesisNode: TToken; ANoiseContentListNode: TListNode; ANoiseCloseParenthesisNode: TToken; ASemicolonNode: TToken; AUsesClauseNode: TUsesClauseNode; ADeclarationListNode: TListNode; AInitSectionNode: TInitSectionNode; ADotNode: TToken);
 begin
   inherited Create;
+
+  // Assigning private members
   FProgramKeywordNode := AProgramKeywordNode;
   FNameNode := ANameNode;
   FNoiseOpenParenthesisNode := ANoiseOpenParenthesisNode;
@@ -2931,6 +3113,7 @@ begin
   FInitSectionNode := AInitSectionNode;
   FDotNode := ADotNode;
 
+  // Adding child nodes
   FChildNodes.Add(AProgramKeywordNode);
   FChildNodes.Add(ANameNode);
   FChildNodes.Add(ANoiseOpenParenthesisNode);
@@ -2942,6 +3125,7 @@ begin
   FChildNodes.Add(AInitSectionNode);
   FChildNodes.Add(ADotNode);
 
+  // Adding properties
   FProperties.Add(TASTNode.TProperty.Create('ProgramKeywordNode', AProgramKeywordNode));
   FProperties.Add(TASTNode.TProperty.Create('NameNode', ANameNode));
   FProperties.Add(TASTNode.TProperty.Create('NoiseOpenParenthesisNode', ANoiseOpenParenthesisNode));
@@ -2974,6 +3158,8 @@ end;
 constructor TPropertyNode.Create(AClassKeywordNode: TToken; APropertyKeywordNode: TToken; ANameNode: TToken; AOpenBracketNode: TToken; AParameterListNode: TListNode; ACloseBracketNode: TToken; AColonNode: TToken; ATypeNode: TASTNode; ADirectiveListNode: TListNode; ASemicolonNode: TToken);
 begin
   inherited Create;
+
+  // Assigning private members
   FClassKeywordNode := AClassKeywordNode;
   FPropertyKeywordNode := APropertyKeywordNode;
   FNameNode := ANameNode;
@@ -2985,6 +3171,7 @@ begin
   FDirectiveListNode := ADirectiveListNode;
   FSemicolonNode := ASemicolonNode;
 
+  // Adding child nodes
   FChildNodes.Add(AClassKeywordNode);
   FChildNodes.Add(APropertyKeywordNode);
   FChildNodes.Add(ANameNode);
@@ -2996,6 +3183,7 @@ begin
   FChildNodes.Add(ADirectiveListNode);
   FChildNodes.Add(ASemicolonNode);
 
+  // Adding properties
   FProperties.Add(TASTNode.TProperty.Create('ClassKeywordNode', AClassKeywordNode));
   FProperties.Add(TASTNode.TProperty.Create('PropertyKeywordNode', APropertyKeywordNode));
   FProperties.Add(TASTNode.TProperty.Create('NameNode', ANameNode));
@@ -3022,16 +3210,20 @@ end;
 constructor TRaiseStatementNode.Create(ARaiseKeywordNode: TToken; AExceptionNode: TASTNode; AAtSemikeywordNode: TToken; AAddressNode: TASTNode);
 begin
   inherited Create;
+
+  // Assigning private members
   FRaiseKeywordNode := ARaiseKeywordNode;
   FExceptionNode := AExceptionNode;
   FAtSemikeywordNode := AAtSemikeywordNode;
   FAddressNode := AAddressNode;
 
+  // Adding child nodes
   FChildNodes.Add(ARaiseKeywordNode);
   FChildNodes.Add(AExceptionNode);
   FChildNodes.Add(AAtSemikeywordNode);
   FChildNodes.Add(AAddressNode);
 
+  // Adding properties
   FProperties.Add(TASTNode.TProperty.Create('RaiseKeywordNode', ARaiseKeywordNode));
   FProperties.Add(TASTNode.TProperty.Create('ExceptionNode', AExceptionNode));
   FProperties.Add(TASTNode.TProperty.Create('AtSemikeywordNode', AAtSemikeywordNode));
@@ -3051,14 +3243,18 @@ end;
 constructor TRecordFieldConstantNode.Create(ANameNode: TASTNode; AColonNode: TToken; AValueNode: TASTNode);
 begin
   inherited Create;
+
+  // Assigning private members
   FNameNode := ANameNode;
   FColonNode := AColonNode;
   FValueNode := AValueNode;
 
+  // Adding child nodes
   FChildNodes.Add(ANameNode);
   FChildNodes.Add(AColonNode);
   FChildNodes.Add(AValueNode);
 
+  // Adding properties
   FProperties.Add(TASTNode.TProperty.Create('NameNode', ANameNode));
   FProperties.Add(TASTNode.TProperty.Create('ColonNode', AColonNode));
   FProperties.Add(TASTNode.TProperty.Create('ValueNode', AValueNode));
@@ -3078,16 +3274,20 @@ end;
 constructor TRecordTypeNode.Create(ARecordKeywordNode: TToken; AContentListNode: TListNode; AVariantSectionNode: TVariantSectionNode; AEndKeywordNode: TToken);
 begin
   inherited Create;
+
+  // Assigning private members
   FRecordKeywordNode := ARecordKeywordNode;
   FContentListNode := AContentListNode;
   FVariantSectionNode := AVariantSectionNode;
   FEndKeywordNode := AEndKeywordNode;
 
+  // Adding child nodes
   FChildNodes.Add(ARecordKeywordNode);
   FChildNodes.Add(AContentListNode);
   FChildNodes.Add(AVariantSectionNode);
   FChildNodes.Add(AEndKeywordNode);
 
+  // Adding properties
   FProperties.Add(TASTNode.TProperty.Create('RecordKeywordNode', ARecordKeywordNode));
   FProperties.Add(TASTNode.TProperty.Create('ContentListNode', AContentListNode));
   FProperties.Add(TASTNode.TProperty.Create('VariantSectionNode', AVariantSectionNode));
@@ -3108,16 +3308,20 @@ end;
 constructor TRepeatStatementNode.Create(ARepeatKeywordNode: TToken; AStatementListNode: TListNode; AUntilKeywordNode: TToken; AConditionNode: TASTNode);
 begin
   inherited Create;
+
+  // Assigning private members
   FRepeatKeywordNode := ARepeatKeywordNode;
   FStatementListNode := AStatementListNode;
   FUntilKeywordNode := AUntilKeywordNode;
   FConditionNode := AConditionNode;
 
+  // Adding child nodes
   FChildNodes.Add(ARepeatKeywordNode);
   FChildNodes.Add(AStatementListNode);
   FChildNodes.Add(AUntilKeywordNode);
   FChildNodes.Add(AConditionNode);
 
+  // Adding properties
   FProperties.Add(TASTNode.TProperty.Create('RepeatKeywordNode', ARepeatKeywordNode));
   FProperties.Add(TASTNode.TProperty.Create('StatementListNode', AStatementListNode));
   FProperties.Add(TASTNode.TProperty.Create('UntilKeywordNode', AUntilKeywordNode));
@@ -3137,14 +3341,18 @@ end;
 constructor TRequiresClauseNode.Create(ARequiresSemikeywordNode: TToken; APackageListNode: TListNode; ASemicolonNode: TToken);
 begin
   inherited Create;
+
+  // Assigning private members
   FRequiresSemikeywordNode := ARequiresSemikeywordNode;
   FPackageListNode := APackageListNode;
   FSemicolonNode := ASemicolonNode;
 
+  // Adding child nodes
   FChildNodes.Add(ARequiresSemikeywordNode);
   FChildNodes.Add(APackageListNode);
   FChildNodes.Add(ASemicolonNode);
 
+  // Adding properties
   FProperties.Add(TASTNode.TProperty.Create('RequiresSemikeywordNode', ARequiresSemikeywordNode));
   FProperties.Add(TASTNode.TProperty.Create('PackageListNode', APackageListNode));
   FProperties.Add(TASTNode.TProperty.Create('SemicolonNode', ASemicolonNode));
@@ -3163,14 +3371,18 @@ end;
 constructor TSetLiteralNode.Create(AOpenBracketNode: TToken; AItemListNode: TListNode; ACloseBracketNode: TToken);
 begin
   inherited Create;
+
+  // Assigning private members
   FOpenBracketNode := AOpenBracketNode;
   FItemListNode := AItemListNode;
   FCloseBracketNode := ACloseBracketNode;
 
+  // Adding child nodes
   FChildNodes.Add(AOpenBracketNode);
   FChildNodes.Add(AItemListNode);
   FChildNodes.Add(ACloseBracketNode);
 
+  // Adding properties
   FProperties.Add(TASTNode.TProperty.Create('OpenBracketNode', AOpenBracketNode));
   FProperties.Add(TASTNode.TProperty.Create('ItemListNode', AItemListNode));
   FProperties.Add(TASTNode.TProperty.Create('CloseBracketNode', ACloseBracketNode));
@@ -3189,14 +3401,18 @@ end;
 constructor TSetOfNode.Create(ASetKeywordNode: TToken; AOfKeywordNode: TToken; ATypeNode: TASTNode);
 begin
   inherited Create;
+
+  // Assigning private members
   FSetKeywordNode := ASetKeywordNode;
   FOfKeywordNode := AOfKeywordNode;
   FTypeNode := ATypeNode;
 
+  // Adding child nodes
   FChildNodes.Add(ASetKeywordNode);
   FChildNodes.Add(AOfKeywordNode);
   FChildNodes.Add(ATypeNode);
 
+  // Adding properties
   FProperties.Add(TASTNode.TProperty.Create('SetKeywordNode', ASetKeywordNode));
   FProperties.Add(TASTNode.TProperty.Create('OfKeywordNode', AOfKeywordNode));
   FProperties.Add(TASTNode.TProperty.Create('TypeNode', ATypeNode));
@@ -3216,16 +3432,20 @@ end;
 constructor TStringOfLengthNode.Create(AStringKeywordNode: TToken; AOpenBracketNode: TToken; ALengthNode: TASTNode; ACloseBracketNode: TToken);
 begin
   inherited Create;
+
+  // Assigning private members
   FStringKeywordNode := AStringKeywordNode;
   FOpenBracketNode := AOpenBracketNode;
   FLengthNode := ALengthNode;
   FCloseBracketNode := ACloseBracketNode;
 
+  // Adding child nodes
   FChildNodes.Add(AStringKeywordNode);
   FChildNodes.Add(AOpenBracketNode);
   FChildNodes.Add(ALengthNode);
   FChildNodes.Add(ACloseBracketNode);
 
+  // Adding properties
   FProperties.Add(TASTNode.TProperty.Create('StringKeywordNode', AStringKeywordNode));
   FProperties.Add(TASTNode.TProperty.Create('OpenBracketNode', AOpenBracketNode));
   FProperties.Add(TASTNode.TProperty.Create('LengthNode', ALengthNode));
@@ -3249,6 +3469,8 @@ end;
 constructor TTryExceptNode.Create(ATryKeywordNode: TToken; ATryStatementListNode: TListNode; AExceptKeywordNode: TToken; AExceptionItemListNode: TListNode; AElseKeywordNode: TToken; AElseStatementListNode: TListNode; AEndKeywordNode: TToken);
 begin
   inherited Create;
+
+  // Assigning private members
   FTryKeywordNode := ATryKeywordNode;
   FTryStatementListNode := ATryStatementListNode;
   FExceptKeywordNode := AExceptKeywordNode;
@@ -3257,6 +3479,7 @@ begin
   FElseStatementListNode := AElseStatementListNode;
   FEndKeywordNode := AEndKeywordNode;
 
+  // Adding child nodes
   FChildNodes.Add(ATryKeywordNode);
   FChildNodes.Add(ATryStatementListNode);
   FChildNodes.Add(AExceptKeywordNode);
@@ -3265,6 +3488,7 @@ begin
   FChildNodes.Add(AElseStatementListNode);
   FChildNodes.Add(AEndKeywordNode);
 
+  // Adding properties
   FProperties.Add(TASTNode.TProperty.Create('TryKeywordNode', ATryKeywordNode));
   FProperties.Add(TASTNode.TProperty.Create('TryStatementListNode', ATryStatementListNode));
   FProperties.Add(TASTNode.TProperty.Create('ExceptKeywordNode', AExceptKeywordNode));
@@ -3289,18 +3513,22 @@ end;
 constructor TTryFinallyNode.Create(ATryKeywordNode: TToken; ATryStatementListNode: TListNode; AFinallyKeywordNode: TToken; AFinallyStatementListNode: TListNode; AEndKeywordNode: TToken);
 begin
   inherited Create;
+
+  // Assigning private members
   FTryKeywordNode := ATryKeywordNode;
   FTryStatementListNode := ATryStatementListNode;
   FFinallyKeywordNode := AFinallyKeywordNode;
   FFinallyStatementListNode := AFinallyStatementListNode;
   FEndKeywordNode := AEndKeywordNode;
 
+  // Adding child nodes
   FChildNodes.Add(ATryKeywordNode);
   FChildNodes.Add(ATryStatementListNode);
   FChildNodes.Add(AFinallyKeywordNode);
   FChildNodes.Add(AFinallyStatementListNode);
   FChildNodes.Add(AEndKeywordNode);
 
+  // Adding properties
   FProperties.Add(TASTNode.TProperty.Create('TryKeywordNode', ATryKeywordNode));
   FProperties.Add(TASTNode.TProperty.Create('TryStatementListNode', ATryStatementListNode));
   FProperties.Add(TASTNode.TProperty.Create('FinallyKeywordNode', AFinallyKeywordNode));
@@ -3324,6 +3552,8 @@ end;
 constructor TTypeDeclNode.Create(ANameNode: TToken; AEqualSignNode: TToken; ATypeKeywordNode: TToken; ATypeNode: TASTNode; APortabilityDirectiveListNode: TListNode; ASemicolonNode: TToken);
 begin
   inherited Create;
+
+  // Assigning private members
   FNameNode := ANameNode;
   FEqualSignNode := AEqualSignNode;
   FTypeKeywordNode := ATypeKeywordNode;
@@ -3331,6 +3561,7 @@ begin
   FPortabilityDirectiveListNode := APortabilityDirectiveListNode;
   FSemicolonNode := ASemicolonNode;
 
+  // Adding child nodes
   FChildNodes.Add(ANameNode);
   FChildNodes.Add(AEqualSignNode);
   FChildNodes.Add(ATypeKeywordNode);
@@ -3338,6 +3569,7 @@ begin
   FChildNodes.Add(APortabilityDirectiveListNode);
   FChildNodes.Add(ASemicolonNode);
 
+  // Adding properties
   FProperties.Add(TASTNode.TProperty.Create('NameNode', ANameNode));
   FProperties.Add(TASTNode.TProperty.Create('EqualSignNode', AEqualSignNode));
   FProperties.Add(TASTNode.TProperty.Create('TypeKeywordNode', ATypeKeywordNode));
@@ -3360,16 +3592,20 @@ end;
 constructor TTypeForwardDeclarationNode.Create(ANameNode: TToken; AEqualSignNode: TToken; ATypeNode: TToken; ASemicolonNode: TToken);
 begin
   inherited Create;
+
+  // Assigning private members
   FNameNode := ANameNode;
   FEqualSignNode := AEqualSignNode;
   FTypeNode := ATypeNode;
   FSemicolonNode := ASemicolonNode;
 
+  // Adding child nodes
   FChildNodes.Add(ANameNode);
   FChildNodes.Add(AEqualSignNode);
   FChildNodes.Add(ATypeNode);
   FChildNodes.Add(ASemicolonNode);
 
+  // Adding properties
   FProperties.Add(TASTNode.TProperty.Create('NameNode', ANameNode));
   FProperties.Add(TASTNode.TProperty.Create('EqualSignNode', AEqualSignNode));
   FProperties.Add(TASTNode.TProperty.Create('TypeNode', ATypeNode));
@@ -3395,6 +3631,8 @@ end;
 constructor TTypeHelperNode.Create(ATypeKeywordNode: TToken; AHelperSemikeywordNode: TToken; AOpenParenthesisNode: TToken; ABaseHelperTypeNode: TASTNode; ACloseParenthesisNode: TToken; AForKeywordNode: TToken; ATypeNode: TASTNode; AContentListNode: TListNode; AEndKeywordNode: TToken);
 begin
   inherited Create;
+
+  // Assigning private members
   FTypeKeywordNode := ATypeKeywordNode;
   FHelperSemikeywordNode := AHelperSemikeywordNode;
   FOpenParenthesisNode := AOpenParenthesisNode;
@@ -3405,6 +3643,7 @@ begin
   FContentListNode := AContentListNode;
   FEndKeywordNode := AEndKeywordNode;
 
+  // Adding child nodes
   FChildNodes.Add(ATypeKeywordNode);
   FChildNodes.Add(AHelperSemikeywordNode);
   FChildNodes.Add(AOpenParenthesisNode);
@@ -3415,6 +3654,7 @@ begin
   FChildNodes.Add(AContentListNode);
   FChildNodes.Add(AEndKeywordNode);
 
+  // Adding properties
   FProperties.Add(TASTNode.TProperty.Create('TypeKeywordNode', ATypeKeywordNode));
   FProperties.Add(TASTNode.TProperty.Create('HelperSemikeywordNode', AHelperSemikeywordNode));
   FProperties.Add(TASTNode.TProperty.Create('OpenParenthesisNode', AOpenParenthesisNode));
@@ -3438,12 +3678,16 @@ end;
 constructor TTypeSectionNode.Create(ATypeKeywordNode: TToken; ATypeListNode: TListNode);
 begin
   inherited Create;
+
+  // Assigning private members
   FTypeKeywordNode := ATypeKeywordNode;
   FTypeListNode := ATypeListNode;
 
+  // Adding child nodes
   FChildNodes.Add(ATypeKeywordNode);
   FChildNodes.Add(ATypeListNode);
 
+  // Adding properties
   FProperties.Add(TASTNode.TProperty.Create('TypeKeywordNode', ATypeKeywordNode));
   FProperties.Add(TASTNode.TProperty.Create('TypeListNode', ATypeListNode));
 end;
@@ -3460,12 +3704,16 @@ end;
 constructor TUnaryOperationNode.Create(AOperatorNode: TToken; AOperandNode: TASTNode);
 begin
   inherited Create;
+
+  // Assigning private members
   FOperatorNode := AOperatorNode;
   FOperandNode := AOperandNode;
 
+  // Adding child nodes
   FChildNodes.Add(AOperatorNode);
   FChildNodes.Add(AOperandNode);
 
+  // Adding properties
   FProperties.Add(TASTNode.TProperty.Create('OperatorNode', AOperatorNode));
   FProperties.Add(TASTNode.TProperty.Create('OperandNode', AOperandNode));
 end;
@@ -3488,6 +3736,8 @@ end;
 constructor TUnitNode.Create(AUnitKeywordNode: TToken; AUnitNameNode: TToken; APortabilityDirectiveListNode: TListNode; ASemicolonNode: TToken; AInterfaceSectionNode: TUnitSectionNode; AImplementationSectionNode: TUnitSectionNode; AInitSectionNode: TInitSectionNode; ADotNode: TToken);
 begin
   inherited Create;
+
+  // Assigning private members
   FUnitKeywordNode := AUnitKeywordNode;
   FUnitNameNode := AUnitNameNode;
   FPortabilityDirectiveListNode := APortabilityDirectiveListNode;
@@ -3497,6 +3747,7 @@ begin
   FInitSectionNode := AInitSectionNode;
   FDotNode := ADotNode;
 
+  // Adding child nodes
   FChildNodes.Add(AUnitKeywordNode);
   FChildNodes.Add(AUnitNameNode);
   FChildNodes.Add(APortabilityDirectiveListNode);
@@ -3506,6 +3757,7 @@ begin
   FChildNodes.Add(AInitSectionNode);
   FChildNodes.Add(ADotNode);
 
+  // Adding properties
   FProperties.Add(TASTNode.TProperty.Create('UnitKeywordNode', AUnitKeywordNode));
   FProperties.Add(TASTNode.TProperty.Create('UnitNameNode', AUnitNameNode));
   FProperties.Add(TASTNode.TProperty.Create('PortabilityDirectiveListNode', APortabilityDirectiveListNode));
@@ -3529,14 +3781,18 @@ end;
 constructor TUnitSectionNode.Create(AHeaderKeywordNode: TToken; AUsesClauseNode: TUsesClauseNode; AContentListNode: TListNode);
 begin
   inherited Create;
+
+  // Assigning private members
   FHeaderKeywordNode := AHeaderKeywordNode;
   FUsesClauseNode := AUsesClauseNode;
   FContentListNode := AContentListNode;
 
+  // Adding child nodes
   FChildNodes.Add(AHeaderKeywordNode);
   FChildNodes.Add(AUsesClauseNode);
   FChildNodes.Add(AContentListNode);
 
+  // Adding properties
   FProperties.Add(TASTNode.TProperty.Create('HeaderKeywordNode', AHeaderKeywordNode));
   FProperties.Add(TASTNode.TProperty.Create('UsesClauseNode', AUsesClauseNode));
   FProperties.Add(TASTNode.TProperty.Create('ContentListNode', AContentListNode));
@@ -3555,14 +3811,18 @@ end;
 constructor TUsedUnitNode.Create(ANameNode: TASTNode; AInKeywordNode: TToken; AFileNameNode: TToken);
 begin
   inherited Create;
+
+  // Assigning private members
   FNameNode := ANameNode;
   FInKeywordNode := AInKeywordNode;
   FFileNameNode := AFileNameNode;
 
+  // Adding child nodes
   FChildNodes.Add(ANameNode);
   FChildNodes.Add(AInKeywordNode);
   FChildNodes.Add(AFileNameNode);
 
+  // Adding properties
   FProperties.Add(TASTNode.TProperty.Create('NameNode', ANameNode));
   FProperties.Add(TASTNode.TProperty.Create('InKeywordNode', AInKeywordNode));
   FProperties.Add(TASTNode.TProperty.Create('FileNameNode', AFileNameNode));
@@ -3581,14 +3841,18 @@ end;
 constructor TUsesClauseNode.Create(AUsesKeywordNode: TToken; AUnitListNode: TListNode; ASemicolonNode: TToken);
 begin
   inherited Create;
+
+  // Assigning private members
   FUsesKeywordNode := AUsesKeywordNode;
   FUnitListNode := AUnitListNode;
   FSemicolonNode := ASemicolonNode;
 
+  // Adding child nodes
   FChildNodes.Add(AUsesKeywordNode);
   FChildNodes.Add(AUnitListNode);
   FChildNodes.Add(ASemicolonNode);
 
+  // Adding properties
   FProperties.Add(TASTNode.TProperty.Create('UsesKeywordNode', AUsesKeywordNode));
   FProperties.Add(TASTNode.TProperty.Create('UnitListNode', AUnitListNode));
   FProperties.Add(TASTNode.TProperty.Create('SemicolonNode', ASemicolonNode));
@@ -3614,6 +3878,8 @@ end;
 constructor TVarDeclNode.Create(ANameListNode: TListNode; AColonNode: TToken; ATypeNode: TASTNode; AFirstPortabilityDirectiveListNode: TListNode; AAbsoluteSemikeywordNode: TToken; AAbsoluteAddressNode: TASTNode; AEqualSignNode: TToken; AValueNode: TASTNode; ASecondPortabilityDirectiveListNode: TListNode; ASemicolonNode: TToken);
 begin
   inherited Create;
+
+  // Assigning private members
   FNameListNode := ANameListNode;
   FColonNode := AColonNode;
   FTypeNode := ATypeNode;
@@ -3625,6 +3891,7 @@ begin
   FSecondPortabilityDirectiveListNode := ASecondPortabilityDirectiveListNode;
   FSemicolonNode := ASemicolonNode;
 
+  // Adding child nodes
   FChildNodes.Add(ANameListNode);
   FChildNodes.Add(AColonNode);
   FChildNodes.Add(ATypeNode);
@@ -3636,6 +3903,7 @@ begin
   FChildNodes.Add(ASecondPortabilityDirectiveListNode);
   FChildNodes.Add(ASemicolonNode);
 
+  // Adding properties
   FProperties.Add(TASTNode.TProperty.Create('NameListNode', ANameListNode));
   FProperties.Add(TASTNode.TProperty.Create('ColonNode', AColonNode));
   FProperties.Add(TASTNode.TProperty.Create('TypeNode', ATypeNode));
@@ -3660,12 +3928,16 @@ end;
 constructor TVarSectionNode.Create(AVarKeywordNode: TToken; AVarListNode: TListNode);
 begin
   inherited Create;
+
+  // Assigning private members
   FVarKeywordNode := AVarKeywordNode;
   FVarListNode := AVarListNode;
 
+  // Adding child nodes
   FChildNodes.Add(AVarKeywordNode);
   FChildNodes.Add(AVarListNode);
 
+  // Adding properties
   FProperties.Add(TASTNode.TProperty.Create('VarKeywordNode', AVarKeywordNode));
   FProperties.Add(TASTNode.TProperty.Create('VarListNode', AVarListNode));
 end;
@@ -3687,6 +3959,8 @@ end;
 constructor TVariantGroupNode.Create(AValueListNode: TListNode; AColonNode: TToken; AOpenParenthesisNode: TToken; AFieldDeclListNode: TListNode; AVariantSectionNode: TVariantSectionNode; ACloseParenthesisNode: TToken; ASemicolonNode: TToken);
 begin
   inherited Create;
+
+  // Assigning private members
   FValueListNode := AValueListNode;
   FColonNode := AColonNode;
   FOpenParenthesisNode := AOpenParenthesisNode;
@@ -3695,6 +3969,7 @@ begin
   FCloseParenthesisNode := ACloseParenthesisNode;
   FSemicolonNode := ASemicolonNode;
 
+  // Adding child nodes
   FChildNodes.Add(AValueListNode);
   FChildNodes.Add(AColonNode);
   FChildNodes.Add(AOpenParenthesisNode);
@@ -3703,6 +3978,7 @@ begin
   FChildNodes.Add(ACloseParenthesisNode);
   FChildNodes.Add(ASemicolonNode);
 
+  // Adding properties
   FProperties.Add(TASTNode.TProperty.Create('ValueListNode', AValueListNode));
   FProperties.Add(TASTNode.TProperty.Create('ColonNode', AColonNode));
   FProperties.Add(TASTNode.TProperty.Create('OpenParenthesisNode', AOpenParenthesisNode));
@@ -3728,6 +4004,8 @@ end;
 constructor TVariantSectionNode.Create(ACaseKeywordNode: TToken; ANameNode: TToken; AColonNode: TToken; ATypeNode: TASTNode; AOfKeywordNode: TToken; AVariantGroupListNode: TListNode);
 begin
   inherited Create;
+
+  // Assigning private members
   FCaseKeywordNode := ACaseKeywordNode;
   FNameNode := ANameNode;
   FColonNode := AColonNode;
@@ -3735,6 +4013,7 @@ begin
   FOfKeywordNode := AOfKeywordNode;
   FVariantGroupListNode := AVariantGroupListNode;
 
+  // Adding child nodes
   FChildNodes.Add(ACaseKeywordNode);
   FChildNodes.Add(ANameNode);
   FChildNodes.Add(AColonNode);
@@ -3742,6 +4021,7 @@ begin
   FChildNodes.Add(AOfKeywordNode);
   FChildNodes.Add(AVariantGroupListNode);
 
+  // Adding properties
   FProperties.Add(TASTNode.TProperty.Create('CaseKeywordNode', ACaseKeywordNode));
   FProperties.Add(TASTNode.TProperty.Create('NameNode', ANameNode));
   FProperties.Add(TASTNode.TProperty.Create('ColonNode', AColonNode));
@@ -3762,12 +4042,16 @@ end;
 constructor TVisibilityNode.Create(AStrictSemikeywordNode: TToken; AVisibilityKeywordNode: TToken);
 begin
   inherited Create;
+
+  // Assigning private members
   FStrictSemikeywordNode := AStrictSemikeywordNode;
   FVisibilityKeywordNode := AVisibilityKeywordNode;
 
+  // Adding child nodes
   FChildNodes.Add(AStrictSemikeywordNode);
   FChildNodes.Add(AVisibilityKeywordNode);
 
+  // Adding properties
   FProperties.Add(TASTNode.TProperty.Create('StrictSemikeywordNode', AStrictSemikeywordNode));
   FProperties.Add(TASTNode.TProperty.Create('VisibilityKeywordNode', AVisibilityKeywordNode));
 end;
@@ -3784,12 +4068,16 @@ end;
 constructor TVisibilitySectionNode.Create(AVisibilityNode: TVisibilityNode; AContentListNode: TListNode);
 begin
   inherited Create;
+
+  // Assigning private members
   FVisibilityNode := AVisibilityNode;
   FContentListNode := AContentListNode;
 
+  // Adding child nodes
   FChildNodes.Add(AVisibilityNode);
   FChildNodes.Add(AContentListNode);
 
+  // Adding properties
   FProperties.Add(TASTNode.TProperty.Create('VisibilityNode', AVisibilityNode));
   FProperties.Add(TASTNode.TProperty.Create('ContentListNode', AContentListNode));
 end;
@@ -3808,16 +4096,20 @@ end;
 constructor TWhileStatementNode.Create(AWhileKeywordNode: TToken; AConditionNode: TASTNode; ADoKeywordNode: TToken; AStatementNode: TASTNode);
 begin
   inherited Create;
+
+  // Assigning private members
   FWhileKeywordNode := AWhileKeywordNode;
   FConditionNode := AConditionNode;
   FDoKeywordNode := ADoKeywordNode;
   FStatementNode := AStatementNode;
 
+  // Adding child nodes
   FChildNodes.Add(AWhileKeywordNode);
   FChildNodes.Add(AConditionNode);
   FChildNodes.Add(ADoKeywordNode);
   FChildNodes.Add(AStatementNode);
 
+  // Adding properties
   FProperties.Add(TASTNode.TProperty.Create('WhileKeywordNode', AWhileKeywordNode));
   FProperties.Add(TASTNode.TProperty.Create('ConditionNode', AConditionNode));
   FProperties.Add(TASTNode.TProperty.Create('DoKeywordNode', ADoKeywordNode));
@@ -3838,16 +4130,20 @@ end;
 constructor TWithStatementNode.Create(AWithKeywordNode: TToken; AExpressionListNode: TListNode; ADoKeywordNode: TToken; AStatementNode: TASTNode);
 begin
   inherited Create;
+
+  // Assigning private members
   FWithKeywordNode := AWithKeywordNode;
   FExpressionListNode := AExpressionListNode;
   FDoKeywordNode := ADoKeywordNode;
   FStatementNode := AStatementNode;
 
+  // Adding child nodes
   FChildNodes.Add(AWithKeywordNode);
   FChildNodes.Add(AExpressionListNode);
   FChildNodes.Add(ADoKeywordNode);
   FChildNodes.Add(AStatementNode);
 
+  // Adding properties
   FProperties.Add(TASTNode.TProperty.Create('WithKeywordNode', AWithKeywordNode));
   FProperties.Add(TASTNode.TProperty.Create('ExpressionListNode', AExpressionListNode));
   FProperties.Add(TASTNode.TProperty.Create('DoKeywordNode', ADoKeywordNode));

@@ -90,18 +90,21 @@ def generate_nodes(yaml_content):
       
     cs += "constructor T" + node_type_name + ".Create(" + '; '.join(params) + ");\n"
     cs += "begin\n"
-    cs += "  inherited Create;\n"
-
+    cs += "  inherited Create;\n\n"
+    
+    cs += "  // Assigning private members\n"
     for property in properties:
       cs += "  F" + property.get('Name') + " := A" + property.get('Name') + ";\n"
 
     cs += "\n"
 
+    cs += "  // Adding child nodes\n"
     for property in properties:
       cs += "  FChildNodes.Add(A" + property.get('Name') + ");\n"
 
     cs += "\n"
 
+    cs += "  // Adding properties\n"
     for property in properties:
       cs += "  FProperties.Add(TASTNode.TProperty.Create('" + property.get('Name') + "', A" + property.get('Name') + "));\n"
 
@@ -111,6 +114,7 @@ def generate_nodes(yaml_content):
     if node_type_name == "DirectiveNode":
       cs += "function TDirectiveNode.ForbidsBody: Boolean;\n"
       cs += "begin\n"
+      cs += "  // Forward or External directives must not have a body!\n"
       cs += "  Result := (FKeywordNode.TokenType = TTForwardSemikeyword) or\n"
       cs += "    (FKeywordNode.TokenType = TTExternalSemikeyword);\n"
       cs += "end;\n\n"
@@ -121,10 +125,13 @@ def generate_nodes(yaml_content):
       cs += "var\n"
       cs += "  I: Integer;\n"
       cs += "begin\n"
+      cs += "  // Methods that are not Forward or External must have a body!\n"
       cs += "  Result := True;\n"
+      cs += "  // Iterate through method directives to find forward/external keyword\n"
       cs += "  for I := 0 to FDirectiveListNode.ItemsCount - 1 do\n"
       cs += "    if (FDirectiveListNode.Items[I] as TDirectiveNode).ForbidsBody then\n"
       cs += "    begin\n"
+      cs += "      // forward/external keyword found -> stop iterating and return False\n"
       cs += "      Result := False;\n"
       cs += "      Break;\n"
       cs += "    end;\n"
