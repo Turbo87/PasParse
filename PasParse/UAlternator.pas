@@ -116,7 +116,7 @@ begin
   end;
 
   if Result = nil then
-    AParser.Failure(DisplayText);
+    raise AParser.Failure(DisplayText);
 end;
 
 function TAlternator.GetDisplayText: string;
