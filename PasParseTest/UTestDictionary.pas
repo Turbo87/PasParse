@@ -52,7 +52,7 @@ begin
   OK(ADict.Read('test2') = TObject(true), 'Read');
 
   // Write third pair
-  OK(not ADict.Write('test3', TObject(false)), 'Write');
+  ADict.Items['test3'] := TObject(false);
 
   // Read third pair
   OK(ADict.Items['test3'] = TObject(false), 'Items[]');

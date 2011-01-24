@@ -16,6 +16,8 @@ type
     /// Returns the integer-based index of the given key or -1 if not found
     function IndexOf(const AKey: string): Integer;
 
+    procedure WriteRedirection(const AKey: string; const AValue: TObject);
+
   public
     /// Standard constructor
     constructor Create(const AFreeChildren: Boolean = False);
@@ -30,12 +32,12 @@ type
     function Read(const AKey: string): TObject; overload;
     /// Assigns the given TObject to the given key.
     ///  Returns whether the key already existed before.
-    function Write(const AKey: string; AValue: TObject): Boolean;
+    function Write(const AKey: string; const AValue: TObject): Boolean;
 
     /// Tests whether a key exists in the dictionary
     function Contains(const AKey: string): Boolean;
 
-    property Items[const AKey: string]: TObject read Read;
+    property Items[const AKey: string]: TObject read Read write WriteRedirection;
   end;
 
 implementation
@@ -98,7 +100,7 @@ begin
     Result := nil;
 end;
 
-function TDictionary.Write(const AKey: string; AValue: TObject): Boolean;
+function TDictionary.Write(const AKey: string; const AValue: TObject): Boolean;
 var
   AIndex: Integer;
 begin
@@ -113,6 +115,12 @@ begin
   end
   else
     FList.AddObject(AKey, AValue);
+end;
+
+procedure TDictionary.WriteRedirection(const AKey: string;
+  const AValue: TObject);
+begin
+  Write(AKey, AValue);
 end;
 
 end.
