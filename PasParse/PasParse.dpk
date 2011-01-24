@@ -25,8 +25,7 @@ package PasParse;
 {$IMPLICITBUILD ON}
 
 requires
-  rtl,
-  vcl;
+  rtl;
 
 contains
   UBaseException in 'UBaseException.pas',

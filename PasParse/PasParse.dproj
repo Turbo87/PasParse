@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <ProjectGuid>{ba966b27-c42c-40dd-aa9f-41aea7d53b6e}</ProjectGuid>
@@ -60,6 +60,5 @@
     <DCCReference Include="UTokenSet.pas" />
     <DCCReference Include="UTokenSets.pas" />
     <DCCReference Include="UTokenType.pas" />
-    <DCCReference Include="vcl.dcp" />
   </ItemGroup>
 </Project>
