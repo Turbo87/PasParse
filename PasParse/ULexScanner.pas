@@ -6,39 +6,38 @@ uses
   ULocation, UTokenType, UToken, UTokenSet, UDictionary, Contnrs;
 
 type
+  /// <Description>An instance of this class is returned when a matching token is found.</Description>
+  TMatch = class(TObject)
+  private
+    /// <Description>Length of the token.</Description>
+    FLength: Integer;
+    /// <Description>Parsed text of the token.</Description>
+    /// <Description>This is not whole the text that was tokenized!</Description>
+    /// <Description>See CurlyBraceComment() for and example.</Description>
+    FParsedText: string;
+    /// <Description>Type of the token.</Description>
+    FTokenType: TTokenType;
+
+  public
+    /// <Description>Default constructor.</Description>
+    constructor Create(ATokenType: TTokenType; ALength: Integer); overload;
+    /// <Description>Additional constructor with parsed text.</Description>
+    constructor Create(ATokenType: TTokenType; ALength: Integer;
+      AParsedText: string); overload;
+
+    /// <Description>Length of the token.</Description>
+    property Length: Integer read FLength;
+    /// <Description>Parsed text of the token.</Description>
+    /// <Description>This is not whole the text that was tokenized!</Description>
+    /// <Description>See CurlyBraceComment() for and example.</Description>
+    property ParsedText: String read FParsedText;
+    /// <Description>Type of the token.</Description>
+    property TokenType: TTokenType read FTokenType;
+  end;
+
   /// <Description>The tokenizer.</Description>
   /// <Description>Converts a string to a list of Tokens.</Description>
   TLexScanner = class(TObject)
-  type
-    /// <Description>An instance of this class is returned when a matching token is found.</Description>
-    TMatch = class(TObject)
-    private
-      /// <Description>Length of the token.</Description>
-      FLength: Integer;
-      /// <Description>Parsed text of the token.</Description>
-      /// <Description>This is not whole the text that was tokenized!</Description>
-      /// <Description>See CurlyBraceComment() for and example.</Description>
-      FParsedText: string;
-      /// <Description>Type of the token.</Description>
-      FTokenType: TTokenType;
-
-    public
-      /// <Description>Default constructor.</Description>
-      constructor Create(ATokenType: TTokenType; ALength: Integer); overload;
-      /// <Description>Additional constructor with parsed text.</Description>
-      constructor Create(ATokenType: TTokenType; ALength: Integer;
-        AParsedText: string); overload;
-
-      /// <Description>Length of the token.</Description>
-      property Length: Integer read FLength;
-      /// <Description>Parsed text of the token.</Description>
-      /// <Description>This is not whole the text that was tokenized!</Description>
-      /// <Description>See CurlyBraceComment() for and example.</Description>
-      property ParsedText: String read FParsedText;
-      /// <Description>Type of the token.</Description>
-      property TokenType: TTokenType read FTokenType;
-    end;
-
   private
     /// <Description>Name of the file that this instance should tokenize.</Description>
     FFileName: string;
@@ -53,33 +52,33 @@ type
     procedure AddWordTypes(ATokenSet: TTokenSet; ASuffixLength: Integer);
 
     /// <Description>Searches for an identifier beginning with an ampersand (&).</Description>
-    function AmpersandIdentifier: TLexScanner.TMatch;
+    function AmpersandIdentifier: TMatch;
     /// <Description>Searches for an identifier.</Description>
-    function BareWord: TLexScanner.TMatch;
+    function BareWord: TMatch;
     /// <Description>Searches for a curly braces comment {...}.</Description>
-    function CurlyBraceComment: TLexScanner.TMatch;
+    function CurlyBraceComment: TMatch;
     /// <Description>Searches for a dot-dot token (..).</Description>
-    function DotDot: TLexScanner.TMatch;
+    function DotDot: TMatch;
     /// <Description>Searches for a double-quoted apostrophe ("'").</Description>
-    function DoubleQuotedApostrophe: TLexScanner.TMatch;
+    function DoubleQuotedApostrophe: TMatch;
     /// <Description>Searches for an equality or assignment operator (:= < <= <> = > >=).</Description>
-    function EqualityOrAssignmentOperator: TLexScanner.TMatch;
+    function EqualityOrAssignmentOperator: TMatch;
     /// <Description>Searches for a hexadecimal number.</Description>
-    function HexNumber: TLexScanner.TMatch;
+    function HexNumber: TMatch;
     /// <Description>Searches for a decimal number.</Description>
-    function Number: TLexScanner.TMatch;
+    function Number: TMatch;
     /// <Description>Searches for a parenthesis-star comment (*...*).</Description>
-    function ParenStarComment: TLexScanner.TMatch;
+    function ParenStarComment: TMatch;
     /// <Description>Searches for a valid single character token.</Description>
-    function SingleCharacter: TLexScanner.TMatch;
+    function SingleCharacter: TMatch;
     /// <Description>Searches for a single line comment (// until next line break).</Description>
-    function SingleLineComment: TLexScanner.TMatch;
+    function SingleLineComment: TMatch;
     /// <Description>Searches for a string literal.</Description>
-    function StringLiteral: TLexScanner.TMatch;
+    function StringLiteral: TMatch;
 
     /// <Description>Returns the next Match or nil if no Match found.</Description>
     /// <Description>The caller is responsible for freeing the Match instance!</Description>
-    function NextMatch: TLexScanner.TMatch;
+    function NextMatch: TMatch;
 
     /// <Description>Checks whether the requested offset is still a valid string position.</Description>
     function CanRead(AOffset: Integer): Boolean;
@@ -159,7 +158,7 @@ begin
   end;      
 end;
 
-function TLexScanner.AmpersandIdentifier: TLexScanner.TMatch;
+function TLexScanner.AmpersandIdentifier: TMatch;
 var
   ALength: Integer;
 begin
@@ -175,7 +174,7 @@ begin
   end;
 end;
 
-function TLexScanner.BareWord: TLexScanner.TMatch;
+function TLexScanner.BareWord: TMatch;
 var
   ALength: Integer;
   AWord: string;
@@ -222,7 +221,7 @@ begin
   FIndex := 0;
 end;
 
-function TLexScanner.CurlyBraceComment: TLexScanner.TMatch;
+function TLexScanner.CurlyBraceComment: TMatch;
 var
   ALength: Integer;
   AParsedText: string;
@@ -255,7 +254,7 @@ begin
   inherited;
 end;
 
-function TLexScanner.DotDot: TLexScanner.TMatch;
+function TLexScanner.DotDot: TMatch;
 begin
   if (Peek(0) = '.') and (Peek(1) = '.') then
     Result := TMatch.Create(TTDotDot, 2)
@@ -263,7 +262,7 @@ begin
     Result := nil;
 end;
 
-function TLexScanner.DoubleQuotedApostrophe: TLexScanner.TMatch;
+function TLexScanner.DoubleQuotedApostrophe: TMatch;
 begin
   if (Peek(0) = '"') and (Peek(1) = '''') and (Peek(2) = '"') then
     Result := TMatch.Create(TTStringLiteral, 3)
@@ -271,7 +270,7 @@ begin
     Result := nil;
 end;
 
-function TLexScanner.EqualityOrAssignmentOperator: TLexScanner.TMatch;
+function TLexScanner.EqualityOrAssignmentOperator: TMatch;
 begin
   Result := nil;
   case Peek(0) of
@@ -323,7 +322,7 @@ begin
   Result := ATokens;
 end;
 
-function TLexScanner.HexNumber: TLexScanner.TMatch;
+function TLexScanner.HexNumber: TMatch;
 var
   ALength: Integer;
 begin
@@ -373,7 +372,7 @@ begin
   Result := IsLetter(AChar) or (AChar = '_');
 end;
 
-function TLexScanner.NextMatch: TLexScanner.TMatch;
+function TLexScanner.NextMatch: TMatch;
 begin
   Result := BareWord;
   if Result = nil then
@@ -432,7 +431,7 @@ begin
   end;
 end;
 
-function TLexScanner.Number: TLexScanner.TMatch;
+function TLexScanner.Number: TMatch;
 var
   ALength: Integer;
 begin
@@ -466,7 +465,7 @@ begin
   end;
 end;
 
-function TLexScanner.ParenStarComment: TLexScanner.TMatch;
+function TLexScanner.ParenStarComment: TMatch;
 var
   ALength: Integer;
   AParsedText: string;
@@ -508,7 +507,7 @@ begin
   Result := FSource[FIndex + AOffset + 1];
 end;
 
-function TLexScanner.SingleCharacter: TLexScanner.TMatch;
+function TLexScanner.SingleCharacter: TMatch;
 begin
   Result := nil;
   case Peek(0) of
@@ -529,7 +528,7 @@ begin
   end;
 end;
 
-function TLexScanner.SingleLineComment: TLexScanner.TMatch;
+function TLexScanner.SingleLineComment: TMatch;
 var
   ALength: Integer;
 begin
@@ -548,7 +547,7 @@ begin
   end;
 end;
 
-function TLexScanner.StringLiteral: TLexScanner.TMatch;
+function TLexScanner.StringLiteral: TMatch;
 var
   ALength: Integer;
 begin
@@ -582,15 +581,15 @@ begin
   end;
 end;
 
-{ TLexScanner.TMatch }
+{ TMatch }
 
-constructor TLexScanner.TMatch.Create(ATokenType: TTokenType; ALength: Integer);
+constructor TMatch.Create(ATokenType: TTokenType; ALength: Integer);
 begin
   // Call overloaded constructor with AParsedText = ''
   Create(ATokenType, ALength, '');
 end;
 
-constructor TLexScanner.TMatch.Create(ATokenType: TTokenType; ALength: Integer;
+constructor TMatch.Create(ATokenType: TTokenType; ALength: Integer;
   AParsedText: string);
 begin
   FTokenType := ATokenType;
