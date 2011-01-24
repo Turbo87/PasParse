@@ -105,7 +105,12 @@ begin
   AIndex := IndexOf(AKey);
   Result := (AIndex >= 0);
   if Result then
+  begin
+    if FFreeChildren then
+        FList.Objects[AIndex].Free;
+
     FList.Objects[AIndex] := AValue
+  end
   else
     FList.AddObject(AKey, AValue);
 end;
