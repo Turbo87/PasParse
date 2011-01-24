@@ -6,111 +6,126 @@ uses
   ULocation, UTokenType, UToken, UTokenSet, UDictionary, Contnrs;
 
 type
+  /// <Description>The tokenizer.</Description>
+  /// <Description>Converts a string to a list of Tokens.</Description>
   TLexScanner = class(TObject)
   type
-    /// An instance of this class is returned when a matching token is found
+    /// <Description>An instance of this class is returned when a matching token is found.</Description>
     TMatch = class(TObject)
     private
+      /// <Description>Length of the token.</Description>
       FLength: Integer;
+      /// <Description>Parsed text of the token.</Description>
+      /// <Description>This is not whole the text that was tokenized!</Description>
+      /// <Description>See CurlyBraceComment() for and example.</Description>
       FParsedText: string;
+      /// <Description>Type of the token.</Description>
       FTokenType: TTokenType;
-    public
-      /// Standard constructor
-      constructor Create(ATokenType: TTokenType; ALength: Integer); overload;
-      /// Additional constructor with parsed text
-      constructor Create(ATokenType: TTokenType; ALength: Integer;
-                         AParsedText: string); overload;
 
-      /// Length of the found token
+    public
+      /// <Description>Default constructor.</Description>
+      constructor Create(ATokenType: TTokenType; ALength: Integer); overload;
+      /// <Description>Additional constructor with parsed text.</Description>
+      constructor Create(ATokenType: TTokenType; ALength: Integer;
+        AParsedText: string); overload;
+
+      /// <Description>Length of the token.</Description>
       property Length: Integer read FLength;
+      /// <Description>Parsed text of the token.</Description>
+      /// <Description>This is not whole the text that was tokenized!</Description>
+      /// <Description>See CurlyBraceComment() for and example.</Description>
       property ParsedText: String read FParsedText;
-      /// Type of the token
+      /// <Description>Type of the token.</Description>
       property TokenType: TTokenType read FTokenType;
     end;
 
   private
+    /// <Description>Name of the file that this instance should tokenize.</Description>
     FFileName: string;
+    /// <Description>Current reading position.</Description>
     FIndex: Integer;
+    /// <Description>Content of the file that this instance should tokenize.</Description>
     FSource: string;
+    /// <Description>Dictionary of (semi)keywords.</Description>
     FWordTypes: TDictionary;
 
-    /// Adds contents of the given TTokenSet to the FWordTypes dictionary
+    /// <Description>Adds contents of the given TTokenSet to the FWordTypes dictionary.</Description>
     procedure AddWordTypes(ATokenSet: TTokenSet; ASuffixLength: Integer);
 
-    /// Searches for an identifier beginning with an ampersand (&)
+    /// <Description>Searches for an identifier beginning with an ampersand (&).</Description>
     function AmpersandIdentifier: TLexScanner.TMatch;
-    /// Searches for an identifier
+    /// <Description>Searches for an identifier.</Description>
     function BareWord: TLexScanner.TMatch;
-    /// Searches for a curly braces comment {...}
+    /// <Description>Searches for a curly braces comment {...}.</Description>
     function CurlyBraceComment: TLexScanner.TMatch;
-    /// Searches for a dot-dot token (..)
+    /// <Description>Searches for a dot-dot token (..).</Description>
     function DotDot: TLexScanner.TMatch;
-    /// Searches for a double-quoted apostrophe ("'")
+    /// <Description>Searches for a double-quoted apostrophe ("'").</Description>
     function DoubleQuotedApostrophe: TLexScanner.TMatch;
-    /// Searches for an equality or assignment operator (:= < <= <> = > >=)
+    /// <Description>Searches for an equality or assignment operator (:= < <= <> = > >=).</Description>
     function EqualityOrAssignmentOperator: TLexScanner.TMatch;
-    /// Searches for a hexadecimal number
+    /// <Description>Searches for a hexadecimal number.</Description>
     function HexNumber: TLexScanner.TMatch;
-    /// Searches for a decimal number
+    /// <Description>Searches for a decimal number.</Description>
     function Number: TLexScanner.TMatch;
-    /// Searches for a parenthesis-star comment (*...*)
+    /// <Description>Searches for a parenthesis-star comment (*...*).</Description>
     function ParenStarComment: TLexScanner.TMatch;
-    /// Searches for a valid single character token
+    /// <Description>Searches for a valid single character token.</Description>
     function SingleCharacter: TLexScanner.TMatch;
-    /// Searches for a single line comment (// until next line break)                                
+    /// <Description>Searches for a single line comment (// until next line break).</Description>
     function SingleLineComment: TLexScanner.TMatch;
-    /// Searches for a string literal
+    /// <Description>Searches for a string literal.</Description>
     function StringLiteral: TLexScanner.TMatch;
 
-    /// Retrieve the next match, returns nil if no match found
-    ///  The caller needs to make sure that the created
-    ///  TMatch instance is freed again
+    /// <Description>Returns the next Match or nil if no Match found.</Description>
+    /// <Description>The caller is responsible for freeing the Match instance!</Description>
     function NextMatch: TLexScanner.TMatch;
 
-    /// Checks whether the requested offset is still a valid string position
+    /// <Description>Checks whether the requested offset is still a valid string position.</Description>
     function CanRead(AOffset: Integer): Boolean;
-    /// Reads the character at the given offset
+    /// <Description>Reads the character at the given offset.</Description>
     function Read(AOffset: Integer): Char;
-    /// Reads the character at the given offset (checks for valid position first)
+    /// <Description>Reads the character at the given offset.</Description>
+    /// <Description>Returns End-of-Transmission character (#4) if invalid position.</Description>
     function Peek(AOffset: Integer): Char;
 
-    /// Checks whether the given character is valid for starting an identifier
+    /// <Description>Checks whether the given character is valid for starting an identifier.</Description>
     function IsWordLeadChar(AChar: Char): Boolean;
-    /// Checks whether the given character is valid for continuing an identifier
+    /// <Description>Checks whether the given character is valid for continuing an identifier.</Description>
     function IsWordContinuationChar(AChar: Char): Boolean;
-    /// Checks whether the given character is a valid hexadecimal digit
+    /// <Description>Checks whether the given character is a valid hexadecimal digit.</Description>
     function IsHexDigit(AChar: Char): Boolean;
-    /// Checks whether the given character is a valid digit
+    /// <Description>Checks whether the given character is a valid digit.</Description>
     function IsDigit(AChar: Char): Boolean;
-    /// Checks whether the given character is a letter (A-Z and a-z)
+    /// <Description>Checks whether the given character is a letter (A-Z and a-z).</Description>
     function IsLetter(AChar: Char): Boolean;
-    /// Checks whether the given character is some form of whitespace
+    /// <Description>Checks whether the given character is some form of whitespace.</Description>
     function IsWhitespace(AChar: Char): Boolean;
 
-    /// Returns a TLocation record of the current reading position
-    ///  The caller is responsible for freeing the resulting TLocation instance
+    /// <Description>Returns a Location instance of the current reading position.</Description>
+    /// <Description>The caller is responsible for freeing the Location instance!</Description>
     function GetLocation: TLocation;
 
-    /// Returns a list with all found tokens
-    ///  The caller is responsible for destruction of the list and its items!
+    /// <Description>Returns a list with all found tokens.</Description>
+    /// <Description>The caller is responsible for freeing the list!</Description>
     function GetTokens: TObjectList;
 
   public
-    /// Standard constructor
+    /// <Description>Default constructor.</Description>
     constructor Create(ASource, AFileName: string);
+    /// <Description>Default destructor.</Description>
     destructor Destroy; override;
 
-    /// Read-only representation of the current reading position as TLocation
-    ///  The caller is responsible for freeing the resulting TLocation instance
-    property Location: TLocation read GetLocation;
-
-    /// Retrieve the next token, returns nil if end-of-file
-    ///  The caller needs to make sure that the created
-    ///  TToken instance is freed again
+    /// <Description>Returns the next Token or nil if end-of-file is reached.</Description>
+    /// <Description>The caller is responsible for freeing the Token!</Description>
     function NextToken: TToken;
 
-    /// Returns a list with all found tokens
-    ///  The caller is responsible for destruction of the list and its items!
+    /// <Description>Returns a Location instance of the current reading position.</Description>
+    /// <Description>The caller is responsible for freeing the Location instance!</Description>
+    property Location: TLocation read GetLocation;
+
+    /// <Description>Returns a list with all found tokens.</Description>
+    /// <Description>The caller is responsible for freeing the list!</Description>
     property Tokens: TObjectList read GetTokens;
   end;
 
@@ -292,7 +307,7 @@ var
   ATokens: TObjectList;
   AToken: TToken;
 begin
-  // Create TToken list that does not kill it's children on destruction
+  // Create TToken list
   ATokens := TObjectList.Create;
 
   // Iterate through tokens and add them to the list
