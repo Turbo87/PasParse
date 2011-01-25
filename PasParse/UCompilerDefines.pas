@@ -129,9 +129,7 @@ function TCompilerDefines.IsTrue(ACompilerDirective: string;
   ALocation: TLocation): Boolean;
 var
   AObject: TObject;
-  AString: string;
 begin
-  AString := Copy(AnsiLowerCase(ACompilerDirective), 1, 6);
   if FDictionary.Read(AnsiLowerCase(ACompilerDirective), AObject) then
     Result := Boolean(AObject)
   else if Copy(AnsiLowerCase(ACompilerDirective), 1, 6) = 'ifdef ' then
