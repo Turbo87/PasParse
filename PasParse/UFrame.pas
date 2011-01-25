@@ -54,8 +54,11 @@ begin
 end;
 
 function TFrame.GetDisplayName: string;
+var
+  AType: string;
 begin
-  Result := Copy(GetEnumName(TypeInfo(TTokenType), Integer(FToken.TokenType)), 3);
+  AType := GetEnumName(TypeInfo(TTokenType), Integer(FToken.TokenType));
+  Result := Copy(AType, 3, Length(AType) - 2);
 end;
 
 function TFrame.GetIsEOF: Boolean;

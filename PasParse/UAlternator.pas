@@ -283,9 +283,12 @@ begin
 end;
 
 function TRuleAlternate.GetDisplayText: string;
+var
+  AType: string;
 begin
   // Use RTTI to get the Alternate name from the enum value
-  Result := Copy(GetEnumName(TypeInfo(TRuleType), Integer(FRuleType)), 3)
+  AType := GetEnumName(TypeInfo(TRuleType), Integer(FRuleType));
+  Result := Copy(AType, 3, Length(AType) - 2)
 end;
 
 function TRuleAlternate.LookAhead(AParser: IParser): Boolean;

@@ -39,8 +39,11 @@ begin
 end;
 
 function TSingleTokenTokenSet.GetName: string;
+var
+  AType: string;
 begin
-  Result := Copy(GetEnumName(TypeInfo(TTokenType), Integer(FTokenType)), 3);
+  AType := GetEnumName(TypeInfo(TTokenType), Integer(FTokenType));
+  Result := Copy(AType, 3, Length(AType) - 2);
 end;
 
 end.

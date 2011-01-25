@@ -35,10 +35,14 @@ begin
 end;
 
 function TRule.Execute: TASTNode;
+var
+   AType: string;
 begin
   if not CanParse then
-    raise FParser.Failure(Copy(GetEnumName(TypeInfo(TRuleType),
-      Integer(FRuleType)), 3));
+  begin
+    AType := GetEnumName(TypeInfo(TRuleType), Integer(FRuleType));
+    raise FParser.Failure(Copy(AType, 3, Length(AType) - 2));
+  end;
   Result := Evaluate;
 end;
 

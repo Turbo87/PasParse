@@ -41,7 +41,7 @@ begin
       // Get token name (e.g. TTIfKeyword)
       AWord := GetEnumName(TypeInfo(TTokenType), Integer(ATokenType));
       // Convert token name to keyword (e.g. TTIfKeyword -> If)
-      AWord := StringReplace(Copy(AWord, 3), 'Semikeyword', '', []);
+      AWord := StringReplace(Copy(AWord, 3, Length(AWord) - 2), 'Semikeyword', '', []);
 
       OK(AWord, TTestParser.ParsesAs(AWord,
         'Identifier |' + AWord + '|', RTIdent));
@@ -57,7 +57,7 @@ begin
       // Get token name (e.g. TTIfKeyword)
       AWord := GetEnumName(TypeInfo(TTokenType), Integer(ATokenType));
       // Convert token name to keyword (e.g. TTIfKeyword -> If)
-      AWord := StringReplace(Copy(AWord, 3), 'Keyword', '', []);
+      AWord := StringReplace(Copy(AWord, 3, Length(AWord) - 2), 'Keyword', '', []);
 
       try
         TTestParser.ParsesAs(AWord, 'Identifier |' + AWord + '|', RTIdent);

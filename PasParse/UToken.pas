@@ -85,8 +85,11 @@ begin
 end;
 
 function TToken.InspectTo(AIndentCount: Integer): string;
+var
+  AType: string;
 begin
-  Result := Copy(GetEnumName(TypeInfo(TTokenType), Integer(TokenType)), 3) +
+  AType := GetEnumName(TypeInfo(TTokenType), Integer(TokenType));
+  Result := Copy(AType, 3, Length(AType) - 2) +
     ' |' + Text + '|';
   if (ParsedText <> '') then
     Result := Result + ', parsed=|' + ParsedText + '|';
