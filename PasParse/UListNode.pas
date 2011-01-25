@@ -51,7 +51,7 @@ begin
     FChildNodes.Add(AItems[I]);
 
   for I := 0 to AItems.Count - 1 do
-    FProperties.Add(TASTNode.TProperty.Create('Items[' + IntToStr(I) + ']', (AItems[I] as TASTNode)));
+    FProperties.Add(TASTNodeProperty.Create('Items[' + IntToStr(I) + ']', (AItems[I] as TASTNode)));
 end;
 
 function TListNode.GetCount: Integer;

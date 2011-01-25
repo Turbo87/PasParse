@@ -41,8 +41,8 @@ begin
   FChildNodes.Add(AItemNode);
   FChildNodes.Add(ADelimiterNode);
 
-  FProperties.Add(TASTNode.TProperty.Create('ItemNode', AItemNode));
-  FProperties.Add(TASTNode.TProperty.Create('DelimiterNode', ADelimiterNode));
+  FProperties.Add(TASTNodeProperty.Create('ItemNode', AItemNode));
+  FProperties.Add(TASTNodeProperty.Create('DelimiterNode', ADelimiterNode));
 end;
 
 end.

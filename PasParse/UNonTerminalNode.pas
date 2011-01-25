@@ -51,13 +51,13 @@ function TNonTerminalNode.InspectTo(AIndentCount: Integer): string;
 var
   AChildIndentCount: Integer;
   I: Integer;
-  AProperty: TASTNode.TProperty;
+  AProperty: TASTNodeProperty;
 begin
   Result := Copy(ClassName, 2, Length(ClassName) - 1);
   AChildIndentCount := AIndentCount + 1;
   for I := 0 to FProperties.Count - 1 do
   begin
-    AProperty := (FProperties.Items[I] as TASTNode.TProperty);
+    AProperty := (FProperties.Items[I] as TASTNodeProperty);
     Result := Result + #13#10 + StringOfChar(' ', AChildIndentCount * 2) +
       AProperty.Key + ': ';
     if AProperty.Value <> nil then

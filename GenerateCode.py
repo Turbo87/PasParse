@@ -106,7 +106,7 @@ def generate_nodes(yaml_content):
 
     cs += "  // Adding properties\n"
     for property in properties:
-      cs += "  FProperties.Add(TASTNode.TProperty.Create('" + property.get('Name') + "', A" + property.get('Name') + "));\n"
+      cs += "  FProperties.Add(TASTNodeProperty.Create('" + property.get('Name') + "', A" + property.get('Name') + "));\n"
 
     cs += "end;\n\n"
 

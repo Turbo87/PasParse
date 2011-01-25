@@ -1523,12 +1523,12 @@ begin
   FChildNodes.Add(ATypeNode);
 
   // Adding properties
-  FProperties.Add(TASTNode.TProperty.Create('ArrayKeywordNode', AArrayKeywordNode));
-  FProperties.Add(TASTNode.TProperty.Create('OpenBracketNode', AOpenBracketNode));
-  FProperties.Add(TASTNode.TProperty.Create('IndexListNode', AIndexListNode));
-  FProperties.Add(TASTNode.TProperty.Create('CloseBracketNode', ACloseBracketNode));
-  FProperties.Add(TASTNode.TProperty.Create('OfKeywordNode', AOfKeywordNode));
-  FProperties.Add(TASTNode.TProperty.Create('TypeNode', ATypeNode));
+  FProperties.Add(TASTNodeProperty.Create('ArrayKeywordNode', AArrayKeywordNode));
+  FProperties.Add(TASTNodeProperty.Create('OpenBracketNode', AOpenBracketNode));
+  FProperties.Add(TASTNodeProperty.Create('IndexListNode', AIndexListNode));
+  FProperties.Add(TASTNodeProperty.Create('CloseBracketNode', ACloseBracketNode));
+  FProperties.Add(TASTNodeProperty.Create('OfKeywordNode', AOfKeywordNode));
+  FProperties.Add(TASTNodeProperty.Create('TypeNode', ATypeNode));
 end;
 
 { TAssemblerStatementNode }
@@ -1553,8 +1553,8 @@ begin
   FChildNodes.Add(AEndKeywordNode);
 
   // Adding properties
-  FProperties.Add(TASTNode.TProperty.Create('AsmKeywordNode', AAsmKeywordNode));
-  FProperties.Add(TASTNode.TProperty.Create('EndKeywordNode', AEndKeywordNode));
+  FProperties.Add(TASTNodeProperty.Create('AsmKeywordNode', AAsmKeywordNode));
+  FProperties.Add(TASTNodeProperty.Create('EndKeywordNode', AEndKeywordNode));
 end;
 
 { TAttributeNode }
@@ -1588,11 +1588,11 @@ begin
   FChildNodes.Add(ACloseBracketNode);
 
   // Adding properties
-  FProperties.Add(TASTNode.TProperty.Create('OpenBracketNode', AOpenBracketNode));
-  FProperties.Add(TASTNode.TProperty.Create('ScopeNode', AScopeNode));
-  FProperties.Add(TASTNode.TProperty.Create('ColonNode', AColonNode));
-  FProperties.Add(TASTNode.TProperty.Create('ValueNode', AValueNode));
-  FProperties.Add(TASTNode.TProperty.Create('CloseBracketNode', ACloseBracketNode));
+  FProperties.Add(TASTNodeProperty.Create('OpenBracketNode', AOpenBracketNode));
+  FProperties.Add(TASTNodeProperty.Create('ScopeNode', AScopeNode));
+  FProperties.Add(TASTNodeProperty.Create('ColonNode', AColonNode));
+  FProperties.Add(TASTNodeProperty.Create('ValueNode', AValueNode));
+  FProperties.Add(TASTNodeProperty.Create('CloseBracketNode', ACloseBracketNode));
 end;
 
 { TBinaryOperationNode }
@@ -1620,9 +1620,9 @@ begin
   FChildNodes.Add(ARightNode);
 
   // Adding properties
-  FProperties.Add(TASTNode.TProperty.Create('LeftNode', ALeftNode));
-  FProperties.Add(TASTNode.TProperty.Create('OperatorNode', AOperatorNode));
-  FProperties.Add(TASTNode.TProperty.Create('RightNode', ARightNode));
+  FProperties.Add(TASTNodeProperty.Create('LeftNode', ALeftNode));
+  FProperties.Add(TASTNodeProperty.Create('OperatorNode', AOperatorNode));
+  FProperties.Add(TASTNodeProperty.Create('RightNode', ARightNode));
 end;
 
 { TBlockNode }
@@ -1650,9 +1650,9 @@ begin
   FChildNodes.Add(AEndKeywordNode);
 
   // Adding properties
-  FProperties.Add(TASTNode.TProperty.Create('BeginKeywordNode', ABeginKeywordNode));
-  FProperties.Add(TASTNode.TProperty.Create('StatementListNode', AStatementListNode));
-  FProperties.Add(TASTNode.TProperty.Create('EndKeywordNode', AEndKeywordNode));
+  FProperties.Add(TASTNodeProperty.Create('BeginKeywordNode', ABeginKeywordNode));
+  FProperties.Add(TASTNodeProperty.Create('StatementListNode', AStatementListNode));
+  FProperties.Add(TASTNodeProperty.Create('EndKeywordNode', AEndKeywordNode));
 end;
 
 { TCaseSelectorNode }
@@ -1683,10 +1683,10 @@ begin
   FChildNodes.Add(ASemicolonNode);
 
   // Adding properties
-  FProperties.Add(TASTNode.TProperty.Create('ValueListNode', AValueListNode));
-  FProperties.Add(TASTNode.TProperty.Create('ColonNode', AColonNode));
-  FProperties.Add(TASTNode.TProperty.Create('StatementNode', AStatementNode));
-  FProperties.Add(TASTNode.TProperty.Create('SemicolonNode', ASemicolonNode));
+  FProperties.Add(TASTNodeProperty.Create('ValueListNode', AValueListNode));
+  FProperties.Add(TASTNodeProperty.Create('ColonNode', AColonNode));
+  FProperties.Add(TASTNodeProperty.Create('StatementNode', AStatementNode));
+  FProperties.Add(TASTNodeProperty.Create('SemicolonNode', ASemicolonNode));
 end;
 
 { TCaseStatementNode }
@@ -1726,13 +1726,13 @@ begin
   FChildNodes.Add(AEndKeywordNode);
 
   // Adding properties
-  FProperties.Add(TASTNode.TProperty.Create('CaseKeywordNode', ACaseKeywordNode));
-  FProperties.Add(TASTNode.TProperty.Create('ExpressionNode', AExpressionNode));
-  FProperties.Add(TASTNode.TProperty.Create('OfKeywordNode', AOfKeywordNode));
-  FProperties.Add(TASTNode.TProperty.Create('SelectorListNode', ASelectorListNode));
-  FProperties.Add(TASTNode.TProperty.Create('ElseKeywordNode', AElseKeywordNode));
-  FProperties.Add(TASTNode.TProperty.Create('ElseStatementListNode', AElseStatementListNode));
-  FProperties.Add(TASTNode.TProperty.Create('EndKeywordNode', AEndKeywordNode));
+  FProperties.Add(TASTNodeProperty.Create('CaseKeywordNode', ACaseKeywordNode));
+  FProperties.Add(TASTNodeProperty.Create('ExpressionNode', AExpressionNode));
+  FProperties.Add(TASTNodeProperty.Create('OfKeywordNode', AOfKeywordNode));
+  FProperties.Add(TASTNodeProperty.Create('SelectorListNode', ASelectorListNode));
+  FProperties.Add(TASTNodeProperty.Create('ElseKeywordNode', AElseKeywordNode));
+  FProperties.Add(TASTNodeProperty.Create('ElseStatementListNode', AElseStatementListNode));
+  FProperties.Add(TASTNodeProperty.Create('EndKeywordNode', AEndKeywordNode));
 end;
 
 { TClassOfNode }
@@ -1760,9 +1760,9 @@ begin
   FChildNodes.Add(ATypeNode);
 
   // Adding properties
-  FProperties.Add(TASTNode.TProperty.Create('ClassKeywordNode', AClassKeywordNode));
-  FProperties.Add(TASTNode.TProperty.Create('OfKeywordNode', AOfKeywordNode));
-  FProperties.Add(TASTNode.TProperty.Create('TypeNode', ATypeNode));
+  FProperties.Add(TASTNodeProperty.Create('ClassKeywordNode', AClassKeywordNode));
+  FProperties.Add(TASTNodeProperty.Create('OfKeywordNode', AOfKeywordNode));
+  FProperties.Add(TASTNodeProperty.Create('TypeNode', ATypeNode));
 end;
 
 { TClassTypeNode }
@@ -1802,13 +1802,13 @@ begin
   FChildNodes.Add(AEndKeywordNode);
 
   // Adding properties
-  FProperties.Add(TASTNode.TProperty.Create('ClassKeywordNode', AClassKeywordNode));
-  FProperties.Add(TASTNode.TProperty.Create('DispositionNode', ADispositionNode));
-  FProperties.Add(TASTNode.TProperty.Create('OpenParenthesisNode', AOpenParenthesisNode));
-  FProperties.Add(TASTNode.TProperty.Create('InheritanceListNode', AInheritanceListNode));
-  FProperties.Add(TASTNode.TProperty.Create('CloseParenthesisNode', ACloseParenthesisNode));
-  FProperties.Add(TASTNode.TProperty.Create('ContentListNode', AContentListNode));
-  FProperties.Add(TASTNode.TProperty.Create('EndKeywordNode', AEndKeywordNode));
+  FProperties.Add(TASTNodeProperty.Create('ClassKeywordNode', AClassKeywordNode));
+  FProperties.Add(TASTNodeProperty.Create('DispositionNode', ADispositionNode));
+  FProperties.Add(TASTNodeProperty.Create('OpenParenthesisNode', AOpenParenthesisNode));
+  FProperties.Add(TASTNodeProperty.Create('InheritanceListNode', AInheritanceListNode));
+  FProperties.Add(TASTNodeProperty.Create('CloseParenthesisNode', ACloseParenthesisNode));
+  FProperties.Add(TASTNodeProperty.Create('ContentListNode', AContentListNode));
+  FProperties.Add(TASTNodeProperty.Create('EndKeywordNode', AEndKeywordNode));
 end;
 
 { TConstSectionNode }
@@ -1833,8 +1833,8 @@ begin
   FChildNodes.Add(AConstListNode);
 
   // Adding properties
-  FProperties.Add(TASTNode.TProperty.Create('ConstKeywordNode', AConstKeywordNode));
-  FProperties.Add(TASTNode.TProperty.Create('ConstListNode', AConstListNode));
+  FProperties.Add(TASTNodeProperty.Create('ConstKeywordNode', AConstKeywordNode));
+  FProperties.Add(TASTNodeProperty.Create('ConstListNode', AConstListNode));
 end;
 
 { TConstantDeclNode }
@@ -1874,13 +1874,13 @@ begin
   FChildNodes.Add(ASemicolonNode);
 
   // Adding properties
-  FProperties.Add(TASTNode.TProperty.Create('NameNode', ANameNode));
-  FProperties.Add(TASTNode.TProperty.Create('ColonNode', AColonNode));
-  FProperties.Add(TASTNode.TProperty.Create('TypeNode', ATypeNode));
-  FProperties.Add(TASTNode.TProperty.Create('EqualSignNode', AEqualSignNode));
-  FProperties.Add(TASTNode.TProperty.Create('ValueNode', AValueNode));
-  FProperties.Add(TASTNode.TProperty.Create('PortabilityDirectiveListNode', APortabilityDirectiveListNode));
-  FProperties.Add(TASTNode.TProperty.Create('SemicolonNode', ASemicolonNode));
+  FProperties.Add(TASTNodeProperty.Create('NameNode', ANameNode));
+  FProperties.Add(TASTNodeProperty.Create('ColonNode', AColonNode));
+  FProperties.Add(TASTNodeProperty.Create('TypeNode', ATypeNode));
+  FProperties.Add(TASTNodeProperty.Create('EqualSignNode', AEqualSignNode));
+  FProperties.Add(TASTNodeProperty.Create('ValueNode', AValueNode));
+  FProperties.Add(TASTNodeProperty.Create('PortabilityDirectiveListNode', APortabilityDirectiveListNode));
+  FProperties.Add(TASTNodeProperty.Create('SemicolonNode', ASemicolonNode));
 end;
 
 { TConstantListNode }
@@ -1908,9 +1908,9 @@ begin
   FChildNodes.Add(ACloseParenthesisNode);
 
   // Adding properties
-  FProperties.Add(TASTNode.TProperty.Create('OpenParenthesisNode', AOpenParenthesisNode));
-  FProperties.Add(TASTNode.TProperty.Create('ItemListNode', AItemListNode));
-  FProperties.Add(TASTNode.TProperty.Create('CloseParenthesisNode', ACloseParenthesisNode));
+  FProperties.Add(TASTNodeProperty.Create('OpenParenthesisNode', AOpenParenthesisNode));
+  FProperties.Add(TASTNodeProperty.Create('ItemListNode', AItemListNode));
+  FProperties.Add(TASTNodeProperty.Create('CloseParenthesisNode', ACloseParenthesisNode));
 end;
 
 { TDirectiveNode }
@@ -1941,10 +1941,10 @@ begin
   FChildNodes.Add(ADataNode);
 
   // Adding properties
-  FProperties.Add(TASTNode.TProperty.Create('SemicolonNode', ASemicolonNode));
-  FProperties.Add(TASTNode.TProperty.Create('KeywordNode', AKeywordNode));
-  FProperties.Add(TASTNode.TProperty.Create('ValueNode', AValueNode));
-  FProperties.Add(TASTNode.TProperty.Create('DataNode', ADataNode));
+  FProperties.Add(TASTNodeProperty.Create('SemicolonNode', ASemicolonNode));
+  FProperties.Add(TASTNodeProperty.Create('KeywordNode', AKeywordNode));
+  FProperties.Add(TASTNodeProperty.Create('ValueNode', AValueNode));
+  FProperties.Add(TASTNodeProperty.Create('DataNode', ADataNode));
 end;
 
 function TDirectiveNode.ForbidsBody: Boolean;
@@ -1979,9 +1979,9 @@ begin
   FChildNodes.Add(AValueNode);
 
   // Adding properties
-  FProperties.Add(TASTNode.TProperty.Create('NameNode', ANameNode));
-  FProperties.Add(TASTNode.TProperty.Create('EqualSignNode', AEqualSignNode));
-  FProperties.Add(TASTNode.TProperty.Create('ValueNode', AValueNode));
+  FProperties.Add(TASTNodeProperty.Create('NameNode', ANameNode));
+  FProperties.Add(TASTNodeProperty.Create('EqualSignNode', AEqualSignNode));
+  FProperties.Add(TASTNodeProperty.Create('ValueNode', AValueNode));
 end;
 
 { TEnumeratedTypeNode }
@@ -2009,9 +2009,9 @@ begin
   FChildNodes.Add(ACloseParenthesisNode);
 
   // Adding properties
-  FProperties.Add(TASTNode.TProperty.Create('OpenParenthesisNode', AOpenParenthesisNode));
-  FProperties.Add(TASTNode.TProperty.Create('ItemListNode', AItemListNode));
-  FProperties.Add(TASTNode.TProperty.Create('CloseParenthesisNode', ACloseParenthesisNode));
+  FProperties.Add(TASTNodeProperty.Create('OpenParenthesisNode', AOpenParenthesisNode));
+  FProperties.Add(TASTNodeProperty.Create('ItemListNode', AItemListNode));
+  FProperties.Add(TASTNodeProperty.Create('CloseParenthesisNode', ACloseParenthesisNode));
 end;
 
 { TExceptionItemNode }
@@ -2051,13 +2051,13 @@ begin
   FChildNodes.Add(ASemicolonNode);
 
   // Adding properties
-  FProperties.Add(TASTNode.TProperty.Create('OnSemikeywordNode', AOnSemikeywordNode));
-  FProperties.Add(TASTNode.TProperty.Create('NameNode', ANameNode));
-  FProperties.Add(TASTNode.TProperty.Create('ColonNode', AColonNode));
-  FProperties.Add(TASTNode.TProperty.Create('TypeNode', ATypeNode));
-  FProperties.Add(TASTNode.TProperty.Create('DoKeywordNode', ADoKeywordNode));
-  FProperties.Add(TASTNode.TProperty.Create('StatementNode', AStatementNode));
-  FProperties.Add(TASTNode.TProperty.Create('SemicolonNode', ASemicolonNode));
+  FProperties.Add(TASTNodeProperty.Create('OnSemikeywordNode', AOnSemikeywordNode));
+  FProperties.Add(TASTNodeProperty.Create('NameNode', ANameNode));
+  FProperties.Add(TASTNodeProperty.Create('ColonNode', AColonNode));
+  FProperties.Add(TASTNodeProperty.Create('TypeNode', ATypeNode));
+  FProperties.Add(TASTNodeProperty.Create('DoKeywordNode', ADoKeywordNode));
+  FProperties.Add(TASTNodeProperty.Create('StatementNode', AStatementNode));
+  FProperties.Add(TASTNodeProperty.Create('SemicolonNode', ASemicolonNode));
 end;
 
 { TExportsItemNode }
@@ -2082,8 +2082,8 @@ begin
   FChildNodes.Add(ASpecifierListNode);
 
   // Adding properties
-  FProperties.Add(TASTNode.TProperty.Create('NameNode', ANameNode));
-  FProperties.Add(TASTNode.TProperty.Create('SpecifierListNode', ASpecifierListNode));
+  FProperties.Add(TASTNodeProperty.Create('NameNode', ANameNode));
+  FProperties.Add(TASTNodeProperty.Create('SpecifierListNode', ASpecifierListNode));
 end;
 
 { TExportsSpecifierNode }
@@ -2108,8 +2108,8 @@ begin
   FChildNodes.Add(AValueNode);
 
   // Adding properties
-  FProperties.Add(TASTNode.TProperty.Create('KeywordNode', AKeywordNode));
-  FProperties.Add(TASTNode.TProperty.Create('ValueNode', AValueNode));
+  FProperties.Add(TASTNodeProperty.Create('KeywordNode', AKeywordNode));
+  FProperties.Add(TASTNodeProperty.Create('ValueNode', AValueNode));
 end;
 
 { TExportsStatementNode }
@@ -2137,9 +2137,9 @@ begin
   FChildNodes.Add(ASemicolonNode);
 
   // Adding properties
-  FProperties.Add(TASTNode.TProperty.Create('ExportsKeywordNode', AExportsKeywordNode));
-  FProperties.Add(TASTNode.TProperty.Create('ItemListNode', AItemListNode));
-  FProperties.Add(TASTNode.TProperty.Create('SemicolonNode', ASemicolonNode));
+  FProperties.Add(TASTNodeProperty.Create('ExportsKeywordNode', AExportsKeywordNode));
+  FProperties.Add(TASTNodeProperty.Create('ItemListNode', AItemListNode));
+  FProperties.Add(TASTNodeProperty.Create('SemicolonNode', ASemicolonNode));
 end;
 
 { TFancyBlockNode }
@@ -2164,8 +2164,8 @@ begin
   FChildNodes.Add(ABlockNode);
 
   // Adding properties
-  FProperties.Add(TASTNode.TProperty.Create('DeclListNode', ADeclListNode));
-  FProperties.Add(TASTNode.TProperty.Create('BlockNode', ABlockNode));
+  FProperties.Add(TASTNodeProperty.Create('DeclListNode', ADeclListNode));
+  FProperties.Add(TASTNodeProperty.Create('BlockNode', ABlockNode));
 end;
 
 { TFieldDeclNode }
@@ -2199,11 +2199,11 @@ begin
   FChildNodes.Add(ASemicolonNode);
 
   // Adding properties
-  FProperties.Add(TASTNode.TProperty.Create('NameListNode', ANameListNode));
-  FProperties.Add(TASTNode.TProperty.Create('ColonNode', AColonNode));
-  FProperties.Add(TASTNode.TProperty.Create('TypeNode', ATypeNode));
-  FProperties.Add(TASTNode.TProperty.Create('PortabilityDirectiveListNode', APortabilityDirectiveListNode));
-  FProperties.Add(TASTNode.TProperty.Create('SemicolonNode', ASemicolonNode));
+  FProperties.Add(TASTNodeProperty.Create('NameListNode', ANameListNode));
+  FProperties.Add(TASTNodeProperty.Create('ColonNode', AColonNode));
+  FProperties.Add(TASTNodeProperty.Create('TypeNode', ATypeNode));
+  FProperties.Add(TASTNodeProperty.Create('PortabilityDirectiveListNode', APortabilityDirectiveListNode));
+  FProperties.Add(TASTNodeProperty.Create('SemicolonNode', ASemicolonNode));
 end;
 
 { TFieldSectionNode }
@@ -2231,9 +2231,9 @@ begin
   FChildNodes.Add(AFieldListNode);
 
   // Adding properties
-  FProperties.Add(TASTNode.TProperty.Create('ClassKeywordNode', AClassKeywordNode));
-  FProperties.Add(TASTNode.TProperty.Create('VarKeywordNode', AVarKeywordNode));
-  FProperties.Add(TASTNode.TProperty.Create('FieldListNode', AFieldListNode));
+  FProperties.Add(TASTNodeProperty.Create('ClassKeywordNode', AClassKeywordNode));
+  FProperties.Add(TASTNodeProperty.Create('VarKeywordNode', AVarKeywordNode));
+  FProperties.Add(TASTNodeProperty.Create('FieldListNode', AFieldListNode));
 end;
 
 { TFileTypeNode }
@@ -2261,9 +2261,9 @@ begin
   FChildNodes.Add(ATypeNode);
 
   // Adding properties
-  FProperties.Add(TASTNode.TProperty.Create('FileKeywordNode', AFileKeywordNode));
-  FProperties.Add(TASTNode.TProperty.Create('OfKeywordNode', AOfKeywordNode));
-  FProperties.Add(TASTNode.TProperty.Create('TypeNode', ATypeNode));
+  FProperties.Add(TASTNodeProperty.Create('FileKeywordNode', AFileKeywordNode));
+  FProperties.Add(TASTNodeProperty.Create('OfKeywordNode', AOfKeywordNode));
+  FProperties.Add(TASTNodeProperty.Create('TypeNode', ATypeNode));
 end;
 
 { TForInStatementNode }
@@ -2300,12 +2300,12 @@ begin
   FChildNodes.Add(AStatementNode);
 
   // Adding properties
-  FProperties.Add(TASTNode.TProperty.Create('ForKeywordNode', AForKeywordNode));
-  FProperties.Add(TASTNode.TProperty.Create('LoopVariableNode', ALoopVariableNode));
-  FProperties.Add(TASTNode.TProperty.Create('InKeywordNode', AInKeywordNode));
-  FProperties.Add(TASTNode.TProperty.Create('ExpressionNode', AExpressionNode));
-  FProperties.Add(TASTNode.TProperty.Create('DoKeywordNode', ADoKeywordNode));
-  FProperties.Add(TASTNode.TProperty.Create('StatementNode', AStatementNode));
+  FProperties.Add(TASTNodeProperty.Create('ForKeywordNode', AForKeywordNode));
+  FProperties.Add(TASTNodeProperty.Create('LoopVariableNode', ALoopVariableNode));
+  FProperties.Add(TASTNodeProperty.Create('InKeywordNode', AInKeywordNode));
+  FProperties.Add(TASTNodeProperty.Create('ExpressionNode', AExpressionNode));
+  FProperties.Add(TASTNodeProperty.Create('DoKeywordNode', ADoKeywordNode));
+  FProperties.Add(TASTNodeProperty.Create('StatementNode', AStatementNode));
 end;
 
 { TForStatementNode }
@@ -2348,14 +2348,14 @@ begin
   FChildNodes.Add(AStatementNode);
 
   // Adding properties
-  FProperties.Add(TASTNode.TProperty.Create('ForKeywordNode', AForKeywordNode));
-  FProperties.Add(TASTNode.TProperty.Create('LoopVariableNode', ALoopVariableNode));
-  FProperties.Add(TASTNode.TProperty.Create('ColonEqualsNode', AColonEqualsNode));
-  FProperties.Add(TASTNode.TProperty.Create('StartingValueNode', AStartingValueNode));
-  FProperties.Add(TASTNode.TProperty.Create('DirectionNode', ADirectionNode));
-  FProperties.Add(TASTNode.TProperty.Create('EndingValueNode', AEndingValueNode));
-  FProperties.Add(TASTNode.TProperty.Create('DoKeywordNode', ADoKeywordNode));
-  FProperties.Add(TASTNode.TProperty.Create('StatementNode', AStatementNode));
+  FProperties.Add(TASTNodeProperty.Create('ForKeywordNode', AForKeywordNode));
+  FProperties.Add(TASTNodeProperty.Create('LoopVariableNode', ALoopVariableNode));
+  FProperties.Add(TASTNodeProperty.Create('ColonEqualsNode', AColonEqualsNode));
+  FProperties.Add(TASTNodeProperty.Create('StartingValueNode', AStartingValueNode));
+  FProperties.Add(TASTNodeProperty.Create('DirectionNode', ADirectionNode));
+  FProperties.Add(TASTNodeProperty.Create('EndingValueNode', AEndingValueNode));
+  FProperties.Add(TASTNodeProperty.Create('DoKeywordNode', ADoKeywordNode));
+  FProperties.Add(TASTNodeProperty.Create('StatementNode', AStatementNode));
 end;
 
 { TGotoStatementNode }
@@ -2380,8 +2380,8 @@ begin
   FChildNodes.Add(ALabelIdNode);
 
   // Adding properties
-  FProperties.Add(TASTNode.TProperty.Create('GotoKeywordNode', AGotoKeywordNode));
-  FProperties.Add(TASTNode.TProperty.Create('LabelIdNode', ALabelIdNode));
+  FProperties.Add(TASTNodeProperty.Create('GotoKeywordNode', AGotoKeywordNode));
+  FProperties.Add(TASTNodeProperty.Create('LabelIdNode', ALabelIdNode));
 end;
 
 { TIfStatementNode }
@@ -2418,12 +2418,12 @@ begin
   FChildNodes.Add(AElseStatementNode);
 
   // Adding properties
-  FProperties.Add(TASTNode.TProperty.Create('IfKeywordNode', AIfKeywordNode));
-  FProperties.Add(TASTNode.TProperty.Create('ConditionNode', AConditionNode));
-  FProperties.Add(TASTNode.TProperty.Create('ThenKeywordNode', AThenKeywordNode));
-  FProperties.Add(TASTNode.TProperty.Create('ThenStatementNode', AThenStatementNode));
-  FProperties.Add(TASTNode.TProperty.Create('ElseKeywordNode', AElseKeywordNode));
-  FProperties.Add(TASTNode.TProperty.Create('ElseStatementNode', AElseStatementNode));
+  FProperties.Add(TASTNodeProperty.Create('IfKeywordNode', AIfKeywordNode));
+  FProperties.Add(TASTNodeProperty.Create('ConditionNode', AConditionNode));
+  FProperties.Add(TASTNodeProperty.Create('ThenKeywordNode', AThenKeywordNode));
+  FProperties.Add(TASTNodeProperty.Create('ThenStatementNode', AThenStatementNode));
+  FProperties.Add(TASTNodeProperty.Create('ElseKeywordNode', AElseKeywordNode));
+  FProperties.Add(TASTNodeProperty.Create('ElseStatementNode', AElseStatementNode));
 end;
 
 { TInitSectionNode }
@@ -2457,11 +2457,11 @@ begin
   FChildNodes.Add(AEndKeywordNode);
 
   // Adding properties
-  FProperties.Add(TASTNode.TProperty.Create('InitializationKeywordNode', AInitializationKeywordNode));
-  FProperties.Add(TASTNode.TProperty.Create('InitializationStatementListNode', AInitializationStatementListNode));
-  FProperties.Add(TASTNode.TProperty.Create('FinalizationKeywordNode', AFinalizationKeywordNode));
-  FProperties.Add(TASTNode.TProperty.Create('FinalizationStatementListNode', AFinalizationStatementListNode));
-  FProperties.Add(TASTNode.TProperty.Create('EndKeywordNode', AEndKeywordNode));
+  FProperties.Add(TASTNodeProperty.Create('InitializationKeywordNode', AInitializationKeywordNode));
+  FProperties.Add(TASTNodeProperty.Create('InitializationStatementListNode', AInitializationStatementListNode));
+  FProperties.Add(TASTNodeProperty.Create('FinalizationKeywordNode', AFinalizationKeywordNode));
+  FProperties.Add(TASTNodeProperty.Create('FinalizationStatementListNode', AFinalizationStatementListNode));
+  FProperties.Add(TASTNodeProperty.Create('EndKeywordNode', AEndKeywordNode));
 end;
 
 { TInterfaceTypeNode }
@@ -2507,15 +2507,15 @@ begin
   FChildNodes.Add(AEndKeywordNode);
 
   // Adding properties
-  FProperties.Add(TASTNode.TProperty.Create('InterfaceKeywordNode', AInterfaceKeywordNode));
-  FProperties.Add(TASTNode.TProperty.Create('OpenParenthesisNode', AOpenParenthesisNode));
-  FProperties.Add(TASTNode.TProperty.Create('BaseInterfaceNode', ABaseInterfaceNode));
-  FProperties.Add(TASTNode.TProperty.Create('CloseParenthesisNode', ACloseParenthesisNode));
-  FProperties.Add(TASTNode.TProperty.Create('OpenBracketNode', AOpenBracketNode));
-  FProperties.Add(TASTNode.TProperty.Create('GuidNode', AGuidNode));
-  FProperties.Add(TASTNode.TProperty.Create('CloseBracketNode', ACloseBracketNode));
-  FProperties.Add(TASTNode.TProperty.Create('MethodAndPropertyListNode', AMethodAndPropertyListNode));
-  FProperties.Add(TASTNode.TProperty.Create('EndKeywordNode', AEndKeywordNode));
+  FProperties.Add(TASTNodeProperty.Create('InterfaceKeywordNode', AInterfaceKeywordNode));
+  FProperties.Add(TASTNodeProperty.Create('OpenParenthesisNode', AOpenParenthesisNode));
+  FProperties.Add(TASTNodeProperty.Create('BaseInterfaceNode', ABaseInterfaceNode));
+  FProperties.Add(TASTNodeProperty.Create('CloseParenthesisNode', ACloseParenthesisNode));
+  FProperties.Add(TASTNodeProperty.Create('OpenBracketNode', AOpenBracketNode));
+  FProperties.Add(TASTNodeProperty.Create('GuidNode', AGuidNode));
+  FProperties.Add(TASTNodeProperty.Create('CloseBracketNode', ACloseBracketNode));
+  FProperties.Add(TASTNodeProperty.Create('MethodAndPropertyListNode', AMethodAndPropertyListNode));
+  FProperties.Add(TASTNodeProperty.Create('EndKeywordNode', AEndKeywordNode));
 end;
 
 { TLabelDeclSectionNode }
@@ -2543,9 +2543,9 @@ begin
   FChildNodes.Add(ASemicolonNode);
 
   // Adding properties
-  FProperties.Add(TASTNode.TProperty.Create('LabelKeywordNode', ALabelKeywordNode));
-  FProperties.Add(TASTNode.TProperty.Create('LabelListNode', ALabelListNode));
-  FProperties.Add(TASTNode.TProperty.Create('SemicolonNode', ASemicolonNode));
+  FProperties.Add(TASTNodeProperty.Create('LabelKeywordNode', ALabelKeywordNode));
+  FProperties.Add(TASTNodeProperty.Create('LabelListNode', ALabelListNode));
+  FProperties.Add(TASTNodeProperty.Create('SemicolonNode', ASemicolonNode));
 end;
 
 { TLabeledStatementNode }
@@ -2573,9 +2573,9 @@ begin
   FChildNodes.Add(AStatementNode);
 
   // Adding properties
-  FProperties.Add(TASTNode.TProperty.Create('LabelIdNode', ALabelIdNode));
-  FProperties.Add(TASTNode.TProperty.Create('ColonNode', AColonNode));
-  FProperties.Add(TASTNode.TProperty.Create('StatementNode', AStatementNode));
+  FProperties.Add(TASTNodeProperty.Create('LabelIdNode', ALabelIdNode));
+  FProperties.Add(TASTNodeProperty.Create('ColonNode', AColonNode));
+  FProperties.Add(TASTNodeProperty.Create('StatementNode', AStatementNode));
 end;
 
 { TMethodHeadingNode }
@@ -2624,16 +2624,16 @@ begin
   FChildNodes.Add(ASemicolonNode);
 
   // Adding properties
-  FProperties.Add(TASTNode.TProperty.Create('ClassKeywordNode', AClassKeywordNode));
-  FProperties.Add(TASTNode.TProperty.Create('MethodTypeNode', AMethodTypeNode));
-  FProperties.Add(TASTNode.TProperty.Create('NameNode', ANameNode));
-  FProperties.Add(TASTNode.TProperty.Create('OpenParenthesisNode', AOpenParenthesisNode));
-  FProperties.Add(TASTNode.TProperty.Create('ParameterListNode', AParameterListNode));
-  FProperties.Add(TASTNode.TProperty.Create('CloseParenthesisNode', ACloseParenthesisNode));
-  FProperties.Add(TASTNode.TProperty.Create('ColonNode', AColonNode));
-  FProperties.Add(TASTNode.TProperty.Create('ReturnTypeNode', AReturnTypeNode));
-  FProperties.Add(TASTNode.TProperty.Create('DirectiveListNode', ADirectiveListNode));
-  FProperties.Add(TASTNode.TProperty.Create('SemicolonNode', ASemicolonNode));
+  FProperties.Add(TASTNodeProperty.Create('ClassKeywordNode', AClassKeywordNode));
+  FProperties.Add(TASTNodeProperty.Create('MethodTypeNode', AMethodTypeNode));
+  FProperties.Add(TASTNodeProperty.Create('NameNode', ANameNode));
+  FProperties.Add(TASTNodeProperty.Create('OpenParenthesisNode', AOpenParenthesisNode));
+  FProperties.Add(TASTNodeProperty.Create('ParameterListNode', AParameterListNode));
+  FProperties.Add(TASTNodeProperty.Create('CloseParenthesisNode', ACloseParenthesisNode));
+  FProperties.Add(TASTNodeProperty.Create('ColonNode', AColonNode));
+  FProperties.Add(TASTNodeProperty.Create('ReturnTypeNode', AReturnTypeNode));
+  FProperties.Add(TASTNodeProperty.Create('DirectiveListNode', ADirectiveListNode));
+  FProperties.Add(TASTNodeProperty.Create('SemicolonNode', ASemicolonNode));
 end;
 
 function TMethodHeadingNode.RequiresBody: Boolean;
@@ -2677,9 +2677,9 @@ begin
   FChildNodes.Add(ASemicolonNode);
 
   // Adding properties
-  FProperties.Add(TASTNode.TProperty.Create('MethodHeadingNode', AMethodHeadingNode));
-  FProperties.Add(TASTNode.TProperty.Create('FancyBlockNode', AFancyBlockNode));
-  FProperties.Add(TASTNode.TProperty.Create('SemicolonNode', ASemicolonNode));
+  FProperties.Add(TASTNodeProperty.Create('MethodHeadingNode', AMethodHeadingNode));
+  FProperties.Add(TASTNodeProperty.Create('FancyBlockNode', AFancyBlockNode));
+  FProperties.Add(TASTNodeProperty.Create('SemicolonNode', ASemicolonNode));
 end;
 
 { TMethodResolutionNode }
@@ -2713,11 +2713,11 @@ begin
   FChildNodes.Add(ASemicolonNode);
 
   // Adding properties
-  FProperties.Add(TASTNode.TProperty.Create('MethodTypeNode', AMethodTypeNode));
-  FProperties.Add(TASTNode.TProperty.Create('InterfaceMethodNode', AInterfaceMethodNode));
-  FProperties.Add(TASTNode.TProperty.Create('EqualSignNode', AEqualSignNode));
-  FProperties.Add(TASTNode.TProperty.Create('ImplementationMethodNode', AImplementationMethodNode));
-  FProperties.Add(TASTNode.TProperty.Create('SemicolonNode', ASemicolonNode));
+  FProperties.Add(TASTNodeProperty.Create('MethodTypeNode', AMethodTypeNode));
+  FProperties.Add(TASTNodeProperty.Create('InterfaceMethodNode', AInterfaceMethodNode));
+  FProperties.Add(TASTNodeProperty.Create('EqualSignNode', AEqualSignNode));
+  FProperties.Add(TASTNodeProperty.Create('ImplementationMethodNode', AImplementationMethodNode));
+  FProperties.Add(TASTNodeProperty.Create('SemicolonNode', ASemicolonNode));
 end;
 
 { TNumberFormatNode }
@@ -2751,11 +2751,11 @@ begin
   FChildNodes.Add(APrecisionNode);
 
   // Adding properties
-  FProperties.Add(TASTNode.TProperty.Create('ValueNode', AValueNode));
-  FProperties.Add(TASTNode.TProperty.Create('SizeColonNode', ASizeColonNode));
-  FProperties.Add(TASTNode.TProperty.Create('SizeNode', ASizeNode));
-  FProperties.Add(TASTNode.TProperty.Create('PrecisionColonNode', APrecisionColonNode));
-  FProperties.Add(TASTNode.TProperty.Create('PrecisionNode', APrecisionNode));
+  FProperties.Add(TASTNodeProperty.Create('ValueNode', AValueNode));
+  FProperties.Add(TASTNodeProperty.Create('SizeColonNode', ASizeColonNode));
+  FProperties.Add(TASTNodeProperty.Create('SizeNode', ASizeNode));
+  FProperties.Add(TASTNodeProperty.Create('PrecisionColonNode', APrecisionColonNode));
+  FProperties.Add(TASTNodeProperty.Create('PrecisionNode', APrecisionNode));
 end;
 
 { TOpenArrayNode }
@@ -2783,9 +2783,9 @@ begin
   FChildNodes.Add(ATypeNode);
 
   // Adding properties
-  FProperties.Add(TASTNode.TProperty.Create('ArrayKeywordNode', AArrayKeywordNode));
-  FProperties.Add(TASTNode.TProperty.Create('OfKeywordNode', AOfKeywordNode));
-  FProperties.Add(TASTNode.TProperty.Create('TypeNode', ATypeNode));
+  FProperties.Add(TASTNodeProperty.Create('ArrayKeywordNode', AArrayKeywordNode));
+  FProperties.Add(TASTNodeProperty.Create('OfKeywordNode', AOfKeywordNode));
+  FProperties.Add(TASTNodeProperty.Create('TypeNode', ATypeNode));
 end;
 
 { TPackageNode }
@@ -2828,14 +2828,14 @@ begin
   FChildNodes.Add(ADotNode);
 
   // Adding properties
-  FProperties.Add(TASTNode.TProperty.Create('PackageKeywordNode', APackageKeywordNode));
-  FProperties.Add(TASTNode.TProperty.Create('NameNode', ANameNode));
-  FProperties.Add(TASTNode.TProperty.Create('SemicolonNode', ASemicolonNode));
-  FProperties.Add(TASTNode.TProperty.Create('RequiresClauseNode', ARequiresClauseNode));
-  FProperties.Add(TASTNode.TProperty.Create('ContainsClauseNode', AContainsClauseNode));
-  FProperties.Add(TASTNode.TProperty.Create('AttributeListNode', AAttributeListNode));
-  FProperties.Add(TASTNode.TProperty.Create('EndKeywordNode', AEndKeywordNode));
-  FProperties.Add(TASTNode.TProperty.Create('DotNode', ADotNode));
+  FProperties.Add(TASTNodeProperty.Create('PackageKeywordNode', APackageKeywordNode));
+  FProperties.Add(TASTNodeProperty.Create('NameNode', ANameNode));
+  FProperties.Add(TASTNodeProperty.Create('SemicolonNode', ASemicolonNode));
+  FProperties.Add(TASTNodeProperty.Create('RequiresClauseNode', ARequiresClauseNode));
+  FProperties.Add(TASTNodeProperty.Create('ContainsClauseNode', AContainsClauseNode));
+  FProperties.Add(TASTNodeProperty.Create('AttributeListNode', AAttributeListNode));
+  FProperties.Add(TASTNodeProperty.Create('EndKeywordNode', AEndKeywordNode));
+  FProperties.Add(TASTNodeProperty.Create('DotNode', ADotNode));
 end;
 
 { TPackedTypeNode }
@@ -2860,8 +2860,8 @@ begin
   FChildNodes.Add(ATypeNode);
 
   // Adding properties
-  FProperties.Add(TASTNode.TProperty.Create('PackedKeywordNode', APackedKeywordNode));
-  FProperties.Add(TASTNode.TProperty.Create('TypeNode', ATypeNode));
+  FProperties.Add(TASTNodeProperty.Create('PackedKeywordNode', APackedKeywordNode));
+  FProperties.Add(TASTNodeProperty.Create('TypeNode', ATypeNode));
 end;
 
 { TParameterNode }
@@ -2898,12 +2898,12 @@ begin
   FChildNodes.Add(ADefaultValueNode);
 
   // Adding properties
-  FProperties.Add(TASTNode.TProperty.Create('ModifierNode', AModifierNode));
-  FProperties.Add(TASTNode.TProperty.Create('NameListNode', ANameListNode));
-  FProperties.Add(TASTNode.TProperty.Create('ColonNode', AColonNode));
-  FProperties.Add(TASTNode.TProperty.Create('TypeNode', ATypeNode));
-  FProperties.Add(TASTNode.TProperty.Create('EqualSignNode', AEqualSignNode));
-  FProperties.Add(TASTNode.TProperty.Create('DefaultValueNode', ADefaultValueNode));
+  FProperties.Add(TASTNodeProperty.Create('ModifierNode', AModifierNode));
+  FProperties.Add(TASTNodeProperty.Create('NameListNode', ANameListNode));
+  FProperties.Add(TASTNodeProperty.Create('ColonNode', AColonNode));
+  FProperties.Add(TASTNodeProperty.Create('TypeNode', ATypeNode));
+  FProperties.Add(TASTNodeProperty.Create('EqualSignNode', AEqualSignNode));
+  FProperties.Add(TASTNodeProperty.Create('DefaultValueNode', ADefaultValueNode));
 end;
 
 { TParameterizedNode }
@@ -2934,10 +2934,10 @@ begin
   FChildNodes.Add(ACloseDelimiterNode);
 
   // Adding properties
-  FProperties.Add(TASTNode.TProperty.Create('LeftNode', ALeftNode));
-  FProperties.Add(TASTNode.TProperty.Create('OpenDelimiterNode', AOpenDelimiterNode));
-  FProperties.Add(TASTNode.TProperty.Create('ParameterListNode', AParameterListNode));
-  FProperties.Add(TASTNode.TProperty.Create('CloseDelimiterNode', ACloseDelimiterNode));
+  FProperties.Add(TASTNodeProperty.Create('LeftNode', ALeftNode));
+  FProperties.Add(TASTNodeProperty.Create('OpenDelimiterNode', AOpenDelimiterNode));
+  FProperties.Add(TASTNodeProperty.Create('ParameterListNode', AParameterListNode));
+  FProperties.Add(TASTNodeProperty.Create('CloseDelimiterNode', ACloseDelimiterNode));
 end;
 
 { TParenthesizedExpressionNode }
@@ -2965,9 +2965,9 @@ begin
   FChildNodes.Add(ACloseParenthesisNode);
 
   // Adding properties
-  FProperties.Add(TASTNode.TProperty.Create('OpenParenthesisNode', AOpenParenthesisNode));
-  FProperties.Add(TASTNode.TProperty.Create('ExpressionNode', AExpressionNode));
-  FProperties.Add(TASTNode.TProperty.Create('CloseParenthesisNode', ACloseParenthesisNode));
+  FProperties.Add(TASTNodeProperty.Create('OpenParenthesisNode', AOpenParenthesisNode));
+  FProperties.Add(TASTNodeProperty.Create('ExpressionNode', AExpressionNode));
+  FProperties.Add(TASTNodeProperty.Create('CloseParenthesisNode', ACloseParenthesisNode));
 end;
 
 { TPointerDereferenceNode }
@@ -2992,8 +2992,8 @@ begin
   FChildNodes.Add(ACaretNode);
 
   // Adding properties
-  FProperties.Add(TASTNode.TProperty.Create('OperandNode', AOperandNode));
-  FProperties.Add(TASTNode.TProperty.Create('CaretNode', ACaretNode));
+  FProperties.Add(TASTNodeProperty.Create('OperandNode', AOperandNode));
+  FProperties.Add(TASTNodeProperty.Create('CaretNode', ACaretNode));
 end;
 
 { TPointerTypeNode }
@@ -3018,8 +3018,8 @@ begin
   FChildNodes.Add(ATypeNode);
 
   // Adding properties
-  FProperties.Add(TASTNode.TProperty.Create('CaretNode', ACaretNode));
-  FProperties.Add(TASTNode.TProperty.Create('TypeNode', ATypeNode));
+  FProperties.Add(TASTNodeProperty.Create('CaretNode', ACaretNode));
+  FProperties.Add(TASTNodeProperty.Create('TypeNode', ATypeNode));
 end;
 
 { TProcedureTypeNode }
@@ -3068,16 +3068,16 @@ begin
   FChildNodes.Add(ASecondDirectiveListNode);
 
   // Adding properties
-  FProperties.Add(TASTNode.TProperty.Create('MethodTypeNode', AMethodTypeNode));
-  FProperties.Add(TASTNode.TProperty.Create('OpenParenthesisNode', AOpenParenthesisNode));
-  FProperties.Add(TASTNode.TProperty.Create('ParameterListNode', AParameterListNode));
-  FProperties.Add(TASTNode.TProperty.Create('CloseParenthesisNode', ACloseParenthesisNode));
-  FProperties.Add(TASTNode.TProperty.Create('ColonNode', AColonNode));
-  FProperties.Add(TASTNode.TProperty.Create('ReturnTypeNode', AReturnTypeNode));
-  FProperties.Add(TASTNode.TProperty.Create('FirstDirectiveListNode', AFirstDirectiveListNode));
-  FProperties.Add(TASTNode.TProperty.Create('OfKeywordNode', AOfKeywordNode));
-  FProperties.Add(TASTNode.TProperty.Create('ObjectKeywordNode', AObjectKeywordNode));
-  FProperties.Add(TASTNode.TProperty.Create('SecondDirectiveListNode', ASecondDirectiveListNode));
+  FProperties.Add(TASTNodeProperty.Create('MethodTypeNode', AMethodTypeNode));
+  FProperties.Add(TASTNodeProperty.Create('OpenParenthesisNode', AOpenParenthesisNode));
+  FProperties.Add(TASTNodeProperty.Create('ParameterListNode', AParameterListNode));
+  FProperties.Add(TASTNodeProperty.Create('CloseParenthesisNode', ACloseParenthesisNode));
+  FProperties.Add(TASTNodeProperty.Create('ColonNode', AColonNode));
+  FProperties.Add(TASTNodeProperty.Create('ReturnTypeNode', AReturnTypeNode));
+  FProperties.Add(TASTNodeProperty.Create('FirstDirectiveListNode', AFirstDirectiveListNode));
+  FProperties.Add(TASTNodeProperty.Create('OfKeywordNode', AOfKeywordNode));
+  FProperties.Add(TASTNodeProperty.Create('ObjectKeywordNode', AObjectKeywordNode));
+  FProperties.Add(TASTNodeProperty.Create('SecondDirectiveListNode', ASecondDirectiveListNode));
 end;
 
 { TProgramNode }
@@ -3126,16 +3126,16 @@ begin
   FChildNodes.Add(ADotNode);
 
   // Adding properties
-  FProperties.Add(TASTNode.TProperty.Create('ProgramKeywordNode', AProgramKeywordNode));
-  FProperties.Add(TASTNode.TProperty.Create('NameNode', ANameNode));
-  FProperties.Add(TASTNode.TProperty.Create('NoiseOpenParenthesisNode', ANoiseOpenParenthesisNode));
-  FProperties.Add(TASTNode.TProperty.Create('NoiseContentListNode', ANoiseContentListNode));
-  FProperties.Add(TASTNode.TProperty.Create('NoiseCloseParenthesisNode', ANoiseCloseParenthesisNode));
-  FProperties.Add(TASTNode.TProperty.Create('SemicolonNode', ASemicolonNode));
-  FProperties.Add(TASTNode.TProperty.Create('UsesClauseNode', AUsesClauseNode));
-  FProperties.Add(TASTNode.TProperty.Create('DeclarationListNode', ADeclarationListNode));
-  FProperties.Add(TASTNode.TProperty.Create('InitSectionNode', AInitSectionNode));
-  FProperties.Add(TASTNode.TProperty.Create('DotNode', ADotNode));
+  FProperties.Add(TASTNodeProperty.Create('ProgramKeywordNode', AProgramKeywordNode));
+  FProperties.Add(TASTNodeProperty.Create('NameNode', ANameNode));
+  FProperties.Add(TASTNodeProperty.Create('NoiseOpenParenthesisNode', ANoiseOpenParenthesisNode));
+  FProperties.Add(TASTNodeProperty.Create('NoiseContentListNode', ANoiseContentListNode));
+  FProperties.Add(TASTNodeProperty.Create('NoiseCloseParenthesisNode', ANoiseCloseParenthesisNode));
+  FProperties.Add(TASTNodeProperty.Create('SemicolonNode', ASemicolonNode));
+  FProperties.Add(TASTNodeProperty.Create('UsesClauseNode', AUsesClauseNode));
+  FProperties.Add(TASTNodeProperty.Create('DeclarationListNode', ADeclarationListNode));
+  FProperties.Add(TASTNodeProperty.Create('InitSectionNode', AInitSectionNode));
+  FProperties.Add(TASTNodeProperty.Create('DotNode', ADotNode));
 end;
 
 { TPropertyNode }
@@ -3184,16 +3184,16 @@ begin
   FChildNodes.Add(ASemicolonNode);
 
   // Adding properties
-  FProperties.Add(TASTNode.TProperty.Create('ClassKeywordNode', AClassKeywordNode));
-  FProperties.Add(TASTNode.TProperty.Create('PropertyKeywordNode', APropertyKeywordNode));
-  FProperties.Add(TASTNode.TProperty.Create('NameNode', ANameNode));
-  FProperties.Add(TASTNode.TProperty.Create('OpenBracketNode', AOpenBracketNode));
-  FProperties.Add(TASTNode.TProperty.Create('ParameterListNode', AParameterListNode));
-  FProperties.Add(TASTNode.TProperty.Create('CloseBracketNode', ACloseBracketNode));
-  FProperties.Add(TASTNode.TProperty.Create('ColonNode', AColonNode));
-  FProperties.Add(TASTNode.TProperty.Create('TypeNode', ATypeNode));
-  FProperties.Add(TASTNode.TProperty.Create('DirectiveListNode', ADirectiveListNode));
-  FProperties.Add(TASTNode.TProperty.Create('SemicolonNode', ASemicolonNode));
+  FProperties.Add(TASTNodeProperty.Create('ClassKeywordNode', AClassKeywordNode));
+  FProperties.Add(TASTNodeProperty.Create('PropertyKeywordNode', APropertyKeywordNode));
+  FProperties.Add(TASTNodeProperty.Create('NameNode', ANameNode));
+  FProperties.Add(TASTNodeProperty.Create('OpenBracketNode', AOpenBracketNode));
+  FProperties.Add(TASTNodeProperty.Create('ParameterListNode', AParameterListNode));
+  FProperties.Add(TASTNodeProperty.Create('CloseBracketNode', ACloseBracketNode));
+  FProperties.Add(TASTNodeProperty.Create('ColonNode', AColonNode));
+  FProperties.Add(TASTNodeProperty.Create('TypeNode', ATypeNode));
+  FProperties.Add(TASTNodeProperty.Create('DirectiveListNode', ADirectiveListNode));
+  FProperties.Add(TASTNodeProperty.Create('SemicolonNode', ASemicolonNode));
 end;
 
 { TRaiseStatementNode }
@@ -3224,10 +3224,10 @@ begin
   FChildNodes.Add(AAddressNode);
 
   // Adding properties
-  FProperties.Add(TASTNode.TProperty.Create('RaiseKeywordNode', ARaiseKeywordNode));
-  FProperties.Add(TASTNode.TProperty.Create('ExceptionNode', AExceptionNode));
-  FProperties.Add(TASTNode.TProperty.Create('AtSemikeywordNode', AAtSemikeywordNode));
-  FProperties.Add(TASTNode.TProperty.Create('AddressNode', AAddressNode));
+  FProperties.Add(TASTNodeProperty.Create('RaiseKeywordNode', ARaiseKeywordNode));
+  FProperties.Add(TASTNodeProperty.Create('ExceptionNode', AExceptionNode));
+  FProperties.Add(TASTNodeProperty.Create('AtSemikeywordNode', AAtSemikeywordNode));
+  FProperties.Add(TASTNodeProperty.Create('AddressNode', AAddressNode));
 end;
 
 { TRecordFieldConstantNode }
@@ -3255,9 +3255,9 @@ begin
   FChildNodes.Add(AValueNode);
 
   // Adding properties
-  FProperties.Add(TASTNode.TProperty.Create('NameNode', ANameNode));
-  FProperties.Add(TASTNode.TProperty.Create('ColonNode', AColonNode));
-  FProperties.Add(TASTNode.TProperty.Create('ValueNode', AValueNode));
+  FProperties.Add(TASTNodeProperty.Create('NameNode', ANameNode));
+  FProperties.Add(TASTNodeProperty.Create('ColonNode', AColonNode));
+  FProperties.Add(TASTNodeProperty.Create('ValueNode', AValueNode));
 end;
 
 { TRecordTypeNode }
@@ -3288,10 +3288,10 @@ begin
   FChildNodes.Add(AEndKeywordNode);
 
   // Adding properties
-  FProperties.Add(TASTNode.TProperty.Create('RecordKeywordNode', ARecordKeywordNode));
-  FProperties.Add(TASTNode.TProperty.Create('ContentListNode', AContentListNode));
-  FProperties.Add(TASTNode.TProperty.Create('VariantSectionNode', AVariantSectionNode));
-  FProperties.Add(TASTNode.TProperty.Create('EndKeywordNode', AEndKeywordNode));
+  FProperties.Add(TASTNodeProperty.Create('RecordKeywordNode', ARecordKeywordNode));
+  FProperties.Add(TASTNodeProperty.Create('ContentListNode', AContentListNode));
+  FProperties.Add(TASTNodeProperty.Create('VariantSectionNode', AVariantSectionNode));
+  FProperties.Add(TASTNodeProperty.Create('EndKeywordNode', AEndKeywordNode));
 end;
 
 { TRepeatStatementNode }
@@ -3322,10 +3322,10 @@ begin
   FChildNodes.Add(AConditionNode);
 
   // Adding properties
-  FProperties.Add(TASTNode.TProperty.Create('RepeatKeywordNode', ARepeatKeywordNode));
-  FProperties.Add(TASTNode.TProperty.Create('StatementListNode', AStatementListNode));
-  FProperties.Add(TASTNode.TProperty.Create('UntilKeywordNode', AUntilKeywordNode));
-  FProperties.Add(TASTNode.TProperty.Create('ConditionNode', AConditionNode));
+  FProperties.Add(TASTNodeProperty.Create('RepeatKeywordNode', ARepeatKeywordNode));
+  FProperties.Add(TASTNodeProperty.Create('StatementListNode', AStatementListNode));
+  FProperties.Add(TASTNodeProperty.Create('UntilKeywordNode', AUntilKeywordNode));
+  FProperties.Add(TASTNodeProperty.Create('ConditionNode', AConditionNode));
 end;
 
 { TRequiresClauseNode }
@@ -3353,9 +3353,9 @@ begin
   FChildNodes.Add(ASemicolonNode);
 
   // Adding properties
-  FProperties.Add(TASTNode.TProperty.Create('RequiresSemikeywordNode', ARequiresSemikeywordNode));
-  FProperties.Add(TASTNode.TProperty.Create('PackageListNode', APackageListNode));
-  FProperties.Add(TASTNode.TProperty.Create('SemicolonNode', ASemicolonNode));
+  FProperties.Add(TASTNodeProperty.Create('RequiresSemikeywordNode', ARequiresSemikeywordNode));
+  FProperties.Add(TASTNodeProperty.Create('PackageListNode', APackageListNode));
+  FProperties.Add(TASTNodeProperty.Create('SemicolonNode', ASemicolonNode));
 end;
 
 { TSetLiteralNode }
@@ -3383,9 +3383,9 @@ begin
   FChildNodes.Add(ACloseBracketNode);
 
   // Adding properties
-  FProperties.Add(TASTNode.TProperty.Create('OpenBracketNode', AOpenBracketNode));
-  FProperties.Add(TASTNode.TProperty.Create('ItemListNode', AItemListNode));
-  FProperties.Add(TASTNode.TProperty.Create('CloseBracketNode', ACloseBracketNode));
+  FProperties.Add(TASTNodeProperty.Create('OpenBracketNode', AOpenBracketNode));
+  FProperties.Add(TASTNodeProperty.Create('ItemListNode', AItemListNode));
+  FProperties.Add(TASTNodeProperty.Create('CloseBracketNode', ACloseBracketNode));
 end;
 
 { TSetOfNode }
@@ -3413,9 +3413,9 @@ begin
   FChildNodes.Add(ATypeNode);
 
   // Adding properties
-  FProperties.Add(TASTNode.TProperty.Create('SetKeywordNode', ASetKeywordNode));
-  FProperties.Add(TASTNode.TProperty.Create('OfKeywordNode', AOfKeywordNode));
-  FProperties.Add(TASTNode.TProperty.Create('TypeNode', ATypeNode));
+  FProperties.Add(TASTNodeProperty.Create('SetKeywordNode', ASetKeywordNode));
+  FProperties.Add(TASTNodeProperty.Create('OfKeywordNode', AOfKeywordNode));
+  FProperties.Add(TASTNodeProperty.Create('TypeNode', ATypeNode));
 end;
 
 { TStringOfLengthNode }
@@ -3446,10 +3446,10 @@ begin
   FChildNodes.Add(ACloseBracketNode);
 
   // Adding properties
-  FProperties.Add(TASTNode.TProperty.Create('StringKeywordNode', AStringKeywordNode));
-  FProperties.Add(TASTNode.TProperty.Create('OpenBracketNode', AOpenBracketNode));
-  FProperties.Add(TASTNode.TProperty.Create('LengthNode', ALengthNode));
-  FProperties.Add(TASTNode.TProperty.Create('CloseBracketNode', ACloseBracketNode));
+  FProperties.Add(TASTNodeProperty.Create('StringKeywordNode', AStringKeywordNode));
+  FProperties.Add(TASTNodeProperty.Create('OpenBracketNode', AOpenBracketNode));
+  FProperties.Add(TASTNodeProperty.Create('LengthNode', ALengthNode));
+  FProperties.Add(TASTNodeProperty.Create('CloseBracketNode', ACloseBracketNode));
 end;
 
 { TTryExceptNode }
@@ -3489,13 +3489,13 @@ begin
   FChildNodes.Add(AEndKeywordNode);
 
   // Adding properties
-  FProperties.Add(TASTNode.TProperty.Create('TryKeywordNode', ATryKeywordNode));
-  FProperties.Add(TASTNode.TProperty.Create('TryStatementListNode', ATryStatementListNode));
-  FProperties.Add(TASTNode.TProperty.Create('ExceptKeywordNode', AExceptKeywordNode));
-  FProperties.Add(TASTNode.TProperty.Create('ExceptionItemListNode', AExceptionItemListNode));
-  FProperties.Add(TASTNode.TProperty.Create('ElseKeywordNode', AElseKeywordNode));
-  FProperties.Add(TASTNode.TProperty.Create('ElseStatementListNode', AElseStatementListNode));
-  FProperties.Add(TASTNode.TProperty.Create('EndKeywordNode', AEndKeywordNode));
+  FProperties.Add(TASTNodeProperty.Create('TryKeywordNode', ATryKeywordNode));
+  FProperties.Add(TASTNodeProperty.Create('TryStatementListNode', ATryStatementListNode));
+  FProperties.Add(TASTNodeProperty.Create('ExceptKeywordNode', AExceptKeywordNode));
+  FProperties.Add(TASTNodeProperty.Create('ExceptionItemListNode', AExceptionItemListNode));
+  FProperties.Add(TASTNodeProperty.Create('ElseKeywordNode', AElseKeywordNode));
+  FProperties.Add(TASTNodeProperty.Create('ElseStatementListNode', AElseStatementListNode));
+  FProperties.Add(TASTNodeProperty.Create('EndKeywordNode', AEndKeywordNode));
 end;
 
 { TTryFinallyNode }
@@ -3529,11 +3529,11 @@ begin
   FChildNodes.Add(AEndKeywordNode);
 
   // Adding properties
-  FProperties.Add(TASTNode.TProperty.Create('TryKeywordNode', ATryKeywordNode));
-  FProperties.Add(TASTNode.TProperty.Create('TryStatementListNode', ATryStatementListNode));
-  FProperties.Add(TASTNode.TProperty.Create('FinallyKeywordNode', AFinallyKeywordNode));
-  FProperties.Add(TASTNode.TProperty.Create('FinallyStatementListNode', AFinallyStatementListNode));
-  FProperties.Add(TASTNode.TProperty.Create('EndKeywordNode', AEndKeywordNode));
+  FProperties.Add(TASTNodeProperty.Create('TryKeywordNode', ATryKeywordNode));
+  FProperties.Add(TASTNodeProperty.Create('TryStatementListNode', ATryStatementListNode));
+  FProperties.Add(TASTNodeProperty.Create('FinallyKeywordNode', AFinallyKeywordNode));
+  FProperties.Add(TASTNodeProperty.Create('FinallyStatementListNode', AFinallyStatementListNode));
+  FProperties.Add(TASTNodeProperty.Create('EndKeywordNode', AEndKeywordNode));
 end;
 
 { TTypeDeclNode }
@@ -3570,12 +3570,12 @@ begin
   FChildNodes.Add(ASemicolonNode);
 
   // Adding properties
-  FProperties.Add(TASTNode.TProperty.Create('NameNode', ANameNode));
-  FProperties.Add(TASTNode.TProperty.Create('EqualSignNode', AEqualSignNode));
-  FProperties.Add(TASTNode.TProperty.Create('TypeKeywordNode', ATypeKeywordNode));
-  FProperties.Add(TASTNode.TProperty.Create('TypeNode', ATypeNode));
-  FProperties.Add(TASTNode.TProperty.Create('PortabilityDirectiveListNode', APortabilityDirectiveListNode));
-  FProperties.Add(TASTNode.TProperty.Create('SemicolonNode', ASemicolonNode));
+  FProperties.Add(TASTNodeProperty.Create('NameNode', ANameNode));
+  FProperties.Add(TASTNodeProperty.Create('EqualSignNode', AEqualSignNode));
+  FProperties.Add(TASTNodeProperty.Create('TypeKeywordNode', ATypeKeywordNode));
+  FProperties.Add(TASTNodeProperty.Create('TypeNode', ATypeNode));
+  FProperties.Add(TASTNodeProperty.Create('PortabilityDirectiveListNode', APortabilityDirectiveListNode));
+  FProperties.Add(TASTNodeProperty.Create('SemicolonNode', ASemicolonNode));
 end;
 
 { TTypeForwardDeclarationNode }
@@ -3606,10 +3606,10 @@ begin
   FChildNodes.Add(ASemicolonNode);
 
   // Adding properties
-  FProperties.Add(TASTNode.TProperty.Create('NameNode', ANameNode));
-  FProperties.Add(TASTNode.TProperty.Create('EqualSignNode', AEqualSignNode));
-  FProperties.Add(TASTNode.TProperty.Create('TypeNode', ATypeNode));
-  FProperties.Add(TASTNode.TProperty.Create('SemicolonNode', ASemicolonNode));
+  FProperties.Add(TASTNodeProperty.Create('NameNode', ANameNode));
+  FProperties.Add(TASTNodeProperty.Create('EqualSignNode', AEqualSignNode));
+  FProperties.Add(TASTNodeProperty.Create('TypeNode', ATypeNode));
+  FProperties.Add(TASTNodeProperty.Create('SemicolonNode', ASemicolonNode));
 end;
 
 { TTypeHelperNode }
@@ -3655,15 +3655,15 @@ begin
   FChildNodes.Add(AEndKeywordNode);
 
   // Adding properties
-  FProperties.Add(TASTNode.TProperty.Create('TypeKeywordNode', ATypeKeywordNode));
-  FProperties.Add(TASTNode.TProperty.Create('HelperSemikeywordNode', AHelperSemikeywordNode));
-  FProperties.Add(TASTNode.TProperty.Create('OpenParenthesisNode', AOpenParenthesisNode));
-  FProperties.Add(TASTNode.TProperty.Create('BaseHelperTypeNode', ABaseHelperTypeNode));
-  FProperties.Add(TASTNode.TProperty.Create('CloseParenthesisNode', ACloseParenthesisNode));
-  FProperties.Add(TASTNode.TProperty.Create('ForKeywordNode', AForKeywordNode));
-  FProperties.Add(TASTNode.TProperty.Create('TypeNode', ATypeNode));
-  FProperties.Add(TASTNode.TProperty.Create('ContentListNode', AContentListNode));
-  FProperties.Add(TASTNode.TProperty.Create('EndKeywordNode', AEndKeywordNode));
+  FProperties.Add(TASTNodeProperty.Create('TypeKeywordNode', ATypeKeywordNode));
+  FProperties.Add(TASTNodeProperty.Create('HelperSemikeywordNode', AHelperSemikeywordNode));
+  FProperties.Add(TASTNodeProperty.Create('OpenParenthesisNode', AOpenParenthesisNode));
+  FProperties.Add(TASTNodeProperty.Create('BaseHelperTypeNode', ABaseHelperTypeNode));
+  FProperties.Add(TASTNodeProperty.Create('CloseParenthesisNode', ACloseParenthesisNode));
+  FProperties.Add(TASTNodeProperty.Create('ForKeywordNode', AForKeywordNode));
+  FProperties.Add(TASTNodeProperty.Create('TypeNode', ATypeNode));
+  FProperties.Add(TASTNodeProperty.Create('ContentListNode', AContentListNode));
+  FProperties.Add(TASTNodeProperty.Create('EndKeywordNode', AEndKeywordNode));
 end;
 
 { TTypeSectionNode }
@@ -3688,8 +3688,8 @@ begin
   FChildNodes.Add(ATypeListNode);
 
   // Adding properties
-  FProperties.Add(TASTNode.TProperty.Create('TypeKeywordNode', ATypeKeywordNode));
-  FProperties.Add(TASTNode.TProperty.Create('TypeListNode', ATypeListNode));
+  FProperties.Add(TASTNodeProperty.Create('TypeKeywordNode', ATypeKeywordNode));
+  FProperties.Add(TASTNodeProperty.Create('TypeListNode', ATypeListNode));
 end;
 
 { TUnaryOperationNode }
@@ -3714,8 +3714,8 @@ begin
   FChildNodes.Add(AOperandNode);
 
   // Adding properties
-  FProperties.Add(TASTNode.TProperty.Create('OperatorNode', AOperatorNode));
-  FProperties.Add(TASTNode.TProperty.Create('OperandNode', AOperandNode));
+  FProperties.Add(TASTNodeProperty.Create('OperatorNode', AOperatorNode));
+  FProperties.Add(TASTNodeProperty.Create('OperandNode', AOperandNode));
 end;
 
 { TUnitNode }
@@ -3758,14 +3758,14 @@ begin
   FChildNodes.Add(ADotNode);
 
   // Adding properties
-  FProperties.Add(TASTNode.TProperty.Create('UnitKeywordNode', AUnitKeywordNode));
-  FProperties.Add(TASTNode.TProperty.Create('UnitNameNode', AUnitNameNode));
-  FProperties.Add(TASTNode.TProperty.Create('PortabilityDirectiveListNode', APortabilityDirectiveListNode));
-  FProperties.Add(TASTNode.TProperty.Create('SemicolonNode', ASemicolonNode));
-  FProperties.Add(TASTNode.TProperty.Create('InterfaceSectionNode', AInterfaceSectionNode));
-  FProperties.Add(TASTNode.TProperty.Create('ImplementationSectionNode', AImplementationSectionNode));
-  FProperties.Add(TASTNode.TProperty.Create('InitSectionNode', AInitSectionNode));
-  FProperties.Add(TASTNode.TProperty.Create('DotNode', ADotNode));
+  FProperties.Add(TASTNodeProperty.Create('UnitKeywordNode', AUnitKeywordNode));
+  FProperties.Add(TASTNodeProperty.Create('UnitNameNode', AUnitNameNode));
+  FProperties.Add(TASTNodeProperty.Create('PortabilityDirectiveListNode', APortabilityDirectiveListNode));
+  FProperties.Add(TASTNodeProperty.Create('SemicolonNode', ASemicolonNode));
+  FProperties.Add(TASTNodeProperty.Create('InterfaceSectionNode', AInterfaceSectionNode));
+  FProperties.Add(TASTNodeProperty.Create('ImplementationSectionNode', AImplementationSectionNode));
+  FProperties.Add(TASTNodeProperty.Create('InitSectionNode', AInitSectionNode));
+  FProperties.Add(TASTNodeProperty.Create('DotNode', ADotNode));
 end;
 
 { TUnitSectionNode }
@@ -3793,9 +3793,9 @@ begin
   FChildNodes.Add(AContentListNode);
 
   // Adding properties
-  FProperties.Add(TASTNode.TProperty.Create('HeaderKeywordNode', AHeaderKeywordNode));
-  FProperties.Add(TASTNode.TProperty.Create('UsesClauseNode', AUsesClauseNode));
-  FProperties.Add(TASTNode.TProperty.Create('ContentListNode', AContentListNode));
+  FProperties.Add(TASTNodeProperty.Create('HeaderKeywordNode', AHeaderKeywordNode));
+  FProperties.Add(TASTNodeProperty.Create('UsesClauseNode', AUsesClauseNode));
+  FProperties.Add(TASTNodeProperty.Create('ContentListNode', AContentListNode));
 end;
 
 { TUsedUnitNode }
@@ -3823,9 +3823,9 @@ begin
   FChildNodes.Add(AFileNameNode);
 
   // Adding properties
-  FProperties.Add(TASTNode.TProperty.Create('NameNode', ANameNode));
-  FProperties.Add(TASTNode.TProperty.Create('InKeywordNode', AInKeywordNode));
-  FProperties.Add(TASTNode.TProperty.Create('FileNameNode', AFileNameNode));
+  FProperties.Add(TASTNodeProperty.Create('NameNode', ANameNode));
+  FProperties.Add(TASTNodeProperty.Create('InKeywordNode', AInKeywordNode));
+  FProperties.Add(TASTNodeProperty.Create('FileNameNode', AFileNameNode));
 end;
 
 { TUsesClauseNode }
@@ -3853,9 +3853,9 @@ begin
   FChildNodes.Add(ASemicolonNode);
 
   // Adding properties
-  FProperties.Add(TASTNode.TProperty.Create('UsesKeywordNode', AUsesKeywordNode));
-  FProperties.Add(TASTNode.TProperty.Create('UnitListNode', AUnitListNode));
-  FProperties.Add(TASTNode.TProperty.Create('SemicolonNode', ASemicolonNode));
+  FProperties.Add(TASTNodeProperty.Create('UsesKeywordNode', AUsesKeywordNode));
+  FProperties.Add(TASTNodeProperty.Create('UnitListNode', AUnitListNode));
+  FProperties.Add(TASTNodeProperty.Create('SemicolonNode', ASemicolonNode));
 end;
 
 { TVarDeclNode }
@@ -3904,16 +3904,16 @@ begin
   FChildNodes.Add(ASemicolonNode);
 
   // Adding properties
-  FProperties.Add(TASTNode.TProperty.Create('NameListNode', ANameListNode));
-  FProperties.Add(TASTNode.TProperty.Create('ColonNode', AColonNode));
-  FProperties.Add(TASTNode.TProperty.Create('TypeNode', ATypeNode));
-  FProperties.Add(TASTNode.TProperty.Create('FirstPortabilityDirectiveListNode', AFirstPortabilityDirectiveListNode));
-  FProperties.Add(TASTNode.TProperty.Create('AbsoluteSemikeywordNode', AAbsoluteSemikeywordNode));
-  FProperties.Add(TASTNode.TProperty.Create('AbsoluteAddressNode', AAbsoluteAddressNode));
-  FProperties.Add(TASTNode.TProperty.Create('EqualSignNode', AEqualSignNode));
-  FProperties.Add(TASTNode.TProperty.Create('ValueNode', AValueNode));
-  FProperties.Add(TASTNode.TProperty.Create('SecondPortabilityDirectiveListNode', ASecondPortabilityDirectiveListNode));
-  FProperties.Add(TASTNode.TProperty.Create('SemicolonNode', ASemicolonNode));
+  FProperties.Add(TASTNodeProperty.Create('NameListNode', ANameListNode));
+  FProperties.Add(TASTNodeProperty.Create('ColonNode', AColonNode));
+  FProperties.Add(TASTNodeProperty.Create('TypeNode', ATypeNode));
+  FProperties.Add(TASTNodeProperty.Create('FirstPortabilityDirectiveListNode', AFirstPortabilityDirectiveListNode));
+  FProperties.Add(TASTNodeProperty.Create('AbsoluteSemikeywordNode', AAbsoluteSemikeywordNode));
+  FProperties.Add(TASTNodeProperty.Create('AbsoluteAddressNode', AAbsoluteAddressNode));
+  FProperties.Add(TASTNodeProperty.Create('EqualSignNode', AEqualSignNode));
+  FProperties.Add(TASTNodeProperty.Create('ValueNode', AValueNode));
+  FProperties.Add(TASTNodeProperty.Create('SecondPortabilityDirectiveListNode', ASecondPortabilityDirectiveListNode));
+  FProperties.Add(TASTNodeProperty.Create('SemicolonNode', ASemicolonNode));
 end;
 
 { TVarSectionNode }
@@ -3938,8 +3938,8 @@ begin
   FChildNodes.Add(AVarListNode);
 
   // Adding properties
-  FProperties.Add(TASTNode.TProperty.Create('VarKeywordNode', AVarKeywordNode));
-  FProperties.Add(TASTNode.TProperty.Create('VarListNode', AVarListNode));
+  FProperties.Add(TASTNodeProperty.Create('VarKeywordNode', AVarKeywordNode));
+  FProperties.Add(TASTNodeProperty.Create('VarListNode', AVarListNode));
 end;
 
 { TVariantGroupNode }
@@ -3979,13 +3979,13 @@ begin
   FChildNodes.Add(ASemicolonNode);
 
   // Adding properties
-  FProperties.Add(TASTNode.TProperty.Create('ValueListNode', AValueListNode));
-  FProperties.Add(TASTNode.TProperty.Create('ColonNode', AColonNode));
-  FProperties.Add(TASTNode.TProperty.Create('OpenParenthesisNode', AOpenParenthesisNode));
-  FProperties.Add(TASTNode.TProperty.Create('FieldDeclListNode', AFieldDeclListNode));
-  FProperties.Add(TASTNode.TProperty.Create('VariantSectionNode', AVariantSectionNode));
-  FProperties.Add(TASTNode.TProperty.Create('CloseParenthesisNode', ACloseParenthesisNode));
-  FProperties.Add(TASTNode.TProperty.Create('SemicolonNode', ASemicolonNode));
+  FProperties.Add(TASTNodeProperty.Create('ValueListNode', AValueListNode));
+  FProperties.Add(TASTNodeProperty.Create('ColonNode', AColonNode));
+  FProperties.Add(TASTNodeProperty.Create('OpenParenthesisNode', AOpenParenthesisNode));
+  FProperties.Add(TASTNodeProperty.Create('FieldDeclListNode', AFieldDeclListNode));
+  FProperties.Add(TASTNodeProperty.Create('VariantSectionNode', AVariantSectionNode));
+  FProperties.Add(TASTNodeProperty.Create('CloseParenthesisNode', ACloseParenthesisNode));
+  FProperties.Add(TASTNodeProperty.Create('SemicolonNode', ASemicolonNode));
 end;
 
 { TVariantSectionNode }
@@ -4022,12 +4022,12 @@ begin
   FChildNodes.Add(AVariantGroupListNode);
 
   // Adding properties
-  FProperties.Add(TASTNode.TProperty.Create('CaseKeywordNode', ACaseKeywordNode));
-  FProperties.Add(TASTNode.TProperty.Create('NameNode', ANameNode));
-  FProperties.Add(TASTNode.TProperty.Create('ColonNode', AColonNode));
-  FProperties.Add(TASTNode.TProperty.Create('TypeNode', ATypeNode));
-  FProperties.Add(TASTNode.TProperty.Create('OfKeywordNode', AOfKeywordNode));
-  FProperties.Add(TASTNode.TProperty.Create('VariantGroupListNode', AVariantGroupListNode));
+  FProperties.Add(TASTNodeProperty.Create('CaseKeywordNode', ACaseKeywordNode));
+  FProperties.Add(TASTNodeProperty.Create('NameNode', ANameNode));
+  FProperties.Add(TASTNodeProperty.Create('ColonNode', AColonNode));
+  FProperties.Add(TASTNodeProperty.Create('TypeNode', ATypeNode));
+  FProperties.Add(TASTNodeProperty.Create('OfKeywordNode', AOfKeywordNode));
+  FProperties.Add(TASTNodeProperty.Create('VariantGroupListNode', AVariantGroupListNode));
 end;
 
 { TVisibilityNode }
@@ -4052,8 +4052,8 @@ begin
   FChildNodes.Add(AVisibilityKeywordNode);
 
   // Adding properties
-  FProperties.Add(TASTNode.TProperty.Create('StrictSemikeywordNode', AStrictSemikeywordNode));
-  FProperties.Add(TASTNode.TProperty.Create('VisibilityKeywordNode', AVisibilityKeywordNode));
+  FProperties.Add(TASTNodeProperty.Create('StrictSemikeywordNode', AStrictSemikeywordNode));
+  FProperties.Add(TASTNodeProperty.Create('VisibilityKeywordNode', AVisibilityKeywordNode));
 end;
 
 { TVisibilitySectionNode }
@@ -4078,8 +4078,8 @@ begin
   FChildNodes.Add(AContentListNode);
 
   // Adding properties
-  FProperties.Add(TASTNode.TProperty.Create('VisibilityNode', AVisibilityNode));
-  FProperties.Add(TASTNode.TProperty.Create('ContentListNode', AContentListNode));
+  FProperties.Add(TASTNodeProperty.Create('VisibilityNode', AVisibilityNode));
+  FProperties.Add(TASTNodeProperty.Create('ContentListNode', AContentListNode));
 end;
 
 { TWhileStatementNode }
@@ -4110,10 +4110,10 @@ begin
   FChildNodes.Add(AStatementNode);
 
   // Adding properties
-  FProperties.Add(TASTNode.TProperty.Create('WhileKeywordNode', AWhileKeywordNode));
-  FProperties.Add(TASTNode.TProperty.Create('ConditionNode', AConditionNode));
-  FProperties.Add(TASTNode.TProperty.Create('DoKeywordNode', ADoKeywordNode));
-  FProperties.Add(TASTNode.TProperty.Create('StatementNode', AStatementNode));
+  FProperties.Add(TASTNodeProperty.Create('WhileKeywordNode', AWhileKeywordNode));
+  FProperties.Add(TASTNodeProperty.Create('ConditionNode', AConditionNode));
+  FProperties.Add(TASTNodeProperty.Create('DoKeywordNode', ADoKeywordNode));
+  FProperties.Add(TASTNodeProperty.Create('StatementNode', AStatementNode));
 end;
 
 { TWithStatementNode }
@@ -4144,10 +4144,10 @@ begin
   FChildNodes.Add(AStatementNode);
 
   // Adding properties
-  FProperties.Add(TASTNode.TProperty.Create('WithKeywordNode', AWithKeywordNode));
-  FProperties.Add(TASTNode.TProperty.Create('ExpressionListNode', AExpressionListNode));
-  FProperties.Add(TASTNode.TProperty.Create('DoKeywordNode', ADoKeywordNode));
-  FProperties.Add(TASTNode.TProperty.Create('StatementNode', AStatementNode));
+  FProperties.Add(TASTNodeProperty.Create('WithKeywordNode', AWithKeywordNode));
+  FProperties.Add(TASTNodeProperty.Create('ExpressionListNode', AExpressionListNode));
+  FProperties.Add(TASTNodeProperty.Create('DoKeywordNode', ADoKeywordNode));
+  FProperties.Add(TASTNodeProperty.Create('StatementNode', AStatementNode));
 end;
 
 end.

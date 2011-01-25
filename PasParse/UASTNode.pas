@@ -6,28 +6,29 @@ uses
   ULocation, Contnrs;
 
 type
+  TASTNode = class;
+
+  /// <Description>A Key-Value-Pair mapping a string to a ASTNode.</Description>
+  /// <Description>The value (ASTNode) is not automatically destroyed on destruction of the Property!</Description>
+  TASTNodeProperty = class
+  private
+    /// <Description>The key (string).</Description>
+    FKey: string;
+    /// <Description>The value (ASTNode).</Description>
+    FValue: TASTNode;
+
+  public
+    /// <Description>Public read-only accessor for the key.</Description>
+    property Key: string read FKey;
+    /// <Description>Public read-only accessor for the value.</Description>
+    property Value: TASTNode read FValue;
+
+    /// <Description>Default constructor. Assigns key and value.</Description>
+    constructor Create(const AKey: string; const AValue: TASTNode);
+  end;
+
   /// <Description>Prototype/Interface for an Abstract Syntax Tree Node.</Description>
   TASTNode = class
-  type
-    /// <Description>A Key-Value-Pair mapping a string to a ASTNode.</Description>
-    /// <Description>The value (ASTNode) is not automatically destroyed on destruction of the Property!</Description>
-    TProperty = class
-    private
-      /// <Description>The key (string).</Description>
-      FKey: string;
-      /// <Description>The value (ASTNode).</Description>
-      FValue: TASTNode;
-
-    public
-      /// <Description>Public read-only accessor for the key.</Description>
-      property Key: string read FKey;
-      /// <Description>Public read-only accessor for the value.</Description>
-      property Value: TASTNode read FValue;
-
-      /// <Description>Default constructor. Assigns key and value.</Description>
-      constructor Create(const AKey: string; const AValue: TASTNode);
-    end;
-
   private
     /// <Description>Pointer to the parent node</Description>
     FParentNode: TASTNode;
@@ -35,7 +36,7 @@ type
   protected
     /// <Description>TObjectList of TASTNode elements.</Description>
     FChildNodes: TObjectList;
-    /// <Description>TObjectList of TASTNode.TProperty elements.</Description>
+    /// <Description>TObjectList of TASTNodeProperty elements.</Description>
     FProperties: TObjectList;
 
     /// <Description>Default constructor.</Description>
@@ -145,9 +146,9 @@ begin
   Result := ToCode(Self, Self);
 end;
 
-{ TASTNode.TProperty }
+{ TASTNodeProperty }
 
-constructor TASTNode.TProperty.Create(const AKey: string;
+constructor TASTNodeProperty.Create(const AKey: string;
   const AValue: TASTNode);
 begin
   inherited Create;
