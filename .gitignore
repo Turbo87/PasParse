@@ -40,3 +40,8 @@ results.txt
 *.map
 *.lnk
 *MemoryManager_EventLog.txt
+
+# Lazarus specific
+*.o
+*.ppu
+*.compiled
