@@ -1,0 +1,157 @@
+<?xml version="1.0"?>
+<CONFIG>
+  <Package Version="3">
+    <PathDelim Value="\"/>
+    <Name Value="PasParse"/>
+    <CompilerOptions>
+      <Version Value="9"/>
+      <PathDelim Value="\"/>
+      <SearchPaths>
+        <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)\"/>
+      </SearchPaths>
+      <Parsing>
+        <SyntaxOptions>
+          <SyntaxMode Value="Delphi"/>
+        </SyntaxOptions>
+      </Parsing>
+      <Other>
+        <CompilerPath Value="$(CompPath)"/>
+      </Other>
+    </CompilerOptions>
+    <Files Count="30">
+      <Item1>
+        <Filename Value="UBaseException.pas"/>
+        <UnitName Value="UBaseException"/>
+      </Item1>
+      <Item2>
+        <Filename Value="ULexException.pas"/>
+        <UnitName Value="ULexException"/>
+      </Item2>
+      <Item3>
+        <Filename Value="ULexScanner.pas"/>
+        <UnitName Value="ULexScanner"/>
+      </Item3>
+      <Item4>
+        <Filename Value="ULocation.pas"/>
+        <UnitName Value="ULocation"/>
+      </Item4>
+      <Item5>
+        <Filename Value="UToken.pas"/>
+        <UnitName Value="UToken"/>
+      </Item5>
+      <Item6>
+        <Filename Value="UTokenSet.pas"/>
+        <UnitName Value="UTokenSet"/>
+      </Item6>
+      <Item7>
+        <Filename Value="UTokenSets.pas"/>
+        <UnitName Value="UTokenSets"/>
+      </Item7>
+      <Item8>
+        <Filename Value="UTokenType.pas"/>
+        <UnitName Value="UTokenType"/>
+      </Item8>
+      <Item9>
+        <Filename Value="URuleType.pas"/>
+        <UnitName Value="URuleType"/>
+      </Item9>
+      <Item10>
+        <Filename Value="UCompilerDefines.pas"/>
+        <UnitName Value="UCompilerDefines"/>
+      </Item10>
+      <Item11>
+        <Filename Value="UPreprocessorException.pas"/>
+        <UnitName Value="UPreprocessorException"/>
+      </Item11>
+      <Item12>
+        <Filename Value="UDictionary.pas"/>
+        <UnitName Value="UDictionary"/>
+      </Item12>
+      <Item13>
+        <Filename Value="UASTNode.pas"/>
+        <UnitName Value="UASTNode"/>
+      </Item13>
+      <Item14>
+        <Filename Value="UNonTerminalNode.pas"/>
+        <UnitName Value="UNonTerminalNode"/>
+      </Item14>
+      <Item15>
+        <Filename Value="UDelimitedItemNode.pas"/>
+        <UnitName Value="UDelimitedItemNode"/>
+      </Item15>
+      <Item16>
+        <Filename Value="UGeneratedNodes.pas"/>
+        <UnitName Value="UGeneratedNodes"/>
+      </Item16>
+      <Item17>
+        <Filename Value="UListNode.pas"/>
+        <UnitName Value="UListNode"/>
+      </Item17>
+      <Item18>
+        <Filename Value="UParser.pas"/>
+        <UnitName Value="UParser"/>
+      </Item18>
+      <Item19>
+        <Filename Value="UIFrame.pas"/>
+        <UnitName Value="UIFrame"/>
+      </Item19>
+      <Item20>
+        <Filename Value="UEOFFrame.pas"/>
+        <UnitName Value="UEOFFrame"/>
+      </Item20>
+      <Item21>
+        <Filename Value="UParseException.pas"/>
+        <UnitName Value="UParseException"/>
+      </Item21>
+      <Item22>
+        <Filename Value="UInvalidOperationException.pas"/>
+        <UnitName Value="UInvalidOperationException"/>
+      </Item22>
+      <Item23>
+        <Filename Value="UFrame.pas"/>
+        <UnitName Value="UFrame"/>
+      </Item23>
+      <Item24>
+        <Filename Value="UITokenSet.pas"/>
+        <UnitName Value="UITokenSet"/>
+      </Item24>
+      <Item25>
+        <Filename Value="USingleTokenTokenSet.pas"/>
+        <UnitName Value="USingleTokenTokenSet"/>
+      </Item25>
+      <Item26>
+        <Filename Value="URule.pas"/>
+        <UnitName Value="URule"/>
+      </Item26>
+      <Item27>
+        <Filename Value="UIParser.pas"/>
+        <UnitName Value="UIParser"/>
+      </Item27>
+      <Item28>
+        <Filename Value="UTokenRule.pas"/>
+        <UnitName Value="UTokenRule"/>
+      </Item28>
+      <Item29>
+        <Filename Value="URules.pas"/>
+        <UnitName Value="URules"/>
+      </Item29>
+      <Item30>
+        <Filename Value="UAlternator.pas"/>
+        <UnitName Value="UAlternator"/>
+      </Item30>
+    </Files>
+    <Type Value="RunAndDesignTime"/>
+    <RequiredPkgs Count="1">
+      <Item1>
+        <PackageName Value="LCL"/>
+        <MinVersion Major="1" Valid="True"/>
+      </Item1>
+    </RequiredPkgs>
+    <UsageOptions>
+      <UnitPath Value="$(PkgOutDir)"/>
+    </UsageOptions>
+    <PublishOptions>
+      <Version Value="2"/>
+    </PublishOptions>
+  </Package>
+</CONFIG>
