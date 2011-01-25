@@ -69,6 +69,7 @@ function TEOFFrame.GetNext: IFrame;
 begin
   raise EParseException.Create('Expected token but found end of file',
     Location.Clone);
+  Result := nil;
 end;
 
 function TEOFFrame.GetTokenType: TTokenType;
@@ -80,6 +81,7 @@ function TEOFFrame.ParseToken(ATokenSet: ITokenSet): TToken;
 begin
   raise EParseException.Create('Expected ' + ATokenSet.Name +
     ' but found end of file', Location.Clone);
+  Result := nil;
 end;
 
 procedure TEOFFrame.SetNext(const Value: IFrame);
