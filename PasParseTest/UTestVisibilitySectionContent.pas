@@ -15,7 +15,7 @@ type
 implementation
 
 uses
-  UTestParser, URuleType, UParseException;
+  UTestParser, URuleType;
 
 { TTestVisibilitySectionContent }
 
