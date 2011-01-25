@@ -1,5 +1,9 @@
 unit UBaseException;
 
+{$IFDEF FPC}
+  {$MODE Delphi}
+{$ENDIF}
+
 interface
 
 uses
