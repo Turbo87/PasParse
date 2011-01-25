@@ -18,7 +18,7 @@ type
 implementation
 
 uses
-  ULexScanner, UToken, SysUtils, ULexException;
+  ULexScanner, UToken, ULexException;
 
 { TTestLexScanner }
 
@@ -45,7 +45,7 @@ begin
         AToken := ALexScanner.NextToken;
         Result := (AToken <> nil) and (AToken.Inspect = ATokens[I]);
       finally
-        FreeAndNil(AToken);
+        AToken.Free;
       end;
     end;
 
@@ -53,10 +53,10 @@ begin
       AToken := ALexScanner.NextToken;
       Result := (AToken = nil) and Result;
     finally
-     FreeAndNil(AToken);
+      AToken.Free;
     end;
   finally
-    FreeAndNil(ALexScanner);
+    ALexScanner.Free;
   end;
 end;
 
