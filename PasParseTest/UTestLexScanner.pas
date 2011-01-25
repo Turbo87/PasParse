@@ -41,20 +41,17 @@ begin
   try
     for I := 0 to Length(ATokens) - 1 do
     begin
+      AToken := ALexScanner.NextToken;
       try
-        AToken := ALexScanner.NextToken;
         Result := (AToken <> nil) and (AToken.Inspect = ATokens[I]);
       finally
         AToken.Free;
       end;
     end;
 
-    try
-      AToken := ALexScanner.NextToken;
-      Result := (AToken = nil) and Result;
-    finally
-      AToken.Free;
-    end;
+    AToken := ALexScanner.NextToken;
+    Result := (AToken = nil) and Result;
+    AToken.Free;
   finally
     ALexScanner.Free;
   end;
