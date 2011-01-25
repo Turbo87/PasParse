@@ -3,7 +3,7 @@ unit URules;
 interface
 
 uses
-  URule, UASTNode, UIParser, URuleType, UITokenSet, UAlternator;
+  URule, UASTNode, UIParser, URuleType, UAlternator;
 
 type
   TArrayTypeRule = class(TRule)
