@@ -120,6 +120,7 @@ begin
     TTestASTNode.Test;
     TTestLexScanner.Test;
     TTestCompilerDefines.Test;
+    TTestTokenFilter.Test;
     TTestAlternator.Test;
 
     TTestAddOp.Test;
@@ -202,7 +203,6 @@ begin
     TTestStatementList.Test;
     TTestStringType.Test;
     TTestTerm.Test;
-    TTestTokenFilter.Test;
     TTestTryStatement.Test;
     TTestType.Test;
     TTestTypedConstant.Test;
