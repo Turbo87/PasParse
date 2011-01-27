@@ -4,13 +4,9 @@ interface
 
 uses
   UCompilerDefines, UToken, UIFrame, UITokenSet, UTokenType, UListNode,
-  UParseException, UIParser, URule, URuleType, UASTNode, Contnrs;
+  UParseException, UIParser, URule, URuleType, UASTNode, UFileLoader, Contnrs;
 
 type
-  TFileLoader = class
-
-  end;
-
   TRuleClass = class of TRule;
 
   TParser = class(IParser)

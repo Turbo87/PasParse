@@ -57,6 +57,7 @@ contains
   UIParser in 'UIParser.pas',
   UTokenRule in 'UTokenRule.pas',
   URules in 'URules.pas',
-  UAlternator in 'UAlternator.pas';
+  UAlternator in 'UAlternator.pas',
+  UFileLoader in 'UFileLoader.pas';
 
 end.

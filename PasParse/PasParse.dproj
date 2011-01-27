@@ -37,6 +37,7 @@
     <DCCReference Include="UDelimitedItemNode.pas" />
     <DCCReference Include="UDictionary.pas" />
     <DCCReference Include="UEOFFrame.pas" />
+    <DCCReference Include="UFileLoader.pas" />
     <DCCReference Include="UFrame.pas" />
     <DCCReference Include="UGeneratedNodes.pas" />
     <DCCReference Include="UIFrame.pas" />
