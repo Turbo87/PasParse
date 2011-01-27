@@ -153,7 +153,7 @@ begin
       // Convert token name to keyword (e.g. TTIfKeyword -> If)
       ABaseWord := Copy(ATokenString, 3, Length(ATokenString) - ASuffixLength);
       // Add keyword-token pair to FWordTypes keyword list
-      FWordTypes.Write(AnsiLowerCase(ABaseWord), TObject(Integer(ATokenType)));
+      FWordTypes.Write(AnsiLowerCase(ABaseWord), TObject(ATokenType));
     end;  
   end;      
 end;
@@ -192,7 +192,7 @@ begin
     // Check whether the parsed identifier is a known keyword
     AWord := Copy(FSource, FIndex + 1, ALength);
     if FWordTypes.Read(AnsiLowerCase(AWord), AObject) then
-      ATokenType := TTokenType(Integer(AObject))
+      ATokenType := TTokenType(AObject)
     else
       ATokenType := TTIdentifier;
 
