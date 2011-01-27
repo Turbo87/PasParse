@@ -108,7 +108,7 @@ end;
 procedure TCompilerDefines.DefineDirective(ACompilerDirective: string;
   AIsTrue: Boolean);
 begin
-  FDictionary.Write(AnsiLowerCase(ACompilerDirective), TObject(AIsTrue));
+  FDictionary[AnsiLowerCase(ACompilerDirective)] := TObject(AIsTrue);
 end;
 
 procedure TCompilerDefines.DefineDirectiveAsFalse(ACompilerDirective: string);
