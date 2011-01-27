@@ -25,7 +25,7 @@ uses
 
 class function TTestTokenFilter.GetName: string;
 begin
-  Result := 'LexScanner';
+  Result := 'TokenFilter';
 end;
 
 class function TTestTokenFilter.LexesAndFiltersAs(ASource: string;
