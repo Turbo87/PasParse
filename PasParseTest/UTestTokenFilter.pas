@@ -95,115 +95,115 @@ begin
 //  Assert.That('{$NODEFINE Foo}', []));
 //  Assert.That('{$NOINCLUDE Foo}', []));
 //
-//  OK('IfDefTrue',
-//    LexesAndFiltersAs('0{$IFDEF TRUE}1{$ENDIF}2', [
-//      'Number |0|',
-//      'Number |1|',
-//      'Number |2|']));
-//
-//  OK('IfDefFalse',
-//    LexesAndFiltersAs('0{$IFDEF FALSE}1{$ENDIF}2', [
-//      'Number |0|',
-//      'Number |2|']));
-//
-//  OK('IfDefTrueTrue',
-//    LexesAndFiltersAs('0{$IFDEF TRUE}1{$IFDEF TRUE}2{$ENDIF}3{$ENDIF}4', [
-//      'Number |0|',
-//      'Number |1|',
-//      'Number |2|',
-//      'Number |3|',
-//      'Number |4|']));
-//
-//  OK('IfDefTrueFalse',
-//    LexesAndFiltersAs('0{$IFDEF TRUE}1{$IFDEF FALSE}2{$ENDIF}3{$ENDIF}4', [
-//      'Number |0|',
-//      'Number |1|',
-//      'Number |3|',
-//      'Number |4|']));
-//
-//  OK('IfDefFalseTrue',
-//    LexesAndFiltersAs('0{$IFDEF FALSE}1{$IFDEF TRUE}2{$ENDIF}3{$ENDIF}4', [
-//      'Number |0|',
-//      'Number |4|']));
-//
-//  OK('IfDefFalseFalse',
-//    LexesAndFiltersAs('0{$IFDEF FALSE}1{$IFDEF FALSE}2{$ENDIF}3{$ENDIF}4', [
-//      'Number |0|',
-//      'Number |4|']));
-//
-//  OK('IfDefFalseUnknown',
-//    LexesAndFiltersAs('0{$IFDEF FALSE}1{$IFDEF UNKNOWN}2{$ENDIF}3{$ENDIF}4', [
-//      'Number |0|',
-//      'Number |4|']));
-//
-//  OK('IfEnd',
-//    LexesAndFiltersAs('0{$IF False}1{$IFEND}2', [
-//      'Number |0|',
-//      'Number |2|']));
-//
-//  OK('IfDefTrueWithElse',
-//    LexesAndFiltersAs('0{$IFDEF TRUE}1{$ELSE}2{$ENDIF}3', [
-//      'Number |0|',
-//      'Number |1|',
-//      'Number |3|']));
-//
-//  OK('IfDefFalseWithElse',
-//    LexesAndFiltersAs('0{$IFDEF FALSE}1{$ELSE}2{$ENDIF}3', [
-//      'Number |0|',
-//      'Number |2|',
-//      'Number |3|']));
-//
-//  OK('IfDefTrueTrueWithElses',
-//    LexesAndFiltersAs('0{$IFDEF TRUE}1{$IFDEF TRUE}2{$ELSE}3{$ENDIF}4{$ELSE}5{$ENDIF}6', [
-//      'Number |0|',
-//      'Number |1|',
-//      'Number |2|',
-//      'Number |4|',
-//      'Number |6|']));
-//
-//  OK('IfDefTrueFalseWithElses',
-//    LexesAndFiltersAs('0{$IFDEF TRUE}1{$IFDEF FALSE}2{$ELSE}3{$ENDIF}4{$ELSE}5{$ENDIF}6', [
-//      'Number |0|',
-//      'Number |1|',
-//      'Number |3|',
-//      'Number |4|',
-//      'Number |6|']));
-//
-//  OK('IfDefFalseTrueWithElses',
-//    LexesAndFiltersAs('0{$IFDEF FALSE}1{$IFDEF TRUE}2{$ELSE}3{$ENDIF}4{$ELSE}5{$ENDIF}6', [
-//      'Number |0|',
-//      'Number |5|',
-//      'Number |6|']));
-//
-//  OK('IfDefFalseFalseWithElses',
-//    LexesAndFiltersAs('0{$IFDEF FALSE}1{$IFDEF FALSE}2{$ELSE}3{$ENDIF}4{$ELSE}5{$ENDIF}6', [
-//      'Number |0|',
-//      'Number |5|',
-//      'Number |6|']));
-//
-//  OK('IfTrueElseIfTrue',
-//    LexesAndFiltersAs('0{$IF True}1{$ELSEIF True}2{$ELSE}3{$IFEND}4', [
-//      'Number |0|',
-//      'Number |1|',
-//      'Number |4|']));
-//
-//  OK('IfTrueElseIfFalse',
-//    LexesAndFiltersAs('0{$IF True}1{$ELSEIF False}2{$ELSE}3{$IFEND}4', [
-//      'Number |0|',
-//      'Number |1|',
-//      'Number |4|']));
-//
-//  OK('IfFalseElseIfTrue',
-//    LexesAndFiltersAs('0{$IF False}1{$ELSEIF True}2{$ELSE}3{$IFEND}4', [
-//      'Number |0|',
-//      'Number |2|',
-//      'Number |4|']));
-//
-//  OK('IfFalseElseIfFalse',
-//    LexesAndFiltersAs('0{$IF False}1{$ELSEIF False}2{$ELSE}3{$IFEND}4', [
-//      'Number |0|',
-//      'Number |3|',
-//      'Number |4|']));
+  OK('IfDefTrue',
+    LexesAndFiltersAs('0{$IFDEF TRUE}1{$ENDIF}2', [
+      'Number |0|',
+      'Number |1|',
+      'Number |2|']));
+
+  OK('IfDefFalse',
+    LexesAndFiltersAs('0{$IFDEF FALSE}1{$ENDIF}2', [
+      'Number |0|',
+      'Number |2|']));
+
+  OK('IfDefTrueTrue',
+    LexesAndFiltersAs('0{$IFDEF TRUE}1{$IFDEF TRUE}2{$ENDIF}3{$ENDIF}4', [
+      'Number |0|',
+      'Number |1|',
+      'Number |2|',
+      'Number |3|',
+      'Number |4|']));
+
+  OK('IfDefTrueFalse',
+    LexesAndFiltersAs('0{$IFDEF TRUE}1{$IFDEF FALSE}2{$ENDIF}3{$ENDIF}4', [
+      'Number |0|',
+      'Number |1|',
+      'Number |3|',
+      'Number |4|']));
+
+  OK('IfDefFalseTrue',
+    LexesAndFiltersAs('0{$IFDEF FALSE}1{$IFDEF TRUE}2{$ENDIF}3{$ENDIF}4', [
+      'Number |0|',
+      'Number |4|']));
+
+  OK('IfDefFalseFalse',
+    LexesAndFiltersAs('0{$IFDEF FALSE}1{$IFDEF FALSE}2{$ENDIF}3{$ENDIF}4', [
+      'Number |0|',
+      'Number |4|']));
+
+  OK('IfDefFalseUnknown',
+    LexesAndFiltersAs('0{$IFDEF FALSE}1{$IFDEF UNKNOWN}2{$ENDIF}3{$ENDIF}4', [
+      'Number |0|',
+      'Number |4|']));
+
+  OK('IfEnd',
+    LexesAndFiltersAs('0{$IF False}1{$IFEND}2', [
+      'Number |0|',
+      'Number |2|']));
+
+  OK('IfDefTrueWithElse',
+    LexesAndFiltersAs('0{$IFDEF TRUE}1{$ELSE}2{$ENDIF}3', [
+      'Number |0|',
+      'Number |1|',
+      'Number |3|']));
+
+  OK('IfDefFalseWithElse',
+    LexesAndFiltersAs('0{$IFDEF FALSE}1{$ELSE}2{$ENDIF}3', [
+      'Number |0|',
+      'Number |2|',
+      'Number |3|']));
+
+  OK('IfDefTrueTrueWithElses',
+    LexesAndFiltersAs('0{$IFDEF TRUE}1{$IFDEF TRUE}2{$ELSE}3{$ENDIF}4{$ELSE}5{$ENDIF}6', [
+      'Number |0|',
+      'Number |1|',
+      'Number |2|',
+      'Number |4|',
+      'Number |6|']));
+
+  OK('IfDefTrueFalseWithElses',
+    LexesAndFiltersAs('0{$IFDEF TRUE}1{$IFDEF FALSE}2{$ELSE}3{$ENDIF}4{$ELSE}5{$ENDIF}6', [
+      'Number |0|',
+      'Number |1|',
+      'Number |3|',
+      'Number |4|',
+      'Number |6|']));
+
+  OK('IfDefFalseTrueWithElses',
+    LexesAndFiltersAs('0{$IFDEF FALSE}1{$IFDEF TRUE}2{$ELSE}3{$ENDIF}4{$ELSE}5{$ENDIF}6', [
+      'Number |0|',
+      'Number |5|',
+      'Number |6|']));
+
+  OK('IfDefFalseFalseWithElses',
+    LexesAndFiltersAs('0{$IFDEF FALSE}1{$IFDEF FALSE}2{$ELSE}3{$ENDIF}4{$ELSE}5{$ENDIF}6', [
+      'Number |0|',
+      'Number |5|',
+      'Number |6|']));
+
+  OK('IfTrueElseIfTrue',
+    LexesAndFiltersAs('0{$IF True}1{$ELSEIF True}2{$ELSE}3{$IFEND}4', [
+      'Number |0|',
+      'Number |1|',
+      'Number |4|']));
+
+  OK('IfTrueElseIfFalse',
+    LexesAndFiltersAs('0{$IF True}1{$ELSEIF False}2{$ELSE}3{$IFEND}4', [
+      'Number |0|',
+      'Number |1|',
+      'Number |4|']));
+
+  OK('IfFalseElseIfTrue',
+    LexesAndFiltersAs('0{$IF False}1{$ELSEIF True}2{$ELSE}3{$IFEND}4', [
+      'Number |0|',
+      'Number |2|',
+      'Number |4|']));
+
+  OK('IfFalseElseIfFalse',
+    LexesAndFiltersAs('0{$IF False}1{$ELSEIF False}2{$ELSE}3{$IFEND}4', [
+      'Number |0|',
+      'Number |3|',
+      'Number |4|']));
 
 
 

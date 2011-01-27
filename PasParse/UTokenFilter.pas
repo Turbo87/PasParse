@@ -3,7 +3,7 @@ unit UTokenFilter;
 interface
 
 uses
-  UDictionary, UCompilerDefines, UFileLoader, Contnrs;
+  UDictionary, UCompilerDefines, UFileLoader, UToken, ULocation, Contnrs;
 
 type
   TDirectiveType = (
@@ -35,6 +35,12 @@ type
     function Filter(AIfDefStack: TStack; ATokens: TObjectList): TObjectList;
     function GetTokens: TObjectList;
 
+    function FirstWordOf(AString: string): string;
+    function GetDirectiveType(AFirstWord: string): TDirectiveType;
+    procedure HandleCompilerDirective(AIfDefStack: TStack; AToken: TToken);
+    procedure HandleIf(AIfDefStack: TStack; ADirective: string; ALocation: TLocation); 
+    procedure HandleElseIf(AIfDefStack: TStack; ADirective: string; ALocation: TLocation);
+    procedure HandleElse(AIfDefStack: TStack);
   public
     constructor Create(ATokens: TObjectList; ACompilerDefines: TCompilerDefines;
       AFileLoader: TFileLoader);
@@ -46,7 +52,7 @@ type
 implementation
 
 uses
-  UToken, UTokenType;
+  UTokenType;
 
 { TTokenFilter }
 
@@ -159,11 +165,40 @@ begin
       TTCurlyBraceComment,
       TTParenStarComment:
         ; // Do nothing
+
+      TTCompilerDirective:
+        HandleCompilerDirective(AIfDefStack, AToken);
+
       else
         if AIfDefStack.Peek = TObject(IDTTrue) then
           Result.Add(AToken.Clone);
     end;
   end;
+end;
+
+function TTokenFilter.FirstWordOf(AString: string): string;
+var
+  AChar: Char;
+begin
+  Result := '';
+  for AChar in AString do
+  begin
+    if ((AChar <= 'Z') and (AChar >= 'A')) or
+       ((AChar <= 'z') and (AChar >= 'a')) then
+      Result := Result + AChar
+    else
+      Break;
+  end;   
+end;
+
+function TTokenFilter.GetDirectiveType(AFirstWord: string): TDirectiveType;
+begin
+  if FDirectiveTypes.Contains(AFirstWord) then
+    Result := TDirectiveType(FDirectiveTypes[AFirstWord])
+  else if Length(AFirstWord) = 1 then
+    Result := DTIgnored
+  else
+    Result := DTUnrecognized;
 end;
 
 function TTokenFilter.GetTokens: TObjectList;
@@ -174,6 +209,86 @@ begin
   AIfDefStack.Push(TObject(IDTTrue));
   Result := Filter(AIfDefStack, FTokens);
   AIfDefStack.Free;
+end;
+
+procedure TTokenFilter.HandleCompilerDirective(AIfDefStack: TStack;
+  AToken: TToken);
+var
+  ADirective, AFirstWord, AParameter: string;
+begin
+  ADirective := AToken.ParsedText;
+  AFirstWord := FirstWordOf(ADirective);
+  AParameter := Copy(ADirective, Length(AFirstWord) + 1,
+    Length(ADirective) - Length(AFirstWord));
+
+  case GetDirectiveType(AFirstWord) of
+    DTUnrecognized:
+      ; // TODO Exception
+
+    DTDefine:
+      if AIfDefStack.Peek = TObject(IDTTrue) then
+        FCompilerDefines.DefineSymbol(AParameter);
+
+    DTUndefine:
+      if AIfDefStack.Peek = TObject(IDTTrue) then
+        FCompilerDefines.UndefineSymbol(AParameter);
+
+    DTIf:
+      HandleIf(AIfDefStack, ADirective, AToken.Location);
+
+    DTElseIf:
+      HandleElseIf(AIfDefStack, ADirective, AToken.Location);
+
+    DTElse:
+      HandleElse(AIfDefStack);
+
+    DTEndIf:
+      AIfDefStack.Pop;
+  end;
+end;
+
+procedure TTokenFilter.HandleElse(AIfDefStack: TStack);
+var
+  ATruth: TIfDefTruth;
+begin
+  ATruth := TIfDefTruth(AIfDefStack.Pop);
+  if ATruth = IDTInitiallyFalse then
+    AIfDefStack.Push(TObject(IDTTrue))
+  else
+    AIfDefStack.Push(TObject(IDTForeverFalse));
+end;
+
+procedure TTokenFilter.HandleElseIf(AIfDefStack: TStack; ADirective: string;
+  ALocation: TLocation);
+var
+  ATruth: TIfDefTruth;
+  ATrimmedDirective: string;
+begin
+  ATruth := TIfDefTruth(AIfDefStack.Pop);
+  if (ATruth = IDTTrue) or (ATruth = IDTForeverFalse) then
+    AIfDefStack.Push(TObject(IDTForeverFalse))
+  else
+  begin
+    ATrimmedDirective := Copy(ADirective, 5, Length(ADirective) - 4);
+    if FCompilerDefines.IsTrue(ATrimmedDirective, ALocation) then
+      AIfDefStack.Push(TObject(IDTTrue))
+    else
+      AIfDefStack.Push(TObject(IDTInitiallyFalse));
+  end;
+end;
+
+procedure TTokenFilter.HandleIf(AIfDefStack: TStack; ADirective: string;
+  ALocation: TLocation);
+begin
+  if TIfDefTruth(AIfDefStack.Peek) = IDTTrue then
+  begin
+    if FCompilerDefines.IsTrue(ADirective, ALocation) then
+      AIfDefStack.Push(TObject(IDTTrue))
+    else
+      AIfDefStack.Push(TObject(IDTInitiallyFalse));
+  end
+  else
+    AIfDefStack.Push(TObject(IDTForeverFalse));
 end;
 
 end.
