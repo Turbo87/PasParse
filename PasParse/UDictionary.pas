@@ -40,7 +40,7 @@ type
     function Contains(const AKey: string): Boolean;
 
     /// <Description>User-friendly syntax option to access the Read/Write() functions.</Description>
-    property Items[const AKey: string]: TObject read Read write WriteRedirection;
+    property Items[const AKey: string]: TObject read Read write WriteRedirection; default;
   end;
 
 implementation
