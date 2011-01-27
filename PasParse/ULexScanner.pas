@@ -250,7 +250,7 @@ end;
 destructor TLexScanner.Destroy;
 begin
   // Destroy keyword list
-  FreeAndNil(FWordTypes);
+  FWordTypes.Free;
   inherited;
 end;
 
@@ -426,7 +426,7 @@ begin
       Result := TToken.Create(AMatch.TokenType, Location, AText,
                               AMatch.ParsedText);
       Inc(FIndex, AMatch.Length);
-      FreeAndNil(AMatch);
+      AMatch.Free;
     end;
   end;
 end;

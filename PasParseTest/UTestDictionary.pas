@@ -15,7 +15,7 @@ type
 implementation
 
 uses
-  UDictionary, SysUtils;
+  UDictionary;
 
 { TTestDictionary }
 
@@ -65,7 +65,7 @@ begin
   OK(ADict.Read('test1', AObject), 'Read');
   OK(Integer(AObject) = 3, 'Integer(AObject) = 3');
 
-  FreeAndNil(ADict);
+  ADict.Free;
 end;
 
 end.

@@ -121,7 +121,7 @@ end;
 
 destructor TCompilerDefines.Destroy;
 begin
-  FreeAndNil(FDictionary);
+  FDictionary.Free;
   inherited;
 end;
 

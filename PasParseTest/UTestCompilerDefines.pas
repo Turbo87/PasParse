@@ -19,7 +19,7 @@ type
 implementation
 
 uses
-  SysUtils, ULocation, UPreprocessorException;
+  ULocation, UPreprocessorException;
 
 { TTestCompilerDefines }
 
@@ -84,7 +84,7 @@ begin
   ADefines.DefineDirectiveAsTrue('IFDEF FOO');
   OK(DefineIsTrue(ADefines, 'IfDef Foo'), 'IfDef Foo');
 
-  FreeAndNil(ADefines);
+  ADefines.Free;
 end;
 
 end.
