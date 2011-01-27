@@ -8,7 +8,7 @@ uses
 type
   TTestLexScanner = class(TTest)
   private
-    class function LexesAs(ASource: string; ATokens: array of string): Boolean;
+    class function LexesAs(ASource: string; AExpectedTokens: array of string): Boolean;
 
   protected
     class procedure TestAll; override;
@@ -18,7 +18,7 @@ type
 implementation
 
 uses
-  ULexScanner, UToken, ULexException;
+  ULexScanner, UToken, ULexException, Contnrs;
 
 { TTestLexScanner }
 
@@ -28,30 +28,30 @@ begin
 end;
 
 class function TTestLexScanner.LexesAs(ASource: string;
-  ATokens: array of string): Boolean;
+  AExpectedTokens: array of string): Boolean;
 var
   ALexScanner: TLexScanner;
+  ATokens: TObjectList;
   AToken: TToken;
   I: Integer;
 begin
   ALexScanner := TLexScanner.Create(ASource, '');
-
-  Result := True;
-
   try
-    for I := 0 to Length(ATokens) - 1 do
+    ATokens := ALexScanner.Tokens;
+
+    Result := (ATokens.Count = Length(AExpectedTokens));
+    if Result then
     begin
-      AToken := ALexScanner.NextToken;
       try
-        Result := (AToken <> nil) and (AToken.Inspect = ATokens[I]);
+        for I := 0 to ATokens.Count - 1 do
+        begin
+          AToken := ATokens[I] as TToken;
+          Result := (AToken <> nil) and (AToken.Inspect = AExpectedTokens[I]);
+        end;
       finally
-        AToken.Free;
+        ATokens.Free;
       end;
     end;
-
-    AToken := ALexScanner.NextToken;
-    Result := (AToken = nil) and Result;
-    AToken.Free;
   finally
     ALexScanner.Free;
   end;
