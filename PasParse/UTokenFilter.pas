@@ -32,7 +32,7 @@ type
     FFileLoader: TFileLoader;
     FDirectiveTypes: TDictionary;
 
-    function Filter(ATokens: TObjectList): TObjectList;
+    function Filter(AIfDefStack: TStack; ATokens: TObjectList): TObjectList;
     function GetTokens: TObjectList;
 
   public
@@ -144,7 +144,7 @@ begin
   inherited;
 end;
 
-function TTokenFilter.Filter(ATokens: TObjectList): TObjectList;
+function TTokenFilter.Filter(AIfDefStack: TStack; ATokens: TObjectList): TObjectList;
 var
   AToken: TToken;
   I: Integer;
@@ -160,14 +160,20 @@ begin
       TTParenStarComment:
         ; // Do nothing
       else
-        Result.Add(AToken.Clone);
+        if AIfDefStack.Peek = TObject(IDTTrue) then
+          Result.Add(AToken.Clone);
     end;
   end;
 end;
 
 function TTokenFilter.GetTokens: TObjectList;
+var
+  AIfDefStack: TStack;
 begin
-  Result := Filter(FTokens);
+  AIfDefStack := TStack.Create;
+  AIfDefStack.Push(TObject(IDTTrue));
+  Result := Filter(AIfDefStack, FTokens);
+  AIfDefStack.Free;
 end;
 
 end.
