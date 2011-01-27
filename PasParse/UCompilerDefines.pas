@@ -14,6 +14,8 @@ type
     constructor Create(ADefineStandards: Boolean = False);
     destructor Destroy; override;
 
+    function Clone: TCompilerDefines;
+
     procedure DefineDirective(ACompilerDirective: string; AIsTrue: Boolean);
     procedure DefineDirectiveAsFalse(ACompilerDirective: string);
     procedure DefineDirectiveAsTrue(ACompilerDirective: string);
@@ -29,6 +31,17 @@ uses
   SysUtils, UPreprocessorException;
 
 { TCompilerDefines }
+
+function TCompilerDefines.Clone: TCompilerDefines;
+var
+  APair: TDictionaryKeyValuePair;
+begin
+  Result := TCompilerDefines.Create;
+  for APair in FDictionary do
+  begin
+    Result.DefineDirective(APair.Key, (APair.Value = TObject(true)));    
+  end;
+end;
 
 constructor TCompilerDefines.Create(ADefineStandards: Boolean);
 begin

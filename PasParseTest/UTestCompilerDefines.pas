@@ -40,7 +40,7 @@ end;
 
 class procedure TTestCompilerDefines.TestAll;
 var
-  ADefines: TCompilerDefines;
+  ADefines, AClone: TCompilerDefines;
 begin
   ADefines := TCompilerDefines.Create;
 
@@ -84,7 +84,12 @@ begin
   ADefines.DefineDirectiveAsTrue('IFDEF FOO');
   OK(DefineIsTrue(ADefines, 'IfDef Foo'), 'IfDef Foo');
 
+  AClone := ADefines.Clone;
   ADefines.Free;
+
+  OK(DefineIsTrue(AClone, 'IfDef Foo'), 'Clone');
+
+  AClone.Free;
 end;
 
 end.
