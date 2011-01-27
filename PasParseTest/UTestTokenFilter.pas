@@ -19,7 +19,7 @@ type
 implementation
 
 uses
-  ULexScanner, UToken, ULexException, UTokenFilter, UCompilerDefines, Contnrs;
+  ULexScanner, UToken, UTokenFilter, UCompilerDefines, Contnrs;
 
 { TTestTokenFilter }
 
