@@ -303,23 +303,24 @@ end;
 
 function TLexScanner.GetTokens: TObjectList;
 var
-  ATokens: TObjectList;
   AToken: TToken;
 begin
   // Create TToken list
-  ATokens := TObjectList.Create;
+  Result := TObjectList.Create;
+  try
+    // Iterate through tokens and add them to the list
+    repeat
+      AToken := NextToken;
+      // If last token reached, jump out of the loop
+      if AToken = nil then
+        Break;
 
-  // Iterate through tokens and add them to the list
-  repeat
-    AToken := NextToken;
-    // If last token reached, jump out of the loop
-    if AToken = nil then
-      Break;
-
-    ATokens.Add(AToken);
-  until False;
-
-  Result := ATokens;
+      Result.Add(AToken);
+    until False;
+  except
+    Result.Free;
+    raise;
+  end;
 end;
 
 function TLexScanner.HexNumber: TMatch;
