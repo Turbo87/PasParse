@@ -537,7 +537,6 @@ begin
   else
   begin
     ALength := 2;
-    // TODO strip trailing \n
     while (CanRead(ALength)) and
           (Peek(ALength) <> #13) and
           (Peek(ALength) <> #10) do
