@@ -110,7 +110,8 @@ uses
   UTestUnit in 'UTestUnit.pas',
   UTestRequiresClause in 'UTestRequiresClause.pas',
   UTestProgram in 'UTestProgram.pas',
-  UTestPackage in 'UTestPackage.pas';
+  UTestPackage in 'UTestPackage.pas',
+  UTestTokenFilter in 'UTestTokenFilter.pas';
 
 begin
   try
@@ -201,6 +202,7 @@ begin
     TTestStatementList.Test;
     TTestStringType.Test;
     TTestTerm.Test;
+    TTestTokenFilter.Test;
     TTestTryStatement.Test;
     TTestType.Test;
     TTestTypedConstant.Test;

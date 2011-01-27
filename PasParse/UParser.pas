@@ -61,7 +61,7 @@ implementation
 
 uses
   ULexScanner, UEOFFrame, ULocation, UFrame, USingleTokenTokenSet, UTokenRule,
-  UTokenSets, URules, UDelimitedItemNode;
+  UTokenSets, URules, UDelimitedItemNode, UTokenFilter;
 
 { TParser }
 
@@ -212,12 +212,16 @@ constructor TParser.CreateFromText(AText, AFileName: string;
   ACompilerDefines: TCompilerDefines; AFileLoader: TFileLoader);
 var
   ALexScanner: TLexScanner;
-  ATokens: TObjectList;
+  ATokens, AFilteredTokens: TObjectList;
+  ATokenFilter: TTokenFilter;
 begin
   ALexScanner := TLexScanner.Create(AText, AFileName);
   ATokens := ALexScanner.Tokens;
-  // TODO TokenFilter
-  CreateFromTokens(ATokens);
+  ATokenFilter := TTokenFilter.Create(ATokens, ACompilerDefines, AFileLoader);
+  AFilteredTokens := ATokenFilter.Tokens;
+  CreateFromTokens(AFilteredTokens);
+  AFilteredTokens.Free;
+  ATokenFilter.Free;
   ATokens.Free;
   ALexScanner.Free;
 end;

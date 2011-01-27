@@ -124,6 +124,7 @@
     <DCCReference Include="UTestStatementList.pas" />
     <DCCReference Include="UTestStringType.pas" />
     <DCCReference Include="UTestTerm.pas" />
+    <DCCReference Include="UTestTokenFilter.pas" />
     <DCCReference Include="UTestTryStatement.pas" />
     <DCCReference Include="UTestType.pas" />
     <DCCReference Include="UTestTypedConstant.pas" />

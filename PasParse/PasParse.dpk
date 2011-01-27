@@ -58,6 +58,7 @@ contains
   UTokenRule in 'UTokenRule.pas',
   URules in 'URules.pas',
   UAlternator in 'UAlternator.pas',
+  UTokenFilter in 'UTokenFilter.pas',
   UFileLoader in 'UFileLoader.pas';
 
 end.
