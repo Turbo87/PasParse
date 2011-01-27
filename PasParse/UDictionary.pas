@@ -6,6 +6,37 @@ uses
   Classes;
 
 type
+  /// <Description>KeyValuePair record for TDictionary.</Description>
+  TDictionaryKeyValuePair = record
+    /// <Description>The Key.</Description>
+    Key: string;
+    /// <Description>The Value.</Description>
+    Value: TObject;
+  end;
+
+  /// <Description>Enumerator class for TDictionary.</Description>
+  TDictionaryEnumerator = class
+  private
+    /// <Description>Pointer to the Dictionary's internal TStringList.</Description>
+    FList: TStringList;
+    /// <Description>Index variable for FList access.</Description>
+    /// <Description>Gets increased by MoveNext().</Description>
+    FIndex: Integer;
+
+    /// <Description>Returns a KeyValuePair at the current position of FIndex.</Description>
+    function GetCurrent: TDictionaryKeyValuePair;
+
+  public
+    /// <Description>Default constructor.</Description>
+    constructor Create(AList: TStringList);
+
+    /// <Description>Increases the FIndex variable if possible.</Description>
+    /// <Description>Returns whether FIndex is still inside the FList bounds.</Description>
+    function MoveNext: Boolean;
+    /// <Description>Returns a KeyValuePair at the current position of FIndex.</Description>
+    property Current: TDictionaryKeyValuePair read GetCurrent;
+  end;
+
   /// <Description>A generic Dictionary class.</Description>
   /// <Description>Instead of an Integer-based array index a string is used.</Description>
   TDictionary = class
@@ -27,6 +58,8 @@ type
     constructor Create(const AFreeChildren: Boolean = False);
     /// <Description>Default destructor.</Description>
     destructor Destroy; override;
+
+    function GetEnumerator: TDictionaryEnumerator;
 
     /// <Description>Returns true if the given key was found in the Dictionary.</Description>
     /// <Description>Writes the corresponding TObject instance to the Value output parameter.</Description>
@@ -85,6 +118,12 @@ begin
   inherited;
 end;
 
+function TDictionary.GetEnumerator: TDictionaryEnumerator;
+begin
+  // Creates an enumerator for the Dictionary
+  Result := TDictionaryEnumerator.Create(FList);
+end;
+
 function TDictionary.IndexOf(const AKey: string): Integer;
 begin
   // Pass the result of the internal IndexOf() function
@@ -141,6 +180,35 @@ procedure TDictionary.WriteRedirection(const AKey: string;
 begin
   // Pass Key and Value to Write() and don't care about the return value
   Write(AKey, AValue);
+end;
+
+{ TDictionaryEnumerator }
+
+constructor TDictionaryEnumerator.Create(AList: TStringList);
+begin
+  inherited Create;
+  // Save the pointer to the TStringList of the Dictionary
+  FList := AList;
+  // Set current position to -1
+  // MoveNext() will increase it to 0 before
+  // GetCurrent() is called for the first time
+  FIndex := -1;
+end;
+
+function TDictionaryEnumerator.GetCurrent: TDictionaryKeyValuePair;
+begin
+  // Assign Key and Value of the Pair that is returned
+  Result.Key := FList.Strings[FIndex];
+  Result.Value := FList.Objects[FIndex];
+end;
+
+function TDictionaryEnumerator.MoveNext: Boolean;
+begin
+  // Is there stil another Pair left in the Dictionary?
+  Result := (FIndex < FList.Count - 1);
+  if Result then
+    // If so, increase the index variable
+    Inc(FIndex);
 end;
 
 end.

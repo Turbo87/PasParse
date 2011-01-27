@@ -28,6 +28,7 @@ class procedure TTestDictionary.TestAll;
 var
   ADict: TDictionary;
   AObject: TObject;
+  APair: TDictionaryKeyValuePair;
 begin
   ADict := TDictionary.Create;
 
@@ -64,6 +65,19 @@ begin
   OK(ADict.Contains('test1'), 'Contains');
   OK(ADict.Read('test1', AObject), 'Read');
   OK(Integer(AObject) = 3, 'Integer(AObject) = 3');
+
+  // Test Enumerator
+  for APair in ADict do
+  begin
+    if APair.Key = 'test1' then
+      OK(Integer(APair.Value) = 3, 'Enumerator 1')
+    else if APair.Key = 'test2' then
+      OK(APair.Value = TObject(true), 'Enumerator 2')
+    else if APair.Key = 'test3' then
+      OK(APair.Value = TObject(false), 'Enumerator 3')
+    else
+      OK(False, 'Enumerator - unknown key');
+  end;
 
   ADict.Free;
 end;
