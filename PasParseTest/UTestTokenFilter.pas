@@ -3,11 +3,13 @@ unit UTestTokenFilter;
 interface
 
 uses
-  UTest;
+  UTest, UCompilerDefines;
 
 type
   TTestTokenFilter = class(TTest)
   private
+    class var FCompilerDefines: TCompilerDefines;
+    
     class function LexesAndFiltersAs(ASource: string;
       AExpectedTokens: array of string): Boolean;
 
@@ -19,7 +21,7 @@ type
 implementation
 
 uses
-  ULexScanner, UToken, UTokenFilter, UCompilerDefines, Contnrs;
+  ULexScanner, UToken, UTokenFilter, Contnrs;
 
 { TTestTokenFilter }
 
@@ -33,24 +35,16 @@ class function TTestTokenFilter.LexesAndFiltersAs(ASource: string;
 var
   ALexScanner: TLexScanner;
   ATokens, AFilteredTokens: TObjectList;
-  ACompilerDefines: TCompilerDefines;
   ATokenFilter: TTokenFilter;
   AToken: TToken;
   I: Integer;
 begin
-  ACompilerDefines := nil;
   ATokenFilter := nil;
   ALexScanner := TLexScanner.Create(ASource, '');
   try
     ATokens := ALexScanner.Tokens;
 
-    ACompilerDefines := TCompilerDefines.Create;
-    ACompilerDefines.DefineSymbol('TRUE');
-    ACompilerDefines.UndefineSymbol('FALSE');
-    ACompilerDefines.DefineDirectiveAsTrue('IF True');
-    ACompilerDefines.DefineDirectiveAsFalse('IF False');
-
-    ATokenFilter := TTokenFilter.Create(ATokens, ACompilerDefines, nil);
+    ATokenFilter := TTokenFilter.Create(ATokens, FCompilerDefines, nil);
     AFilteredTokens := ATokenFilter.Tokens;
     ATokens.Free;
 
@@ -68,7 +62,6 @@ begin
       end;
     end;
   finally
-    ACompilerDefines.Free;
     ATokenFilter.Free;
     ALexScanner.Free;
   end;
@@ -76,6 +69,13 @@ end;
 
 class procedure TTestTokenFilter.TestAll;
 begin
+  FCompilerDefines := TCompilerDefines.Create;
+  FCompilerDefines.DefineSymbol('TRUE');
+  FCompilerDefines.UndefineSymbol('FALSE');
+  FCompilerDefines.DefineDirectiveAsTrue('IF True');
+  FCompilerDefines.DefineDirectiveAsFalse('IF False');
+
+  try
   OK('PassThrough', LexesAndFiltersAs('Foo', ['Identifier |Foo|']));
   OK('SingleLineCommentIsIgnored', LexesAndFiltersAs('// Foo', []));
   OK('CurlyBraceCommentIsIgnored', LexesAndFiltersAs('{ Foo }', []));
@@ -217,6 +217,10 @@ begin
 //  else
 //    OK(False, 'TestNeverEndingString');
 //  end;
+
+  finally
+    FCompilerDefines.Free;
+  end;
 end;
 
 end.
