@@ -52,7 +52,7 @@ type
 implementation
 
 uses
-  UTokenType, SysUtils;
+  UTokenType, ULexException, SysUtils;
 
 { TTokenFilter }
 
@@ -223,7 +223,9 @@ begin
 
   case GetDirectiveType(AFirstWord) of
     DTUnrecognized:
-      ; // TODO Exception
+      if AIfDefStack.Peek = TObject(IDTTrue) then
+        raise ELexException.Create('Unrecognized compiler directive ''' +
+          AFirstWord + '''', AToken.Location.Clone);
 
     DTDefine:
       if AIfDefStack.Peek = TObject(IDTTrue) then
