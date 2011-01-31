@@ -45,8 +45,11 @@ begin
     ATokens := ALexScanner.Tokens;
 
     ATokenFilter := TTokenFilter.Create(ATokens, FCompilerDefines, nil);
-    AFilteredTokens := ATokenFilter.Tokens;
-    ATokens.Free;
+    try
+      AFilteredTokens := ATokenFilter.Tokens;
+    finally
+      ATokens.Free;
+    end;
 
     Result := (AFilteredTokens.Count = Length(AExpectedTokens));
     if Result then
