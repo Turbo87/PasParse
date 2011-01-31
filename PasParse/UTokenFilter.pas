@@ -157,22 +157,27 @@ var
 begin
   Result := TObjectList.Create;
 
-  for I := 0 to ATokens.Count - 1 do
-  begin
-    AToken := ATokens[I] as TToken;
-    case AToken.TokenType of
-      TTSingleLineComment,
-      TTCurlyBraceComment,
-      TTParenStarComment:
-        ; // Do nothing
+  try
+    for I := 0 to ATokens.Count - 1 do
+    begin
+      AToken := ATokens[I] as TToken;
+      case AToken.TokenType of
+        TTSingleLineComment,
+        TTCurlyBraceComment,
+        TTParenStarComment:
+          ; // Do nothing
 
-      TTCompilerDirective:
-        HandleCompilerDirective(AIfDefStack, AToken);
+        TTCompilerDirective:
+          HandleCompilerDirective(AIfDefStack, AToken);
 
-      else
-        if AIfDefStack.Peek = TObject(IDTTrue) then
-          Result.Add(AToken.Clone);
+        else
+          if AIfDefStack.Peek = TObject(IDTTrue) then
+            Result.Add(AToken.Clone);
+      end;
     end;
+  except
+    Result.Free;
+    raise
   end;
 end;
 
@@ -207,8 +212,11 @@ var
 begin
   AIfDefStack := TStack.Create;
   AIfDefStack.Push(TObject(IDTTrue));
-  Result := Filter(AIfDefStack, FTokens);
-  AIfDefStack.Free;
+  try
+    Result := Filter(AIfDefStack, FTokens);
+  finally
+    AIfDefStack.Free;
+  end;
 end;
 
 procedure TTokenFilter.HandleCompilerDirective(AIfDefStack: TStack;
