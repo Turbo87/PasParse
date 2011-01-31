@@ -52,7 +52,7 @@ type
 implementation
 
 uses
-  UTokenType;
+  UTokenType, SysUtils;
 
 { TTokenFilter }
 
@@ -218,8 +218,8 @@ var
 begin
   ADirective := AToken.ParsedText;
   AFirstWord := FirstWordOf(ADirective);
-  AParameter := Copy(ADirective, Length(AFirstWord) + 1,
-    Length(ADirective) - Length(AFirstWord));
+  AParameter := Trim(Copy(ADirective, Length(AFirstWord) + 1,
+    Length(ADirective) - Length(AFirstWord)));
 
   case GetDirectiveType(AFirstWord) of
     DTUnrecognized:
