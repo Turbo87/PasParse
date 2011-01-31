@@ -21,7 +21,7 @@ type
 implementation
 
 uses
-  ULexScanner, UToken, UTokenFilter, Contnrs;
+  ULexScanner, UToken, UTokenFilter, ULexException, Contnrs;
 
 { TTestTokenFilter }
 
@@ -84,20 +84,20 @@ begin
   OK('CurlyBraceCommentIsIgnored', LexesAndFiltersAs('{ Foo }', []));
   OK('ParenStarCommentIsIgnored', LexesAndFiltersAs('(* Foo *)', []));
 
-//  OK('ParserUsesFilter',
-//    LexesAndFiltersAs(r = ParserTestCase.CreateParser('// Foo');
-//  Assert.That(parser.AtEof, Is.True);
-//
-//  OK('SingleLetterCompilerDirectivesAreIgnored',
-//    LexesAndFiltersAs('{$R+}', []));
-//  Assert.That('{$A8}', []));
-//
-//  OK('CPlusPlusBuilderCompilerDirectivesAreIgnored',
-//    LexesAndFiltersAs('{$EXTERNALSYM Foo}', []));
-//  Assert.That('{$HPPEMIT '#pragma Foo'}', []));
-//  Assert.That('{$NODEFINE Foo}', []));
-//  Assert.That('{$NOINCLUDE Foo}', []));
-//
+  OK('SingleLetterCompilerDirectivesAreIgnored',
+    LexesAndFiltersAs('{$R+}', []));
+  OK('SingleLetterCompilerDirectivesAreIgnored',
+    LexesAndFiltersAs('{$A8}', []));
+
+  OK('CPlusPlusBuilderCompilerDirectivesAreIgnored',
+    LexesAndFiltersAs('{$EXTERNALSYM Foo}', []));
+  OK('CPlusPlusBuilderCompilerDirectivesAreIgnored',
+    LexesAndFiltersAs('{$HPPEMIT ''#pragma Foo''}', []));
+  OK('CPlusPlusBuilderCompilerDirectivesAreIgnored',
+    LexesAndFiltersAs('{$NODEFINE Foo}', []));
+  OK('CPlusPlusBuilderCompilerDirectivesAreIgnored',
+    LexesAndFiltersAs('{$NOINCLUDE Foo}', []));
+
   OK('IfDefTrue',
     LexesAndFiltersAs('0{$IFDEF TRUE}1{$ENDIF}2', [
       'Number |0|',
@@ -208,18 +208,46 @@ begin
       'Number |3|',
       'Number |4|']));
 
+  OK('IPlusIsNotTreatedAsInclude',
+    LexesAndFiltersAs('{$I+}', []));
+  OK('IMinusIsNotTreatedAsInclude',
+    LexesAndFiltersAs('{$I-}', []));
 
+  FCompilerDefines.UndefineSymbol('FOO');
+  OK('Define', LexesAndFiltersAs('{$DEFINE FOO} {$IFDEF FOO} Foo {$ENDIF}',
+    ['Identifier |Foo|']));
 
-//  try
-//    LexesAndFiltersAs('''abc', ['StringLiteral |''abc|']);
-//    OK(False, 'TestNeverEndingString');
-//  except
-//    on ETestException do;
-//    on ELexException do
-//      OK(True, 'TestNeverEndingString');
-//  else
-//    OK(False, 'TestNeverEndingString');
-//  end;
+  FCompilerDefines.DefineSymbol('FOO');
+  OK('Undefine', LexesAndFiltersAs('{$UNDEF FOO} {$IFDEF FOO} Foo {$ENDIF}', []));
+
+//  FCompilerDefines.UndefineSymbol('FOO');
+//  OK('DefineScopeDoesNotExtendToOtherFiles',
+//    LexesAndFiltersAs('{$DEFINE FOO}', []));
+//  OK('DefineScopeDoesNotExtendToOtherFiles',
+//    LexesAndFiltersAs('{$IFDEF FOO} Foo {$ENDIF}', []));
+
+  FCompilerDefines.UndefineSymbol('FOO');
+  OK('DefineIgnoredInFalseIf',
+    LexesAndFiltersAs('{$IF False}{$DEFINE FOO}{$IFEND} {$IFDEF FOO}Foo{$ENDIF}', []));
+
+  FCompilerDefines.DefineSymbol('FOO');
+  OK('UndefineIgnoredInFalseIf',
+    LexesAndFiltersAs('{$IF False}{$UNDEF FOO}{$IFEND} {$IFDEF FOO}Foo{$ENDIF}',
+    ['Identifier |Foo|']));
+
+  try
+    LexesAndFiltersAs('{$FOO}', []);
+    OK(False, 'ThrowOnUnrecognizedDirective');
+  except
+    on ETestException do;
+    on ELexException do
+      OK(True, 'ThrowOnUnrecognizedDirective');
+  else
+    OK(False, 'ThrowOnUnrecognizedDirective');
+  end;
+
+  OK('UnrecognizedIsIgnoredInFalseIf',
+    LexesAndFiltersAs('{$IF False}{$FOO}{$IFEND}', []));
 
   finally
     FCompilerDefines.Free;
