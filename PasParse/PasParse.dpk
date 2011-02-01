@@ -61,7 +61,6 @@ contains
   UTokenFilter in 'UTokenFilter.pas',
   UFileLoader in 'UFileLoader.pas',
   UIFileLoader in 'UIFileLoader.pas',
-  UMemoryFileLoader in 'UMemoryFileLoader.pas',
-  UIOException in 'UIOException.pas';
+  UMemoryFileLoader in 'UMemoryFileLoader.pas';
 
 end.

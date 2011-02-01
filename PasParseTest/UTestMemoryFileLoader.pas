@@ -15,7 +15,7 @@ type
 implementation
 
 uses
-  UMemoryFileLoader, UIOException;
+  UMemoryFileLoader, SysUtils;
 
 { TTestMemoryFileLoader }
 
@@ -35,7 +35,7 @@ begin
     OK(False, 'Load exception');
   except
     on ETestException do;
-    on EIOException do
+    on EInOutError do
       OK(True, 'Load exception');
   else
     OK(False, 'Load exception');

@@ -26,7 +26,7 @@ type
 implementation
 
 uses
-  UIOException;
+  UIOException, SysUtils;
 
 { TMemoryFileLoader }
 
@@ -58,7 +58,7 @@ begin
   if (AIndex >= 0) and (AIndex < FFileContents.Count) then
     Result := FFileContents.Strings[AIndex]
   else
-    raise EIOException.Create('File not found: ' + AFileName);
+    raise EInOutError.Create('File not found: ' + AFileName);
 end;
 
 function TMemoryFileLoader.Load(AFileName: string): string;
