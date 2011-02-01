@@ -4,7 +4,7 @@ interface
 
 uses
   UCompilerDefines, UToken, UIFrame, UITokenSet, UTokenType, UListNode,
-  UParseException, UIParser, URule, URuleType, UASTNode, UFileLoader, Contnrs;
+  UParseException, UIParser, URule, URuleType, UASTNode, UIFileLoader, Contnrs;
 
 type
   TRuleClass = class of TRule;
@@ -27,7 +27,7 @@ type
 
   public
     constructor CreateFromText(AText, AFileName: string;
-      ACompilerDefines: TCompilerDefines; AFileLoader: TFileLoader);
+      ACompilerDefines: TCompilerDefines; AFileLoader: IFileLoader);
     constructor CreateFromFrame(AFrame: IFrame);
     constructor CreateFromTokens(ATokens: TObjectList);
     destructor Destroy; override;
@@ -209,7 +209,7 @@ begin
 end;
 
 constructor TParser.CreateFromText(AText, AFileName: string;
-  ACompilerDefines: TCompilerDefines; AFileLoader: TFileLoader);
+  ACompilerDefines: TCompilerDefines; AFileLoader: IFileLoader);
 var
   ALexScanner: TLexScanner;
   ATokens, AFilteredTokens: TObjectList;
