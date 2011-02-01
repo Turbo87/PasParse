@@ -50,6 +50,7 @@
     <DCCReference Include="ULexScanner.pas" />
     <DCCReference Include="UListNode.pas" />
     <DCCReference Include="ULocation.pas" />
+    <DCCReference Include="UMemoryFileLoader.pas" />
     <DCCReference Include="UNonTerminalNode.pas" />
     <DCCReference Include="UParseException.pas" />
     <DCCReference Include="UParser.pas" />

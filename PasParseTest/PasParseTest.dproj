@@ -88,6 +88,7 @@
     <DCCReference Include="UTestLabelDeclSection.pas" />
     <DCCReference Include="UTestLabelId.pas" />
     <DCCReference Include="UTestLexScanner.pas" />
+    <DCCReference Include="UTestMemoryFileLoader.pas" />
     <DCCReference Include="UTestMethodHeading.pas" />
     <DCCReference Include="UTestMethodImplementation.pas" />
     <DCCReference Include="UTestMethodOrProperty.pas" />

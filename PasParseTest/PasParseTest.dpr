@@ -111,7 +111,8 @@ uses
   UTestRequiresClause in 'UTestRequiresClause.pas',
   UTestProgram in 'UTestProgram.pas',
   UTestPackage in 'UTestPackage.pas',
-  UTestTokenFilter in 'UTestTokenFilter.pas';
+  UTestTokenFilter in 'UTestTokenFilter.pas',
+  UTestMemoryFileLoader in 'UTestMemoryFileLoader.pas';
 
 begin
   try
@@ -122,6 +123,7 @@ begin
     TTestCompilerDefines.Test;
     TTestTokenFilter.Test;
     TTestAlternator.Test;
+    TTestMemoryFileLoader.Test;
 
     TTestAddOp.Test;
     TTestArrayType.Test;
