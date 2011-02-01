@@ -12,6 +12,8 @@ type
     FFileSource: string;
     /// <Description>The offset from the start of FileSource where the Location can be found.</Description>
     FOffset: Integer;
+    /// <Description>The directory that the file is in.</Description>
+    function GetDirectory: string;
 
   public
     /// <Description>Default constructor.</Description>
@@ -24,11 +26,17 @@ type
     /// <Description>The offset from the start of FileSource where the Location can be found.</Description>
     property Offset: Integer read FOffset;
 
-    /// <Description>Creates a clone of the current Location</Description>
+    /// <Description>Creates a clone of the current Location.</Description>
     function Clone: TLocation;
+
+    /// <Description>The directory that the file is in.</Description>
+    property Directory: string read GetDirectory;
   end;
 
 implementation
+
+uses
+  SysUtils;
 
 { TLocation }
 
@@ -44,6 +52,14 @@ begin
   FFileName := AFileName;
   FFileSource := AFileSource;
   FOffset := AOffset;
+end;
+
+function TLocation.GetDirectory: string;
+begin
+  if FFileName = '' then
+    Result := ''
+  else
+    Result := ExtractFilePath(FFileName);
 end;
 
 end.
