@@ -3,7 +3,7 @@ unit UTokenFilter;
 interface
 
 uses
-  UDictionary, UCompilerDefines, UFileLoader, UToken, ULocation, Contnrs;
+  UDictionary, UCompilerDefines, UIFileLoader, UToken, ULocation, Contnrs;
 
 type
   TDirectiveType = (
@@ -29,7 +29,7 @@ type
   private
     FTokens: TObjectList;
     FCompilerDefines: TCompilerDefines;
-    FFileLoader: TFileLoader;
+    FFileLoader: IFileLoader;
     FDirectiveTypes: TDictionary;
 
     function Filter(AIfDefStack: TStack; ATokens: TObjectList): TObjectList;
@@ -41,9 +41,10 @@ type
     procedure HandleIf(AIfDefStack: TStack; ADirective: string; ALocation: TLocation); 
     procedure HandleElseIf(AIfDefStack: TStack; ADirective: string; ALocation: TLocation);
     procedure HandleElse(AIfDefStack: TStack);
+
   public
     constructor Create(ATokens: TObjectList; ACompilerDefines: TCompilerDefines;
-      AFileLoader: TFileLoader);
+      AFileLoader: IFileLoader);
     destructor Destroy; override;
 
     property Tokens: TObjectList read GetTokens;
@@ -57,7 +58,7 @@ uses
 { TTokenFilter }
 
 constructor TTokenFilter.Create(ATokens: TObjectList;
-  ACompilerDefines: TCompilerDefines; AFileLoader: TFileLoader);
+  ACompilerDefines: TCompilerDefines; AFileLoader: IFileLoader);
 begin
   inherited Create;
   FTokens := ATokens;
