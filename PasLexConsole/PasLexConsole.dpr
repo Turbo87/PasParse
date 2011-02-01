@@ -34,6 +34,8 @@ begin
 
     AToken.Destroy;
   until False;
+
+  ALexScanner.Free;
 end;
 
 begin
