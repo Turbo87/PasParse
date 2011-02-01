@@ -1,1 +1,2 @@
-PasParseTest\PasParseTest.exe > results.txt
+cd PasParseTest
+PasParseTest.exe > ..\results.txt

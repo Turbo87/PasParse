@@ -112,7 +112,8 @@ uses
   UTestProgram in 'UTestProgram.pas',
   UTestPackage in 'UTestPackage.pas',
   UTestTokenFilter in 'UTestTokenFilter.pas',
-  UTestMemoryFileLoader in 'UTestMemoryFileLoader.pas';
+  UTestMemoryFileLoader in 'UTestMemoryFileLoader.pas',
+  UTestFileLoader in 'UTestFileLoader.pas';
 
 begin
   try
@@ -124,6 +125,7 @@ begin
     TTestTokenFilter.Test;
     TTestAlternator.Test;
     TTestMemoryFileLoader.Test;
+    TTestFileLoader.Test;
 
     TTestAddOp.Test;
     TTestArrayType.Test;

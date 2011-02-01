@@ -73,6 +73,7 @@
     <DCCReference Include="UTestFancyBlock.pas" />
     <DCCReference Include="UTestFieldDecl.pas" />
     <DCCReference Include="UTestFieldSection.pas" />
+    <DCCReference Include="UTestFileLoader.pas" />
     <DCCReference Include="UTestFileType.pas" />
     <DCCReference Include="UTestForStatement.pas" />
     <DCCReference Include="UTestGotoStatement.pas" />
