@@ -15,8 +15,6 @@ var
   AParser: TParser;
   ANode: TASTNode;
 begin
-  Writeln('Parsing file: ' + ParamStr(1));
-
   AssignFile(AFileHandle, AFileName);
   Reset(AFileHandle);
   while not Eof(AFileHandle) do
@@ -44,7 +42,6 @@ begin
       raise Exception.Create('missing file parameter');
 
     ParseFile(ParamStr(1));
-    Readln;
   except
     on E:Exception do
       Writeln(E.Classname, ': ', E.Message);
