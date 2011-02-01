@@ -40,6 +40,7 @@
     <DCCReference Include="UFileLoader.pas" />
     <DCCReference Include="UFrame.pas" />
     <DCCReference Include="UGeneratedNodes.pas" />
+    <DCCReference Include="UIFileLoader.pas" />
     <DCCReference Include="UIFrame.pas" />
     <DCCReference Include="UInvalidOperationException.pas" />
     <DCCReference Include="UIParser.pas" />

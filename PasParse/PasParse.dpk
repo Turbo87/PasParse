@@ -59,6 +59,7 @@ contains
   URules in 'URules.pas',
   UAlternator in 'UAlternator.pas',
   UTokenFilter in 'UTokenFilter.pas',
-  UFileLoader in 'UFileLoader.pas';
+  UFileLoader in 'UFileLoader.pas',
+  UIFileLoader in 'UIFileLoader.pas';
 
 end.
