@@ -43,6 +43,7 @@
     <DCCReference Include="UIFileLoader.pas" />
     <DCCReference Include="UIFrame.pas" />
     <DCCReference Include="UInvalidOperationException.pas" />
+    <DCCReference Include="UIOException.pas" />
     <DCCReference Include="UIParser.pas" />
     <DCCReference Include="UITokenSet.pas" />
     <DCCReference Include="ULexException.pas" />

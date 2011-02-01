@@ -60,6 +60,7 @@ contains
   UAlternator in 'UAlternator.pas',
   UTokenFilter in 'UTokenFilter.pas',
   UFileLoader in 'UFileLoader.pas',
-  UIFileLoader in 'UIFileLoader.pas';
+  UIFileLoader in 'UIFileLoader.pas',
+  UIOException in 'UIOException.pas';
 
 end.
