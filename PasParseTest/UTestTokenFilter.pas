@@ -3,13 +3,14 @@ unit UTestTokenFilter;
 interface
 
 uses
-  UTest, UCompilerDefines;
+  UTest, UCompilerDefines, UIFileLoader;
 
 type
   TTestTokenFilter = class(TTest)
   private
     class var FCompilerDefines: TCompilerDefines;
-    
+    class var FFileLoader: IFileLoader;
+
     class function LexesAndFiltersAs(ASource: string;
       AExpectedTokens: array of string): Boolean;
 
@@ -21,7 +22,7 @@ type
 implementation
 
 uses
-  ULexScanner, UToken, UTokenFilter, ULexException, Contnrs;
+  ULexScanner, UToken, UTokenFilter, ULexException, UMemoryFileLoader, Contnrs;
 
 { TTestTokenFilter }
 
@@ -44,7 +45,7 @@ begin
   try
     ATokens := ALexScanner.Tokens;
 
-    ATokenFilter := TTokenFilter.Create(ATokens, FCompilerDefines, nil);
+    ATokenFilter := TTokenFilter.Create(ATokens, FCompilerDefines, FFileLoader);
     try
       AFilteredTokens := ATokenFilter.Tokens;
     finally
@@ -72,6 +73,8 @@ end;
 
 class procedure TTestTokenFilter.TestAll;
 begin
+  FFileLoader := TMemoryFileLoader.Create;
+
   FCompilerDefines := TCompilerDefines.Create;
   FCompilerDefines.DefineSymbol('TRUE');
   FCompilerDefines.UndefineSymbol('FALSE');
@@ -251,6 +254,7 @@ begin
 
   finally
     FCompilerDefines.Free;
+    FFileLoader.Free;
   end;
 end;
 
