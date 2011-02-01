@@ -15,7 +15,7 @@ type
 implementation
 
 uses
-  UIOException, SysUtils;
+  SysUtils;
 
 { TFileLoader }
 
