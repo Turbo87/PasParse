@@ -3,7 +3,7 @@ program PasParseConsole;
 {$APPTYPE CONSOLE}
 
 uses
-  SysUtils, UParser, UCompilerDefines, UASTNode, URuleType;
+  SysUtils, UParser, UCompilerDefines, UFileLoader, UASTNode, URuleType;
 
 procedure ParseFile(const AFileName : string);
 var
@@ -11,6 +11,7 @@ var
   ALine: string;
   AContent: string;
   ACompilerDefines: TCompilerDefines;
+  AFileLoader: TFileLoader;
   AParser: TParser;
   ANode: TASTNode;
 begin
@@ -26,9 +27,15 @@ begin
   CloseFile(AFileHandle);
 
   ACompilerDefines := TCompilerDefines.Create;
-  AParser := TParser.CreateFromText(AContent, '', ACompilerDefines, nil);
+  AFileLoader := TFileLoader.Create;
+  AParser := TParser.CreateFromText(AContent, '', ACompilerDefines, AFileLoader);
   ANode := AParser.ParseRule(RTUnit);
   Write(ANode.Inspect);
+
+  ANode.Free;
+  AParser.Free;
+  AFileLoader.Free;
+  ACompilerDefines.Free;
 end;
 
 begin
