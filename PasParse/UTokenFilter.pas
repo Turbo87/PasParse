@@ -37,10 +37,11 @@ type
 
     function FirstWordOf(AString: string): string;
     function GetDirectiveType(AFirstWord: string): TDirectiveType;
-    procedure HandleCompilerDirective(AIfDefStack: TStack; AToken: TToken);
+    procedure HandleCompilerDirective(AIfDefStack: TStack; AToken: TToken; ATokens: TObjectList);
     procedure HandleIf(AIfDefStack: TStack; ADirective: string; ALocation: TLocation); 
     procedure HandleElseIf(AIfDefStack: TStack; ADirective: string; ALocation: TLocation);
     procedure HandleElse(AIfDefStack: TStack);
+    procedure HandleInclude(AIfDefStack: TStack; ATokens: TObjectList; ADirectory, AFileName: string);
 
   public
     constructor Create(ATokens: TObjectList; ACompilerDefines: TCompilerDefines;
@@ -53,7 +54,7 @@ type
 implementation
 
 uses
-  UTokenType, ULexException, SysUtils;
+  UTokenType, ULexException, ULexScanner, SysUtils;
 
 { TTokenFilter }
 
@@ -159,7 +160,8 @@ begin
   Result := TObjectList.Create;
 
   try
-    for I := 0 to ATokens.Count - 1 do
+    I := 0;
+    while I < ATokens.Count do
     begin
       AToken := ATokens[I] as TToken;
       case AToken.TokenType of
@@ -169,12 +171,13 @@ begin
           ; // Do nothing
 
         TTCompilerDirective:
-          HandleCompilerDirective(AIfDefStack, AToken);
+          HandleCompilerDirective(AIfDefStack, AToken, Result);
 
         else
           if AIfDefStack.Peek = TObject(IDTTrue) then
             Result.Add(AToken.Clone);
       end;
+      Inc(I);
     end;
   except
     Result.Free;
@@ -221,7 +224,7 @@ begin
 end;
 
 procedure TTokenFilter.HandleCompilerDirective(AIfDefStack: TStack;
-  AToken: TToken);
+  AToken: TToken; ATokens: TObjectList);
 var
   ADirective, AFirstWord, AParameter: string;
 begin
@@ -235,6 +238,15 @@ begin
       if AIfDefStack.Peek = TObject(IDTTrue) then
         raise ELexException.Create('Unrecognized compiler directive ''' +
           AFirstWord + '''', AToken.Location.Clone);
+
+    DTInclude, DTPossibleInclude:
+    begin
+      if (GetDirectiveType(AFirstWord) = DTInclude) or
+        ((AParameter[1] <> '+') and (AParameter[1] <> '-')) then
+      begin
+        HandleInclude(AIfDefStack, ATokens, AToken.Location.Directory, AParameter);
+      end;
+    end;
 
     DTDefine:
       if AIfDefStack.Peek = TObject(IDTTrue) then
@@ -300,6 +312,36 @@ begin
   end
   else
     AIfDefStack.Push(TObject(IDTForeverFalse));
+end;
+
+procedure TTokenFilter.HandleInclude(AIfDefStack: TStack; ATokens: TObjectList;
+  ADirectory, AFileName: string);
+var
+  ASource: string;
+  ALexer: TLexScanner;
+  ALexTokens, ANewTokens: TObjectList;
+  I: Integer;
+begin
+  AFileName := FFileLoader.ExpandFileName(ADirectory, AFileName);
+  ASource := FFileLoader.Load(AFileName);
+
+  ALexer := TLexScanner.Create(ASource, AFileName);
+  try
+    ALexTokens := ALexer.Tokens;
+    try
+      ANewTokens := Filter(AIfDefStack, ALexTokens);
+
+      for I := 0 to ANewTokens.Count - 1 do
+        ATokens.Add(ANewTokens.Items[I]);
+
+      ANewTokens.OwnsObjects := False;
+      ANewTokens.Free;
+    finally
+      ALexTokens.Free;
+    end;
+  finally
+    ALexer.Free;
+  end;
 end;
 
 end.

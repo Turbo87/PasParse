@@ -3,13 +3,13 @@ unit UTestTokenFilter;
 interface
 
 uses
-  UTest, UCompilerDefines, UIFileLoader;
+  UTest, UCompilerDefines, UMemoryFileLoader;
 
 type
   TTestTokenFilter = class(TTest)
   private
     class var FCompilerDefines: TCompilerDefines;
-    class var FFileLoader: IFileLoader;
+    class var FFileLoader: TMemoryFileLoader;
 
     class function LexesAndFiltersAs(ASource: string;
       AExpectedTokens: array of string): Boolean;
@@ -22,7 +22,7 @@ type
 implementation
 
 uses
-  ULexScanner, UToken, UTokenFilter, ULexException, UMemoryFileLoader, Contnrs;
+  ULexScanner, UToken, UTokenFilter, ULexException, Contnrs;
 
 { TTestTokenFilter }
 
@@ -216,6 +216,19 @@ begin
   OK('IMinusIsNotTreatedAsInclude',
     LexesAndFiltersAs('{$I-}', []));
 
+  FFileLoader['bar.inc'] := 'Bar';
+  OK('Include',
+    LexesAndFiltersAs('Foo {$INCLUDE bar.inc} Baz', [
+      'Identifier |Foo|',
+      'Identifier |Bar|',
+      'Identifier |Baz|']));
+
+  OK('I',
+    LexesAndFiltersAs('Foo {$I bar.inc} Baz', [
+      'Identifier |Foo|',
+      'Identifier |Bar|',
+      'Identifier |Baz|']));
+
   FCompilerDefines.UndefineSymbol('FOO');
   OK('Define', LexesAndFiltersAs('{$DEFINE FOO} {$IFDEF FOO} Foo {$ENDIF}',
     ['Identifier |Foo|']));
@@ -223,11 +236,11 @@ begin
   FCompilerDefines.DefineSymbol('FOO');
   OK('Undefine', LexesAndFiltersAs('{$UNDEF FOO} {$IFDEF FOO} Foo {$ENDIF}', []));
 
-//  FCompilerDefines.UndefineSymbol('FOO');
-//  OK('DefineScopeDoesNotExtendToOtherFiles',
-//    LexesAndFiltersAs('{$DEFINE FOO}', []));
-//  OK('DefineScopeDoesNotExtendToOtherFiles',
-//    LexesAndFiltersAs('{$IFDEF FOO} Foo {$ENDIF}', []));
+  FCompilerDefines.UndefineSymbol('FOO');
+  FFileLoader['defines.inc'] := '{$DEFINE FOO}';
+  OK('DefineScopeDoesBubbleUpFromIncludeFiles',
+    LexesAndFiltersAs('{$I defines.inc} {$IFDEF FOO} Foo {$ENDIF}', [
+      'Identifier |Foo|']));
 
   FCompilerDefines.UndefineSymbol('FOO');
   OK('DefineIgnoredInFalseIf',
