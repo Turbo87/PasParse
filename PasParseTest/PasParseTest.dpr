@@ -113,7 +113,8 @@ uses
   UTestPackage in 'UTestPackage.pas',
   UTestTokenFilter in 'UTestTokenFilter.pas',
   UTestMemoryFileLoader in 'UTestMemoryFileLoader.pas',
-  UTestFileLoader in 'UTestFileLoader.pas';
+  UTestFileLoader in 'UTestFileLoader.pas',
+  UTestVisitor in 'UTestVisitor.pas';
 
 begin
   try
@@ -225,6 +226,8 @@ begin
     TTestVisibilitySectionContent.Test;
     TTestWhileStatement.Test;
     TTestWithStatement.Test;
+
+    TTestVisitor.Test;
   except
     on E:Exception do
     begin
