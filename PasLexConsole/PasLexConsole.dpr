@@ -40,11 +40,9 @@ end;
 begin
   try
     if ParamCount < 1 then
-      Writeln('Missing parameter!')
-    else
-    begin
-      LoadFile(ParamStr(1));
-    end;
+      raise Exception.Create('missing file parameter');
+
+    LoadFile(ParamStr(1));
   except
     on E: Exception do
       Writeln(E.Classname, ': ', E.Message);
