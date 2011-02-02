@@ -3,39 +3,38 @@ program PasLexConsole;
 {$APPTYPE CONSOLE}
 
 uses
-  SysUtils, ULexScanner, UToken, UTokenType, TypInfo;
+  SysUtils, ULexScanner, UToken, UTokenType, UFileLoader, TypInfo;
 
-procedure LoadFile(const AFileName : string);
+procedure LoadFile(const AFileName: string);
 var
-  AFileHandle: TextFile;
-  ALine: string;
+  AFileLoader: TFileLoader;
   AContent: string;
   ALexScanner: TLexScanner;
   AToken: TToken;
 begin
-  AssignFile(AFileHandle, AFileName);
-  Reset(AFileHandle);
-  while not Eof(AFileHandle) do
-  begin
-    ReadLn(AFileHandle, ALine);
-    AContent := AContent + ALine + #13#10;
+  AFileLoader := TFileLoader.Create;
+  try
+    AContent := AFileLoader.Load(AFileName);
+    ALexScanner := TLexScanner.Create(AContent, AFileName);
+    try
+      repeat
+        AToken := ALexScanner.NextToken;
+        if AToken = nil then
+          Break;
+
+        WriteLn(
+          GetEnumName(TypeInfo(TTokenType), Integer(AToken.TokenType)) + ': ''' +
+          AToken.Text + '''');
+
+        AToken.Destroy;
+      until False;
+
+    finally
+      ALexScanner.Free;
+    end;
+  finally
+    AFileLoader.Free;
   end;
-  CloseFile(AFileHandle);
-
-  ALexScanner := TLexScanner.Create(AContent, AFileName);
-  repeat
-    AToken := ALexScanner.NextToken;
-    if AToken = nil then
-      Break;
-
-    WriteLn(
-      GetEnumName(TypeInfo(TTokenType), Integer(AToken.TokenType)) + ': ''' +
-      AToken.Text + '''');
-
-    AToken.Destroy;
-  until False;
-
-  ALexScanner.Free;
 end;
 
 begin
@@ -47,7 +46,8 @@ begin
       LoadFile(ParamStr(1));
     end;
   except
-    on E:Exception do
+    on E: Exception do
       Writeln(E.Classname, ': ', E.Message);
   end;
 end.
+
