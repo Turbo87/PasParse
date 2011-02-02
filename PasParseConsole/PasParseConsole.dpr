@@ -5,27 +5,17 @@ program PasParseConsole;
 uses
   SysUtils, UParser, UCompilerDefines, UFileLoader, UASTNode, URuleType;
 
-procedure ParseFile(const AFileName : string);
+procedure ParseFile(const AFileName: string);
 var
-  AFileHandle: TextFile;
-  ALine: string;
+  AFileLoader: TFileLoader;
   AContent: string;
   ACompilerDefines: TCompilerDefines;
-  AFileLoader: TFileLoader;
   AParser: TParser;
   ANode: TASTNode;
 begin
-  AssignFile(AFileHandle, AFileName);
-  Reset(AFileHandle);
-  while not Eof(AFileHandle) do
-  begin
-    ReadLn(AFileHandle, ALine);
-    AContent := AContent + ALine + #13#10;
-  end;
-  CloseFile(AFileHandle);
-
-  ACompilerDefines := TCompilerDefines.Create;
   AFileLoader := TFileLoader.Create;
+  AContent := AFileLoader.Load(AFileName);
+  ACompilerDefines := TCompilerDefines.Create;
   AParser := TParser.CreateFromText(AContent, '', ACompilerDefines, AFileLoader);
   ANode := AParser.ParseRule(RTUnit);
   Write(ANode.Inspect);
@@ -43,7 +33,8 @@ begin
 
     ParseFile(ParamStr(1));
   except
-    on E:Exception do
+    on E: Exception do
       Writeln(E.Classname, ': ', E.Message);
   end;
 end.
+
