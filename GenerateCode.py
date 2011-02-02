@@ -139,6 +139,92 @@ def generate_nodes(yaml_content):
 
   cs += "end.\n"
   return cs
+  
+def generate_visitor(yaml_content):
+  cs = "unit UVisitor;\n\n"
+  cs += "/////////////////////////////////////////\n"
+  cs += "// This file is generated! Don't edit! //\n"
+  cs += "/////////////////////////////////////////\n\n"
+  cs += "interface\n\n"
+  cs += "uses\n"
+  cs += "  UASTNode, UDelimitedItemNode, UListNode, UToken, UGeneratedNodes;\n\n"
+  cs += "type\n"
+  cs += "  TVisitor = class(TASTVisitor)\n"
+  cs += "  public\n"
+  cs += "    procedure Visit(ANode: TASTNode); overload; override;\n";
+  cs += "\n";
+  cs += "    procedure Visit(ANode: TDelimitedItemNode); overload; virtual;\n";
+  cs += "    procedure Visit(ANode: TListNode); overload; virtual;\n";
+  cs += "    procedure Visit(ANode: TToken); overload; virtual;\n";
+  cs += "\n";
+
+  cs += "    // Generated Nodes\n"
+  node_types = sorted(yaml_content.get("NodeTypes").items())
+  for node_type in node_types:
+    node_type_name = node_type[0]
+    cs += "    procedure Visit(ANode: T" + node_type_name + "); overload; virtual;\n"
+
+  cs += "  end;\n"
+  cs += "\n"
+
+  cs += "implementation\n\n"
+  cs += "{ TVisitor }\n\n"
+
+  cs += "procedure TVisitor.Visit(ANode: TASTNode);\n"
+  cs += "begin\n"
+    
+  cs += "  // Visit child nodes\n"
+  cs += "  if ANode is TDelimitedItemNode then\n"
+  cs += "    Visit(ANode as TDelimitedItemNode);\n"
+  cs += "  if ANode is TListNode then\n"
+  cs += "    Visit(ANode as TListNode);\n"
+  cs += "  if ANode is TToken then\n"
+  cs += "    Visit(ANode as TToken);\n"
+  cs += "\n"
+  cs += "  // Generated Nodes\n"
+  for node_type in node_types:
+    node_type_name = node_type[0]
+    cs += "  if ANode is T" + node_type_name + " then\n"
+    cs += "    Visit(ANode as T" + node_type_name + ");\n"
+
+  cs += "end;\n\n"
+
+  cs += "procedure TVisitor.Visit(ANode: TDelimitedItemNode);\n"
+  cs += "begin\n"
+  cs += "  // Visit child nodes\n"
+  cs += "  Visit(ANode.ItemNode);\n"
+  cs += "  Visit(ANode.DelimiterNode);\n"
+  cs += "end;\n\n"
+
+  cs += "procedure TVisitor.Visit(ANode: TListNode);\n"
+  cs += "var\n"
+  cs += "  I: Integer;\n"
+  cs += "begin\n"
+  cs += "  // Visit child nodes\n"
+  cs += "  for I := 0 to ANode.ItemsCount - 1 do\n"
+  cs += "    Visit(ANode.Items[I]);\n"
+  cs += "end;\n\n"
+
+  cs += "procedure TVisitor.Visit(ANode: TToken);\n"
+  cs += "begin\n"
+  cs += "  // Do nothing\n"
+  cs += "end;\n\n"
+
+  for node_type in node_types:
+    node_type_name = node_type[0]
+    properties = node_type[1]
+    
+    cs += "procedure TVisitor.Visit(ANode: T" + node_type_name + ");\n"
+    cs += "begin\n"
+
+    cs += "  // Visit child nodes\n"
+    for property in properties:
+      cs += "  Visit(ANode." + property.get('Name') + ");\n"
+
+    cs += "end;\n\n"
+
+  cs += "end.\n"
+  return cs
 
 file = open("CodeGen.yaml");
 yaml_content = yaml.load(file)
@@ -146,4 +232,8 @@ file.close()
 
 file = open("PasParse/UGeneratedNodes.pas", "w")
 file.write(generate_nodes(yaml_content))
+file.close()
+
+file = open("PasParse/UVisitor.pas", "w")
+file.write(generate_visitor(yaml_content))
 file.close()
