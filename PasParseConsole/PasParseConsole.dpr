@@ -14,16 +14,27 @@ var
   ANode: TASTNode;
 begin
   AFileLoader := TFileLoader.Create;
-  AContent := AFileLoader.Load(AFileName);
-  ACompilerDefines := TCompilerDefines.Create;
-  AParser := TParser.CreateFromText(AContent, '', ACompilerDefines, AFileLoader);
-  ANode := AParser.ParseRule(RTUnit);
-  Write(ANode.Inspect);
-
-  ANode.Free;
-  AParser.Free;
-  AFileLoader.Free;
-  ACompilerDefines.Free;
+  try
+    AContent := AFileLoader.Load(AFileName);
+    ACompilerDefines := TCompilerDefines.Create;
+    try
+      AParser := TParser.CreateFromText(AContent, '', ACompilerDefines, AFileLoader);
+      try
+        ANode := AParser.ParseRule(RTUnit);
+        try
+          Write(ANode.Inspect);
+        finally
+          ANode.Free;
+        end;
+      finally
+        AParser.Free;
+      end;
+    finally
+      ACompilerDefines.Free;
+    end;
+  finally
+    AFileLoader.Free;
+  end;
 end;
 
 begin
