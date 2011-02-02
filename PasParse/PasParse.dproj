@@ -64,5 +64,6 @@
     <DCCReference Include="UTokenSet.pas" />
     <DCCReference Include="UTokenSets.pas" />
     <DCCReference Include="UTokenType.pas" />
+    <DCCReference Include="UVisitor.pas" />
   </ItemGroup>
 </Project>

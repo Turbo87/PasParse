@@ -8,6 +8,11 @@ uses
 type
   TASTNode = class;
 
+  TASTVisitor = class
+  public
+    procedure Visit(ANode: TASTNode); overload; virtual; abstract;
+  end;
+
   /// <Description>A Key-Value-Pair mapping a string to a ASTNode.</Description>
   /// <Description>The value (ASTNode) is not automatically destroyed on destruction of the Property!</Description>
   TASTNodeProperty = class
@@ -80,6 +85,8 @@ type
     class function ToCode(AFirstNode, ALastNode: TASTNode): string; overload;
     /// <Description>Returns the code of this node.</Description>
     function ToCode: string; overload;
+
+    procedure Accept(AVisitor: TASTVisitor); virtual;
   end;
 
 implementation
@@ -100,6 +107,11 @@ begin
     // Otherwise copy and return the code between the two Locations
     Result :=
       Copy(AFirst.FileSource, AFirst.Offset, ALast.Offset - AFirst.Offset);  
+end;
+
+procedure TASTNode.Accept(AVisitor: TASTVisitor);
+begin
+  AVisitor.Visit(Self);
 end;
 
 procedure TASTNode.BuildParentReferences(AASTNode: TASTNode);

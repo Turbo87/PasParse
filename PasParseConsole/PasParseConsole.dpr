@@ -5,45 +5,55 @@ program PasParseConsole;
 uses
   SysUtils, UParser, UCompilerDefines, UFileLoader, UASTNode, URuleType;
 
-procedure ParseFile(const AFileName : string);
+procedure ParseFile(const AFileName: string);
 var
-  AFileHandle: TextFile;
-  ALine: string;
+  AFileLoader: TFileLoader;
   AContent: string;
   ACompilerDefines: TCompilerDefines;
-  AFileLoader: TFileLoader;
   AParser: TParser;
   ANode: TASTNode;
 begin
-  AssignFile(AFileHandle, AFileName);
-  Reset(AFileHandle);
-  while not Eof(AFileHandle) do
-  begin
-    ReadLn(AFileHandle, ALine);
-    AContent := AContent + ALine + #13#10;
-  end;
-  CloseFile(AFileHandle);
-
-  ACompilerDefines := TCompilerDefines.Create;
+  // Create FileLoader to load the specified file
   AFileLoader := TFileLoader.Create;
-  AParser := TParser.CreateFromText(AContent, '', ACompilerDefines, AFileLoader);
-  ANode := AParser.ParseRule(RTUnit);
-  Write(ANode.Inspect);
-
-  ANode.Free;
-  AParser.Free;
-  AFileLoader.Free;
-  ACompilerDefines.Free;
+  try
+    // Load the file content
+    AContent := AFileLoader.Load(AFileName);
+    // Create empty compiler defines
+    ACompilerDefines := TCompilerDefines.Create;
+    try
+      // Create the parser
+      AParser := TParser.CreateFromText(AContent, '', ACompilerDefines, AFileLoader);
+      try
+        // Try to parse a unit from the file content
+        ANode := AParser.ParseRule(RTUnit);
+        try
+          // Write the tree to stdout
+          Write(ANode.Inspect);
+        finally
+          ANode.Free;
+        end;
+      finally
+        AParser.Free;
+      end;
+    finally
+      ACompilerDefines.Free;
+    end;
+  finally
+    AFileLoader.Free;
+  end;
 end;
 
 begin
   try
+    // No file given as parameter
     if ParamCount < 1 then
       raise Exception.Create('missing file parameter');
 
+    // Parse given filename
     ParseFile(ParamStr(1));
   except
-    on E:Exception do
+    on E: Exception do
       Writeln(E.Classname, ': ', E.Message);
   end;
 end.
+
