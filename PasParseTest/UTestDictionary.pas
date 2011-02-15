@@ -79,6 +79,10 @@ begin
       OK(False, 'Enumerator - unknown key');
   end;
 
+  // Test clear()
+  ADict.Clear;
+  OK(not ADict.Contains('test1'), 'clear()');
+
   ADict.Free;
 end;
 
