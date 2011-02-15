@@ -28,6 +28,7 @@ requires
   rtl;
 
 contains
-  ULOCCounter in 'ULOCCounter.pas';
+  ULOCCounter in 'ULOCCounter.pas',
+  UMcCabe in 'UMcCabe.pas';
 
 end.

@@ -32,5 +32,6 @@
     <DCCReference Include="..\PasParseTest\PasParse.dcp" />
     <DCCReference Include="i:\rtl.dcp" />
     <DCCReference Include="ULOCCounter.pas" />
+    <DCCReference Include="UMcCabe.pas" />
   </ItemGroup>
 </Project>

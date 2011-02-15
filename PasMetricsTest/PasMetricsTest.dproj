@@ -38,5 +38,6 @@
     <DCCReference Include="..\FastMM\FastMM4.pas" />
     <DCCReference Include="..\FastMM\FastMM4Messages.pas" />
     <DCCReference Include="UTestLOCCounter.pas" />
+    <DCCReference Include="UTestMcCabe.pas" />
   </ItemGroup>
 </Project>
