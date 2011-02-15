@@ -199,7 +199,12 @@ type
   end;
   
   TGoalRule = class(TRule)
+    FAlternator: TAlternator;
+
   public
+    constructor Create(AParser: IParser; ARuleType: TRuleType); override;
+    destructor Destroy; override;
+
     function CanParse: Boolean; override;
     function Evaluate: TASTNode; override;
   end;
@@ -1506,12 +1511,27 @@ end;
 
 function TGoalRule.CanParse: Boolean;
 begin
-  Result := False;
+  Result := FAlternator.LookAhead(FParser);
+end;
+
+constructor TGoalRule.Create(AParser: IParser; ARuleType: TRuleType);
+begin
+  inherited Create(AParser, ARuleType);
+  FAlternator := TAlternator.Create;
+  FAlternator.AddRule(RTPackage);
+  FAlternator.AddRule(RTProgram);
+  FAlternator.AddRule(RTUnit);
+end;
+
+destructor TGoalRule.Destroy;
+begin
+  FAlternator.Free;
+  inherited;
 end;
 
 function TGoalRule.Evaluate: TASTNode;
 begin
-  Result := nil;
+  Result := FAlternator.Execute(FParser);
 end;
 
 { TGotoStatementRule }

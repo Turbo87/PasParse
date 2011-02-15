@@ -113,7 +113,8 @@ uses
   UTestTokenFilter in 'UTestTokenFilter.pas',
   UTestMemoryFileLoader in 'UTestMemoryFileLoader.pas',
   UTestFileLoader in 'UTestFileLoader.pas',
-  UTestVisitor in 'UTestVisitor.pas';
+  UTestVisitor in 'UTestVisitor.pas',
+  UTestGoal in 'UTestGoal.pas';
 
 begin
   try
@@ -160,6 +161,7 @@ begin
     TTestFieldSection.Test;
     TTestFileType.Test;
     TTestForStatement.Test;
+    TTestGoal.Test;
     TTestGotoStatement.Test;
     TTestIdent.Test;
     TTestIdentList.Test;
