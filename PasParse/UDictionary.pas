@@ -72,6 +72,9 @@ type
     /// <Description>Clears all items from the dictionary.</Description>
     procedure Clear;
 
+    /// <Description>Returns the number of pairs in the Dictionary.</Description>
+    function Count: Integer;
+
     /// <Description>Checks whether the Key exists in the Dictionary.</Description>
     function Contains(const AKey: string): Boolean;
 
@@ -110,6 +113,11 @@ begin
   AIndex := IndexOf(AKey);
   // IndexOf returns negative value if Key was not found!
   Result := (AIndex >= 0);
+end;
+
+function TDictionary.Count: Integer;
+begin
+  Result := FList.Count;
 end;
 
 constructor TDictionary.Create(const AFreeChildren: Boolean);
