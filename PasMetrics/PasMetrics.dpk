@@ -30,6 +30,7 @@ requires
 contains
   ULOCCounter in 'ULOCCounter.pas',
   UMcCabe in 'UMcCabe.pas',
-  UHalstead in 'UHalstead.pas';
+  UHalstead in 'UHalstead.pas',
+  UMaintainabilityIndex in 'UMaintainabilityIndex.pas';
 
 end.

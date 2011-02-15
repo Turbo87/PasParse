@@ -30,9 +30,10 @@
       <MainSource>MainSource</MainSource>
     </DelphiCompile>
     <DCCReference Include="..\PasParseTest\PasParse.dcp" />
-    <DCCReference Include="i:\rtl.dcp" />
+    <DCCReference Include="rtl.dcp" />
     <DCCReference Include="UHalstead.pas" />
     <DCCReference Include="ULOCCounter.pas" />
+    <DCCReference Include="UMaintainabilityIndex.pas" />
     <DCCReference Include="UMcCabe.pas" />
   </ItemGroup>
 </Project>
