@@ -7,12 +7,14 @@ uses
   FastMM4Messages in '..\FastMM\FastMM4Messages.pas',
   SysUtils,
   UTestLOCCounter in 'UTestLOCCounter.pas',
-  UTestMcCabe in 'UTestMcCabe.pas';
+  UTestMcCabe in 'UTestMcCabe.pas',
+  UTestHalstead in 'UTestHalstead.pas';
 
 begin
   try
     TTestLOCCounter.Test;
     TTestMcCabe.Test;
+    TTestHalstead.Test;
   except
     on E:Exception do
     begin

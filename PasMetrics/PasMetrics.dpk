@@ -29,6 +29,7 @@ requires
 
 contains
   ULOCCounter in 'ULOCCounter.pas',
-  UMcCabe in 'UMcCabe.pas';
+  UMcCabe in 'UMcCabe.pas',
+  UHalstead in 'UHalstead.pas';
 
 end.
