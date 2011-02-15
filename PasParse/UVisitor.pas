@@ -260,8 +260,10 @@ end;
 procedure TVisitor.Visit(ANode: TDelimitedItemNode);
 begin
   // Visit child nodes
-  Visit(ANode.ItemNode);
-  Visit(ANode.DelimiterNode);
+  if ANode.ItemNode <> nil then
+    Visit(ANode.ItemNode);
+  if ANode.DelimiterNode <> nil then
+    Visit(ANode.DelimiterNode);
 end;
 
 procedure TVisitor.Visit(ANode: TListNode);
@@ -270,7 +272,10 @@ var
 begin
   // Visit child nodes
   for I := 0 to ANode.ItemsCount - 1 do
-    Visit(ANode.Items[I]);
+  begin
+    if ANode.Items[I] <> nil then
+      Visit(ANode.Items[I]);
+  end;
 end;
 
 procedure TVisitor.Visit(ANode: TToken);
@@ -281,697 +286,1028 @@ end;
 procedure TVisitor.Visit(ANode: TArrayTypeNode);
 begin
   // Visit child nodes
-  Visit(ANode.ArrayKeywordNode);
-  Visit(ANode.OpenBracketNode);
-  Visit(ANode.IndexListNode);
-  Visit(ANode.CloseBracketNode);
-  Visit(ANode.OfKeywordNode);
-  Visit(ANode.TypeNode);
+  if ANode.ArrayKeywordNode <> nil then
+    Visit(ANode.ArrayKeywordNode);
+  if ANode.OpenBracketNode <> nil then
+    Visit(ANode.OpenBracketNode);
+  if ANode.IndexListNode <> nil then
+    Visit(ANode.IndexListNode);
+  if ANode.CloseBracketNode <> nil then
+    Visit(ANode.CloseBracketNode);
+  if ANode.OfKeywordNode <> nil then
+    Visit(ANode.OfKeywordNode);
+  if ANode.TypeNode <> nil then
+    Visit(ANode.TypeNode);
 end;
 
 procedure TVisitor.Visit(ANode: TAssemblerStatementNode);
 begin
   // Visit child nodes
-  Visit(ANode.AsmKeywordNode);
-  Visit(ANode.EndKeywordNode);
+  if ANode.AsmKeywordNode <> nil then
+    Visit(ANode.AsmKeywordNode);
+  if ANode.EndKeywordNode <> nil then
+    Visit(ANode.EndKeywordNode);
 end;
 
 procedure TVisitor.Visit(ANode: TAttributeNode);
 begin
   // Visit child nodes
-  Visit(ANode.OpenBracketNode);
-  Visit(ANode.ScopeNode);
-  Visit(ANode.ColonNode);
-  Visit(ANode.ValueNode);
-  Visit(ANode.CloseBracketNode);
+  if ANode.OpenBracketNode <> nil then
+    Visit(ANode.OpenBracketNode);
+  if ANode.ScopeNode <> nil then
+    Visit(ANode.ScopeNode);
+  if ANode.ColonNode <> nil then
+    Visit(ANode.ColonNode);
+  if ANode.ValueNode <> nil then
+    Visit(ANode.ValueNode);
+  if ANode.CloseBracketNode <> nil then
+    Visit(ANode.CloseBracketNode);
 end;
 
 procedure TVisitor.Visit(ANode: TBinaryOperationNode);
 begin
   // Visit child nodes
-  Visit(ANode.LeftNode);
-  Visit(ANode.OperatorNode);
-  Visit(ANode.RightNode);
+  if ANode.LeftNode <> nil then
+    Visit(ANode.LeftNode);
+  if ANode.OperatorNode <> nil then
+    Visit(ANode.OperatorNode);
+  if ANode.RightNode <> nil then
+    Visit(ANode.RightNode);
 end;
 
 procedure TVisitor.Visit(ANode: TBlockNode);
 begin
   // Visit child nodes
-  Visit(ANode.BeginKeywordNode);
-  Visit(ANode.StatementListNode);
-  Visit(ANode.EndKeywordNode);
+  if ANode.BeginKeywordNode <> nil then
+    Visit(ANode.BeginKeywordNode);
+  if ANode.StatementListNode <> nil then
+    Visit(ANode.StatementListNode);
+  if ANode.EndKeywordNode <> nil then
+    Visit(ANode.EndKeywordNode);
 end;
 
 procedure TVisitor.Visit(ANode: TCaseSelectorNode);
 begin
   // Visit child nodes
-  Visit(ANode.ValueListNode);
-  Visit(ANode.ColonNode);
-  Visit(ANode.StatementNode);
-  Visit(ANode.SemicolonNode);
+  if ANode.ValueListNode <> nil then
+    Visit(ANode.ValueListNode);
+  if ANode.ColonNode <> nil then
+    Visit(ANode.ColonNode);
+  if ANode.StatementNode <> nil then
+    Visit(ANode.StatementNode);
+  if ANode.SemicolonNode <> nil then
+    Visit(ANode.SemicolonNode);
 end;
 
 procedure TVisitor.Visit(ANode: TCaseStatementNode);
 begin
   // Visit child nodes
-  Visit(ANode.CaseKeywordNode);
-  Visit(ANode.ExpressionNode);
-  Visit(ANode.OfKeywordNode);
-  Visit(ANode.SelectorListNode);
-  Visit(ANode.ElseKeywordNode);
-  Visit(ANode.ElseStatementListNode);
-  Visit(ANode.EndKeywordNode);
+  if ANode.CaseKeywordNode <> nil then
+    Visit(ANode.CaseKeywordNode);
+  if ANode.ExpressionNode <> nil then
+    Visit(ANode.ExpressionNode);
+  if ANode.OfKeywordNode <> nil then
+    Visit(ANode.OfKeywordNode);
+  if ANode.SelectorListNode <> nil then
+    Visit(ANode.SelectorListNode);
+  if ANode.ElseKeywordNode <> nil then
+    Visit(ANode.ElseKeywordNode);
+  if ANode.ElseStatementListNode <> nil then
+    Visit(ANode.ElseStatementListNode);
+  if ANode.EndKeywordNode <> nil then
+    Visit(ANode.EndKeywordNode);
 end;
 
 procedure TVisitor.Visit(ANode: TClassOfNode);
 begin
   // Visit child nodes
-  Visit(ANode.ClassKeywordNode);
-  Visit(ANode.OfKeywordNode);
-  Visit(ANode.TypeNode);
+  if ANode.ClassKeywordNode <> nil then
+    Visit(ANode.ClassKeywordNode);
+  if ANode.OfKeywordNode <> nil then
+    Visit(ANode.OfKeywordNode);
+  if ANode.TypeNode <> nil then
+    Visit(ANode.TypeNode);
 end;
 
 procedure TVisitor.Visit(ANode: TClassTypeNode);
 begin
   // Visit child nodes
-  Visit(ANode.ClassKeywordNode);
-  Visit(ANode.DispositionNode);
-  Visit(ANode.OpenParenthesisNode);
-  Visit(ANode.InheritanceListNode);
-  Visit(ANode.CloseParenthesisNode);
-  Visit(ANode.ContentListNode);
-  Visit(ANode.EndKeywordNode);
+  if ANode.ClassKeywordNode <> nil then
+    Visit(ANode.ClassKeywordNode);
+  if ANode.DispositionNode <> nil then
+    Visit(ANode.DispositionNode);
+  if ANode.OpenParenthesisNode <> nil then
+    Visit(ANode.OpenParenthesisNode);
+  if ANode.InheritanceListNode <> nil then
+    Visit(ANode.InheritanceListNode);
+  if ANode.CloseParenthesisNode <> nil then
+    Visit(ANode.CloseParenthesisNode);
+  if ANode.ContentListNode <> nil then
+    Visit(ANode.ContentListNode);
+  if ANode.EndKeywordNode <> nil then
+    Visit(ANode.EndKeywordNode);
 end;
 
 procedure TVisitor.Visit(ANode: TConstSectionNode);
 begin
   // Visit child nodes
-  Visit(ANode.ConstKeywordNode);
-  Visit(ANode.ConstListNode);
+  if ANode.ConstKeywordNode <> nil then
+    Visit(ANode.ConstKeywordNode);
+  if ANode.ConstListNode <> nil then
+    Visit(ANode.ConstListNode);
 end;
 
 procedure TVisitor.Visit(ANode: TConstantDeclNode);
 begin
   // Visit child nodes
-  Visit(ANode.NameNode);
-  Visit(ANode.ColonNode);
-  Visit(ANode.TypeNode);
-  Visit(ANode.EqualSignNode);
-  Visit(ANode.ValueNode);
-  Visit(ANode.PortabilityDirectiveListNode);
-  Visit(ANode.SemicolonNode);
+  if ANode.NameNode <> nil then
+    Visit(ANode.NameNode);
+  if ANode.ColonNode <> nil then
+    Visit(ANode.ColonNode);
+  if ANode.TypeNode <> nil then
+    Visit(ANode.TypeNode);
+  if ANode.EqualSignNode <> nil then
+    Visit(ANode.EqualSignNode);
+  if ANode.ValueNode <> nil then
+    Visit(ANode.ValueNode);
+  if ANode.PortabilityDirectiveListNode <> nil then
+    Visit(ANode.PortabilityDirectiveListNode);
+  if ANode.SemicolonNode <> nil then
+    Visit(ANode.SemicolonNode);
 end;
 
 procedure TVisitor.Visit(ANode: TConstantListNode);
 begin
   // Visit child nodes
-  Visit(ANode.OpenParenthesisNode);
-  Visit(ANode.ItemListNode);
-  Visit(ANode.CloseParenthesisNode);
+  if ANode.OpenParenthesisNode <> nil then
+    Visit(ANode.OpenParenthesisNode);
+  if ANode.ItemListNode <> nil then
+    Visit(ANode.ItemListNode);
+  if ANode.CloseParenthesisNode <> nil then
+    Visit(ANode.CloseParenthesisNode);
 end;
 
 procedure TVisitor.Visit(ANode: TDirectiveNode);
 begin
   // Visit child nodes
-  Visit(ANode.SemicolonNode);
-  Visit(ANode.KeywordNode);
-  Visit(ANode.ValueNode);
-  Visit(ANode.DataNode);
+  if ANode.SemicolonNode <> nil then
+    Visit(ANode.SemicolonNode);
+  if ANode.KeywordNode <> nil then
+    Visit(ANode.KeywordNode);
+  if ANode.ValueNode <> nil then
+    Visit(ANode.ValueNode);
+  if ANode.DataNode <> nil then
+    Visit(ANode.DataNode);
 end;
 
 procedure TVisitor.Visit(ANode: TEnumeratedTypeElementNode);
 begin
   // Visit child nodes
-  Visit(ANode.NameNode);
-  Visit(ANode.EqualSignNode);
-  Visit(ANode.ValueNode);
+  if ANode.NameNode <> nil then
+    Visit(ANode.NameNode);
+  if ANode.EqualSignNode <> nil then
+    Visit(ANode.EqualSignNode);
+  if ANode.ValueNode <> nil then
+    Visit(ANode.ValueNode);
 end;
 
 procedure TVisitor.Visit(ANode: TEnumeratedTypeNode);
 begin
   // Visit child nodes
-  Visit(ANode.OpenParenthesisNode);
-  Visit(ANode.ItemListNode);
-  Visit(ANode.CloseParenthesisNode);
+  if ANode.OpenParenthesisNode <> nil then
+    Visit(ANode.OpenParenthesisNode);
+  if ANode.ItemListNode <> nil then
+    Visit(ANode.ItemListNode);
+  if ANode.CloseParenthesisNode <> nil then
+    Visit(ANode.CloseParenthesisNode);
 end;
 
 procedure TVisitor.Visit(ANode: TExceptionItemNode);
 begin
   // Visit child nodes
-  Visit(ANode.OnSemikeywordNode);
-  Visit(ANode.NameNode);
-  Visit(ANode.ColonNode);
-  Visit(ANode.TypeNode);
-  Visit(ANode.DoKeywordNode);
-  Visit(ANode.StatementNode);
-  Visit(ANode.SemicolonNode);
+  if ANode.OnSemikeywordNode <> nil then
+    Visit(ANode.OnSemikeywordNode);
+  if ANode.NameNode <> nil then
+    Visit(ANode.NameNode);
+  if ANode.ColonNode <> nil then
+    Visit(ANode.ColonNode);
+  if ANode.TypeNode <> nil then
+    Visit(ANode.TypeNode);
+  if ANode.DoKeywordNode <> nil then
+    Visit(ANode.DoKeywordNode);
+  if ANode.StatementNode <> nil then
+    Visit(ANode.StatementNode);
+  if ANode.SemicolonNode <> nil then
+    Visit(ANode.SemicolonNode);
 end;
 
 procedure TVisitor.Visit(ANode: TExportsItemNode);
 begin
   // Visit child nodes
-  Visit(ANode.NameNode);
-  Visit(ANode.SpecifierListNode);
+  if ANode.NameNode <> nil then
+    Visit(ANode.NameNode);
+  if ANode.SpecifierListNode <> nil then
+    Visit(ANode.SpecifierListNode);
 end;
 
 procedure TVisitor.Visit(ANode: TExportsSpecifierNode);
 begin
   // Visit child nodes
-  Visit(ANode.KeywordNode);
-  Visit(ANode.ValueNode);
+  if ANode.KeywordNode <> nil then
+    Visit(ANode.KeywordNode);
+  if ANode.ValueNode <> nil then
+    Visit(ANode.ValueNode);
 end;
 
 procedure TVisitor.Visit(ANode: TExportsStatementNode);
 begin
   // Visit child nodes
-  Visit(ANode.ExportsKeywordNode);
-  Visit(ANode.ItemListNode);
-  Visit(ANode.SemicolonNode);
+  if ANode.ExportsKeywordNode <> nil then
+    Visit(ANode.ExportsKeywordNode);
+  if ANode.ItemListNode <> nil then
+    Visit(ANode.ItemListNode);
+  if ANode.SemicolonNode <> nil then
+    Visit(ANode.SemicolonNode);
 end;
 
 procedure TVisitor.Visit(ANode: TFancyBlockNode);
 begin
   // Visit child nodes
-  Visit(ANode.DeclListNode);
-  Visit(ANode.BlockNode);
+  if ANode.DeclListNode <> nil then
+    Visit(ANode.DeclListNode);
+  if ANode.BlockNode <> nil then
+    Visit(ANode.BlockNode);
 end;
 
 procedure TVisitor.Visit(ANode: TFieldDeclNode);
 begin
   // Visit child nodes
-  Visit(ANode.NameListNode);
-  Visit(ANode.ColonNode);
-  Visit(ANode.TypeNode);
-  Visit(ANode.PortabilityDirectiveListNode);
-  Visit(ANode.SemicolonNode);
+  if ANode.NameListNode <> nil then
+    Visit(ANode.NameListNode);
+  if ANode.ColonNode <> nil then
+    Visit(ANode.ColonNode);
+  if ANode.TypeNode <> nil then
+    Visit(ANode.TypeNode);
+  if ANode.PortabilityDirectiveListNode <> nil then
+    Visit(ANode.PortabilityDirectiveListNode);
+  if ANode.SemicolonNode <> nil then
+    Visit(ANode.SemicolonNode);
 end;
 
 procedure TVisitor.Visit(ANode: TFieldSectionNode);
 begin
   // Visit child nodes
-  Visit(ANode.ClassKeywordNode);
-  Visit(ANode.VarKeywordNode);
-  Visit(ANode.FieldListNode);
+  if ANode.ClassKeywordNode <> nil then
+    Visit(ANode.ClassKeywordNode);
+  if ANode.VarKeywordNode <> nil then
+    Visit(ANode.VarKeywordNode);
+  if ANode.FieldListNode <> nil then
+    Visit(ANode.FieldListNode);
 end;
 
 procedure TVisitor.Visit(ANode: TFileTypeNode);
 begin
   // Visit child nodes
-  Visit(ANode.FileKeywordNode);
-  Visit(ANode.OfKeywordNode);
-  Visit(ANode.TypeNode);
+  if ANode.FileKeywordNode <> nil then
+    Visit(ANode.FileKeywordNode);
+  if ANode.OfKeywordNode <> nil then
+    Visit(ANode.OfKeywordNode);
+  if ANode.TypeNode <> nil then
+    Visit(ANode.TypeNode);
 end;
 
 procedure TVisitor.Visit(ANode: TForInStatementNode);
 begin
   // Visit child nodes
-  Visit(ANode.ForKeywordNode);
-  Visit(ANode.LoopVariableNode);
-  Visit(ANode.InKeywordNode);
-  Visit(ANode.ExpressionNode);
-  Visit(ANode.DoKeywordNode);
-  Visit(ANode.StatementNode);
+  if ANode.ForKeywordNode <> nil then
+    Visit(ANode.ForKeywordNode);
+  if ANode.LoopVariableNode <> nil then
+    Visit(ANode.LoopVariableNode);
+  if ANode.InKeywordNode <> nil then
+    Visit(ANode.InKeywordNode);
+  if ANode.ExpressionNode <> nil then
+    Visit(ANode.ExpressionNode);
+  if ANode.DoKeywordNode <> nil then
+    Visit(ANode.DoKeywordNode);
+  if ANode.StatementNode <> nil then
+    Visit(ANode.StatementNode);
 end;
 
 procedure TVisitor.Visit(ANode: TForStatementNode);
 begin
   // Visit child nodes
-  Visit(ANode.ForKeywordNode);
-  Visit(ANode.LoopVariableNode);
-  Visit(ANode.ColonEqualsNode);
-  Visit(ANode.StartingValueNode);
-  Visit(ANode.DirectionNode);
-  Visit(ANode.EndingValueNode);
-  Visit(ANode.DoKeywordNode);
-  Visit(ANode.StatementNode);
+  if ANode.ForKeywordNode <> nil then
+    Visit(ANode.ForKeywordNode);
+  if ANode.LoopVariableNode <> nil then
+    Visit(ANode.LoopVariableNode);
+  if ANode.ColonEqualsNode <> nil then
+    Visit(ANode.ColonEqualsNode);
+  if ANode.StartingValueNode <> nil then
+    Visit(ANode.StartingValueNode);
+  if ANode.DirectionNode <> nil then
+    Visit(ANode.DirectionNode);
+  if ANode.EndingValueNode <> nil then
+    Visit(ANode.EndingValueNode);
+  if ANode.DoKeywordNode <> nil then
+    Visit(ANode.DoKeywordNode);
+  if ANode.StatementNode <> nil then
+    Visit(ANode.StatementNode);
 end;
 
 procedure TVisitor.Visit(ANode: TGotoStatementNode);
 begin
   // Visit child nodes
-  Visit(ANode.GotoKeywordNode);
-  Visit(ANode.LabelIdNode);
+  if ANode.GotoKeywordNode <> nil then
+    Visit(ANode.GotoKeywordNode);
+  if ANode.LabelIdNode <> nil then
+    Visit(ANode.LabelIdNode);
 end;
 
 procedure TVisitor.Visit(ANode: TIfStatementNode);
 begin
   // Visit child nodes
-  Visit(ANode.IfKeywordNode);
-  Visit(ANode.ConditionNode);
-  Visit(ANode.ThenKeywordNode);
-  Visit(ANode.ThenStatementNode);
-  Visit(ANode.ElseKeywordNode);
-  Visit(ANode.ElseStatementNode);
+  if ANode.IfKeywordNode <> nil then
+    Visit(ANode.IfKeywordNode);
+  if ANode.ConditionNode <> nil then
+    Visit(ANode.ConditionNode);
+  if ANode.ThenKeywordNode <> nil then
+    Visit(ANode.ThenKeywordNode);
+  if ANode.ThenStatementNode <> nil then
+    Visit(ANode.ThenStatementNode);
+  if ANode.ElseKeywordNode <> nil then
+    Visit(ANode.ElseKeywordNode);
+  if ANode.ElseStatementNode <> nil then
+    Visit(ANode.ElseStatementNode);
 end;
 
 procedure TVisitor.Visit(ANode: TInitSectionNode);
 begin
   // Visit child nodes
-  Visit(ANode.InitializationKeywordNode);
-  Visit(ANode.InitializationStatementListNode);
-  Visit(ANode.FinalizationKeywordNode);
-  Visit(ANode.FinalizationStatementListNode);
-  Visit(ANode.EndKeywordNode);
+  if ANode.InitializationKeywordNode <> nil then
+    Visit(ANode.InitializationKeywordNode);
+  if ANode.InitializationStatementListNode <> nil then
+    Visit(ANode.InitializationStatementListNode);
+  if ANode.FinalizationKeywordNode <> nil then
+    Visit(ANode.FinalizationKeywordNode);
+  if ANode.FinalizationStatementListNode <> nil then
+    Visit(ANode.FinalizationStatementListNode);
+  if ANode.EndKeywordNode <> nil then
+    Visit(ANode.EndKeywordNode);
 end;
 
 procedure TVisitor.Visit(ANode: TInterfaceTypeNode);
 begin
   // Visit child nodes
-  Visit(ANode.InterfaceKeywordNode);
-  Visit(ANode.OpenParenthesisNode);
-  Visit(ANode.BaseInterfaceNode);
-  Visit(ANode.CloseParenthesisNode);
-  Visit(ANode.OpenBracketNode);
-  Visit(ANode.GuidNode);
-  Visit(ANode.CloseBracketNode);
-  Visit(ANode.MethodAndPropertyListNode);
-  Visit(ANode.EndKeywordNode);
+  if ANode.InterfaceKeywordNode <> nil then
+    Visit(ANode.InterfaceKeywordNode);
+  if ANode.OpenParenthesisNode <> nil then
+    Visit(ANode.OpenParenthesisNode);
+  if ANode.BaseInterfaceNode <> nil then
+    Visit(ANode.BaseInterfaceNode);
+  if ANode.CloseParenthesisNode <> nil then
+    Visit(ANode.CloseParenthesisNode);
+  if ANode.OpenBracketNode <> nil then
+    Visit(ANode.OpenBracketNode);
+  if ANode.GuidNode <> nil then
+    Visit(ANode.GuidNode);
+  if ANode.CloseBracketNode <> nil then
+    Visit(ANode.CloseBracketNode);
+  if ANode.MethodAndPropertyListNode <> nil then
+    Visit(ANode.MethodAndPropertyListNode);
+  if ANode.EndKeywordNode <> nil then
+    Visit(ANode.EndKeywordNode);
 end;
 
 procedure TVisitor.Visit(ANode: TLabelDeclSectionNode);
 begin
   // Visit child nodes
-  Visit(ANode.LabelKeywordNode);
-  Visit(ANode.LabelListNode);
-  Visit(ANode.SemicolonNode);
+  if ANode.LabelKeywordNode <> nil then
+    Visit(ANode.LabelKeywordNode);
+  if ANode.LabelListNode <> nil then
+    Visit(ANode.LabelListNode);
+  if ANode.SemicolonNode <> nil then
+    Visit(ANode.SemicolonNode);
 end;
 
 procedure TVisitor.Visit(ANode: TLabeledStatementNode);
 begin
   // Visit child nodes
-  Visit(ANode.LabelIdNode);
-  Visit(ANode.ColonNode);
-  Visit(ANode.StatementNode);
+  if ANode.LabelIdNode <> nil then
+    Visit(ANode.LabelIdNode);
+  if ANode.ColonNode <> nil then
+    Visit(ANode.ColonNode);
+  if ANode.StatementNode <> nil then
+    Visit(ANode.StatementNode);
 end;
 
 procedure TVisitor.Visit(ANode: TMethodHeadingNode);
 begin
   // Visit child nodes
-  Visit(ANode.ClassKeywordNode);
-  Visit(ANode.MethodTypeNode);
-  Visit(ANode.NameNode);
-  Visit(ANode.OpenParenthesisNode);
-  Visit(ANode.ParameterListNode);
-  Visit(ANode.CloseParenthesisNode);
-  Visit(ANode.ColonNode);
-  Visit(ANode.ReturnTypeNode);
-  Visit(ANode.DirectiveListNode);
-  Visit(ANode.SemicolonNode);
+  if ANode.ClassKeywordNode <> nil then
+    Visit(ANode.ClassKeywordNode);
+  if ANode.MethodTypeNode <> nil then
+    Visit(ANode.MethodTypeNode);
+  if ANode.NameNode <> nil then
+    Visit(ANode.NameNode);
+  if ANode.OpenParenthesisNode <> nil then
+    Visit(ANode.OpenParenthesisNode);
+  if ANode.ParameterListNode <> nil then
+    Visit(ANode.ParameterListNode);
+  if ANode.CloseParenthesisNode <> nil then
+    Visit(ANode.CloseParenthesisNode);
+  if ANode.ColonNode <> nil then
+    Visit(ANode.ColonNode);
+  if ANode.ReturnTypeNode <> nil then
+    Visit(ANode.ReturnTypeNode);
+  if ANode.DirectiveListNode <> nil then
+    Visit(ANode.DirectiveListNode);
+  if ANode.SemicolonNode <> nil then
+    Visit(ANode.SemicolonNode);
 end;
 
 procedure TVisitor.Visit(ANode: TMethodImplementationNode);
 begin
   // Visit child nodes
-  Visit(ANode.MethodHeadingNode);
-  Visit(ANode.FancyBlockNode);
-  Visit(ANode.SemicolonNode);
+  if ANode.MethodHeadingNode <> nil then
+    Visit(ANode.MethodHeadingNode);
+  if ANode.FancyBlockNode <> nil then
+    Visit(ANode.FancyBlockNode);
+  if ANode.SemicolonNode <> nil then
+    Visit(ANode.SemicolonNode);
 end;
 
 procedure TVisitor.Visit(ANode: TMethodResolutionNode);
 begin
   // Visit child nodes
-  Visit(ANode.MethodTypeNode);
-  Visit(ANode.InterfaceMethodNode);
-  Visit(ANode.EqualSignNode);
-  Visit(ANode.ImplementationMethodNode);
-  Visit(ANode.SemicolonNode);
+  if ANode.MethodTypeNode <> nil then
+    Visit(ANode.MethodTypeNode);
+  if ANode.InterfaceMethodNode <> nil then
+    Visit(ANode.InterfaceMethodNode);
+  if ANode.EqualSignNode <> nil then
+    Visit(ANode.EqualSignNode);
+  if ANode.ImplementationMethodNode <> nil then
+    Visit(ANode.ImplementationMethodNode);
+  if ANode.SemicolonNode <> nil then
+    Visit(ANode.SemicolonNode);
 end;
 
 procedure TVisitor.Visit(ANode: TNumberFormatNode);
 begin
   // Visit child nodes
-  Visit(ANode.ValueNode);
-  Visit(ANode.SizeColonNode);
-  Visit(ANode.SizeNode);
-  Visit(ANode.PrecisionColonNode);
-  Visit(ANode.PrecisionNode);
+  if ANode.ValueNode <> nil then
+    Visit(ANode.ValueNode);
+  if ANode.SizeColonNode <> nil then
+    Visit(ANode.SizeColonNode);
+  if ANode.SizeNode <> nil then
+    Visit(ANode.SizeNode);
+  if ANode.PrecisionColonNode <> nil then
+    Visit(ANode.PrecisionColonNode);
+  if ANode.PrecisionNode <> nil then
+    Visit(ANode.PrecisionNode);
 end;
 
 procedure TVisitor.Visit(ANode: TOpenArrayNode);
 begin
   // Visit child nodes
-  Visit(ANode.ArrayKeywordNode);
-  Visit(ANode.OfKeywordNode);
-  Visit(ANode.TypeNode);
+  if ANode.ArrayKeywordNode <> nil then
+    Visit(ANode.ArrayKeywordNode);
+  if ANode.OfKeywordNode <> nil then
+    Visit(ANode.OfKeywordNode);
+  if ANode.TypeNode <> nil then
+    Visit(ANode.TypeNode);
 end;
 
 procedure TVisitor.Visit(ANode: TPackageNode);
 begin
   // Visit child nodes
-  Visit(ANode.PackageKeywordNode);
-  Visit(ANode.NameNode);
-  Visit(ANode.SemicolonNode);
-  Visit(ANode.RequiresClauseNode);
-  Visit(ANode.ContainsClauseNode);
-  Visit(ANode.AttributeListNode);
-  Visit(ANode.EndKeywordNode);
-  Visit(ANode.DotNode);
+  if ANode.PackageKeywordNode <> nil then
+    Visit(ANode.PackageKeywordNode);
+  if ANode.NameNode <> nil then
+    Visit(ANode.NameNode);
+  if ANode.SemicolonNode <> nil then
+    Visit(ANode.SemicolonNode);
+  if ANode.RequiresClauseNode <> nil then
+    Visit(ANode.RequiresClauseNode);
+  if ANode.ContainsClauseNode <> nil then
+    Visit(ANode.ContainsClauseNode);
+  if ANode.AttributeListNode <> nil then
+    Visit(ANode.AttributeListNode);
+  if ANode.EndKeywordNode <> nil then
+    Visit(ANode.EndKeywordNode);
+  if ANode.DotNode <> nil then
+    Visit(ANode.DotNode);
 end;
 
 procedure TVisitor.Visit(ANode: TPackedTypeNode);
 begin
   // Visit child nodes
-  Visit(ANode.PackedKeywordNode);
-  Visit(ANode.TypeNode);
+  if ANode.PackedKeywordNode <> nil then
+    Visit(ANode.PackedKeywordNode);
+  if ANode.TypeNode <> nil then
+    Visit(ANode.TypeNode);
 end;
 
 procedure TVisitor.Visit(ANode: TParameterNode);
 begin
   // Visit child nodes
-  Visit(ANode.ModifierNode);
-  Visit(ANode.NameListNode);
-  Visit(ANode.ColonNode);
-  Visit(ANode.TypeNode);
-  Visit(ANode.EqualSignNode);
-  Visit(ANode.DefaultValueNode);
+  if ANode.ModifierNode <> nil then
+    Visit(ANode.ModifierNode);
+  if ANode.NameListNode <> nil then
+    Visit(ANode.NameListNode);
+  if ANode.ColonNode <> nil then
+    Visit(ANode.ColonNode);
+  if ANode.TypeNode <> nil then
+    Visit(ANode.TypeNode);
+  if ANode.EqualSignNode <> nil then
+    Visit(ANode.EqualSignNode);
+  if ANode.DefaultValueNode <> nil then
+    Visit(ANode.DefaultValueNode);
 end;
 
 procedure TVisitor.Visit(ANode: TParameterizedNode);
 begin
   // Visit child nodes
-  Visit(ANode.LeftNode);
-  Visit(ANode.OpenDelimiterNode);
-  Visit(ANode.ParameterListNode);
-  Visit(ANode.CloseDelimiterNode);
+  if ANode.LeftNode <> nil then
+    Visit(ANode.LeftNode);
+  if ANode.OpenDelimiterNode <> nil then
+    Visit(ANode.OpenDelimiterNode);
+  if ANode.ParameterListNode <> nil then
+    Visit(ANode.ParameterListNode);
+  if ANode.CloseDelimiterNode <> nil then
+    Visit(ANode.CloseDelimiterNode);
 end;
 
 procedure TVisitor.Visit(ANode: TParenthesizedExpressionNode);
 begin
   // Visit child nodes
-  Visit(ANode.OpenParenthesisNode);
-  Visit(ANode.ExpressionNode);
-  Visit(ANode.CloseParenthesisNode);
+  if ANode.OpenParenthesisNode <> nil then
+    Visit(ANode.OpenParenthesisNode);
+  if ANode.ExpressionNode <> nil then
+    Visit(ANode.ExpressionNode);
+  if ANode.CloseParenthesisNode <> nil then
+    Visit(ANode.CloseParenthesisNode);
 end;
 
 procedure TVisitor.Visit(ANode: TPointerDereferenceNode);
 begin
   // Visit child nodes
-  Visit(ANode.OperandNode);
-  Visit(ANode.CaretNode);
+  if ANode.OperandNode <> nil then
+    Visit(ANode.OperandNode);
+  if ANode.CaretNode <> nil then
+    Visit(ANode.CaretNode);
 end;
 
 procedure TVisitor.Visit(ANode: TPointerTypeNode);
 begin
   // Visit child nodes
-  Visit(ANode.CaretNode);
-  Visit(ANode.TypeNode);
+  if ANode.CaretNode <> nil then
+    Visit(ANode.CaretNode);
+  if ANode.TypeNode <> nil then
+    Visit(ANode.TypeNode);
 end;
 
 procedure TVisitor.Visit(ANode: TProcedureTypeNode);
 begin
   // Visit child nodes
-  Visit(ANode.MethodTypeNode);
-  Visit(ANode.OpenParenthesisNode);
-  Visit(ANode.ParameterListNode);
-  Visit(ANode.CloseParenthesisNode);
-  Visit(ANode.ColonNode);
-  Visit(ANode.ReturnTypeNode);
-  Visit(ANode.FirstDirectiveListNode);
-  Visit(ANode.OfKeywordNode);
-  Visit(ANode.ObjectKeywordNode);
-  Visit(ANode.SecondDirectiveListNode);
+  if ANode.MethodTypeNode <> nil then
+    Visit(ANode.MethodTypeNode);
+  if ANode.OpenParenthesisNode <> nil then
+    Visit(ANode.OpenParenthesisNode);
+  if ANode.ParameterListNode <> nil then
+    Visit(ANode.ParameterListNode);
+  if ANode.CloseParenthesisNode <> nil then
+    Visit(ANode.CloseParenthesisNode);
+  if ANode.ColonNode <> nil then
+    Visit(ANode.ColonNode);
+  if ANode.ReturnTypeNode <> nil then
+    Visit(ANode.ReturnTypeNode);
+  if ANode.FirstDirectiveListNode <> nil then
+    Visit(ANode.FirstDirectiveListNode);
+  if ANode.OfKeywordNode <> nil then
+    Visit(ANode.OfKeywordNode);
+  if ANode.ObjectKeywordNode <> nil then
+    Visit(ANode.ObjectKeywordNode);
+  if ANode.SecondDirectiveListNode <> nil then
+    Visit(ANode.SecondDirectiveListNode);
 end;
 
 procedure TVisitor.Visit(ANode: TProgramNode);
 begin
   // Visit child nodes
-  Visit(ANode.ProgramKeywordNode);
-  Visit(ANode.NameNode);
-  Visit(ANode.NoiseOpenParenthesisNode);
-  Visit(ANode.NoiseContentListNode);
-  Visit(ANode.NoiseCloseParenthesisNode);
-  Visit(ANode.SemicolonNode);
-  Visit(ANode.UsesClauseNode);
-  Visit(ANode.DeclarationListNode);
-  Visit(ANode.InitSectionNode);
-  Visit(ANode.DotNode);
+  if ANode.ProgramKeywordNode <> nil then
+    Visit(ANode.ProgramKeywordNode);
+  if ANode.NameNode <> nil then
+    Visit(ANode.NameNode);
+  if ANode.NoiseOpenParenthesisNode <> nil then
+    Visit(ANode.NoiseOpenParenthesisNode);
+  if ANode.NoiseContentListNode <> nil then
+    Visit(ANode.NoiseContentListNode);
+  if ANode.NoiseCloseParenthesisNode <> nil then
+    Visit(ANode.NoiseCloseParenthesisNode);
+  if ANode.SemicolonNode <> nil then
+    Visit(ANode.SemicolonNode);
+  if ANode.UsesClauseNode <> nil then
+    Visit(ANode.UsesClauseNode);
+  if ANode.DeclarationListNode <> nil then
+    Visit(ANode.DeclarationListNode);
+  if ANode.InitSectionNode <> nil then
+    Visit(ANode.InitSectionNode);
+  if ANode.DotNode <> nil then
+    Visit(ANode.DotNode);
 end;
 
 procedure TVisitor.Visit(ANode: TPropertyNode);
 begin
   // Visit child nodes
-  Visit(ANode.ClassKeywordNode);
-  Visit(ANode.PropertyKeywordNode);
-  Visit(ANode.NameNode);
-  Visit(ANode.OpenBracketNode);
-  Visit(ANode.ParameterListNode);
-  Visit(ANode.CloseBracketNode);
-  Visit(ANode.ColonNode);
-  Visit(ANode.TypeNode);
-  Visit(ANode.DirectiveListNode);
-  Visit(ANode.SemicolonNode);
+  if ANode.ClassKeywordNode <> nil then
+    Visit(ANode.ClassKeywordNode);
+  if ANode.PropertyKeywordNode <> nil then
+    Visit(ANode.PropertyKeywordNode);
+  if ANode.NameNode <> nil then
+    Visit(ANode.NameNode);
+  if ANode.OpenBracketNode <> nil then
+    Visit(ANode.OpenBracketNode);
+  if ANode.ParameterListNode <> nil then
+    Visit(ANode.ParameterListNode);
+  if ANode.CloseBracketNode <> nil then
+    Visit(ANode.CloseBracketNode);
+  if ANode.ColonNode <> nil then
+    Visit(ANode.ColonNode);
+  if ANode.TypeNode <> nil then
+    Visit(ANode.TypeNode);
+  if ANode.DirectiveListNode <> nil then
+    Visit(ANode.DirectiveListNode);
+  if ANode.SemicolonNode <> nil then
+    Visit(ANode.SemicolonNode);
 end;
 
 procedure TVisitor.Visit(ANode: TRaiseStatementNode);
 begin
   // Visit child nodes
-  Visit(ANode.RaiseKeywordNode);
-  Visit(ANode.ExceptionNode);
-  Visit(ANode.AtSemikeywordNode);
-  Visit(ANode.AddressNode);
+  if ANode.RaiseKeywordNode <> nil then
+    Visit(ANode.RaiseKeywordNode);
+  if ANode.ExceptionNode <> nil then
+    Visit(ANode.ExceptionNode);
+  if ANode.AtSemikeywordNode <> nil then
+    Visit(ANode.AtSemikeywordNode);
+  if ANode.AddressNode <> nil then
+    Visit(ANode.AddressNode);
 end;
 
 procedure TVisitor.Visit(ANode: TRecordFieldConstantNode);
 begin
   // Visit child nodes
-  Visit(ANode.NameNode);
-  Visit(ANode.ColonNode);
-  Visit(ANode.ValueNode);
+  if ANode.NameNode <> nil then
+    Visit(ANode.NameNode);
+  if ANode.ColonNode <> nil then
+    Visit(ANode.ColonNode);
+  if ANode.ValueNode <> nil then
+    Visit(ANode.ValueNode);
 end;
 
 procedure TVisitor.Visit(ANode: TRecordTypeNode);
 begin
   // Visit child nodes
-  Visit(ANode.RecordKeywordNode);
-  Visit(ANode.ContentListNode);
-  Visit(ANode.VariantSectionNode);
-  Visit(ANode.EndKeywordNode);
+  if ANode.RecordKeywordNode <> nil then
+    Visit(ANode.RecordKeywordNode);
+  if ANode.ContentListNode <> nil then
+    Visit(ANode.ContentListNode);
+  if ANode.VariantSectionNode <> nil then
+    Visit(ANode.VariantSectionNode);
+  if ANode.EndKeywordNode <> nil then
+    Visit(ANode.EndKeywordNode);
 end;
 
 procedure TVisitor.Visit(ANode: TRepeatStatementNode);
 begin
   // Visit child nodes
-  Visit(ANode.RepeatKeywordNode);
-  Visit(ANode.StatementListNode);
-  Visit(ANode.UntilKeywordNode);
-  Visit(ANode.ConditionNode);
+  if ANode.RepeatKeywordNode <> nil then
+    Visit(ANode.RepeatKeywordNode);
+  if ANode.StatementListNode <> nil then
+    Visit(ANode.StatementListNode);
+  if ANode.UntilKeywordNode <> nil then
+    Visit(ANode.UntilKeywordNode);
+  if ANode.ConditionNode <> nil then
+    Visit(ANode.ConditionNode);
 end;
 
 procedure TVisitor.Visit(ANode: TRequiresClauseNode);
 begin
   // Visit child nodes
-  Visit(ANode.RequiresSemikeywordNode);
-  Visit(ANode.PackageListNode);
-  Visit(ANode.SemicolonNode);
+  if ANode.RequiresSemikeywordNode <> nil then
+    Visit(ANode.RequiresSemikeywordNode);
+  if ANode.PackageListNode <> nil then
+    Visit(ANode.PackageListNode);
+  if ANode.SemicolonNode <> nil then
+    Visit(ANode.SemicolonNode);
 end;
 
 procedure TVisitor.Visit(ANode: TSetLiteralNode);
 begin
   // Visit child nodes
-  Visit(ANode.OpenBracketNode);
-  Visit(ANode.ItemListNode);
-  Visit(ANode.CloseBracketNode);
+  if ANode.OpenBracketNode <> nil then
+    Visit(ANode.OpenBracketNode);
+  if ANode.ItemListNode <> nil then
+    Visit(ANode.ItemListNode);
+  if ANode.CloseBracketNode <> nil then
+    Visit(ANode.CloseBracketNode);
 end;
 
 procedure TVisitor.Visit(ANode: TSetOfNode);
 begin
   // Visit child nodes
-  Visit(ANode.SetKeywordNode);
-  Visit(ANode.OfKeywordNode);
-  Visit(ANode.TypeNode);
+  if ANode.SetKeywordNode <> nil then
+    Visit(ANode.SetKeywordNode);
+  if ANode.OfKeywordNode <> nil then
+    Visit(ANode.OfKeywordNode);
+  if ANode.TypeNode <> nil then
+    Visit(ANode.TypeNode);
 end;
 
 procedure TVisitor.Visit(ANode: TStringOfLengthNode);
 begin
   // Visit child nodes
-  Visit(ANode.StringKeywordNode);
-  Visit(ANode.OpenBracketNode);
-  Visit(ANode.LengthNode);
-  Visit(ANode.CloseBracketNode);
+  if ANode.StringKeywordNode <> nil then
+    Visit(ANode.StringKeywordNode);
+  if ANode.OpenBracketNode <> nil then
+    Visit(ANode.OpenBracketNode);
+  if ANode.LengthNode <> nil then
+    Visit(ANode.LengthNode);
+  if ANode.CloseBracketNode <> nil then
+    Visit(ANode.CloseBracketNode);
 end;
 
 procedure TVisitor.Visit(ANode: TTryExceptNode);
 begin
   // Visit child nodes
-  Visit(ANode.TryKeywordNode);
-  Visit(ANode.TryStatementListNode);
-  Visit(ANode.ExceptKeywordNode);
-  Visit(ANode.ExceptionItemListNode);
-  Visit(ANode.ElseKeywordNode);
-  Visit(ANode.ElseStatementListNode);
-  Visit(ANode.EndKeywordNode);
+  if ANode.TryKeywordNode <> nil then
+    Visit(ANode.TryKeywordNode);
+  if ANode.TryStatementListNode <> nil then
+    Visit(ANode.TryStatementListNode);
+  if ANode.ExceptKeywordNode <> nil then
+    Visit(ANode.ExceptKeywordNode);
+  if ANode.ExceptionItemListNode <> nil then
+    Visit(ANode.ExceptionItemListNode);
+  if ANode.ElseKeywordNode <> nil then
+    Visit(ANode.ElseKeywordNode);
+  if ANode.ElseStatementListNode <> nil then
+    Visit(ANode.ElseStatementListNode);
+  if ANode.EndKeywordNode <> nil then
+    Visit(ANode.EndKeywordNode);
 end;
 
 procedure TVisitor.Visit(ANode: TTryFinallyNode);
 begin
   // Visit child nodes
-  Visit(ANode.TryKeywordNode);
-  Visit(ANode.TryStatementListNode);
-  Visit(ANode.FinallyKeywordNode);
-  Visit(ANode.FinallyStatementListNode);
-  Visit(ANode.EndKeywordNode);
+  if ANode.TryKeywordNode <> nil then
+    Visit(ANode.TryKeywordNode);
+  if ANode.TryStatementListNode <> nil then
+    Visit(ANode.TryStatementListNode);
+  if ANode.FinallyKeywordNode <> nil then
+    Visit(ANode.FinallyKeywordNode);
+  if ANode.FinallyStatementListNode <> nil then
+    Visit(ANode.FinallyStatementListNode);
+  if ANode.EndKeywordNode <> nil then
+    Visit(ANode.EndKeywordNode);
 end;
 
 procedure TVisitor.Visit(ANode: TTypeDeclNode);
 begin
   // Visit child nodes
-  Visit(ANode.NameNode);
-  Visit(ANode.EqualSignNode);
-  Visit(ANode.TypeKeywordNode);
-  Visit(ANode.TypeNode);
-  Visit(ANode.PortabilityDirectiveListNode);
-  Visit(ANode.SemicolonNode);
+  if ANode.NameNode <> nil then
+    Visit(ANode.NameNode);
+  if ANode.EqualSignNode <> nil then
+    Visit(ANode.EqualSignNode);
+  if ANode.TypeKeywordNode <> nil then
+    Visit(ANode.TypeKeywordNode);
+  if ANode.TypeNode <> nil then
+    Visit(ANode.TypeNode);
+  if ANode.PortabilityDirectiveListNode <> nil then
+    Visit(ANode.PortabilityDirectiveListNode);
+  if ANode.SemicolonNode <> nil then
+    Visit(ANode.SemicolonNode);
 end;
 
 procedure TVisitor.Visit(ANode: TTypeForwardDeclarationNode);
 begin
   // Visit child nodes
-  Visit(ANode.NameNode);
-  Visit(ANode.EqualSignNode);
-  Visit(ANode.TypeNode);
-  Visit(ANode.SemicolonNode);
+  if ANode.NameNode <> nil then
+    Visit(ANode.NameNode);
+  if ANode.EqualSignNode <> nil then
+    Visit(ANode.EqualSignNode);
+  if ANode.TypeNode <> nil then
+    Visit(ANode.TypeNode);
+  if ANode.SemicolonNode <> nil then
+    Visit(ANode.SemicolonNode);
 end;
 
 procedure TVisitor.Visit(ANode: TTypeHelperNode);
 begin
   // Visit child nodes
-  Visit(ANode.TypeKeywordNode);
-  Visit(ANode.HelperSemikeywordNode);
-  Visit(ANode.OpenParenthesisNode);
-  Visit(ANode.BaseHelperTypeNode);
-  Visit(ANode.CloseParenthesisNode);
-  Visit(ANode.ForKeywordNode);
-  Visit(ANode.TypeNode);
-  Visit(ANode.ContentListNode);
-  Visit(ANode.EndKeywordNode);
+  if ANode.TypeKeywordNode <> nil then
+    Visit(ANode.TypeKeywordNode);
+  if ANode.HelperSemikeywordNode <> nil then
+    Visit(ANode.HelperSemikeywordNode);
+  if ANode.OpenParenthesisNode <> nil then
+    Visit(ANode.OpenParenthesisNode);
+  if ANode.BaseHelperTypeNode <> nil then
+    Visit(ANode.BaseHelperTypeNode);
+  if ANode.CloseParenthesisNode <> nil then
+    Visit(ANode.CloseParenthesisNode);
+  if ANode.ForKeywordNode <> nil then
+    Visit(ANode.ForKeywordNode);
+  if ANode.TypeNode <> nil then
+    Visit(ANode.TypeNode);
+  if ANode.ContentListNode <> nil then
+    Visit(ANode.ContentListNode);
+  if ANode.EndKeywordNode <> nil then
+    Visit(ANode.EndKeywordNode);
 end;
 
 procedure TVisitor.Visit(ANode: TTypeSectionNode);
 begin
   // Visit child nodes
-  Visit(ANode.TypeKeywordNode);
-  Visit(ANode.TypeListNode);
+  if ANode.TypeKeywordNode <> nil then
+    Visit(ANode.TypeKeywordNode);
+  if ANode.TypeListNode <> nil then
+    Visit(ANode.TypeListNode);
 end;
 
 procedure TVisitor.Visit(ANode: TUnaryOperationNode);
 begin
   // Visit child nodes
-  Visit(ANode.OperatorNode);
-  Visit(ANode.OperandNode);
+  if ANode.OperatorNode <> nil then
+    Visit(ANode.OperatorNode);
+  if ANode.OperandNode <> nil then
+    Visit(ANode.OperandNode);
 end;
 
 procedure TVisitor.Visit(ANode: TUnitNode);
 begin
   // Visit child nodes
-  Visit(ANode.UnitKeywordNode);
-  Visit(ANode.UnitNameNode);
-  Visit(ANode.PortabilityDirectiveListNode);
-  Visit(ANode.SemicolonNode);
-  Visit(ANode.InterfaceSectionNode);
-  Visit(ANode.ImplementationSectionNode);
-  Visit(ANode.InitSectionNode);
-  Visit(ANode.DotNode);
+  if ANode.UnitKeywordNode <> nil then
+    Visit(ANode.UnitKeywordNode);
+  if ANode.UnitNameNode <> nil then
+    Visit(ANode.UnitNameNode);
+  if ANode.PortabilityDirectiveListNode <> nil then
+    Visit(ANode.PortabilityDirectiveListNode);
+  if ANode.SemicolonNode <> nil then
+    Visit(ANode.SemicolonNode);
+  if ANode.InterfaceSectionNode <> nil then
+    Visit(ANode.InterfaceSectionNode);
+  if ANode.ImplementationSectionNode <> nil then
+    Visit(ANode.ImplementationSectionNode);
+  if ANode.InitSectionNode <> nil then
+    Visit(ANode.InitSectionNode);
+  if ANode.DotNode <> nil then
+    Visit(ANode.DotNode);
 end;
 
 procedure TVisitor.Visit(ANode: TUnitSectionNode);
 begin
   // Visit child nodes
-  Visit(ANode.HeaderKeywordNode);
-  Visit(ANode.UsesClauseNode);
-  Visit(ANode.ContentListNode);
+  if ANode.HeaderKeywordNode <> nil then
+    Visit(ANode.HeaderKeywordNode);
+  if ANode.UsesClauseNode <> nil then
+    Visit(ANode.UsesClauseNode);
+  if ANode.ContentListNode <> nil then
+    Visit(ANode.ContentListNode);
 end;
 
 procedure TVisitor.Visit(ANode: TUsedUnitNode);
 begin
   // Visit child nodes
-  Visit(ANode.NameNode);
-  Visit(ANode.InKeywordNode);
-  Visit(ANode.FileNameNode);
+  if ANode.NameNode <> nil then
+    Visit(ANode.NameNode);
+  if ANode.InKeywordNode <> nil then
+    Visit(ANode.InKeywordNode);
+  if ANode.FileNameNode <> nil then
+    Visit(ANode.FileNameNode);
 end;
 
 procedure TVisitor.Visit(ANode: TUsesClauseNode);
 begin
   // Visit child nodes
-  Visit(ANode.UsesKeywordNode);
-  Visit(ANode.UnitListNode);
-  Visit(ANode.SemicolonNode);
+  if ANode.UsesKeywordNode <> nil then
+    Visit(ANode.UsesKeywordNode);
+  if ANode.UnitListNode <> nil then
+    Visit(ANode.UnitListNode);
+  if ANode.SemicolonNode <> nil then
+    Visit(ANode.SemicolonNode);
 end;
 
 procedure TVisitor.Visit(ANode: TVarDeclNode);
 begin
   // Visit child nodes
-  Visit(ANode.NameListNode);
-  Visit(ANode.ColonNode);
-  Visit(ANode.TypeNode);
-  Visit(ANode.FirstPortabilityDirectiveListNode);
-  Visit(ANode.AbsoluteSemikeywordNode);
-  Visit(ANode.AbsoluteAddressNode);
-  Visit(ANode.EqualSignNode);
-  Visit(ANode.ValueNode);
-  Visit(ANode.SecondPortabilityDirectiveListNode);
-  Visit(ANode.SemicolonNode);
+  if ANode.NameListNode <> nil then
+    Visit(ANode.NameListNode);
+  if ANode.ColonNode <> nil then
+    Visit(ANode.ColonNode);
+  if ANode.TypeNode <> nil then
+    Visit(ANode.TypeNode);
+  if ANode.FirstPortabilityDirectiveListNode <> nil then
+    Visit(ANode.FirstPortabilityDirectiveListNode);
+  if ANode.AbsoluteSemikeywordNode <> nil then
+    Visit(ANode.AbsoluteSemikeywordNode);
+  if ANode.AbsoluteAddressNode <> nil then
+    Visit(ANode.AbsoluteAddressNode);
+  if ANode.EqualSignNode <> nil then
+    Visit(ANode.EqualSignNode);
+  if ANode.ValueNode <> nil then
+    Visit(ANode.ValueNode);
+  if ANode.SecondPortabilityDirectiveListNode <> nil then
+    Visit(ANode.SecondPortabilityDirectiveListNode);
+  if ANode.SemicolonNode <> nil then
+    Visit(ANode.SemicolonNode);
 end;
 
 procedure TVisitor.Visit(ANode: TVarSectionNode);
 begin
   // Visit child nodes
-  Visit(ANode.VarKeywordNode);
-  Visit(ANode.VarListNode);
+  if ANode.VarKeywordNode <> nil then
+    Visit(ANode.VarKeywordNode);
+  if ANode.VarListNode <> nil then
+    Visit(ANode.VarListNode);
 end;
 
 procedure TVisitor.Visit(ANode: TVariantGroupNode);
 begin
   // Visit child nodes
-  Visit(ANode.ValueListNode);
-  Visit(ANode.ColonNode);
-  Visit(ANode.OpenParenthesisNode);
-  Visit(ANode.FieldDeclListNode);
-  Visit(ANode.VariantSectionNode);
-  Visit(ANode.CloseParenthesisNode);
-  Visit(ANode.SemicolonNode);
+  if ANode.ValueListNode <> nil then
+    Visit(ANode.ValueListNode);
+  if ANode.ColonNode <> nil then
+    Visit(ANode.ColonNode);
+  if ANode.OpenParenthesisNode <> nil then
+    Visit(ANode.OpenParenthesisNode);
+  if ANode.FieldDeclListNode <> nil then
+    Visit(ANode.FieldDeclListNode);
+  if ANode.VariantSectionNode <> nil then
+    Visit(ANode.VariantSectionNode);
+  if ANode.CloseParenthesisNode <> nil then
+    Visit(ANode.CloseParenthesisNode);
+  if ANode.SemicolonNode <> nil then
+    Visit(ANode.SemicolonNode);
 end;
 
 procedure TVisitor.Visit(ANode: TVariantSectionNode);
 begin
   // Visit child nodes
-  Visit(ANode.CaseKeywordNode);
-  Visit(ANode.NameNode);
-  Visit(ANode.ColonNode);
-  Visit(ANode.TypeNode);
-  Visit(ANode.OfKeywordNode);
-  Visit(ANode.VariantGroupListNode);
+  if ANode.CaseKeywordNode <> nil then
+    Visit(ANode.CaseKeywordNode);
+  if ANode.NameNode <> nil then
+    Visit(ANode.NameNode);
+  if ANode.ColonNode <> nil then
+    Visit(ANode.ColonNode);
+  if ANode.TypeNode <> nil then
+    Visit(ANode.TypeNode);
+  if ANode.OfKeywordNode <> nil then
+    Visit(ANode.OfKeywordNode);
+  if ANode.VariantGroupListNode <> nil then
+    Visit(ANode.VariantGroupListNode);
 end;
 
 procedure TVisitor.Visit(ANode: TVisibilityNode);
 begin
   // Visit child nodes
-  Visit(ANode.StrictSemikeywordNode);
-  Visit(ANode.VisibilityKeywordNode);
+  if ANode.StrictSemikeywordNode <> nil then
+    Visit(ANode.StrictSemikeywordNode);
+  if ANode.VisibilityKeywordNode <> nil then
+    Visit(ANode.VisibilityKeywordNode);
 end;
 
 procedure TVisitor.Visit(ANode: TVisibilitySectionNode);
 begin
   // Visit child nodes
-  Visit(ANode.VisibilityNode);
-  Visit(ANode.ContentListNode);
+  if ANode.VisibilityNode <> nil then
+    Visit(ANode.VisibilityNode);
+  if ANode.ContentListNode <> nil then
+    Visit(ANode.ContentListNode);
 end;
 
 procedure TVisitor.Visit(ANode: TWhileStatementNode);
 begin
   // Visit child nodes
-  Visit(ANode.WhileKeywordNode);
-  Visit(ANode.ConditionNode);
-  Visit(ANode.DoKeywordNode);
-  Visit(ANode.StatementNode);
+  if ANode.WhileKeywordNode <> nil then
+    Visit(ANode.WhileKeywordNode);
+  if ANode.ConditionNode <> nil then
+    Visit(ANode.ConditionNode);
+  if ANode.DoKeywordNode <> nil then
+    Visit(ANode.DoKeywordNode);
+  if ANode.StatementNode <> nil then
+    Visit(ANode.StatementNode);
 end;
 
 procedure TVisitor.Visit(ANode: TWithStatementNode);
 begin
   // Visit child nodes
-  Visit(ANode.WithKeywordNode);
-  Visit(ANode.ExpressionListNode);
-  Visit(ANode.DoKeywordNode);
-  Visit(ANode.StatementNode);
+  if ANode.WithKeywordNode <> nil then
+    Visit(ANode.WithKeywordNode);
+  if ANode.ExpressionListNode <> nil then
+    Visit(ANode.ExpressionListNode);
+  if ANode.DoKeywordNode <> nil then
+    Visit(ANode.DoKeywordNode);
+  if ANode.StatementNode <> nil then
+    Visit(ANode.StatementNode);
 end;
 
 end.
