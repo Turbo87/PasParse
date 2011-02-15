@@ -7,7 +7,6 @@ uses
   FastMM4Messages in '..\FastMM\FastMM4Messages.pas',
   SysUtils,
   UTestLexScanner in 'UTestLexScanner.pas',
-  UTest in 'UTest.pas',
   UTestDictionary in 'UTestDictionary.pas',
   UTestCompilerDefines in 'UTestCompilerDefines.pas',
   UTestASTNode in 'UTestASTNode.pas',
