@@ -48,7 +48,9 @@ begin
     16.2 * ln(FLOCCounter.LOCProgram);
     
   if FMI < 0 then
-    FMI := 0;
+    FMI := 0
+  else if FMI > 100 then
+    FMI := 100;  
 end;
 
 constructor TMaintainabilityIndex.Create;
