@@ -241,11 +241,11 @@ begin
 
   SetLength(FRules, 0);
 
-  if FNextFrame.IsEOF and (FNextFrame <> FFirstFrame) then
+  if (FNextFrame <> nil) and FNextFrame.IsEOF and (FNextFrame <> FFirstFrame) then
     FNextFrame.Free;
 
   FNextFrame := FFirstFrame;
-  while not FNextFrame.IsEOF do
+  while (FNextFrame <> nil) and (not FNextFrame.IsEOF) do
   begin
     AFrame := FNextFrame;
     FNextFrame := FNextFrame.Next;
