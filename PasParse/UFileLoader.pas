@@ -45,6 +45,9 @@ begin
     begin
       Read(AFile, AChar);
       Result := Result + AChar;
+
+      if Result = #239#187#191 then
+        Result := '';
     end;
 
     // Close File
