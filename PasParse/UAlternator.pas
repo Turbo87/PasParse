@@ -158,6 +158,7 @@ end;
 function TAlternator.Execute(AParser: IParser): TASTNode;
 var
   I: Integer;
+  AAlternate: IAlternate;
 begin
   Result := nil;
 
@@ -165,10 +166,14 @@ begin
   for I := 0 to FAlternates.Count - 1 do
   begin
     // Try to parse the next Token with each Alternate
-    Result := (FAlternates.Items[I] as IAlternate).TryParse(AParser);
-    if Result <> nil then
-      // ... and stop iterating when parsing was successful
-      Break;
+    AAlternate := (FAlternates.Items[I] as IAlternate);
+    if AAlternate <> nil then
+    begin
+      Result := AAlternate.TryParse(AParser);
+      if Result <> nil then
+        // ... and stop iterating when parsing was successful
+        Break;
+    end;
   end;
 
   if Result = nil then
