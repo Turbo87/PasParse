@@ -6,6 +6,10 @@ uses
   SysUtils, Classes, UFileLoader, UCompilerDefines, UASTNode,
   UMaintainabilityIndex, UParser, URuleType, ULexException, UParseException;
 
+var
+  FFileName: string;
+  FFile: TextFile;
+
 procedure ParseParameters(out ADirectory: string; out ARecursive: Boolean);
 var
   I: Integer;
@@ -17,6 +21,11 @@ begin
   begin
     if ParamStr(I) = '-r' then
       ARecursive := True
+    else if (ParamStr(I)[1] = '-') and (ParamStr(I)[2] = 'o') then
+    begin
+      if (ParamStr(I)[3] = '=') then
+        FFileName := Copy(ParamStr(I), 4, Length(ParamStr(I)) - 3);
+    end
     else
     begin
       ADirectory := ParamStr(I);
@@ -72,13 +81,13 @@ end;
 
 procedure OutputResult(AFilePath, ABaseDir: string; AMI: TMaintainabilityIndex);
 begin
-  WriteLn(Format('%s - MI: %.0f - LOCpro: %d',
+  WriteLn(FFile, Format('%s - MI: %.0f - LOCpro: %d',
     [ExtractRelativePath(ABaseDir, AFilePath), AMI.Value, AMI.LOCCounter.LOCProgram]));
 end;
 
 procedure OutputWarning(AFilePath, ABaseDir, AWarning: string);
 begin
-  WriteLn(Format('%s'#13#10'### Warning: %s',
+  WriteLn(FFile, Format('%s'#13#10'### Warning: %s',
     [ExtractRelativePath(ABaseDir, AFilePath), AWarning]));
 end;
 
@@ -135,7 +144,10 @@ var
   AFiles: TStringList;
   i: integer;
 begin
+  FFileName := '';
   ParseParameters(ADirectory, ARecursive);
+  Assign(FFile, FFileName);
+  Rewrite(FFile);
 
   AFiles := TStringList.Create;
   FindFiles(AFiles, ADirectory, '*.pas', ARecursive);
@@ -147,6 +159,7 @@ begin
     AnalyzeFile(AFiles[i], ADirectory);
   end;
 
+  CloseFile(FFile);
   AFiles.Free;
 end;
 
