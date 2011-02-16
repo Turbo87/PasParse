@@ -31,11 +31,19 @@ function TListNode.Clone: TASTNode;
 var
   AList: TObjectList;
   I: Integer;
+  AASTNode: TASTNode;
 begin
   AList := TObjectList.Create(False);
 
   for I := 0 to FChildNodes.Count - 1 do
-    AList.Add((FChildNodes[I] as TASTNode).Clone);
+  begin
+    if FChildNodes[I] <> nil then
+      AASTNode := (FChildNodes[I] as TASTNode).Clone
+    else
+      AASTNode := nil;
+      
+    AList.Add(AASTNode);
+  end;
 
   Result := TListNode.Create(AList);
   AList.Free;

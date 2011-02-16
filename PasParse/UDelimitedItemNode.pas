@@ -25,10 +25,23 @@ implementation
 { TDelimitedItemNode }
 
 function TDelimitedItemNode.Clone: TASTNode;
+var
+  AItemNode: TASTNode;
+  ADelimiterNode: TToken;
 begin
+  if FItemNode <> nil then
+    AItemNode := (FItemNode.Clone as TASTNode)
+  else
+    AItemNode := nil;
+
+  if FDelimiterNode <> nil then
+    ADelimiterNode := (FDelimiterNode.Clone as TToken)
+  else
+    ADelimiterNode := nil;
+
   Result := TDelimitedItemNode.Create(
-    FItemNode.Clone as TASTNode,
-    FDelimiterNode.Clone as TToken);
+    AItemNode,
+    ADelimiterNode);
 end;
 
 constructor TDelimitedItemNode.Create(AItemNode: TASTNode;

@@ -75,11 +75,20 @@ def generate_nodes(yaml_content):
     cs += "{ T" + node_type_name + " }\n\n"
 
     cs += "function T" + node_type_name + ".Clone: TASTNode;\n"
+    cs += "var\n"
+    for property in properties:
+      cs += "  A" + property.get('Name') + ": T" + replace_types(property.get('Type')) + ";\n"
+      
     cs += "begin\n"
+    for property in properties:
+      cs += "  if F" + property.get('Name') + " <> nil then\n"
+      cs += "    A" + property.get('Name') + " := (F" + property.get('Name') + ".Clone as T" + replace_types(property.get('Type')) + ")\n"
+      cs += "  else\n"
+      cs += "    A" + property.get('Name') + " := nil;\n\n"
 
     params = []
     for property in properties:
-      params.append("F" + property.get('Name') + ".Clone as T" + replace_types(property.get('Type')));
+      params.append("A" + property.get('Name'));
 
     cs += "  Result := T" + node_type_name + ".Create(\n    " + ',\n    '.join(params) + ");\n"
     cs += "end;\n\n"

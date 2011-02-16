@@ -1492,14 +1492,51 @@ uses
 { TArrayTypeNode }
 
 function TArrayTypeNode.Clone: TASTNode;
+var
+  AArrayKeywordNode: TToken;
+  AOpenBracketNode: TToken;
+  AIndexListNode: TListNode;
+  ACloseBracketNode: TToken;
+  AOfKeywordNode: TToken;
+  ATypeNode: TASTNode;
 begin
+  if FArrayKeywordNode <> nil then
+    AArrayKeywordNode := (FArrayKeywordNode.Clone as TToken)
+  else
+    AArrayKeywordNode := nil;
+
+  if FOpenBracketNode <> nil then
+    AOpenBracketNode := (FOpenBracketNode.Clone as TToken)
+  else
+    AOpenBracketNode := nil;
+
+  if FIndexListNode <> nil then
+    AIndexListNode := (FIndexListNode.Clone as TListNode)
+  else
+    AIndexListNode := nil;
+
+  if FCloseBracketNode <> nil then
+    ACloseBracketNode := (FCloseBracketNode.Clone as TToken)
+  else
+    ACloseBracketNode := nil;
+
+  if FOfKeywordNode <> nil then
+    AOfKeywordNode := (FOfKeywordNode.Clone as TToken)
+  else
+    AOfKeywordNode := nil;
+
+  if FTypeNode <> nil then
+    ATypeNode := (FTypeNode.Clone as TASTNode)
+  else
+    ATypeNode := nil;
+
   Result := TArrayTypeNode.Create(
-    FArrayKeywordNode.Clone as TToken,
-    FOpenBracketNode.Clone as TToken,
-    FIndexListNode.Clone as TListNode,
-    FCloseBracketNode.Clone as TToken,
-    FOfKeywordNode.Clone as TToken,
-    FTypeNode.Clone as TASTNode);
+    AArrayKeywordNode,
+    AOpenBracketNode,
+    AIndexListNode,
+    ACloseBracketNode,
+    AOfKeywordNode,
+    ATypeNode);
 end;
 
 constructor TArrayTypeNode.Create(AArrayKeywordNode: TToken; AOpenBracketNode: TToken; AIndexListNode: TListNode; ACloseBracketNode: TToken; AOfKeywordNode: TToken; ATypeNode: TASTNode);
@@ -1534,10 +1571,23 @@ end;
 { TAssemblerStatementNode }
 
 function TAssemblerStatementNode.Clone: TASTNode;
+var
+  AAsmKeywordNode: TToken;
+  AEndKeywordNode: TToken;
 begin
+  if FAsmKeywordNode <> nil then
+    AAsmKeywordNode := (FAsmKeywordNode.Clone as TToken)
+  else
+    AAsmKeywordNode := nil;
+
+  if FEndKeywordNode <> nil then
+    AEndKeywordNode := (FEndKeywordNode.Clone as TToken)
+  else
+    AEndKeywordNode := nil;
+
   Result := TAssemblerStatementNode.Create(
-    FAsmKeywordNode.Clone as TToken,
-    FEndKeywordNode.Clone as TToken);
+    AAsmKeywordNode,
+    AEndKeywordNode);
 end;
 
 constructor TAssemblerStatementNode.Create(AAsmKeywordNode: TToken; AEndKeywordNode: TToken);
@@ -1560,13 +1610,44 @@ end;
 { TAttributeNode }
 
 function TAttributeNode.Clone: TASTNode;
+var
+  AOpenBracketNode: TToken;
+  AScopeNode: TToken;
+  AColonNode: TToken;
+  AValueNode: TASTNode;
+  ACloseBracketNode: TToken;
 begin
+  if FOpenBracketNode <> nil then
+    AOpenBracketNode := (FOpenBracketNode.Clone as TToken)
+  else
+    AOpenBracketNode := nil;
+
+  if FScopeNode <> nil then
+    AScopeNode := (FScopeNode.Clone as TToken)
+  else
+    AScopeNode := nil;
+
+  if FColonNode <> nil then
+    AColonNode := (FColonNode.Clone as TToken)
+  else
+    AColonNode := nil;
+
+  if FValueNode <> nil then
+    AValueNode := (FValueNode.Clone as TASTNode)
+  else
+    AValueNode := nil;
+
+  if FCloseBracketNode <> nil then
+    ACloseBracketNode := (FCloseBracketNode.Clone as TToken)
+  else
+    ACloseBracketNode := nil;
+
   Result := TAttributeNode.Create(
-    FOpenBracketNode.Clone as TToken,
-    FScopeNode.Clone as TToken,
-    FColonNode.Clone as TToken,
-    FValueNode.Clone as TASTNode,
-    FCloseBracketNode.Clone as TToken);
+    AOpenBracketNode,
+    AScopeNode,
+    AColonNode,
+    AValueNode,
+    ACloseBracketNode);
 end;
 
 constructor TAttributeNode.Create(AOpenBracketNode: TToken; AScopeNode: TToken; AColonNode: TToken; AValueNode: TASTNode; ACloseBracketNode: TToken);
@@ -1598,11 +1679,30 @@ end;
 { TBinaryOperationNode }
 
 function TBinaryOperationNode.Clone: TASTNode;
+var
+  ALeftNode: TASTNode;
+  AOperatorNode: TToken;
+  ARightNode: TASTNode;
 begin
+  if FLeftNode <> nil then
+    ALeftNode := (FLeftNode.Clone as TASTNode)
+  else
+    ALeftNode := nil;
+
+  if FOperatorNode <> nil then
+    AOperatorNode := (FOperatorNode.Clone as TToken)
+  else
+    AOperatorNode := nil;
+
+  if FRightNode <> nil then
+    ARightNode := (FRightNode.Clone as TASTNode)
+  else
+    ARightNode := nil;
+
   Result := TBinaryOperationNode.Create(
-    FLeftNode.Clone as TASTNode,
-    FOperatorNode.Clone as TToken,
-    FRightNode.Clone as TASTNode);
+    ALeftNode,
+    AOperatorNode,
+    ARightNode);
 end;
 
 constructor TBinaryOperationNode.Create(ALeftNode: TASTNode; AOperatorNode: TToken; ARightNode: TASTNode);
@@ -1628,11 +1728,30 @@ end;
 { TBlockNode }
 
 function TBlockNode.Clone: TASTNode;
+var
+  ABeginKeywordNode: TToken;
+  AStatementListNode: TListNode;
+  AEndKeywordNode: TToken;
 begin
+  if FBeginKeywordNode <> nil then
+    ABeginKeywordNode := (FBeginKeywordNode.Clone as TToken)
+  else
+    ABeginKeywordNode := nil;
+
+  if FStatementListNode <> nil then
+    AStatementListNode := (FStatementListNode.Clone as TListNode)
+  else
+    AStatementListNode := nil;
+
+  if FEndKeywordNode <> nil then
+    AEndKeywordNode := (FEndKeywordNode.Clone as TToken)
+  else
+    AEndKeywordNode := nil;
+
   Result := TBlockNode.Create(
-    FBeginKeywordNode.Clone as TToken,
-    FStatementListNode.Clone as TListNode,
-    FEndKeywordNode.Clone as TToken);
+    ABeginKeywordNode,
+    AStatementListNode,
+    AEndKeywordNode);
 end;
 
 constructor TBlockNode.Create(ABeginKeywordNode: TToken; AStatementListNode: TListNode; AEndKeywordNode: TToken);
@@ -1658,12 +1777,37 @@ end;
 { TCaseSelectorNode }
 
 function TCaseSelectorNode.Clone: TASTNode;
+var
+  AValueListNode: TListNode;
+  AColonNode: TToken;
+  AStatementNode: TASTNode;
+  ASemicolonNode: TToken;
 begin
+  if FValueListNode <> nil then
+    AValueListNode := (FValueListNode.Clone as TListNode)
+  else
+    AValueListNode := nil;
+
+  if FColonNode <> nil then
+    AColonNode := (FColonNode.Clone as TToken)
+  else
+    AColonNode := nil;
+
+  if FStatementNode <> nil then
+    AStatementNode := (FStatementNode.Clone as TASTNode)
+  else
+    AStatementNode := nil;
+
+  if FSemicolonNode <> nil then
+    ASemicolonNode := (FSemicolonNode.Clone as TToken)
+  else
+    ASemicolonNode := nil;
+
   Result := TCaseSelectorNode.Create(
-    FValueListNode.Clone as TListNode,
-    FColonNode.Clone as TToken,
-    FStatementNode.Clone as TASTNode,
-    FSemicolonNode.Clone as TToken);
+    AValueListNode,
+    AColonNode,
+    AStatementNode,
+    ASemicolonNode);
 end;
 
 constructor TCaseSelectorNode.Create(AValueListNode: TListNode; AColonNode: TToken; AStatementNode: TASTNode; ASemicolonNode: TToken);
@@ -1692,15 +1836,58 @@ end;
 { TCaseStatementNode }
 
 function TCaseStatementNode.Clone: TASTNode;
+var
+  ACaseKeywordNode: TToken;
+  AExpressionNode: TASTNode;
+  AOfKeywordNode: TToken;
+  ASelectorListNode: TListNode;
+  AElseKeywordNode: TToken;
+  AElseStatementListNode: TListNode;
+  AEndKeywordNode: TToken;
 begin
+  if FCaseKeywordNode <> nil then
+    ACaseKeywordNode := (FCaseKeywordNode.Clone as TToken)
+  else
+    ACaseKeywordNode := nil;
+
+  if FExpressionNode <> nil then
+    AExpressionNode := (FExpressionNode.Clone as TASTNode)
+  else
+    AExpressionNode := nil;
+
+  if FOfKeywordNode <> nil then
+    AOfKeywordNode := (FOfKeywordNode.Clone as TToken)
+  else
+    AOfKeywordNode := nil;
+
+  if FSelectorListNode <> nil then
+    ASelectorListNode := (FSelectorListNode.Clone as TListNode)
+  else
+    ASelectorListNode := nil;
+
+  if FElseKeywordNode <> nil then
+    AElseKeywordNode := (FElseKeywordNode.Clone as TToken)
+  else
+    AElseKeywordNode := nil;
+
+  if FElseStatementListNode <> nil then
+    AElseStatementListNode := (FElseStatementListNode.Clone as TListNode)
+  else
+    AElseStatementListNode := nil;
+
+  if FEndKeywordNode <> nil then
+    AEndKeywordNode := (FEndKeywordNode.Clone as TToken)
+  else
+    AEndKeywordNode := nil;
+
   Result := TCaseStatementNode.Create(
-    FCaseKeywordNode.Clone as TToken,
-    FExpressionNode.Clone as TASTNode,
-    FOfKeywordNode.Clone as TToken,
-    FSelectorListNode.Clone as TListNode,
-    FElseKeywordNode.Clone as TToken,
-    FElseStatementListNode.Clone as TListNode,
-    FEndKeywordNode.Clone as TToken);
+    ACaseKeywordNode,
+    AExpressionNode,
+    AOfKeywordNode,
+    ASelectorListNode,
+    AElseKeywordNode,
+    AElseStatementListNode,
+    AEndKeywordNode);
 end;
 
 constructor TCaseStatementNode.Create(ACaseKeywordNode: TToken; AExpressionNode: TASTNode; AOfKeywordNode: TToken; ASelectorListNode: TListNode; AElseKeywordNode: TToken; AElseStatementListNode: TListNode; AEndKeywordNode: TToken);
@@ -1738,11 +1925,30 @@ end;
 { TClassOfNode }
 
 function TClassOfNode.Clone: TASTNode;
+var
+  AClassKeywordNode: TToken;
+  AOfKeywordNode: TToken;
+  ATypeNode: TASTNode;
 begin
+  if FClassKeywordNode <> nil then
+    AClassKeywordNode := (FClassKeywordNode.Clone as TToken)
+  else
+    AClassKeywordNode := nil;
+
+  if FOfKeywordNode <> nil then
+    AOfKeywordNode := (FOfKeywordNode.Clone as TToken)
+  else
+    AOfKeywordNode := nil;
+
+  if FTypeNode <> nil then
+    ATypeNode := (FTypeNode.Clone as TASTNode)
+  else
+    ATypeNode := nil;
+
   Result := TClassOfNode.Create(
-    FClassKeywordNode.Clone as TToken,
-    FOfKeywordNode.Clone as TToken,
-    FTypeNode.Clone as TASTNode);
+    AClassKeywordNode,
+    AOfKeywordNode,
+    ATypeNode);
 end;
 
 constructor TClassOfNode.Create(AClassKeywordNode: TToken; AOfKeywordNode: TToken; ATypeNode: TASTNode);
@@ -1768,15 +1974,58 @@ end;
 { TClassTypeNode }
 
 function TClassTypeNode.Clone: TASTNode;
+var
+  AClassKeywordNode: TToken;
+  ADispositionNode: TToken;
+  AOpenParenthesisNode: TToken;
+  AInheritanceListNode: TListNode;
+  ACloseParenthesisNode: TToken;
+  AContentListNode: TListNode;
+  AEndKeywordNode: TToken;
 begin
+  if FClassKeywordNode <> nil then
+    AClassKeywordNode := (FClassKeywordNode.Clone as TToken)
+  else
+    AClassKeywordNode := nil;
+
+  if FDispositionNode <> nil then
+    ADispositionNode := (FDispositionNode.Clone as TToken)
+  else
+    ADispositionNode := nil;
+
+  if FOpenParenthesisNode <> nil then
+    AOpenParenthesisNode := (FOpenParenthesisNode.Clone as TToken)
+  else
+    AOpenParenthesisNode := nil;
+
+  if FInheritanceListNode <> nil then
+    AInheritanceListNode := (FInheritanceListNode.Clone as TListNode)
+  else
+    AInheritanceListNode := nil;
+
+  if FCloseParenthesisNode <> nil then
+    ACloseParenthesisNode := (FCloseParenthesisNode.Clone as TToken)
+  else
+    ACloseParenthesisNode := nil;
+
+  if FContentListNode <> nil then
+    AContentListNode := (FContentListNode.Clone as TListNode)
+  else
+    AContentListNode := nil;
+
+  if FEndKeywordNode <> nil then
+    AEndKeywordNode := (FEndKeywordNode.Clone as TToken)
+  else
+    AEndKeywordNode := nil;
+
   Result := TClassTypeNode.Create(
-    FClassKeywordNode.Clone as TToken,
-    FDispositionNode.Clone as TToken,
-    FOpenParenthesisNode.Clone as TToken,
-    FInheritanceListNode.Clone as TListNode,
-    FCloseParenthesisNode.Clone as TToken,
-    FContentListNode.Clone as TListNode,
-    FEndKeywordNode.Clone as TToken);
+    AClassKeywordNode,
+    ADispositionNode,
+    AOpenParenthesisNode,
+    AInheritanceListNode,
+    ACloseParenthesisNode,
+    AContentListNode,
+    AEndKeywordNode);
 end;
 
 constructor TClassTypeNode.Create(AClassKeywordNode: TToken; ADispositionNode: TToken; AOpenParenthesisNode: TToken; AInheritanceListNode: TListNode; ACloseParenthesisNode: TToken; AContentListNode: TListNode; AEndKeywordNode: TToken);
@@ -1814,10 +2063,23 @@ end;
 { TConstSectionNode }
 
 function TConstSectionNode.Clone: TASTNode;
+var
+  AConstKeywordNode: TToken;
+  AConstListNode: TListNode;
 begin
+  if FConstKeywordNode <> nil then
+    AConstKeywordNode := (FConstKeywordNode.Clone as TToken)
+  else
+    AConstKeywordNode := nil;
+
+  if FConstListNode <> nil then
+    AConstListNode := (FConstListNode.Clone as TListNode)
+  else
+    AConstListNode := nil;
+
   Result := TConstSectionNode.Create(
-    FConstKeywordNode.Clone as TToken,
-    FConstListNode.Clone as TListNode);
+    AConstKeywordNode,
+    AConstListNode);
 end;
 
 constructor TConstSectionNode.Create(AConstKeywordNode: TToken; AConstListNode: TListNode);
@@ -1840,15 +2102,58 @@ end;
 { TConstantDeclNode }
 
 function TConstantDeclNode.Clone: TASTNode;
+var
+  ANameNode: TToken;
+  AColonNode: TToken;
+  ATypeNode: TASTNode;
+  AEqualSignNode: TToken;
+  AValueNode: TASTNode;
+  APortabilityDirectiveListNode: TListNode;
+  ASemicolonNode: TToken;
 begin
+  if FNameNode <> nil then
+    ANameNode := (FNameNode.Clone as TToken)
+  else
+    ANameNode := nil;
+
+  if FColonNode <> nil then
+    AColonNode := (FColonNode.Clone as TToken)
+  else
+    AColonNode := nil;
+
+  if FTypeNode <> nil then
+    ATypeNode := (FTypeNode.Clone as TASTNode)
+  else
+    ATypeNode := nil;
+
+  if FEqualSignNode <> nil then
+    AEqualSignNode := (FEqualSignNode.Clone as TToken)
+  else
+    AEqualSignNode := nil;
+
+  if FValueNode <> nil then
+    AValueNode := (FValueNode.Clone as TASTNode)
+  else
+    AValueNode := nil;
+
+  if FPortabilityDirectiveListNode <> nil then
+    APortabilityDirectiveListNode := (FPortabilityDirectiveListNode.Clone as TListNode)
+  else
+    APortabilityDirectiveListNode := nil;
+
+  if FSemicolonNode <> nil then
+    ASemicolonNode := (FSemicolonNode.Clone as TToken)
+  else
+    ASemicolonNode := nil;
+
   Result := TConstantDeclNode.Create(
-    FNameNode.Clone as TToken,
-    FColonNode.Clone as TToken,
-    FTypeNode.Clone as TASTNode,
-    FEqualSignNode.Clone as TToken,
-    FValueNode.Clone as TASTNode,
-    FPortabilityDirectiveListNode.Clone as TListNode,
-    FSemicolonNode.Clone as TToken);
+    ANameNode,
+    AColonNode,
+    ATypeNode,
+    AEqualSignNode,
+    AValueNode,
+    APortabilityDirectiveListNode,
+    ASemicolonNode);
 end;
 
 constructor TConstantDeclNode.Create(ANameNode: TToken; AColonNode: TToken; ATypeNode: TASTNode; AEqualSignNode: TToken; AValueNode: TASTNode; APortabilityDirectiveListNode: TListNode; ASemicolonNode: TToken);
@@ -1886,11 +2191,30 @@ end;
 { TConstantListNode }
 
 function TConstantListNode.Clone: TASTNode;
+var
+  AOpenParenthesisNode: TToken;
+  AItemListNode: TListNode;
+  ACloseParenthesisNode: TToken;
 begin
+  if FOpenParenthesisNode <> nil then
+    AOpenParenthesisNode := (FOpenParenthesisNode.Clone as TToken)
+  else
+    AOpenParenthesisNode := nil;
+
+  if FItemListNode <> nil then
+    AItemListNode := (FItemListNode.Clone as TListNode)
+  else
+    AItemListNode := nil;
+
+  if FCloseParenthesisNode <> nil then
+    ACloseParenthesisNode := (FCloseParenthesisNode.Clone as TToken)
+  else
+    ACloseParenthesisNode := nil;
+
   Result := TConstantListNode.Create(
-    FOpenParenthesisNode.Clone as TToken,
-    FItemListNode.Clone as TListNode,
-    FCloseParenthesisNode.Clone as TToken);
+    AOpenParenthesisNode,
+    AItemListNode,
+    ACloseParenthesisNode);
 end;
 
 constructor TConstantListNode.Create(AOpenParenthesisNode: TToken; AItemListNode: TListNode; ACloseParenthesisNode: TToken);
@@ -1916,12 +2240,37 @@ end;
 { TDirectiveNode }
 
 function TDirectiveNode.Clone: TASTNode;
+var
+  ASemicolonNode: TToken;
+  AKeywordNode: TToken;
+  AValueNode: TASTNode;
+  ADataNode: TASTNode;
 begin
+  if FSemicolonNode <> nil then
+    ASemicolonNode := (FSemicolonNode.Clone as TToken)
+  else
+    ASemicolonNode := nil;
+
+  if FKeywordNode <> nil then
+    AKeywordNode := (FKeywordNode.Clone as TToken)
+  else
+    AKeywordNode := nil;
+
+  if FValueNode <> nil then
+    AValueNode := (FValueNode.Clone as TASTNode)
+  else
+    AValueNode := nil;
+
+  if FDataNode <> nil then
+    ADataNode := (FDataNode.Clone as TASTNode)
+  else
+    ADataNode := nil;
+
   Result := TDirectiveNode.Create(
-    FSemicolonNode.Clone as TToken,
-    FKeywordNode.Clone as TToken,
-    FValueNode.Clone as TASTNode,
-    FDataNode.Clone as TASTNode);
+    ASemicolonNode,
+    AKeywordNode,
+    AValueNode,
+    ADataNode);
 end;
 
 constructor TDirectiveNode.Create(ASemicolonNode: TToken; AKeywordNode: TToken; AValueNode: TASTNode; ADataNode: TASTNode);
@@ -1957,11 +2306,30 @@ end;
 { TEnumeratedTypeElementNode }
 
 function TEnumeratedTypeElementNode.Clone: TASTNode;
+var
+  ANameNode: TToken;
+  AEqualSignNode: TToken;
+  AValueNode: TASTNode;
 begin
+  if FNameNode <> nil then
+    ANameNode := (FNameNode.Clone as TToken)
+  else
+    ANameNode := nil;
+
+  if FEqualSignNode <> nil then
+    AEqualSignNode := (FEqualSignNode.Clone as TToken)
+  else
+    AEqualSignNode := nil;
+
+  if FValueNode <> nil then
+    AValueNode := (FValueNode.Clone as TASTNode)
+  else
+    AValueNode := nil;
+
   Result := TEnumeratedTypeElementNode.Create(
-    FNameNode.Clone as TToken,
-    FEqualSignNode.Clone as TToken,
-    FValueNode.Clone as TASTNode);
+    ANameNode,
+    AEqualSignNode,
+    AValueNode);
 end;
 
 constructor TEnumeratedTypeElementNode.Create(ANameNode: TToken; AEqualSignNode: TToken; AValueNode: TASTNode);
@@ -1987,11 +2355,30 @@ end;
 { TEnumeratedTypeNode }
 
 function TEnumeratedTypeNode.Clone: TASTNode;
+var
+  AOpenParenthesisNode: TToken;
+  AItemListNode: TListNode;
+  ACloseParenthesisNode: TToken;
 begin
+  if FOpenParenthesisNode <> nil then
+    AOpenParenthesisNode := (FOpenParenthesisNode.Clone as TToken)
+  else
+    AOpenParenthesisNode := nil;
+
+  if FItemListNode <> nil then
+    AItemListNode := (FItemListNode.Clone as TListNode)
+  else
+    AItemListNode := nil;
+
+  if FCloseParenthesisNode <> nil then
+    ACloseParenthesisNode := (FCloseParenthesisNode.Clone as TToken)
+  else
+    ACloseParenthesisNode := nil;
+
   Result := TEnumeratedTypeNode.Create(
-    FOpenParenthesisNode.Clone as TToken,
-    FItemListNode.Clone as TListNode,
-    FCloseParenthesisNode.Clone as TToken);
+    AOpenParenthesisNode,
+    AItemListNode,
+    ACloseParenthesisNode);
 end;
 
 constructor TEnumeratedTypeNode.Create(AOpenParenthesisNode: TToken; AItemListNode: TListNode; ACloseParenthesisNode: TToken);
@@ -2017,15 +2404,58 @@ end;
 { TExceptionItemNode }
 
 function TExceptionItemNode.Clone: TASTNode;
+var
+  AOnSemikeywordNode: TToken;
+  ANameNode: TToken;
+  AColonNode: TToken;
+  ATypeNode: TASTNode;
+  ADoKeywordNode: TToken;
+  AStatementNode: TASTNode;
+  ASemicolonNode: TToken;
 begin
+  if FOnSemikeywordNode <> nil then
+    AOnSemikeywordNode := (FOnSemikeywordNode.Clone as TToken)
+  else
+    AOnSemikeywordNode := nil;
+
+  if FNameNode <> nil then
+    ANameNode := (FNameNode.Clone as TToken)
+  else
+    ANameNode := nil;
+
+  if FColonNode <> nil then
+    AColonNode := (FColonNode.Clone as TToken)
+  else
+    AColonNode := nil;
+
+  if FTypeNode <> nil then
+    ATypeNode := (FTypeNode.Clone as TASTNode)
+  else
+    ATypeNode := nil;
+
+  if FDoKeywordNode <> nil then
+    ADoKeywordNode := (FDoKeywordNode.Clone as TToken)
+  else
+    ADoKeywordNode := nil;
+
+  if FStatementNode <> nil then
+    AStatementNode := (FStatementNode.Clone as TASTNode)
+  else
+    AStatementNode := nil;
+
+  if FSemicolonNode <> nil then
+    ASemicolonNode := (FSemicolonNode.Clone as TToken)
+  else
+    ASemicolonNode := nil;
+
   Result := TExceptionItemNode.Create(
-    FOnSemikeywordNode.Clone as TToken,
-    FNameNode.Clone as TToken,
-    FColonNode.Clone as TToken,
-    FTypeNode.Clone as TASTNode,
-    FDoKeywordNode.Clone as TToken,
-    FStatementNode.Clone as TASTNode,
-    FSemicolonNode.Clone as TToken);
+    AOnSemikeywordNode,
+    ANameNode,
+    AColonNode,
+    ATypeNode,
+    ADoKeywordNode,
+    AStatementNode,
+    ASemicolonNode);
 end;
 
 constructor TExceptionItemNode.Create(AOnSemikeywordNode: TToken; ANameNode: TToken; AColonNode: TToken; ATypeNode: TASTNode; ADoKeywordNode: TToken; AStatementNode: TASTNode; ASemicolonNode: TToken);
@@ -2063,10 +2493,23 @@ end;
 { TExportsItemNode }
 
 function TExportsItemNode.Clone: TASTNode;
+var
+  ANameNode: TASTNode;
+  ASpecifierListNode: TListNode;
 begin
+  if FNameNode <> nil then
+    ANameNode := (FNameNode.Clone as TASTNode)
+  else
+    ANameNode := nil;
+
+  if FSpecifierListNode <> nil then
+    ASpecifierListNode := (FSpecifierListNode.Clone as TListNode)
+  else
+    ASpecifierListNode := nil;
+
   Result := TExportsItemNode.Create(
-    FNameNode.Clone as TASTNode,
-    FSpecifierListNode.Clone as TListNode);
+    ANameNode,
+    ASpecifierListNode);
 end;
 
 constructor TExportsItemNode.Create(ANameNode: TASTNode; ASpecifierListNode: TListNode);
@@ -2089,10 +2532,23 @@ end;
 { TExportsSpecifierNode }
 
 function TExportsSpecifierNode.Clone: TASTNode;
+var
+  AKeywordNode: TToken;
+  AValueNode: TASTNode;
 begin
+  if FKeywordNode <> nil then
+    AKeywordNode := (FKeywordNode.Clone as TToken)
+  else
+    AKeywordNode := nil;
+
+  if FValueNode <> nil then
+    AValueNode := (FValueNode.Clone as TASTNode)
+  else
+    AValueNode := nil;
+
   Result := TExportsSpecifierNode.Create(
-    FKeywordNode.Clone as TToken,
-    FValueNode.Clone as TASTNode);
+    AKeywordNode,
+    AValueNode);
 end;
 
 constructor TExportsSpecifierNode.Create(AKeywordNode: TToken; AValueNode: TASTNode);
@@ -2115,11 +2571,30 @@ end;
 { TExportsStatementNode }
 
 function TExportsStatementNode.Clone: TASTNode;
+var
+  AExportsKeywordNode: TToken;
+  AItemListNode: TListNode;
+  ASemicolonNode: TToken;
 begin
+  if FExportsKeywordNode <> nil then
+    AExportsKeywordNode := (FExportsKeywordNode.Clone as TToken)
+  else
+    AExportsKeywordNode := nil;
+
+  if FItemListNode <> nil then
+    AItemListNode := (FItemListNode.Clone as TListNode)
+  else
+    AItemListNode := nil;
+
+  if FSemicolonNode <> nil then
+    ASemicolonNode := (FSemicolonNode.Clone as TToken)
+  else
+    ASemicolonNode := nil;
+
   Result := TExportsStatementNode.Create(
-    FExportsKeywordNode.Clone as TToken,
-    FItemListNode.Clone as TListNode,
-    FSemicolonNode.Clone as TToken);
+    AExportsKeywordNode,
+    AItemListNode,
+    ASemicolonNode);
 end;
 
 constructor TExportsStatementNode.Create(AExportsKeywordNode: TToken; AItemListNode: TListNode; ASemicolonNode: TToken);
@@ -2145,10 +2620,23 @@ end;
 { TFancyBlockNode }
 
 function TFancyBlockNode.Clone: TASTNode;
+var
+  ADeclListNode: TListNode;
+  ABlockNode: TASTNode;
 begin
+  if FDeclListNode <> nil then
+    ADeclListNode := (FDeclListNode.Clone as TListNode)
+  else
+    ADeclListNode := nil;
+
+  if FBlockNode <> nil then
+    ABlockNode := (FBlockNode.Clone as TASTNode)
+  else
+    ABlockNode := nil;
+
   Result := TFancyBlockNode.Create(
-    FDeclListNode.Clone as TListNode,
-    FBlockNode.Clone as TASTNode);
+    ADeclListNode,
+    ABlockNode);
 end;
 
 constructor TFancyBlockNode.Create(ADeclListNode: TListNode; ABlockNode: TASTNode);
@@ -2171,13 +2659,44 @@ end;
 { TFieldDeclNode }
 
 function TFieldDeclNode.Clone: TASTNode;
+var
+  ANameListNode: TListNode;
+  AColonNode: TToken;
+  ATypeNode: TASTNode;
+  APortabilityDirectiveListNode: TListNode;
+  ASemicolonNode: TToken;
 begin
+  if FNameListNode <> nil then
+    ANameListNode := (FNameListNode.Clone as TListNode)
+  else
+    ANameListNode := nil;
+
+  if FColonNode <> nil then
+    AColonNode := (FColonNode.Clone as TToken)
+  else
+    AColonNode := nil;
+
+  if FTypeNode <> nil then
+    ATypeNode := (FTypeNode.Clone as TASTNode)
+  else
+    ATypeNode := nil;
+
+  if FPortabilityDirectiveListNode <> nil then
+    APortabilityDirectiveListNode := (FPortabilityDirectiveListNode.Clone as TListNode)
+  else
+    APortabilityDirectiveListNode := nil;
+
+  if FSemicolonNode <> nil then
+    ASemicolonNode := (FSemicolonNode.Clone as TToken)
+  else
+    ASemicolonNode := nil;
+
   Result := TFieldDeclNode.Create(
-    FNameListNode.Clone as TListNode,
-    FColonNode.Clone as TToken,
-    FTypeNode.Clone as TASTNode,
-    FPortabilityDirectiveListNode.Clone as TListNode,
-    FSemicolonNode.Clone as TToken);
+    ANameListNode,
+    AColonNode,
+    ATypeNode,
+    APortabilityDirectiveListNode,
+    ASemicolonNode);
 end;
 
 constructor TFieldDeclNode.Create(ANameListNode: TListNode; AColonNode: TToken; ATypeNode: TASTNode; APortabilityDirectiveListNode: TListNode; ASemicolonNode: TToken);
@@ -2209,11 +2728,30 @@ end;
 { TFieldSectionNode }
 
 function TFieldSectionNode.Clone: TASTNode;
+var
+  AClassKeywordNode: TToken;
+  AVarKeywordNode: TToken;
+  AFieldListNode: TListNode;
 begin
+  if FClassKeywordNode <> nil then
+    AClassKeywordNode := (FClassKeywordNode.Clone as TToken)
+  else
+    AClassKeywordNode := nil;
+
+  if FVarKeywordNode <> nil then
+    AVarKeywordNode := (FVarKeywordNode.Clone as TToken)
+  else
+    AVarKeywordNode := nil;
+
+  if FFieldListNode <> nil then
+    AFieldListNode := (FFieldListNode.Clone as TListNode)
+  else
+    AFieldListNode := nil;
+
   Result := TFieldSectionNode.Create(
-    FClassKeywordNode.Clone as TToken,
-    FVarKeywordNode.Clone as TToken,
-    FFieldListNode.Clone as TListNode);
+    AClassKeywordNode,
+    AVarKeywordNode,
+    AFieldListNode);
 end;
 
 constructor TFieldSectionNode.Create(AClassKeywordNode: TToken; AVarKeywordNode: TToken; AFieldListNode: TListNode);
@@ -2239,11 +2777,30 @@ end;
 { TFileTypeNode }
 
 function TFileTypeNode.Clone: TASTNode;
+var
+  AFileKeywordNode: TToken;
+  AOfKeywordNode: TToken;
+  ATypeNode: TASTNode;
 begin
+  if FFileKeywordNode <> nil then
+    AFileKeywordNode := (FFileKeywordNode.Clone as TToken)
+  else
+    AFileKeywordNode := nil;
+
+  if FOfKeywordNode <> nil then
+    AOfKeywordNode := (FOfKeywordNode.Clone as TToken)
+  else
+    AOfKeywordNode := nil;
+
+  if FTypeNode <> nil then
+    ATypeNode := (FTypeNode.Clone as TASTNode)
+  else
+    ATypeNode := nil;
+
   Result := TFileTypeNode.Create(
-    FFileKeywordNode.Clone as TToken,
-    FOfKeywordNode.Clone as TToken,
-    FTypeNode.Clone as TASTNode);
+    AFileKeywordNode,
+    AOfKeywordNode,
+    ATypeNode);
 end;
 
 constructor TFileTypeNode.Create(AFileKeywordNode: TToken; AOfKeywordNode: TToken; ATypeNode: TASTNode);
@@ -2269,14 +2826,51 @@ end;
 { TForInStatementNode }
 
 function TForInStatementNode.Clone: TASTNode;
+var
+  AForKeywordNode: TToken;
+  ALoopVariableNode: TToken;
+  AInKeywordNode: TToken;
+  AExpressionNode: TASTNode;
+  ADoKeywordNode: TToken;
+  AStatementNode: TASTNode;
 begin
+  if FForKeywordNode <> nil then
+    AForKeywordNode := (FForKeywordNode.Clone as TToken)
+  else
+    AForKeywordNode := nil;
+
+  if FLoopVariableNode <> nil then
+    ALoopVariableNode := (FLoopVariableNode.Clone as TToken)
+  else
+    ALoopVariableNode := nil;
+
+  if FInKeywordNode <> nil then
+    AInKeywordNode := (FInKeywordNode.Clone as TToken)
+  else
+    AInKeywordNode := nil;
+
+  if FExpressionNode <> nil then
+    AExpressionNode := (FExpressionNode.Clone as TASTNode)
+  else
+    AExpressionNode := nil;
+
+  if FDoKeywordNode <> nil then
+    ADoKeywordNode := (FDoKeywordNode.Clone as TToken)
+  else
+    ADoKeywordNode := nil;
+
+  if FStatementNode <> nil then
+    AStatementNode := (FStatementNode.Clone as TASTNode)
+  else
+    AStatementNode := nil;
+
   Result := TForInStatementNode.Create(
-    FForKeywordNode.Clone as TToken,
-    FLoopVariableNode.Clone as TToken,
-    FInKeywordNode.Clone as TToken,
-    FExpressionNode.Clone as TASTNode,
-    FDoKeywordNode.Clone as TToken,
-    FStatementNode.Clone as TASTNode);
+    AForKeywordNode,
+    ALoopVariableNode,
+    AInKeywordNode,
+    AExpressionNode,
+    ADoKeywordNode,
+    AStatementNode);
 end;
 
 constructor TForInStatementNode.Create(AForKeywordNode: TToken; ALoopVariableNode: TToken; AInKeywordNode: TToken; AExpressionNode: TASTNode; ADoKeywordNode: TToken; AStatementNode: TASTNode);
@@ -2311,16 +2905,65 @@ end;
 { TForStatementNode }
 
 function TForStatementNode.Clone: TASTNode;
+var
+  AForKeywordNode: TToken;
+  ALoopVariableNode: TToken;
+  AColonEqualsNode: TToken;
+  AStartingValueNode: TASTNode;
+  ADirectionNode: TToken;
+  AEndingValueNode: TASTNode;
+  ADoKeywordNode: TToken;
+  AStatementNode: TASTNode;
 begin
+  if FForKeywordNode <> nil then
+    AForKeywordNode := (FForKeywordNode.Clone as TToken)
+  else
+    AForKeywordNode := nil;
+
+  if FLoopVariableNode <> nil then
+    ALoopVariableNode := (FLoopVariableNode.Clone as TToken)
+  else
+    ALoopVariableNode := nil;
+
+  if FColonEqualsNode <> nil then
+    AColonEqualsNode := (FColonEqualsNode.Clone as TToken)
+  else
+    AColonEqualsNode := nil;
+
+  if FStartingValueNode <> nil then
+    AStartingValueNode := (FStartingValueNode.Clone as TASTNode)
+  else
+    AStartingValueNode := nil;
+
+  if FDirectionNode <> nil then
+    ADirectionNode := (FDirectionNode.Clone as TToken)
+  else
+    ADirectionNode := nil;
+
+  if FEndingValueNode <> nil then
+    AEndingValueNode := (FEndingValueNode.Clone as TASTNode)
+  else
+    AEndingValueNode := nil;
+
+  if FDoKeywordNode <> nil then
+    ADoKeywordNode := (FDoKeywordNode.Clone as TToken)
+  else
+    ADoKeywordNode := nil;
+
+  if FStatementNode <> nil then
+    AStatementNode := (FStatementNode.Clone as TASTNode)
+  else
+    AStatementNode := nil;
+
   Result := TForStatementNode.Create(
-    FForKeywordNode.Clone as TToken,
-    FLoopVariableNode.Clone as TToken,
-    FColonEqualsNode.Clone as TToken,
-    FStartingValueNode.Clone as TASTNode,
-    FDirectionNode.Clone as TToken,
-    FEndingValueNode.Clone as TASTNode,
-    FDoKeywordNode.Clone as TToken,
-    FStatementNode.Clone as TASTNode);
+    AForKeywordNode,
+    ALoopVariableNode,
+    AColonEqualsNode,
+    AStartingValueNode,
+    ADirectionNode,
+    AEndingValueNode,
+    ADoKeywordNode,
+    AStatementNode);
 end;
 
 constructor TForStatementNode.Create(AForKeywordNode: TToken; ALoopVariableNode: TToken; AColonEqualsNode: TToken; AStartingValueNode: TASTNode; ADirectionNode: TToken; AEndingValueNode: TASTNode; ADoKeywordNode: TToken; AStatementNode: TASTNode);
@@ -2361,10 +3004,23 @@ end;
 { TGotoStatementNode }
 
 function TGotoStatementNode.Clone: TASTNode;
+var
+  AGotoKeywordNode: TToken;
+  ALabelIdNode: TToken;
 begin
+  if FGotoKeywordNode <> nil then
+    AGotoKeywordNode := (FGotoKeywordNode.Clone as TToken)
+  else
+    AGotoKeywordNode := nil;
+
+  if FLabelIdNode <> nil then
+    ALabelIdNode := (FLabelIdNode.Clone as TToken)
+  else
+    ALabelIdNode := nil;
+
   Result := TGotoStatementNode.Create(
-    FGotoKeywordNode.Clone as TToken,
-    FLabelIdNode.Clone as TToken);
+    AGotoKeywordNode,
+    ALabelIdNode);
 end;
 
 constructor TGotoStatementNode.Create(AGotoKeywordNode: TToken; ALabelIdNode: TToken);
@@ -2387,14 +3043,51 @@ end;
 { TIfStatementNode }
 
 function TIfStatementNode.Clone: TASTNode;
+var
+  AIfKeywordNode: TToken;
+  AConditionNode: TASTNode;
+  AThenKeywordNode: TToken;
+  AThenStatementNode: TASTNode;
+  AElseKeywordNode: TToken;
+  AElseStatementNode: TASTNode;
 begin
+  if FIfKeywordNode <> nil then
+    AIfKeywordNode := (FIfKeywordNode.Clone as TToken)
+  else
+    AIfKeywordNode := nil;
+
+  if FConditionNode <> nil then
+    AConditionNode := (FConditionNode.Clone as TASTNode)
+  else
+    AConditionNode := nil;
+
+  if FThenKeywordNode <> nil then
+    AThenKeywordNode := (FThenKeywordNode.Clone as TToken)
+  else
+    AThenKeywordNode := nil;
+
+  if FThenStatementNode <> nil then
+    AThenStatementNode := (FThenStatementNode.Clone as TASTNode)
+  else
+    AThenStatementNode := nil;
+
+  if FElseKeywordNode <> nil then
+    AElseKeywordNode := (FElseKeywordNode.Clone as TToken)
+  else
+    AElseKeywordNode := nil;
+
+  if FElseStatementNode <> nil then
+    AElseStatementNode := (FElseStatementNode.Clone as TASTNode)
+  else
+    AElseStatementNode := nil;
+
   Result := TIfStatementNode.Create(
-    FIfKeywordNode.Clone as TToken,
-    FConditionNode.Clone as TASTNode,
-    FThenKeywordNode.Clone as TToken,
-    FThenStatementNode.Clone as TASTNode,
-    FElseKeywordNode.Clone as TToken,
-    FElseStatementNode.Clone as TASTNode);
+    AIfKeywordNode,
+    AConditionNode,
+    AThenKeywordNode,
+    AThenStatementNode,
+    AElseKeywordNode,
+    AElseStatementNode);
 end;
 
 constructor TIfStatementNode.Create(AIfKeywordNode: TToken; AConditionNode: TASTNode; AThenKeywordNode: TToken; AThenStatementNode: TASTNode; AElseKeywordNode: TToken; AElseStatementNode: TASTNode);
@@ -2429,13 +3122,44 @@ end;
 { TInitSectionNode }
 
 function TInitSectionNode.Clone: TASTNode;
+var
+  AInitializationKeywordNode: TToken;
+  AInitializationStatementListNode: TListNode;
+  AFinalizationKeywordNode: TToken;
+  AFinalizationStatementListNode: TListNode;
+  AEndKeywordNode: TToken;
 begin
+  if FInitializationKeywordNode <> nil then
+    AInitializationKeywordNode := (FInitializationKeywordNode.Clone as TToken)
+  else
+    AInitializationKeywordNode := nil;
+
+  if FInitializationStatementListNode <> nil then
+    AInitializationStatementListNode := (FInitializationStatementListNode.Clone as TListNode)
+  else
+    AInitializationStatementListNode := nil;
+
+  if FFinalizationKeywordNode <> nil then
+    AFinalizationKeywordNode := (FFinalizationKeywordNode.Clone as TToken)
+  else
+    AFinalizationKeywordNode := nil;
+
+  if FFinalizationStatementListNode <> nil then
+    AFinalizationStatementListNode := (FFinalizationStatementListNode.Clone as TListNode)
+  else
+    AFinalizationStatementListNode := nil;
+
+  if FEndKeywordNode <> nil then
+    AEndKeywordNode := (FEndKeywordNode.Clone as TToken)
+  else
+    AEndKeywordNode := nil;
+
   Result := TInitSectionNode.Create(
-    FInitializationKeywordNode.Clone as TToken,
-    FInitializationStatementListNode.Clone as TListNode,
-    FFinalizationKeywordNode.Clone as TToken,
-    FFinalizationStatementListNode.Clone as TListNode,
-    FEndKeywordNode.Clone as TToken);
+    AInitializationKeywordNode,
+    AInitializationStatementListNode,
+    AFinalizationKeywordNode,
+    AFinalizationStatementListNode,
+    AEndKeywordNode);
 end;
 
 constructor TInitSectionNode.Create(AInitializationKeywordNode: TToken; AInitializationStatementListNode: TListNode; AFinalizationKeywordNode: TToken; AFinalizationStatementListNode: TListNode; AEndKeywordNode: TToken);
@@ -2467,17 +3191,72 @@ end;
 { TInterfaceTypeNode }
 
 function TInterfaceTypeNode.Clone: TASTNode;
+var
+  AInterfaceKeywordNode: TToken;
+  AOpenParenthesisNode: TToken;
+  ABaseInterfaceNode: TASTNode;
+  ACloseParenthesisNode: TToken;
+  AOpenBracketNode: TToken;
+  AGuidNode: TASTNode;
+  ACloseBracketNode: TToken;
+  AMethodAndPropertyListNode: TListNode;
+  AEndKeywordNode: TToken;
 begin
+  if FInterfaceKeywordNode <> nil then
+    AInterfaceKeywordNode := (FInterfaceKeywordNode.Clone as TToken)
+  else
+    AInterfaceKeywordNode := nil;
+
+  if FOpenParenthesisNode <> nil then
+    AOpenParenthesisNode := (FOpenParenthesisNode.Clone as TToken)
+  else
+    AOpenParenthesisNode := nil;
+
+  if FBaseInterfaceNode <> nil then
+    ABaseInterfaceNode := (FBaseInterfaceNode.Clone as TASTNode)
+  else
+    ABaseInterfaceNode := nil;
+
+  if FCloseParenthesisNode <> nil then
+    ACloseParenthesisNode := (FCloseParenthesisNode.Clone as TToken)
+  else
+    ACloseParenthesisNode := nil;
+
+  if FOpenBracketNode <> nil then
+    AOpenBracketNode := (FOpenBracketNode.Clone as TToken)
+  else
+    AOpenBracketNode := nil;
+
+  if FGuidNode <> nil then
+    AGuidNode := (FGuidNode.Clone as TASTNode)
+  else
+    AGuidNode := nil;
+
+  if FCloseBracketNode <> nil then
+    ACloseBracketNode := (FCloseBracketNode.Clone as TToken)
+  else
+    ACloseBracketNode := nil;
+
+  if FMethodAndPropertyListNode <> nil then
+    AMethodAndPropertyListNode := (FMethodAndPropertyListNode.Clone as TListNode)
+  else
+    AMethodAndPropertyListNode := nil;
+
+  if FEndKeywordNode <> nil then
+    AEndKeywordNode := (FEndKeywordNode.Clone as TToken)
+  else
+    AEndKeywordNode := nil;
+
   Result := TInterfaceTypeNode.Create(
-    FInterfaceKeywordNode.Clone as TToken,
-    FOpenParenthesisNode.Clone as TToken,
-    FBaseInterfaceNode.Clone as TASTNode,
-    FCloseParenthesisNode.Clone as TToken,
-    FOpenBracketNode.Clone as TToken,
-    FGuidNode.Clone as TASTNode,
-    FCloseBracketNode.Clone as TToken,
-    FMethodAndPropertyListNode.Clone as TListNode,
-    FEndKeywordNode.Clone as TToken);
+    AInterfaceKeywordNode,
+    AOpenParenthesisNode,
+    ABaseInterfaceNode,
+    ACloseParenthesisNode,
+    AOpenBracketNode,
+    AGuidNode,
+    ACloseBracketNode,
+    AMethodAndPropertyListNode,
+    AEndKeywordNode);
 end;
 
 constructor TInterfaceTypeNode.Create(AInterfaceKeywordNode: TToken; AOpenParenthesisNode: TToken; ABaseInterfaceNode: TASTNode; ACloseParenthesisNode: TToken; AOpenBracketNode: TToken; AGuidNode: TASTNode; ACloseBracketNode: TToken; AMethodAndPropertyListNode: TListNode; AEndKeywordNode: TToken);
@@ -2521,11 +3300,30 @@ end;
 { TLabelDeclSectionNode }
 
 function TLabelDeclSectionNode.Clone: TASTNode;
+var
+  ALabelKeywordNode: TToken;
+  ALabelListNode: TListNode;
+  ASemicolonNode: TToken;
 begin
+  if FLabelKeywordNode <> nil then
+    ALabelKeywordNode := (FLabelKeywordNode.Clone as TToken)
+  else
+    ALabelKeywordNode := nil;
+
+  if FLabelListNode <> nil then
+    ALabelListNode := (FLabelListNode.Clone as TListNode)
+  else
+    ALabelListNode := nil;
+
+  if FSemicolonNode <> nil then
+    ASemicolonNode := (FSemicolonNode.Clone as TToken)
+  else
+    ASemicolonNode := nil;
+
   Result := TLabelDeclSectionNode.Create(
-    FLabelKeywordNode.Clone as TToken,
-    FLabelListNode.Clone as TListNode,
-    FSemicolonNode.Clone as TToken);
+    ALabelKeywordNode,
+    ALabelListNode,
+    ASemicolonNode);
 end;
 
 constructor TLabelDeclSectionNode.Create(ALabelKeywordNode: TToken; ALabelListNode: TListNode; ASemicolonNode: TToken);
@@ -2551,11 +3349,30 @@ end;
 { TLabeledStatementNode }
 
 function TLabeledStatementNode.Clone: TASTNode;
+var
+  ALabelIdNode: TToken;
+  AColonNode: TToken;
+  AStatementNode: TASTNode;
 begin
+  if FLabelIdNode <> nil then
+    ALabelIdNode := (FLabelIdNode.Clone as TToken)
+  else
+    ALabelIdNode := nil;
+
+  if FColonNode <> nil then
+    AColonNode := (FColonNode.Clone as TToken)
+  else
+    AColonNode := nil;
+
+  if FStatementNode <> nil then
+    AStatementNode := (FStatementNode.Clone as TASTNode)
+  else
+    AStatementNode := nil;
+
   Result := TLabeledStatementNode.Create(
-    FLabelIdNode.Clone as TToken,
-    FColonNode.Clone as TToken,
-    FStatementNode.Clone as TASTNode);
+    ALabelIdNode,
+    AColonNode,
+    AStatementNode);
 end;
 
 constructor TLabeledStatementNode.Create(ALabelIdNode: TToken; AColonNode: TToken; AStatementNode: TASTNode);
@@ -2581,18 +3398,79 @@ end;
 { TMethodHeadingNode }
 
 function TMethodHeadingNode.Clone: TASTNode;
+var
+  AClassKeywordNode: TToken;
+  AMethodTypeNode: TToken;
+  ANameNode: TASTNode;
+  AOpenParenthesisNode: TToken;
+  AParameterListNode: TListNode;
+  ACloseParenthesisNode: TToken;
+  AColonNode: TToken;
+  AReturnTypeNode: TASTNode;
+  ADirectiveListNode: TListNode;
+  ASemicolonNode: TToken;
 begin
+  if FClassKeywordNode <> nil then
+    AClassKeywordNode := (FClassKeywordNode.Clone as TToken)
+  else
+    AClassKeywordNode := nil;
+
+  if FMethodTypeNode <> nil then
+    AMethodTypeNode := (FMethodTypeNode.Clone as TToken)
+  else
+    AMethodTypeNode := nil;
+
+  if FNameNode <> nil then
+    ANameNode := (FNameNode.Clone as TASTNode)
+  else
+    ANameNode := nil;
+
+  if FOpenParenthesisNode <> nil then
+    AOpenParenthesisNode := (FOpenParenthesisNode.Clone as TToken)
+  else
+    AOpenParenthesisNode := nil;
+
+  if FParameterListNode <> nil then
+    AParameterListNode := (FParameterListNode.Clone as TListNode)
+  else
+    AParameterListNode := nil;
+
+  if FCloseParenthesisNode <> nil then
+    ACloseParenthesisNode := (FCloseParenthesisNode.Clone as TToken)
+  else
+    ACloseParenthesisNode := nil;
+
+  if FColonNode <> nil then
+    AColonNode := (FColonNode.Clone as TToken)
+  else
+    AColonNode := nil;
+
+  if FReturnTypeNode <> nil then
+    AReturnTypeNode := (FReturnTypeNode.Clone as TASTNode)
+  else
+    AReturnTypeNode := nil;
+
+  if FDirectiveListNode <> nil then
+    ADirectiveListNode := (FDirectiveListNode.Clone as TListNode)
+  else
+    ADirectiveListNode := nil;
+
+  if FSemicolonNode <> nil then
+    ASemicolonNode := (FSemicolonNode.Clone as TToken)
+  else
+    ASemicolonNode := nil;
+
   Result := TMethodHeadingNode.Create(
-    FClassKeywordNode.Clone as TToken,
-    FMethodTypeNode.Clone as TToken,
-    FNameNode.Clone as TASTNode,
-    FOpenParenthesisNode.Clone as TToken,
-    FParameterListNode.Clone as TListNode,
-    FCloseParenthesisNode.Clone as TToken,
-    FColonNode.Clone as TToken,
-    FReturnTypeNode.Clone as TASTNode,
-    FDirectiveListNode.Clone as TListNode,
-    FSemicolonNode.Clone as TToken);
+    AClassKeywordNode,
+    AMethodTypeNode,
+    ANameNode,
+    AOpenParenthesisNode,
+    AParameterListNode,
+    ACloseParenthesisNode,
+    AColonNode,
+    AReturnTypeNode,
+    ADirectiveListNode,
+    ASemicolonNode);
 end;
 
 constructor TMethodHeadingNode.Create(AClassKeywordNode: TToken; AMethodTypeNode: TToken; ANameNode: TASTNode; AOpenParenthesisNode: TToken; AParameterListNode: TListNode; ACloseParenthesisNode: TToken; AColonNode: TToken; AReturnTypeNode: TASTNode; ADirectiveListNode: TListNode; ASemicolonNode: TToken);
@@ -2655,11 +3533,30 @@ end;
 { TMethodImplementationNode }
 
 function TMethodImplementationNode.Clone: TASTNode;
+var
+  AMethodHeadingNode: TMethodHeadingNode;
+  AFancyBlockNode: TFancyBlockNode;
+  ASemicolonNode: TToken;
 begin
+  if FMethodHeadingNode <> nil then
+    AMethodHeadingNode := (FMethodHeadingNode.Clone as TMethodHeadingNode)
+  else
+    AMethodHeadingNode := nil;
+
+  if FFancyBlockNode <> nil then
+    AFancyBlockNode := (FFancyBlockNode.Clone as TFancyBlockNode)
+  else
+    AFancyBlockNode := nil;
+
+  if FSemicolonNode <> nil then
+    ASemicolonNode := (FSemicolonNode.Clone as TToken)
+  else
+    ASemicolonNode := nil;
+
   Result := TMethodImplementationNode.Create(
-    FMethodHeadingNode.Clone as TMethodHeadingNode,
-    FFancyBlockNode.Clone as TFancyBlockNode,
-    FSemicolonNode.Clone as TToken);
+    AMethodHeadingNode,
+    AFancyBlockNode,
+    ASemicolonNode);
 end;
 
 constructor TMethodImplementationNode.Create(AMethodHeadingNode: TMethodHeadingNode; AFancyBlockNode: TFancyBlockNode; ASemicolonNode: TToken);
@@ -2685,13 +3582,44 @@ end;
 { TMethodResolutionNode }
 
 function TMethodResolutionNode.Clone: TASTNode;
+var
+  AMethodTypeNode: TToken;
+  AInterfaceMethodNode: TASTNode;
+  AEqualSignNode: TToken;
+  AImplementationMethodNode: TToken;
+  ASemicolonNode: TToken;
 begin
+  if FMethodTypeNode <> nil then
+    AMethodTypeNode := (FMethodTypeNode.Clone as TToken)
+  else
+    AMethodTypeNode := nil;
+
+  if FInterfaceMethodNode <> nil then
+    AInterfaceMethodNode := (FInterfaceMethodNode.Clone as TASTNode)
+  else
+    AInterfaceMethodNode := nil;
+
+  if FEqualSignNode <> nil then
+    AEqualSignNode := (FEqualSignNode.Clone as TToken)
+  else
+    AEqualSignNode := nil;
+
+  if FImplementationMethodNode <> nil then
+    AImplementationMethodNode := (FImplementationMethodNode.Clone as TToken)
+  else
+    AImplementationMethodNode := nil;
+
+  if FSemicolonNode <> nil then
+    ASemicolonNode := (FSemicolonNode.Clone as TToken)
+  else
+    ASemicolonNode := nil;
+
   Result := TMethodResolutionNode.Create(
-    FMethodTypeNode.Clone as TToken,
-    FInterfaceMethodNode.Clone as TASTNode,
-    FEqualSignNode.Clone as TToken,
-    FImplementationMethodNode.Clone as TToken,
-    FSemicolonNode.Clone as TToken);
+    AMethodTypeNode,
+    AInterfaceMethodNode,
+    AEqualSignNode,
+    AImplementationMethodNode,
+    ASemicolonNode);
 end;
 
 constructor TMethodResolutionNode.Create(AMethodTypeNode: TToken; AInterfaceMethodNode: TASTNode; AEqualSignNode: TToken; AImplementationMethodNode: TToken; ASemicolonNode: TToken);
@@ -2723,13 +3651,44 @@ end;
 { TNumberFormatNode }
 
 function TNumberFormatNode.Clone: TASTNode;
+var
+  AValueNode: TASTNode;
+  ASizeColonNode: TToken;
+  ASizeNode: TASTNode;
+  APrecisionColonNode: TToken;
+  APrecisionNode: TASTNode;
 begin
+  if FValueNode <> nil then
+    AValueNode := (FValueNode.Clone as TASTNode)
+  else
+    AValueNode := nil;
+
+  if FSizeColonNode <> nil then
+    ASizeColonNode := (FSizeColonNode.Clone as TToken)
+  else
+    ASizeColonNode := nil;
+
+  if FSizeNode <> nil then
+    ASizeNode := (FSizeNode.Clone as TASTNode)
+  else
+    ASizeNode := nil;
+
+  if FPrecisionColonNode <> nil then
+    APrecisionColonNode := (FPrecisionColonNode.Clone as TToken)
+  else
+    APrecisionColonNode := nil;
+
+  if FPrecisionNode <> nil then
+    APrecisionNode := (FPrecisionNode.Clone as TASTNode)
+  else
+    APrecisionNode := nil;
+
   Result := TNumberFormatNode.Create(
-    FValueNode.Clone as TASTNode,
-    FSizeColonNode.Clone as TToken,
-    FSizeNode.Clone as TASTNode,
-    FPrecisionColonNode.Clone as TToken,
-    FPrecisionNode.Clone as TASTNode);
+    AValueNode,
+    ASizeColonNode,
+    ASizeNode,
+    APrecisionColonNode,
+    APrecisionNode);
 end;
 
 constructor TNumberFormatNode.Create(AValueNode: TASTNode; ASizeColonNode: TToken; ASizeNode: TASTNode; APrecisionColonNode: TToken; APrecisionNode: TASTNode);
@@ -2761,11 +3720,30 @@ end;
 { TOpenArrayNode }
 
 function TOpenArrayNode.Clone: TASTNode;
+var
+  AArrayKeywordNode: TToken;
+  AOfKeywordNode: TToken;
+  ATypeNode: TASTNode;
 begin
+  if FArrayKeywordNode <> nil then
+    AArrayKeywordNode := (FArrayKeywordNode.Clone as TToken)
+  else
+    AArrayKeywordNode := nil;
+
+  if FOfKeywordNode <> nil then
+    AOfKeywordNode := (FOfKeywordNode.Clone as TToken)
+  else
+    AOfKeywordNode := nil;
+
+  if FTypeNode <> nil then
+    ATypeNode := (FTypeNode.Clone as TASTNode)
+  else
+    ATypeNode := nil;
+
   Result := TOpenArrayNode.Create(
-    FArrayKeywordNode.Clone as TToken,
-    FOfKeywordNode.Clone as TToken,
-    FTypeNode.Clone as TASTNode);
+    AArrayKeywordNode,
+    AOfKeywordNode,
+    ATypeNode);
 end;
 
 constructor TOpenArrayNode.Create(AArrayKeywordNode: TToken; AOfKeywordNode: TToken; ATypeNode: TASTNode);
@@ -2791,16 +3769,65 @@ end;
 { TPackageNode }
 
 function TPackageNode.Clone: TASTNode;
+var
+  APackageKeywordNode: TToken;
+  ANameNode: TASTNode;
+  ASemicolonNode: TToken;
+  ARequiresClauseNode: TRequiresClauseNode;
+  AContainsClauseNode: TUsesClauseNode;
+  AAttributeListNode: TListNode;
+  AEndKeywordNode: TToken;
+  ADotNode: TToken;
 begin
+  if FPackageKeywordNode <> nil then
+    APackageKeywordNode := (FPackageKeywordNode.Clone as TToken)
+  else
+    APackageKeywordNode := nil;
+
+  if FNameNode <> nil then
+    ANameNode := (FNameNode.Clone as TASTNode)
+  else
+    ANameNode := nil;
+
+  if FSemicolonNode <> nil then
+    ASemicolonNode := (FSemicolonNode.Clone as TToken)
+  else
+    ASemicolonNode := nil;
+
+  if FRequiresClauseNode <> nil then
+    ARequiresClauseNode := (FRequiresClauseNode.Clone as TRequiresClauseNode)
+  else
+    ARequiresClauseNode := nil;
+
+  if FContainsClauseNode <> nil then
+    AContainsClauseNode := (FContainsClauseNode.Clone as TUsesClauseNode)
+  else
+    AContainsClauseNode := nil;
+
+  if FAttributeListNode <> nil then
+    AAttributeListNode := (FAttributeListNode.Clone as TListNode)
+  else
+    AAttributeListNode := nil;
+
+  if FEndKeywordNode <> nil then
+    AEndKeywordNode := (FEndKeywordNode.Clone as TToken)
+  else
+    AEndKeywordNode := nil;
+
+  if FDotNode <> nil then
+    ADotNode := (FDotNode.Clone as TToken)
+  else
+    ADotNode := nil;
+
   Result := TPackageNode.Create(
-    FPackageKeywordNode.Clone as TToken,
-    FNameNode.Clone as TASTNode,
-    FSemicolonNode.Clone as TToken,
-    FRequiresClauseNode.Clone as TRequiresClauseNode,
-    FContainsClauseNode.Clone as TUsesClauseNode,
-    FAttributeListNode.Clone as TListNode,
-    FEndKeywordNode.Clone as TToken,
-    FDotNode.Clone as TToken);
+    APackageKeywordNode,
+    ANameNode,
+    ASemicolonNode,
+    ARequiresClauseNode,
+    AContainsClauseNode,
+    AAttributeListNode,
+    AEndKeywordNode,
+    ADotNode);
 end;
 
 constructor TPackageNode.Create(APackageKeywordNode: TToken; ANameNode: TASTNode; ASemicolonNode: TToken; ARequiresClauseNode: TRequiresClauseNode; AContainsClauseNode: TUsesClauseNode; AAttributeListNode: TListNode; AEndKeywordNode: TToken; ADotNode: TToken);
@@ -2841,10 +3868,23 @@ end;
 { TPackedTypeNode }
 
 function TPackedTypeNode.Clone: TASTNode;
+var
+  APackedKeywordNode: TToken;
+  ATypeNode: TASTNode;
 begin
+  if FPackedKeywordNode <> nil then
+    APackedKeywordNode := (FPackedKeywordNode.Clone as TToken)
+  else
+    APackedKeywordNode := nil;
+
+  if FTypeNode <> nil then
+    ATypeNode := (FTypeNode.Clone as TASTNode)
+  else
+    ATypeNode := nil;
+
   Result := TPackedTypeNode.Create(
-    FPackedKeywordNode.Clone as TToken,
-    FTypeNode.Clone as TASTNode);
+    APackedKeywordNode,
+    ATypeNode);
 end;
 
 constructor TPackedTypeNode.Create(APackedKeywordNode: TToken; ATypeNode: TASTNode);
@@ -2867,14 +3907,51 @@ end;
 { TParameterNode }
 
 function TParameterNode.Clone: TASTNode;
+var
+  AModifierNode: TToken;
+  ANameListNode: TListNode;
+  AColonNode: TToken;
+  ATypeNode: TASTNode;
+  AEqualSignNode: TToken;
+  ADefaultValueNode: TASTNode;
 begin
+  if FModifierNode <> nil then
+    AModifierNode := (FModifierNode.Clone as TToken)
+  else
+    AModifierNode := nil;
+
+  if FNameListNode <> nil then
+    ANameListNode := (FNameListNode.Clone as TListNode)
+  else
+    ANameListNode := nil;
+
+  if FColonNode <> nil then
+    AColonNode := (FColonNode.Clone as TToken)
+  else
+    AColonNode := nil;
+
+  if FTypeNode <> nil then
+    ATypeNode := (FTypeNode.Clone as TASTNode)
+  else
+    ATypeNode := nil;
+
+  if FEqualSignNode <> nil then
+    AEqualSignNode := (FEqualSignNode.Clone as TToken)
+  else
+    AEqualSignNode := nil;
+
+  if FDefaultValueNode <> nil then
+    ADefaultValueNode := (FDefaultValueNode.Clone as TASTNode)
+  else
+    ADefaultValueNode := nil;
+
   Result := TParameterNode.Create(
-    FModifierNode.Clone as TToken,
-    FNameListNode.Clone as TListNode,
-    FColonNode.Clone as TToken,
-    FTypeNode.Clone as TASTNode,
-    FEqualSignNode.Clone as TToken,
-    FDefaultValueNode.Clone as TASTNode);
+    AModifierNode,
+    ANameListNode,
+    AColonNode,
+    ATypeNode,
+    AEqualSignNode,
+    ADefaultValueNode);
 end;
 
 constructor TParameterNode.Create(AModifierNode: TToken; ANameListNode: TListNode; AColonNode: TToken; ATypeNode: TASTNode; AEqualSignNode: TToken; ADefaultValueNode: TASTNode);
@@ -2909,12 +3986,37 @@ end;
 { TParameterizedNode }
 
 function TParameterizedNode.Clone: TASTNode;
+var
+  ALeftNode: TASTNode;
+  AOpenDelimiterNode: TToken;
+  AParameterListNode: TListNode;
+  ACloseDelimiterNode: TToken;
 begin
+  if FLeftNode <> nil then
+    ALeftNode := (FLeftNode.Clone as TASTNode)
+  else
+    ALeftNode := nil;
+
+  if FOpenDelimiterNode <> nil then
+    AOpenDelimiterNode := (FOpenDelimiterNode.Clone as TToken)
+  else
+    AOpenDelimiterNode := nil;
+
+  if FParameterListNode <> nil then
+    AParameterListNode := (FParameterListNode.Clone as TListNode)
+  else
+    AParameterListNode := nil;
+
+  if FCloseDelimiterNode <> nil then
+    ACloseDelimiterNode := (FCloseDelimiterNode.Clone as TToken)
+  else
+    ACloseDelimiterNode := nil;
+
   Result := TParameterizedNode.Create(
-    FLeftNode.Clone as TASTNode,
-    FOpenDelimiterNode.Clone as TToken,
-    FParameterListNode.Clone as TListNode,
-    FCloseDelimiterNode.Clone as TToken);
+    ALeftNode,
+    AOpenDelimiterNode,
+    AParameterListNode,
+    ACloseDelimiterNode);
 end;
 
 constructor TParameterizedNode.Create(ALeftNode: TASTNode; AOpenDelimiterNode: TToken; AParameterListNode: TListNode; ACloseDelimiterNode: TToken);
@@ -2943,11 +4045,30 @@ end;
 { TParenthesizedExpressionNode }
 
 function TParenthesizedExpressionNode.Clone: TASTNode;
+var
+  AOpenParenthesisNode: TToken;
+  AExpressionNode: TASTNode;
+  ACloseParenthesisNode: TToken;
 begin
+  if FOpenParenthesisNode <> nil then
+    AOpenParenthesisNode := (FOpenParenthesisNode.Clone as TToken)
+  else
+    AOpenParenthesisNode := nil;
+
+  if FExpressionNode <> nil then
+    AExpressionNode := (FExpressionNode.Clone as TASTNode)
+  else
+    AExpressionNode := nil;
+
+  if FCloseParenthesisNode <> nil then
+    ACloseParenthesisNode := (FCloseParenthesisNode.Clone as TToken)
+  else
+    ACloseParenthesisNode := nil;
+
   Result := TParenthesizedExpressionNode.Create(
-    FOpenParenthesisNode.Clone as TToken,
-    FExpressionNode.Clone as TASTNode,
-    FCloseParenthesisNode.Clone as TToken);
+    AOpenParenthesisNode,
+    AExpressionNode,
+    ACloseParenthesisNode);
 end;
 
 constructor TParenthesizedExpressionNode.Create(AOpenParenthesisNode: TToken; AExpressionNode: TASTNode; ACloseParenthesisNode: TToken);
@@ -2973,10 +4094,23 @@ end;
 { TPointerDereferenceNode }
 
 function TPointerDereferenceNode.Clone: TASTNode;
+var
+  AOperandNode: TASTNode;
+  ACaretNode: TToken;
 begin
+  if FOperandNode <> nil then
+    AOperandNode := (FOperandNode.Clone as TASTNode)
+  else
+    AOperandNode := nil;
+
+  if FCaretNode <> nil then
+    ACaretNode := (FCaretNode.Clone as TToken)
+  else
+    ACaretNode := nil;
+
   Result := TPointerDereferenceNode.Create(
-    FOperandNode.Clone as TASTNode,
-    FCaretNode.Clone as TToken);
+    AOperandNode,
+    ACaretNode);
 end;
 
 constructor TPointerDereferenceNode.Create(AOperandNode: TASTNode; ACaretNode: TToken);
@@ -2999,10 +4133,23 @@ end;
 { TPointerTypeNode }
 
 function TPointerTypeNode.Clone: TASTNode;
+var
+  ACaretNode: TToken;
+  ATypeNode: TASTNode;
 begin
+  if FCaretNode <> nil then
+    ACaretNode := (FCaretNode.Clone as TToken)
+  else
+    ACaretNode := nil;
+
+  if FTypeNode <> nil then
+    ATypeNode := (FTypeNode.Clone as TASTNode)
+  else
+    ATypeNode := nil;
+
   Result := TPointerTypeNode.Create(
-    FCaretNode.Clone as TToken,
-    FTypeNode.Clone as TASTNode);
+    ACaretNode,
+    ATypeNode);
 end;
 
 constructor TPointerTypeNode.Create(ACaretNode: TToken; ATypeNode: TASTNode);
@@ -3025,18 +4172,79 @@ end;
 { TProcedureTypeNode }
 
 function TProcedureTypeNode.Clone: TASTNode;
+var
+  AMethodTypeNode: TToken;
+  AOpenParenthesisNode: TToken;
+  AParameterListNode: TListNode;
+  ACloseParenthesisNode: TToken;
+  AColonNode: TToken;
+  AReturnTypeNode: TASTNode;
+  AFirstDirectiveListNode: TListNode;
+  AOfKeywordNode: TToken;
+  AObjectKeywordNode: TToken;
+  ASecondDirectiveListNode: TListNode;
 begin
+  if FMethodTypeNode <> nil then
+    AMethodTypeNode := (FMethodTypeNode.Clone as TToken)
+  else
+    AMethodTypeNode := nil;
+
+  if FOpenParenthesisNode <> nil then
+    AOpenParenthesisNode := (FOpenParenthesisNode.Clone as TToken)
+  else
+    AOpenParenthesisNode := nil;
+
+  if FParameterListNode <> nil then
+    AParameterListNode := (FParameterListNode.Clone as TListNode)
+  else
+    AParameterListNode := nil;
+
+  if FCloseParenthesisNode <> nil then
+    ACloseParenthesisNode := (FCloseParenthesisNode.Clone as TToken)
+  else
+    ACloseParenthesisNode := nil;
+
+  if FColonNode <> nil then
+    AColonNode := (FColonNode.Clone as TToken)
+  else
+    AColonNode := nil;
+
+  if FReturnTypeNode <> nil then
+    AReturnTypeNode := (FReturnTypeNode.Clone as TASTNode)
+  else
+    AReturnTypeNode := nil;
+
+  if FFirstDirectiveListNode <> nil then
+    AFirstDirectiveListNode := (FFirstDirectiveListNode.Clone as TListNode)
+  else
+    AFirstDirectiveListNode := nil;
+
+  if FOfKeywordNode <> nil then
+    AOfKeywordNode := (FOfKeywordNode.Clone as TToken)
+  else
+    AOfKeywordNode := nil;
+
+  if FObjectKeywordNode <> nil then
+    AObjectKeywordNode := (FObjectKeywordNode.Clone as TToken)
+  else
+    AObjectKeywordNode := nil;
+
+  if FSecondDirectiveListNode <> nil then
+    ASecondDirectiveListNode := (FSecondDirectiveListNode.Clone as TListNode)
+  else
+    ASecondDirectiveListNode := nil;
+
   Result := TProcedureTypeNode.Create(
-    FMethodTypeNode.Clone as TToken,
-    FOpenParenthesisNode.Clone as TToken,
-    FParameterListNode.Clone as TListNode,
-    FCloseParenthesisNode.Clone as TToken,
-    FColonNode.Clone as TToken,
-    FReturnTypeNode.Clone as TASTNode,
-    FFirstDirectiveListNode.Clone as TListNode,
-    FOfKeywordNode.Clone as TToken,
-    FObjectKeywordNode.Clone as TToken,
-    FSecondDirectiveListNode.Clone as TListNode);
+    AMethodTypeNode,
+    AOpenParenthesisNode,
+    AParameterListNode,
+    ACloseParenthesisNode,
+    AColonNode,
+    AReturnTypeNode,
+    AFirstDirectiveListNode,
+    AOfKeywordNode,
+    AObjectKeywordNode,
+    ASecondDirectiveListNode);
 end;
 
 constructor TProcedureTypeNode.Create(AMethodTypeNode: TToken; AOpenParenthesisNode: TToken; AParameterListNode: TListNode; ACloseParenthesisNode: TToken; AColonNode: TToken; AReturnTypeNode: TASTNode; AFirstDirectiveListNode: TListNode; AOfKeywordNode: TToken; AObjectKeywordNode: TToken; ASecondDirectiveListNode: TListNode);
@@ -3083,18 +4291,79 @@ end;
 { TProgramNode }
 
 function TProgramNode.Clone: TASTNode;
+var
+  AProgramKeywordNode: TToken;
+  ANameNode: TToken;
+  ANoiseOpenParenthesisNode: TToken;
+  ANoiseContentListNode: TListNode;
+  ANoiseCloseParenthesisNode: TToken;
+  ASemicolonNode: TToken;
+  AUsesClauseNode: TUsesClauseNode;
+  ADeclarationListNode: TListNode;
+  AInitSectionNode: TInitSectionNode;
+  ADotNode: TToken;
 begin
+  if FProgramKeywordNode <> nil then
+    AProgramKeywordNode := (FProgramKeywordNode.Clone as TToken)
+  else
+    AProgramKeywordNode := nil;
+
+  if FNameNode <> nil then
+    ANameNode := (FNameNode.Clone as TToken)
+  else
+    ANameNode := nil;
+
+  if FNoiseOpenParenthesisNode <> nil then
+    ANoiseOpenParenthesisNode := (FNoiseOpenParenthesisNode.Clone as TToken)
+  else
+    ANoiseOpenParenthesisNode := nil;
+
+  if FNoiseContentListNode <> nil then
+    ANoiseContentListNode := (FNoiseContentListNode.Clone as TListNode)
+  else
+    ANoiseContentListNode := nil;
+
+  if FNoiseCloseParenthesisNode <> nil then
+    ANoiseCloseParenthesisNode := (FNoiseCloseParenthesisNode.Clone as TToken)
+  else
+    ANoiseCloseParenthesisNode := nil;
+
+  if FSemicolonNode <> nil then
+    ASemicolonNode := (FSemicolonNode.Clone as TToken)
+  else
+    ASemicolonNode := nil;
+
+  if FUsesClauseNode <> nil then
+    AUsesClauseNode := (FUsesClauseNode.Clone as TUsesClauseNode)
+  else
+    AUsesClauseNode := nil;
+
+  if FDeclarationListNode <> nil then
+    ADeclarationListNode := (FDeclarationListNode.Clone as TListNode)
+  else
+    ADeclarationListNode := nil;
+
+  if FInitSectionNode <> nil then
+    AInitSectionNode := (FInitSectionNode.Clone as TInitSectionNode)
+  else
+    AInitSectionNode := nil;
+
+  if FDotNode <> nil then
+    ADotNode := (FDotNode.Clone as TToken)
+  else
+    ADotNode := nil;
+
   Result := TProgramNode.Create(
-    FProgramKeywordNode.Clone as TToken,
-    FNameNode.Clone as TToken,
-    FNoiseOpenParenthesisNode.Clone as TToken,
-    FNoiseContentListNode.Clone as TListNode,
-    FNoiseCloseParenthesisNode.Clone as TToken,
-    FSemicolonNode.Clone as TToken,
-    FUsesClauseNode.Clone as TUsesClauseNode,
-    FDeclarationListNode.Clone as TListNode,
-    FInitSectionNode.Clone as TInitSectionNode,
-    FDotNode.Clone as TToken);
+    AProgramKeywordNode,
+    ANameNode,
+    ANoiseOpenParenthesisNode,
+    ANoiseContentListNode,
+    ANoiseCloseParenthesisNode,
+    ASemicolonNode,
+    AUsesClauseNode,
+    ADeclarationListNode,
+    AInitSectionNode,
+    ADotNode);
 end;
 
 constructor TProgramNode.Create(AProgramKeywordNode: TToken; ANameNode: TToken; ANoiseOpenParenthesisNode: TToken; ANoiseContentListNode: TListNode; ANoiseCloseParenthesisNode: TToken; ASemicolonNode: TToken; AUsesClauseNode: TUsesClauseNode; ADeclarationListNode: TListNode; AInitSectionNode: TInitSectionNode; ADotNode: TToken);
@@ -3141,18 +4410,79 @@ end;
 { TPropertyNode }
 
 function TPropertyNode.Clone: TASTNode;
+var
+  AClassKeywordNode: TToken;
+  APropertyKeywordNode: TToken;
+  ANameNode: TToken;
+  AOpenBracketNode: TToken;
+  AParameterListNode: TListNode;
+  ACloseBracketNode: TToken;
+  AColonNode: TToken;
+  ATypeNode: TASTNode;
+  ADirectiveListNode: TListNode;
+  ASemicolonNode: TToken;
 begin
+  if FClassKeywordNode <> nil then
+    AClassKeywordNode := (FClassKeywordNode.Clone as TToken)
+  else
+    AClassKeywordNode := nil;
+
+  if FPropertyKeywordNode <> nil then
+    APropertyKeywordNode := (FPropertyKeywordNode.Clone as TToken)
+  else
+    APropertyKeywordNode := nil;
+
+  if FNameNode <> nil then
+    ANameNode := (FNameNode.Clone as TToken)
+  else
+    ANameNode := nil;
+
+  if FOpenBracketNode <> nil then
+    AOpenBracketNode := (FOpenBracketNode.Clone as TToken)
+  else
+    AOpenBracketNode := nil;
+
+  if FParameterListNode <> nil then
+    AParameterListNode := (FParameterListNode.Clone as TListNode)
+  else
+    AParameterListNode := nil;
+
+  if FCloseBracketNode <> nil then
+    ACloseBracketNode := (FCloseBracketNode.Clone as TToken)
+  else
+    ACloseBracketNode := nil;
+
+  if FColonNode <> nil then
+    AColonNode := (FColonNode.Clone as TToken)
+  else
+    AColonNode := nil;
+
+  if FTypeNode <> nil then
+    ATypeNode := (FTypeNode.Clone as TASTNode)
+  else
+    ATypeNode := nil;
+
+  if FDirectiveListNode <> nil then
+    ADirectiveListNode := (FDirectiveListNode.Clone as TListNode)
+  else
+    ADirectiveListNode := nil;
+
+  if FSemicolonNode <> nil then
+    ASemicolonNode := (FSemicolonNode.Clone as TToken)
+  else
+    ASemicolonNode := nil;
+
   Result := TPropertyNode.Create(
-    FClassKeywordNode.Clone as TToken,
-    FPropertyKeywordNode.Clone as TToken,
-    FNameNode.Clone as TToken,
-    FOpenBracketNode.Clone as TToken,
-    FParameterListNode.Clone as TListNode,
-    FCloseBracketNode.Clone as TToken,
-    FColonNode.Clone as TToken,
-    FTypeNode.Clone as TASTNode,
-    FDirectiveListNode.Clone as TListNode,
-    FSemicolonNode.Clone as TToken);
+    AClassKeywordNode,
+    APropertyKeywordNode,
+    ANameNode,
+    AOpenBracketNode,
+    AParameterListNode,
+    ACloseBracketNode,
+    AColonNode,
+    ATypeNode,
+    ADirectiveListNode,
+    ASemicolonNode);
 end;
 
 constructor TPropertyNode.Create(AClassKeywordNode: TToken; APropertyKeywordNode: TToken; ANameNode: TToken; AOpenBracketNode: TToken; AParameterListNode: TListNode; ACloseBracketNode: TToken; AColonNode: TToken; ATypeNode: TASTNode; ADirectiveListNode: TListNode; ASemicolonNode: TToken);
@@ -3199,12 +4529,37 @@ end;
 { TRaiseStatementNode }
 
 function TRaiseStatementNode.Clone: TASTNode;
+var
+  ARaiseKeywordNode: TToken;
+  AExceptionNode: TASTNode;
+  AAtSemikeywordNode: TToken;
+  AAddressNode: TASTNode;
 begin
+  if FRaiseKeywordNode <> nil then
+    ARaiseKeywordNode := (FRaiseKeywordNode.Clone as TToken)
+  else
+    ARaiseKeywordNode := nil;
+
+  if FExceptionNode <> nil then
+    AExceptionNode := (FExceptionNode.Clone as TASTNode)
+  else
+    AExceptionNode := nil;
+
+  if FAtSemikeywordNode <> nil then
+    AAtSemikeywordNode := (FAtSemikeywordNode.Clone as TToken)
+  else
+    AAtSemikeywordNode := nil;
+
+  if FAddressNode <> nil then
+    AAddressNode := (FAddressNode.Clone as TASTNode)
+  else
+    AAddressNode := nil;
+
   Result := TRaiseStatementNode.Create(
-    FRaiseKeywordNode.Clone as TToken,
-    FExceptionNode.Clone as TASTNode,
-    FAtSemikeywordNode.Clone as TToken,
-    FAddressNode.Clone as TASTNode);
+    ARaiseKeywordNode,
+    AExceptionNode,
+    AAtSemikeywordNode,
+    AAddressNode);
 end;
 
 constructor TRaiseStatementNode.Create(ARaiseKeywordNode: TToken; AExceptionNode: TASTNode; AAtSemikeywordNode: TToken; AAddressNode: TASTNode);
@@ -3233,11 +4588,30 @@ end;
 { TRecordFieldConstantNode }
 
 function TRecordFieldConstantNode.Clone: TASTNode;
+var
+  ANameNode: TASTNode;
+  AColonNode: TToken;
+  AValueNode: TASTNode;
 begin
+  if FNameNode <> nil then
+    ANameNode := (FNameNode.Clone as TASTNode)
+  else
+    ANameNode := nil;
+
+  if FColonNode <> nil then
+    AColonNode := (FColonNode.Clone as TToken)
+  else
+    AColonNode := nil;
+
+  if FValueNode <> nil then
+    AValueNode := (FValueNode.Clone as TASTNode)
+  else
+    AValueNode := nil;
+
   Result := TRecordFieldConstantNode.Create(
-    FNameNode.Clone as TASTNode,
-    FColonNode.Clone as TToken,
-    FValueNode.Clone as TASTNode);
+    ANameNode,
+    AColonNode,
+    AValueNode);
 end;
 
 constructor TRecordFieldConstantNode.Create(ANameNode: TASTNode; AColonNode: TToken; AValueNode: TASTNode);
@@ -3263,12 +4637,37 @@ end;
 { TRecordTypeNode }
 
 function TRecordTypeNode.Clone: TASTNode;
+var
+  ARecordKeywordNode: TToken;
+  AContentListNode: TListNode;
+  AVariantSectionNode: TVariantSectionNode;
+  AEndKeywordNode: TToken;
 begin
+  if FRecordKeywordNode <> nil then
+    ARecordKeywordNode := (FRecordKeywordNode.Clone as TToken)
+  else
+    ARecordKeywordNode := nil;
+
+  if FContentListNode <> nil then
+    AContentListNode := (FContentListNode.Clone as TListNode)
+  else
+    AContentListNode := nil;
+
+  if FVariantSectionNode <> nil then
+    AVariantSectionNode := (FVariantSectionNode.Clone as TVariantSectionNode)
+  else
+    AVariantSectionNode := nil;
+
+  if FEndKeywordNode <> nil then
+    AEndKeywordNode := (FEndKeywordNode.Clone as TToken)
+  else
+    AEndKeywordNode := nil;
+
   Result := TRecordTypeNode.Create(
-    FRecordKeywordNode.Clone as TToken,
-    FContentListNode.Clone as TListNode,
-    FVariantSectionNode.Clone as TVariantSectionNode,
-    FEndKeywordNode.Clone as TToken);
+    ARecordKeywordNode,
+    AContentListNode,
+    AVariantSectionNode,
+    AEndKeywordNode);
 end;
 
 constructor TRecordTypeNode.Create(ARecordKeywordNode: TToken; AContentListNode: TListNode; AVariantSectionNode: TVariantSectionNode; AEndKeywordNode: TToken);
@@ -3297,12 +4696,37 @@ end;
 { TRepeatStatementNode }
 
 function TRepeatStatementNode.Clone: TASTNode;
+var
+  ARepeatKeywordNode: TToken;
+  AStatementListNode: TListNode;
+  AUntilKeywordNode: TToken;
+  AConditionNode: TASTNode;
 begin
+  if FRepeatKeywordNode <> nil then
+    ARepeatKeywordNode := (FRepeatKeywordNode.Clone as TToken)
+  else
+    ARepeatKeywordNode := nil;
+
+  if FStatementListNode <> nil then
+    AStatementListNode := (FStatementListNode.Clone as TListNode)
+  else
+    AStatementListNode := nil;
+
+  if FUntilKeywordNode <> nil then
+    AUntilKeywordNode := (FUntilKeywordNode.Clone as TToken)
+  else
+    AUntilKeywordNode := nil;
+
+  if FConditionNode <> nil then
+    AConditionNode := (FConditionNode.Clone as TASTNode)
+  else
+    AConditionNode := nil;
+
   Result := TRepeatStatementNode.Create(
-    FRepeatKeywordNode.Clone as TToken,
-    FStatementListNode.Clone as TListNode,
-    FUntilKeywordNode.Clone as TToken,
-    FConditionNode.Clone as TASTNode);
+    ARepeatKeywordNode,
+    AStatementListNode,
+    AUntilKeywordNode,
+    AConditionNode);
 end;
 
 constructor TRepeatStatementNode.Create(ARepeatKeywordNode: TToken; AStatementListNode: TListNode; AUntilKeywordNode: TToken; AConditionNode: TASTNode);
@@ -3331,11 +4755,30 @@ end;
 { TRequiresClauseNode }
 
 function TRequiresClauseNode.Clone: TASTNode;
+var
+  ARequiresSemikeywordNode: TToken;
+  APackageListNode: TListNode;
+  ASemicolonNode: TToken;
 begin
+  if FRequiresSemikeywordNode <> nil then
+    ARequiresSemikeywordNode := (FRequiresSemikeywordNode.Clone as TToken)
+  else
+    ARequiresSemikeywordNode := nil;
+
+  if FPackageListNode <> nil then
+    APackageListNode := (FPackageListNode.Clone as TListNode)
+  else
+    APackageListNode := nil;
+
+  if FSemicolonNode <> nil then
+    ASemicolonNode := (FSemicolonNode.Clone as TToken)
+  else
+    ASemicolonNode := nil;
+
   Result := TRequiresClauseNode.Create(
-    FRequiresSemikeywordNode.Clone as TToken,
-    FPackageListNode.Clone as TListNode,
-    FSemicolonNode.Clone as TToken);
+    ARequiresSemikeywordNode,
+    APackageListNode,
+    ASemicolonNode);
 end;
 
 constructor TRequiresClauseNode.Create(ARequiresSemikeywordNode: TToken; APackageListNode: TListNode; ASemicolonNode: TToken);
@@ -3361,11 +4804,30 @@ end;
 { TSetLiteralNode }
 
 function TSetLiteralNode.Clone: TASTNode;
+var
+  AOpenBracketNode: TToken;
+  AItemListNode: TListNode;
+  ACloseBracketNode: TToken;
 begin
+  if FOpenBracketNode <> nil then
+    AOpenBracketNode := (FOpenBracketNode.Clone as TToken)
+  else
+    AOpenBracketNode := nil;
+
+  if FItemListNode <> nil then
+    AItemListNode := (FItemListNode.Clone as TListNode)
+  else
+    AItemListNode := nil;
+
+  if FCloseBracketNode <> nil then
+    ACloseBracketNode := (FCloseBracketNode.Clone as TToken)
+  else
+    ACloseBracketNode := nil;
+
   Result := TSetLiteralNode.Create(
-    FOpenBracketNode.Clone as TToken,
-    FItemListNode.Clone as TListNode,
-    FCloseBracketNode.Clone as TToken);
+    AOpenBracketNode,
+    AItemListNode,
+    ACloseBracketNode);
 end;
 
 constructor TSetLiteralNode.Create(AOpenBracketNode: TToken; AItemListNode: TListNode; ACloseBracketNode: TToken);
@@ -3391,11 +4853,30 @@ end;
 { TSetOfNode }
 
 function TSetOfNode.Clone: TASTNode;
+var
+  ASetKeywordNode: TToken;
+  AOfKeywordNode: TToken;
+  ATypeNode: TASTNode;
 begin
+  if FSetKeywordNode <> nil then
+    ASetKeywordNode := (FSetKeywordNode.Clone as TToken)
+  else
+    ASetKeywordNode := nil;
+
+  if FOfKeywordNode <> nil then
+    AOfKeywordNode := (FOfKeywordNode.Clone as TToken)
+  else
+    AOfKeywordNode := nil;
+
+  if FTypeNode <> nil then
+    ATypeNode := (FTypeNode.Clone as TASTNode)
+  else
+    ATypeNode := nil;
+
   Result := TSetOfNode.Create(
-    FSetKeywordNode.Clone as TToken,
-    FOfKeywordNode.Clone as TToken,
-    FTypeNode.Clone as TASTNode);
+    ASetKeywordNode,
+    AOfKeywordNode,
+    ATypeNode);
 end;
 
 constructor TSetOfNode.Create(ASetKeywordNode: TToken; AOfKeywordNode: TToken; ATypeNode: TASTNode);
@@ -3421,12 +4902,37 @@ end;
 { TStringOfLengthNode }
 
 function TStringOfLengthNode.Clone: TASTNode;
+var
+  AStringKeywordNode: TToken;
+  AOpenBracketNode: TToken;
+  ALengthNode: TASTNode;
+  ACloseBracketNode: TToken;
 begin
+  if FStringKeywordNode <> nil then
+    AStringKeywordNode := (FStringKeywordNode.Clone as TToken)
+  else
+    AStringKeywordNode := nil;
+
+  if FOpenBracketNode <> nil then
+    AOpenBracketNode := (FOpenBracketNode.Clone as TToken)
+  else
+    AOpenBracketNode := nil;
+
+  if FLengthNode <> nil then
+    ALengthNode := (FLengthNode.Clone as TASTNode)
+  else
+    ALengthNode := nil;
+
+  if FCloseBracketNode <> nil then
+    ACloseBracketNode := (FCloseBracketNode.Clone as TToken)
+  else
+    ACloseBracketNode := nil;
+
   Result := TStringOfLengthNode.Create(
-    FStringKeywordNode.Clone as TToken,
-    FOpenBracketNode.Clone as TToken,
-    FLengthNode.Clone as TASTNode,
-    FCloseBracketNode.Clone as TToken);
+    AStringKeywordNode,
+    AOpenBracketNode,
+    ALengthNode,
+    ACloseBracketNode);
 end;
 
 constructor TStringOfLengthNode.Create(AStringKeywordNode: TToken; AOpenBracketNode: TToken; ALengthNode: TASTNode; ACloseBracketNode: TToken);
@@ -3455,15 +4961,58 @@ end;
 { TTryExceptNode }
 
 function TTryExceptNode.Clone: TASTNode;
+var
+  ATryKeywordNode: TToken;
+  ATryStatementListNode: TListNode;
+  AExceptKeywordNode: TToken;
+  AExceptionItemListNode: TListNode;
+  AElseKeywordNode: TToken;
+  AElseStatementListNode: TListNode;
+  AEndKeywordNode: TToken;
 begin
+  if FTryKeywordNode <> nil then
+    ATryKeywordNode := (FTryKeywordNode.Clone as TToken)
+  else
+    ATryKeywordNode := nil;
+
+  if FTryStatementListNode <> nil then
+    ATryStatementListNode := (FTryStatementListNode.Clone as TListNode)
+  else
+    ATryStatementListNode := nil;
+
+  if FExceptKeywordNode <> nil then
+    AExceptKeywordNode := (FExceptKeywordNode.Clone as TToken)
+  else
+    AExceptKeywordNode := nil;
+
+  if FExceptionItemListNode <> nil then
+    AExceptionItemListNode := (FExceptionItemListNode.Clone as TListNode)
+  else
+    AExceptionItemListNode := nil;
+
+  if FElseKeywordNode <> nil then
+    AElseKeywordNode := (FElseKeywordNode.Clone as TToken)
+  else
+    AElseKeywordNode := nil;
+
+  if FElseStatementListNode <> nil then
+    AElseStatementListNode := (FElseStatementListNode.Clone as TListNode)
+  else
+    AElseStatementListNode := nil;
+
+  if FEndKeywordNode <> nil then
+    AEndKeywordNode := (FEndKeywordNode.Clone as TToken)
+  else
+    AEndKeywordNode := nil;
+
   Result := TTryExceptNode.Create(
-    FTryKeywordNode.Clone as TToken,
-    FTryStatementListNode.Clone as TListNode,
-    FExceptKeywordNode.Clone as TToken,
-    FExceptionItemListNode.Clone as TListNode,
-    FElseKeywordNode.Clone as TToken,
-    FElseStatementListNode.Clone as TListNode,
-    FEndKeywordNode.Clone as TToken);
+    ATryKeywordNode,
+    ATryStatementListNode,
+    AExceptKeywordNode,
+    AExceptionItemListNode,
+    AElseKeywordNode,
+    AElseStatementListNode,
+    AEndKeywordNode);
 end;
 
 constructor TTryExceptNode.Create(ATryKeywordNode: TToken; ATryStatementListNode: TListNode; AExceptKeywordNode: TToken; AExceptionItemListNode: TListNode; AElseKeywordNode: TToken; AElseStatementListNode: TListNode; AEndKeywordNode: TToken);
@@ -3501,13 +5050,44 @@ end;
 { TTryFinallyNode }
 
 function TTryFinallyNode.Clone: TASTNode;
+var
+  ATryKeywordNode: TToken;
+  ATryStatementListNode: TListNode;
+  AFinallyKeywordNode: TToken;
+  AFinallyStatementListNode: TListNode;
+  AEndKeywordNode: TToken;
 begin
+  if FTryKeywordNode <> nil then
+    ATryKeywordNode := (FTryKeywordNode.Clone as TToken)
+  else
+    ATryKeywordNode := nil;
+
+  if FTryStatementListNode <> nil then
+    ATryStatementListNode := (FTryStatementListNode.Clone as TListNode)
+  else
+    ATryStatementListNode := nil;
+
+  if FFinallyKeywordNode <> nil then
+    AFinallyKeywordNode := (FFinallyKeywordNode.Clone as TToken)
+  else
+    AFinallyKeywordNode := nil;
+
+  if FFinallyStatementListNode <> nil then
+    AFinallyStatementListNode := (FFinallyStatementListNode.Clone as TListNode)
+  else
+    AFinallyStatementListNode := nil;
+
+  if FEndKeywordNode <> nil then
+    AEndKeywordNode := (FEndKeywordNode.Clone as TToken)
+  else
+    AEndKeywordNode := nil;
+
   Result := TTryFinallyNode.Create(
-    FTryKeywordNode.Clone as TToken,
-    FTryStatementListNode.Clone as TListNode,
-    FFinallyKeywordNode.Clone as TToken,
-    FFinallyStatementListNode.Clone as TListNode,
-    FEndKeywordNode.Clone as TToken);
+    ATryKeywordNode,
+    ATryStatementListNode,
+    AFinallyKeywordNode,
+    AFinallyStatementListNode,
+    AEndKeywordNode);
 end;
 
 constructor TTryFinallyNode.Create(ATryKeywordNode: TToken; ATryStatementListNode: TListNode; AFinallyKeywordNode: TToken; AFinallyStatementListNode: TListNode; AEndKeywordNode: TToken);
@@ -3539,14 +5119,51 @@ end;
 { TTypeDeclNode }
 
 function TTypeDeclNode.Clone: TASTNode;
+var
+  ANameNode: TToken;
+  AEqualSignNode: TToken;
+  ATypeKeywordNode: TToken;
+  ATypeNode: TASTNode;
+  APortabilityDirectiveListNode: TListNode;
+  ASemicolonNode: TToken;
 begin
+  if FNameNode <> nil then
+    ANameNode := (FNameNode.Clone as TToken)
+  else
+    ANameNode := nil;
+
+  if FEqualSignNode <> nil then
+    AEqualSignNode := (FEqualSignNode.Clone as TToken)
+  else
+    AEqualSignNode := nil;
+
+  if FTypeKeywordNode <> nil then
+    ATypeKeywordNode := (FTypeKeywordNode.Clone as TToken)
+  else
+    ATypeKeywordNode := nil;
+
+  if FTypeNode <> nil then
+    ATypeNode := (FTypeNode.Clone as TASTNode)
+  else
+    ATypeNode := nil;
+
+  if FPortabilityDirectiveListNode <> nil then
+    APortabilityDirectiveListNode := (FPortabilityDirectiveListNode.Clone as TListNode)
+  else
+    APortabilityDirectiveListNode := nil;
+
+  if FSemicolonNode <> nil then
+    ASemicolonNode := (FSemicolonNode.Clone as TToken)
+  else
+    ASemicolonNode := nil;
+
   Result := TTypeDeclNode.Create(
-    FNameNode.Clone as TToken,
-    FEqualSignNode.Clone as TToken,
-    FTypeKeywordNode.Clone as TToken,
-    FTypeNode.Clone as TASTNode,
-    FPortabilityDirectiveListNode.Clone as TListNode,
-    FSemicolonNode.Clone as TToken);
+    ANameNode,
+    AEqualSignNode,
+    ATypeKeywordNode,
+    ATypeNode,
+    APortabilityDirectiveListNode,
+    ASemicolonNode);
 end;
 
 constructor TTypeDeclNode.Create(ANameNode: TToken; AEqualSignNode: TToken; ATypeKeywordNode: TToken; ATypeNode: TASTNode; APortabilityDirectiveListNode: TListNode; ASemicolonNode: TToken);
@@ -3581,12 +5198,37 @@ end;
 { TTypeForwardDeclarationNode }
 
 function TTypeForwardDeclarationNode.Clone: TASTNode;
+var
+  ANameNode: TToken;
+  AEqualSignNode: TToken;
+  ATypeNode: TToken;
+  ASemicolonNode: TToken;
 begin
+  if FNameNode <> nil then
+    ANameNode := (FNameNode.Clone as TToken)
+  else
+    ANameNode := nil;
+
+  if FEqualSignNode <> nil then
+    AEqualSignNode := (FEqualSignNode.Clone as TToken)
+  else
+    AEqualSignNode := nil;
+
+  if FTypeNode <> nil then
+    ATypeNode := (FTypeNode.Clone as TToken)
+  else
+    ATypeNode := nil;
+
+  if FSemicolonNode <> nil then
+    ASemicolonNode := (FSemicolonNode.Clone as TToken)
+  else
+    ASemicolonNode := nil;
+
   Result := TTypeForwardDeclarationNode.Create(
-    FNameNode.Clone as TToken,
-    FEqualSignNode.Clone as TToken,
-    FTypeNode.Clone as TToken,
-    FSemicolonNode.Clone as TToken);
+    ANameNode,
+    AEqualSignNode,
+    ATypeNode,
+    ASemicolonNode);
 end;
 
 constructor TTypeForwardDeclarationNode.Create(ANameNode: TToken; AEqualSignNode: TToken; ATypeNode: TToken; ASemicolonNode: TToken);
@@ -3615,17 +5257,72 @@ end;
 { TTypeHelperNode }
 
 function TTypeHelperNode.Clone: TASTNode;
+var
+  ATypeKeywordNode: TToken;
+  AHelperSemikeywordNode: TToken;
+  AOpenParenthesisNode: TToken;
+  ABaseHelperTypeNode: TASTNode;
+  ACloseParenthesisNode: TToken;
+  AForKeywordNode: TToken;
+  ATypeNode: TASTNode;
+  AContentListNode: TListNode;
+  AEndKeywordNode: TToken;
 begin
+  if FTypeKeywordNode <> nil then
+    ATypeKeywordNode := (FTypeKeywordNode.Clone as TToken)
+  else
+    ATypeKeywordNode := nil;
+
+  if FHelperSemikeywordNode <> nil then
+    AHelperSemikeywordNode := (FHelperSemikeywordNode.Clone as TToken)
+  else
+    AHelperSemikeywordNode := nil;
+
+  if FOpenParenthesisNode <> nil then
+    AOpenParenthesisNode := (FOpenParenthesisNode.Clone as TToken)
+  else
+    AOpenParenthesisNode := nil;
+
+  if FBaseHelperTypeNode <> nil then
+    ABaseHelperTypeNode := (FBaseHelperTypeNode.Clone as TASTNode)
+  else
+    ABaseHelperTypeNode := nil;
+
+  if FCloseParenthesisNode <> nil then
+    ACloseParenthesisNode := (FCloseParenthesisNode.Clone as TToken)
+  else
+    ACloseParenthesisNode := nil;
+
+  if FForKeywordNode <> nil then
+    AForKeywordNode := (FForKeywordNode.Clone as TToken)
+  else
+    AForKeywordNode := nil;
+
+  if FTypeNode <> nil then
+    ATypeNode := (FTypeNode.Clone as TASTNode)
+  else
+    ATypeNode := nil;
+
+  if FContentListNode <> nil then
+    AContentListNode := (FContentListNode.Clone as TListNode)
+  else
+    AContentListNode := nil;
+
+  if FEndKeywordNode <> nil then
+    AEndKeywordNode := (FEndKeywordNode.Clone as TToken)
+  else
+    AEndKeywordNode := nil;
+
   Result := TTypeHelperNode.Create(
-    FTypeKeywordNode.Clone as TToken,
-    FHelperSemikeywordNode.Clone as TToken,
-    FOpenParenthesisNode.Clone as TToken,
-    FBaseHelperTypeNode.Clone as TASTNode,
-    FCloseParenthesisNode.Clone as TToken,
-    FForKeywordNode.Clone as TToken,
-    FTypeNode.Clone as TASTNode,
-    FContentListNode.Clone as TListNode,
-    FEndKeywordNode.Clone as TToken);
+    ATypeKeywordNode,
+    AHelperSemikeywordNode,
+    AOpenParenthesisNode,
+    ABaseHelperTypeNode,
+    ACloseParenthesisNode,
+    AForKeywordNode,
+    ATypeNode,
+    AContentListNode,
+    AEndKeywordNode);
 end;
 
 constructor TTypeHelperNode.Create(ATypeKeywordNode: TToken; AHelperSemikeywordNode: TToken; AOpenParenthesisNode: TToken; ABaseHelperTypeNode: TASTNode; ACloseParenthesisNode: TToken; AForKeywordNode: TToken; ATypeNode: TASTNode; AContentListNode: TListNode; AEndKeywordNode: TToken);
@@ -3669,10 +5366,23 @@ end;
 { TTypeSectionNode }
 
 function TTypeSectionNode.Clone: TASTNode;
+var
+  ATypeKeywordNode: TToken;
+  ATypeListNode: TListNode;
 begin
+  if FTypeKeywordNode <> nil then
+    ATypeKeywordNode := (FTypeKeywordNode.Clone as TToken)
+  else
+    ATypeKeywordNode := nil;
+
+  if FTypeListNode <> nil then
+    ATypeListNode := (FTypeListNode.Clone as TListNode)
+  else
+    ATypeListNode := nil;
+
   Result := TTypeSectionNode.Create(
-    FTypeKeywordNode.Clone as TToken,
-    FTypeListNode.Clone as TListNode);
+    ATypeKeywordNode,
+    ATypeListNode);
 end;
 
 constructor TTypeSectionNode.Create(ATypeKeywordNode: TToken; ATypeListNode: TListNode);
@@ -3695,10 +5405,23 @@ end;
 { TUnaryOperationNode }
 
 function TUnaryOperationNode.Clone: TASTNode;
+var
+  AOperatorNode: TToken;
+  AOperandNode: TASTNode;
 begin
+  if FOperatorNode <> nil then
+    AOperatorNode := (FOperatorNode.Clone as TToken)
+  else
+    AOperatorNode := nil;
+
+  if FOperandNode <> nil then
+    AOperandNode := (FOperandNode.Clone as TASTNode)
+  else
+    AOperandNode := nil;
+
   Result := TUnaryOperationNode.Create(
-    FOperatorNode.Clone as TToken,
-    FOperandNode.Clone as TASTNode);
+    AOperatorNode,
+    AOperandNode);
 end;
 
 constructor TUnaryOperationNode.Create(AOperatorNode: TToken; AOperandNode: TASTNode);
@@ -3721,16 +5444,65 @@ end;
 { TUnitNode }
 
 function TUnitNode.Clone: TASTNode;
+var
+  AUnitKeywordNode: TToken;
+  AUnitNameNode: TToken;
+  APortabilityDirectiveListNode: TListNode;
+  ASemicolonNode: TToken;
+  AInterfaceSectionNode: TUnitSectionNode;
+  AImplementationSectionNode: TUnitSectionNode;
+  AInitSectionNode: TInitSectionNode;
+  ADotNode: TToken;
 begin
+  if FUnitKeywordNode <> nil then
+    AUnitKeywordNode := (FUnitKeywordNode.Clone as TToken)
+  else
+    AUnitKeywordNode := nil;
+
+  if FUnitNameNode <> nil then
+    AUnitNameNode := (FUnitNameNode.Clone as TToken)
+  else
+    AUnitNameNode := nil;
+
+  if FPortabilityDirectiveListNode <> nil then
+    APortabilityDirectiveListNode := (FPortabilityDirectiveListNode.Clone as TListNode)
+  else
+    APortabilityDirectiveListNode := nil;
+
+  if FSemicolonNode <> nil then
+    ASemicolonNode := (FSemicolonNode.Clone as TToken)
+  else
+    ASemicolonNode := nil;
+
+  if FInterfaceSectionNode <> nil then
+    AInterfaceSectionNode := (FInterfaceSectionNode.Clone as TUnitSectionNode)
+  else
+    AInterfaceSectionNode := nil;
+
+  if FImplementationSectionNode <> nil then
+    AImplementationSectionNode := (FImplementationSectionNode.Clone as TUnitSectionNode)
+  else
+    AImplementationSectionNode := nil;
+
+  if FInitSectionNode <> nil then
+    AInitSectionNode := (FInitSectionNode.Clone as TInitSectionNode)
+  else
+    AInitSectionNode := nil;
+
+  if FDotNode <> nil then
+    ADotNode := (FDotNode.Clone as TToken)
+  else
+    ADotNode := nil;
+
   Result := TUnitNode.Create(
-    FUnitKeywordNode.Clone as TToken,
-    FUnitNameNode.Clone as TToken,
-    FPortabilityDirectiveListNode.Clone as TListNode,
-    FSemicolonNode.Clone as TToken,
-    FInterfaceSectionNode.Clone as TUnitSectionNode,
-    FImplementationSectionNode.Clone as TUnitSectionNode,
-    FInitSectionNode.Clone as TInitSectionNode,
-    FDotNode.Clone as TToken);
+    AUnitKeywordNode,
+    AUnitNameNode,
+    APortabilityDirectiveListNode,
+    ASemicolonNode,
+    AInterfaceSectionNode,
+    AImplementationSectionNode,
+    AInitSectionNode,
+    ADotNode);
 end;
 
 constructor TUnitNode.Create(AUnitKeywordNode: TToken; AUnitNameNode: TToken; APortabilityDirectiveListNode: TListNode; ASemicolonNode: TToken; AInterfaceSectionNode: TUnitSectionNode; AImplementationSectionNode: TUnitSectionNode; AInitSectionNode: TInitSectionNode; ADotNode: TToken);
@@ -3771,11 +5543,30 @@ end;
 { TUnitSectionNode }
 
 function TUnitSectionNode.Clone: TASTNode;
+var
+  AHeaderKeywordNode: TToken;
+  AUsesClauseNode: TUsesClauseNode;
+  AContentListNode: TListNode;
 begin
+  if FHeaderKeywordNode <> nil then
+    AHeaderKeywordNode := (FHeaderKeywordNode.Clone as TToken)
+  else
+    AHeaderKeywordNode := nil;
+
+  if FUsesClauseNode <> nil then
+    AUsesClauseNode := (FUsesClauseNode.Clone as TUsesClauseNode)
+  else
+    AUsesClauseNode := nil;
+
+  if FContentListNode <> nil then
+    AContentListNode := (FContentListNode.Clone as TListNode)
+  else
+    AContentListNode := nil;
+
   Result := TUnitSectionNode.Create(
-    FHeaderKeywordNode.Clone as TToken,
-    FUsesClauseNode.Clone as TUsesClauseNode,
-    FContentListNode.Clone as TListNode);
+    AHeaderKeywordNode,
+    AUsesClauseNode,
+    AContentListNode);
 end;
 
 constructor TUnitSectionNode.Create(AHeaderKeywordNode: TToken; AUsesClauseNode: TUsesClauseNode; AContentListNode: TListNode);
@@ -3801,11 +5592,30 @@ end;
 { TUsedUnitNode }
 
 function TUsedUnitNode.Clone: TASTNode;
+var
+  ANameNode: TASTNode;
+  AInKeywordNode: TToken;
+  AFileNameNode: TToken;
 begin
+  if FNameNode <> nil then
+    ANameNode := (FNameNode.Clone as TASTNode)
+  else
+    ANameNode := nil;
+
+  if FInKeywordNode <> nil then
+    AInKeywordNode := (FInKeywordNode.Clone as TToken)
+  else
+    AInKeywordNode := nil;
+
+  if FFileNameNode <> nil then
+    AFileNameNode := (FFileNameNode.Clone as TToken)
+  else
+    AFileNameNode := nil;
+
   Result := TUsedUnitNode.Create(
-    FNameNode.Clone as TASTNode,
-    FInKeywordNode.Clone as TToken,
-    FFileNameNode.Clone as TToken);
+    ANameNode,
+    AInKeywordNode,
+    AFileNameNode);
 end;
 
 constructor TUsedUnitNode.Create(ANameNode: TASTNode; AInKeywordNode: TToken; AFileNameNode: TToken);
@@ -3831,11 +5641,30 @@ end;
 { TUsesClauseNode }
 
 function TUsesClauseNode.Clone: TASTNode;
+var
+  AUsesKeywordNode: TToken;
+  AUnitListNode: TListNode;
+  ASemicolonNode: TToken;
 begin
+  if FUsesKeywordNode <> nil then
+    AUsesKeywordNode := (FUsesKeywordNode.Clone as TToken)
+  else
+    AUsesKeywordNode := nil;
+
+  if FUnitListNode <> nil then
+    AUnitListNode := (FUnitListNode.Clone as TListNode)
+  else
+    AUnitListNode := nil;
+
+  if FSemicolonNode <> nil then
+    ASemicolonNode := (FSemicolonNode.Clone as TToken)
+  else
+    ASemicolonNode := nil;
+
   Result := TUsesClauseNode.Create(
-    FUsesKeywordNode.Clone as TToken,
-    FUnitListNode.Clone as TListNode,
-    FSemicolonNode.Clone as TToken);
+    AUsesKeywordNode,
+    AUnitListNode,
+    ASemicolonNode);
 end;
 
 constructor TUsesClauseNode.Create(AUsesKeywordNode: TToken; AUnitListNode: TListNode; ASemicolonNode: TToken);
@@ -3861,18 +5690,79 @@ end;
 { TVarDeclNode }
 
 function TVarDeclNode.Clone: TASTNode;
+var
+  ANameListNode: TListNode;
+  AColonNode: TToken;
+  ATypeNode: TASTNode;
+  AFirstPortabilityDirectiveListNode: TListNode;
+  AAbsoluteSemikeywordNode: TToken;
+  AAbsoluteAddressNode: TASTNode;
+  AEqualSignNode: TToken;
+  AValueNode: TASTNode;
+  ASecondPortabilityDirectiveListNode: TListNode;
+  ASemicolonNode: TToken;
 begin
+  if FNameListNode <> nil then
+    ANameListNode := (FNameListNode.Clone as TListNode)
+  else
+    ANameListNode := nil;
+
+  if FColonNode <> nil then
+    AColonNode := (FColonNode.Clone as TToken)
+  else
+    AColonNode := nil;
+
+  if FTypeNode <> nil then
+    ATypeNode := (FTypeNode.Clone as TASTNode)
+  else
+    ATypeNode := nil;
+
+  if FFirstPortabilityDirectiveListNode <> nil then
+    AFirstPortabilityDirectiveListNode := (FFirstPortabilityDirectiveListNode.Clone as TListNode)
+  else
+    AFirstPortabilityDirectiveListNode := nil;
+
+  if FAbsoluteSemikeywordNode <> nil then
+    AAbsoluteSemikeywordNode := (FAbsoluteSemikeywordNode.Clone as TToken)
+  else
+    AAbsoluteSemikeywordNode := nil;
+
+  if FAbsoluteAddressNode <> nil then
+    AAbsoluteAddressNode := (FAbsoluteAddressNode.Clone as TASTNode)
+  else
+    AAbsoluteAddressNode := nil;
+
+  if FEqualSignNode <> nil then
+    AEqualSignNode := (FEqualSignNode.Clone as TToken)
+  else
+    AEqualSignNode := nil;
+
+  if FValueNode <> nil then
+    AValueNode := (FValueNode.Clone as TASTNode)
+  else
+    AValueNode := nil;
+
+  if FSecondPortabilityDirectiveListNode <> nil then
+    ASecondPortabilityDirectiveListNode := (FSecondPortabilityDirectiveListNode.Clone as TListNode)
+  else
+    ASecondPortabilityDirectiveListNode := nil;
+
+  if FSemicolonNode <> nil then
+    ASemicolonNode := (FSemicolonNode.Clone as TToken)
+  else
+    ASemicolonNode := nil;
+
   Result := TVarDeclNode.Create(
-    FNameListNode.Clone as TListNode,
-    FColonNode.Clone as TToken,
-    FTypeNode.Clone as TASTNode,
-    FFirstPortabilityDirectiveListNode.Clone as TListNode,
-    FAbsoluteSemikeywordNode.Clone as TToken,
-    FAbsoluteAddressNode.Clone as TASTNode,
-    FEqualSignNode.Clone as TToken,
-    FValueNode.Clone as TASTNode,
-    FSecondPortabilityDirectiveListNode.Clone as TListNode,
-    FSemicolonNode.Clone as TToken);
+    ANameListNode,
+    AColonNode,
+    ATypeNode,
+    AFirstPortabilityDirectiveListNode,
+    AAbsoluteSemikeywordNode,
+    AAbsoluteAddressNode,
+    AEqualSignNode,
+    AValueNode,
+    ASecondPortabilityDirectiveListNode,
+    ASemicolonNode);
 end;
 
 constructor TVarDeclNode.Create(ANameListNode: TListNode; AColonNode: TToken; ATypeNode: TASTNode; AFirstPortabilityDirectiveListNode: TListNode; AAbsoluteSemikeywordNode: TToken; AAbsoluteAddressNode: TASTNode; AEqualSignNode: TToken; AValueNode: TASTNode; ASecondPortabilityDirectiveListNode: TListNode; ASemicolonNode: TToken);
@@ -3919,10 +5809,23 @@ end;
 { TVarSectionNode }
 
 function TVarSectionNode.Clone: TASTNode;
+var
+  AVarKeywordNode: TToken;
+  AVarListNode: TListNode;
 begin
+  if FVarKeywordNode <> nil then
+    AVarKeywordNode := (FVarKeywordNode.Clone as TToken)
+  else
+    AVarKeywordNode := nil;
+
+  if FVarListNode <> nil then
+    AVarListNode := (FVarListNode.Clone as TListNode)
+  else
+    AVarListNode := nil;
+
   Result := TVarSectionNode.Create(
-    FVarKeywordNode.Clone as TToken,
-    FVarListNode.Clone as TListNode);
+    AVarKeywordNode,
+    AVarListNode);
 end;
 
 constructor TVarSectionNode.Create(AVarKeywordNode: TToken; AVarListNode: TListNode);
@@ -3945,15 +5848,58 @@ end;
 { TVariantGroupNode }
 
 function TVariantGroupNode.Clone: TASTNode;
+var
+  AValueListNode: TListNode;
+  AColonNode: TToken;
+  AOpenParenthesisNode: TToken;
+  AFieldDeclListNode: TListNode;
+  AVariantSectionNode: TVariantSectionNode;
+  ACloseParenthesisNode: TToken;
+  ASemicolonNode: TToken;
 begin
+  if FValueListNode <> nil then
+    AValueListNode := (FValueListNode.Clone as TListNode)
+  else
+    AValueListNode := nil;
+
+  if FColonNode <> nil then
+    AColonNode := (FColonNode.Clone as TToken)
+  else
+    AColonNode := nil;
+
+  if FOpenParenthesisNode <> nil then
+    AOpenParenthesisNode := (FOpenParenthesisNode.Clone as TToken)
+  else
+    AOpenParenthesisNode := nil;
+
+  if FFieldDeclListNode <> nil then
+    AFieldDeclListNode := (FFieldDeclListNode.Clone as TListNode)
+  else
+    AFieldDeclListNode := nil;
+
+  if FVariantSectionNode <> nil then
+    AVariantSectionNode := (FVariantSectionNode.Clone as TVariantSectionNode)
+  else
+    AVariantSectionNode := nil;
+
+  if FCloseParenthesisNode <> nil then
+    ACloseParenthesisNode := (FCloseParenthesisNode.Clone as TToken)
+  else
+    ACloseParenthesisNode := nil;
+
+  if FSemicolonNode <> nil then
+    ASemicolonNode := (FSemicolonNode.Clone as TToken)
+  else
+    ASemicolonNode := nil;
+
   Result := TVariantGroupNode.Create(
-    FValueListNode.Clone as TListNode,
-    FColonNode.Clone as TToken,
-    FOpenParenthesisNode.Clone as TToken,
-    FFieldDeclListNode.Clone as TListNode,
-    FVariantSectionNode.Clone as TVariantSectionNode,
-    FCloseParenthesisNode.Clone as TToken,
-    FSemicolonNode.Clone as TToken);
+    AValueListNode,
+    AColonNode,
+    AOpenParenthesisNode,
+    AFieldDeclListNode,
+    AVariantSectionNode,
+    ACloseParenthesisNode,
+    ASemicolonNode);
 end;
 
 constructor TVariantGroupNode.Create(AValueListNode: TListNode; AColonNode: TToken; AOpenParenthesisNode: TToken; AFieldDeclListNode: TListNode; AVariantSectionNode: TVariantSectionNode; ACloseParenthesisNode: TToken; ASemicolonNode: TToken);
@@ -3991,14 +5937,51 @@ end;
 { TVariantSectionNode }
 
 function TVariantSectionNode.Clone: TASTNode;
+var
+  ACaseKeywordNode: TToken;
+  ANameNode: TToken;
+  AColonNode: TToken;
+  ATypeNode: TASTNode;
+  AOfKeywordNode: TToken;
+  AVariantGroupListNode: TListNode;
 begin
+  if FCaseKeywordNode <> nil then
+    ACaseKeywordNode := (FCaseKeywordNode.Clone as TToken)
+  else
+    ACaseKeywordNode := nil;
+
+  if FNameNode <> nil then
+    ANameNode := (FNameNode.Clone as TToken)
+  else
+    ANameNode := nil;
+
+  if FColonNode <> nil then
+    AColonNode := (FColonNode.Clone as TToken)
+  else
+    AColonNode := nil;
+
+  if FTypeNode <> nil then
+    ATypeNode := (FTypeNode.Clone as TASTNode)
+  else
+    ATypeNode := nil;
+
+  if FOfKeywordNode <> nil then
+    AOfKeywordNode := (FOfKeywordNode.Clone as TToken)
+  else
+    AOfKeywordNode := nil;
+
+  if FVariantGroupListNode <> nil then
+    AVariantGroupListNode := (FVariantGroupListNode.Clone as TListNode)
+  else
+    AVariantGroupListNode := nil;
+
   Result := TVariantSectionNode.Create(
-    FCaseKeywordNode.Clone as TToken,
-    FNameNode.Clone as TToken,
-    FColonNode.Clone as TToken,
-    FTypeNode.Clone as TASTNode,
-    FOfKeywordNode.Clone as TToken,
-    FVariantGroupListNode.Clone as TListNode);
+    ACaseKeywordNode,
+    ANameNode,
+    AColonNode,
+    ATypeNode,
+    AOfKeywordNode,
+    AVariantGroupListNode);
 end;
 
 constructor TVariantSectionNode.Create(ACaseKeywordNode: TToken; ANameNode: TToken; AColonNode: TToken; ATypeNode: TASTNode; AOfKeywordNode: TToken; AVariantGroupListNode: TListNode);
@@ -4033,10 +6016,23 @@ end;
 { TVisibilityNode }
 
 function TVisibilityNode.Clone: TASTNode;
+var
+  AStrictSemikeywordNode: TToken;
+  AVisibilityKeywordNode: TToken;
 begin
+  if FStrictSemikeywordNode <> nil then
+    AStrictSemikeywordNode := (FStrictSemikeywordNode.Clone as TToken)
+  else
+    AStrictSemikeywordNode := nil;
+
+  if FVisibilityKeywordNode <> nil then
+    AVisibilityKeywordNode := (FVisibilityKeywordNode.Clone as TToken)
+  else
+    AVisibilityKeywordNode := nil;
+
   Result := TVisibilityNode.Create(
-    FStrictSemikeywordNode.Clone as TToken,
-    FVisibilityKeywordNode.Clone as TToken);
+    AStrictSemikeywordNode,
+    AVisibilityKeywordNode);
 end;
 
 constructor TVisibilityNode.Create(AStrictSemikeywordNode: TToken; AVisibilityKeywordNode: TToken);
@@ -4059,10 +6055,23 @@ end;
 { TVisibilitySectionNode }
 
 function TVisibilitySectionNode.Clone: TASTNode;
+var
+  AVisibilityNode: TVisibilityNode;
+  AContentListNode: TListNode;
 begin
+  if FVisibilityNode <> nil then
+    AVisibilityNode := (FVisibilityNode.Clone as TVisibilityNode)
+  else
+    AVisibilityNode := nil;
+
+  if FContentListNode <> nil then
+    AContentListNode := (FContentListNode.Clone as TListNode)
+  else
+    AContentListNode := nil;
+
   Result := TVisibilitySectionNode.Create(
-    FVisibilityNode.Clone as TVisibilityNode,
-    FContentListNode.Clone as TListNode);
+    AVisibilityNode,
+    AContentListNode);
 end;
 
 constructor TVisibilitySectionNode.Create(AVisibilityNode: TVisibilityNode; AContentListNode: TListNode);
@@ -4085,12 +6094,37 @@ end;
 { TWhileStatementNode }
 
 function TWhileStatementNode.Clone: TASTNode;
+var
+  AWhileKeywordNode: TToken;
+  AConditionNode: TASTNode;
+  ADoKeywordNode: TToken;
+  AStatementNode: TASTNode;
 begin
+  if FWhileKeywordNode <> nil then
+    AWhileKeywordNode := (FWhileKeywordNode.Clone as TToken)
+  else
+    AWhileKeywordNode := nil;
+
+  if FConditionNode <> nil then
+    AConditionNode := (FConditionNode.Clone as TASTNode)
+  else
+    AConditionNode := nil;
+
+  if FDoKeywordNode <> nil then
+    ADoKeywordNode := (FDoKeywordNode.Clone as TToken)
+  else
+    ADoKeywordNode := nil;
+
+  if FStatementNode <> nil then
+    AStatementNode := (FStatementNode.Clone as TASTNode)
+  else
+    AStatementNode := nil;
+
   Result := TWhileStatementNode.Create(
-    FWhileKeywordNode.Clone as TToken,
-    FConditionNode.Clone as TASTNode,
-    FDoKeywordNode.Clone as TToken,
-    FStatementNode.Clone as TASTNode);
+    AWhileKeywordNode,
+    AConditionNode,
+    ADoKeywordNode,
+    AStatementNode);
 end;
 
 constructor TWhileStatementNode.Create(AWhileKeywordNode: TToken; AConditionNode: TASTNode; ADoKeywordNode: TToken; AStatementNode: TASTNode);
@@ -4119,12 +6153,37 @@ end;
 { TWithStatementNode }
 
 function TWithStatementNode.Clone: TASTNode;
+var
+  AWithKeywordNode: TToken;
+  AExpressionListNode: TListNode;
+  ADoKeywordNode: TToken;
+  AStatementNode: TASTNode;
 begin
+  if FWithKeywordNode <> nil then
+    AWithKeywordNode := (FWithKeywordNode.Clone as TToken)
+  else
+    AWithKeywordNode := nil;
+
+  if FExpressionListNode <> nil then
+    AExpressionListNode := (FExpressionListNode.Clone as TListNode)
+  else
+    AExpressionListNode := nil;
+
+  if FDoKeywordNode <> nil then
+    ADoKeywordNode := (FDoKeywordNode.Clone as TToken)
+  else
+    ADoKeywordNode := nil;
+
+  if FStatementNode <> nil then
+    AStatementNode := (FStatementNode.Clone as TASTNode)
+  else
+    AStatementNode := nil;
+
   Result := TWithStatementNode.Create(
-    FWithKeywordNode.Clone as TToken,
-    FExpressionListNode.Clone as TListNode,
-    FDoKeywordNode.Clone as TToken,
-    FStatementNode.Clone as TASTNode);
+    AWithKeywordNode,
+    AExpressionListNode,
+    ADoKeywordNode,
+    AStatementNode);
 end;
 
 constructor TWithStatementNode.Create(AWithKeywordNode: TToken; AExpressionListNode: TListNode; ADoKeywordNode: TToken; AStatementNode: TASTNode);
