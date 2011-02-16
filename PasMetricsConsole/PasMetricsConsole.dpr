@@ -9,7 +9,8 @@ uses
 type
   TStyle = (
     sASCII,
-    sCSV
+    sCSV,
+    sHTML
   );
 
 var
@@ -41,6 +42,8 @@ begin
 
       if (AFormat = 'CSV') then
         FStyle := sCSV
+      else if (AFormat = 'HTML') then
+        FStyle := sHTML
       else
         FStyle := sASCII;
     end
@@ -101,6 +104,15 @@ function GetHeader: string;
 begin
   case FStyle of
     sCSV: Result := 'File,MI,LOCpro';
+    sHTML: Result := '<html><head><title>PasMetrics</title></head><body><table><tr><td>File</td><td>MI</td><td>LOCpro</td></tr>';
+    else Result := '';
+  end;
+end;
+
+function GetFooter: string;
+begin
+  case FStyle of
+    sHTML: Result := '</table></body></html>';
     else Result := '';
   end;
 end;
@@ -109,6 +121,7 @@ function GetResultFormat: string;
 begin
   case FStyle of
     sCSV: Result := '%s,%.0f,%d';
+    sHTML: Result := '<tr><td>%s</td><td>%.0f</td><td>%d</td></tr>';
     else Result := '%s - MI: %.0f - LOCpro: %d';
   end;
 end;
@@ -117,6 +130,7 @@ function GetWarningFormat: string;
 begin
   case FStyle of
     sCSV: Result := '%s,%s';
+    sHTML: Result := '<tr><td>%s</td><td colspan="2">%s</td></tr>';
     else Result := '%s'#13#10'### Warning: %s';
   end;
 end;
@@ -204,6 +218,9 @@ begin
   begin
     AnalyzeFile(AFiles[i], ADirectory);
   end;
+
+  if GetFooter <> '' then
+    WriteLn(FFile, GetFooter);
 
   CloseFile(FFile);
   AFiles.Free;
