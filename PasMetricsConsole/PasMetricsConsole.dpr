@@ -6,13 +6,21 @@ uses
   SysUtils, Classes, UFileLoader, UCompilerDefines, UASTNode,
   UMaintainabilityIndex, UParser, URuleType, ULexException, UParseException;
 
+type
+  TStyle = (
+    sASCII,
+    sCSV
+  );
+
 var
   FFileName: string;
   FFile: TextFile;
+  FStyle: TStyle;
 
 procedure ParseParameters(out ADirectory: string; out ARecursive: Boolean);
 var
   I: Integer;
+  AFormat: string;
 begin
   ADirectory := '';
   ARecursive := False;
@@ -25,6 +33,16 @@ begin
     begin
       if (ParamStr(I)[3] = '=') then
         FFileName := Copy(ParamStr(I), 4, Length(ParamStr(I)) - 3);
+    end
+    else if (ParamStr(I)[1] = '-') and (ParamStr(I)[2] = 'f') then
+    begin
+      if (ParamStr(I)[3] = '=') then
+        AFormat := UpperCase(Copy(ParamStr(I), 4, Length(ParamStr(I)) - 3));
+
+      if (AFormat = 'CSV') then
+        FStyle := sCSV
+      else
+        FStyle := sASCII;
     end
     else
     begin
@@ -79,15 +97,39 @@ begin
   end;
 end;
 
+function GetHeader: string;
+begin
+  case FStyle of
+    sCSV: Result := 'File,MI,LOCpro';
+    else Result := '';
+  end;
+end;
+
+function GetResultFormat: string;
+begin
+  case FStyle of
+    sCSV: Result := '%s,%.0f,%d';
+    else Result := '%s - MI: %.0f - LOCpro: %d';
+  end;
+end;
+
+function GetWarningFormat: string;
+begin
+  case FStyle of
+    sCSV: Result := '%s,%s';
+    else Result := '%s'#13#10'### Warning: %s';
+  end;
+end;
+
 procedure OutputResult(AFilePath, ABaseDir: string; AMI: TMaintainabilityIndex);
 begin
-  WriteLn(FFile, Format('%s - MI: %.0f - LOCpro: %d',
+  WriteLn(FFile, Format(GetResultFormat,
     [ExtractRelativePath(ABaseDir, AFilePath), AMI.Value, AMI.LOCCounter.LOCProgram]));
 end;
 
 procedure OutputWarning(AFilePath, ABaseDir, AWarning: string);
 begin
-  WriteLn(FFile, Format('%s'#13#10'### Warning: %s',
+  WriteLn(FFile, Format(GetWarningFormat,
     [ExtractRelativePath(ABaseDir, AFilePath), AWarning]));
 end;
 
@@ -144,10 +186,14 @@ var
   AFiles: TStringList;
   i: integer;
 begin
+  FStyle := sASCII;
   FFileName := '';
   ParseParameters(ADirectory, ARecursive);
   Assign(FFile, FFileName);
   Rewrite(FFile);
+
+  if GetHeader <> '' then
+    WriteLn(FFile, GetHeader);
 
   AFiles := TStringList.Create;
   FindFiles(AFiles, ADirectory, '*.pas', ARecursive);
