@@ -104,7 +104,7 @@ function GetHeader: string;
 begin
   case FStyle of
     sCSV: Result := 'File,MI,LOCpro';
-    sHTML: Result := '<html><head><title>PasMetrics</title><style>html { FONT-FAMILY: Arial; }</style></head><body><table><tr><td>File</td><td>MI</td><td>LOCpro</td></tr>';
+    sHTML: Result := '<html><head><title>PasMetrics</title><style>html { FONT-FAMILY: Arial; }</style></head><body><table><tr><td>File</td><td colspan="2">Maintainability Index</td><td>LOCpro</td></tr>';
     else Result := '';
   end;
 end;
@@ -117,11 +117,23 @@ begin
   end;
 end;
 
-function GetResultFormat: string;
+function GetResultFormat(AMI: Extended): string;
+var
+  AColor: string;
 begin
+  if FStyle = sHTML then
+  begin
+    if AMI <= 5 then
+      AColor := 'red'
+    else if AMI <= 20 then
+      AColor := 'yellow'
+    else
+      AColor := 'green';
+  end;
+
   case FStyle of
     sCSV: Result := '%s,%.0f,%d';
-    sHTML: Result := '<tr><td>%s</td><td>%.0f</td><td>%d</td></tr>';
+    sHTML: Result := '<tr><td>%s</td><td>%.0f</td><td><div style="WIDTH: ' + Format('%.0f', [AMI]) + 'px; BACKGROUND: ' + AColor + ';">&nbsp;</div></td><td>%d</td></tr>';
     else Result := '%s - MI: %.0f - LOCpro: %d';
   end;
 end;
@@ -130,14 +142,14 @@ function GetWarningFormat: string;
 begin
   case FStyle of
     sCSV: Result := '%s,%s';
-    sHTML: Result := '<tr><td>%s</td><td colspan="2" style="COLOR: white; BACKGROUND: red; FONT-WEIGHT: bold;">%s</td></tr>';
+    sHTML: Result := '<tr><td>%s</td><td colspan="3" style="COLOR: white; BACKGROUND: red; FONT-WEIGHT: bold;">%s</td></tr>';
     else Result := '%s'#13#10'### Warning: %s';
   end;
 end;
 
 procedure OutputResult(AFilePath, ABaseDir: string; AMI: TMaintainabilityIndex);
 begin
-  WriteLn(FFile, Format(GetResultFormat,
+  WriteLn(FFile, Format(GetResultFormat(AMI.Value),
     [ExtractRelativePath(ABaseDir, AFilePath), AMI.Value, AMI.LOCCounter.LOCProgram]));
 end;
 
