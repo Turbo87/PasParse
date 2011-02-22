@@ -19,6 +19,7 @@ type
 
     function ExpandFileName(ACurrentDirectory, AFileName: string): string; override;
     function Load(AFileName: string): string; override;
+    function Exists(AFileName: string): Boolean; override;
 
     property Files[AFileName: string]: string read GetFile write SetFile; default;
   end;
@@ -42,6 +43,14 @@ begin
   FFileNames.Free;
   FFileContents.Free;
   inherited;
+end;
+
+function TMemoryFileLoader.Exists(AFileName: string): Boolean;
+var
+  AIndex: Integer;
+begin
+  AIndex := FFileNames.IndexOf(AFileName);
+  Result := (AIndex >= 0) and (AIndex < FFileContents.Count);
 end;
 
 function TMemoryFileLoader.ExpandFileName(ACurrentDirectory,
