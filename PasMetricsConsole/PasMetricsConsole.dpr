@@ -130,7 +130,7 @@ function GetWarningFormat: string;
 begin
   case FStyle of
     sCSV: Result := '%s,%s';
-    sHTML: Result := '<tr><td>%s</td><td colspan="2">%s</td></tr>';
+    sHTML: Result := '<tr><td>%s</td><td colspan="2" style="COLOR: white; BACKGROUND: red; FONT-WEIGHT: bold;">%s</td></tr>';
     else Result := '%s'#13#10'### Warning: %s';
   end;
 end;
