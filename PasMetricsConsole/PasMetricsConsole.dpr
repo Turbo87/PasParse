@@ -105,8 +105,8 @@ end;
 function GetHeader: string;
 begin
   case FStyle of
-    sCSV: Result := 'File,MI,LOCpro';
-    sHTML: Result := '<html><head><title>PasMetrics</title><style>html { FONT-FAMILY: Arial; }</style></head><body><table><tr><td>File</td><td colspan="2">Maintainability Index</td><td>LOCpro</td></tr>';
+    sCSV: Result := 'File,MI,McCabe,LOCpro';
+    sHTML: Result := '<html><head><title>PasMetrics</title><style>html { FONT-FAMILY: Arial; }</style></head><body><table><tr><td>File</td><td colspan="2">Maintainability Index</td><td>McCabe</td><td>LOCpro</td></tr>';
     else Result := '';
   end;
 end;
@@ -134,9 +134,9 @@ begin
   end;
 
   case FStyle of
-    sCSV: Result := '%s,%.0f,%d';
-    sHTML: Result := '<tr><td>%s</td><td>%.0f</td><td><div style="WIDTH: ' + Format('%.0f', [AMI]) + 'px; BACKGROUND: ' + AColor + ';">&nbsp;</div></td><td>%d</td></tr>';
-    else Result := '%s - MI: %.0f - LOCpro: %d';
+    sCSV: Result := '%s,%.0f,%d,%d';
+    sHTML: Result := '<tr><td>%s</td><td>%.0f</td><td><div style="WIDTH: ' + Format('%.0f', [AMI]) + 'px; BACKGROUND: ' + AColor + ';">&nbsp;</div></td><td>%d</td><td>%d</td></tr>';
+    else Result := '%s - MI: %.0f - McCabe: %d - LOCpro: %d';
   end;
 end;
 
@@ -144,7 +144,7 @@ function GetWarningFormat: string;
 begin
   case FStyle of
     sCSV: Result := '%s,%s';
-    sHTML: Result := '<tr><td>%s</td><td colspan="3" style="COLOR: white; BACKGROUND: red; FONT-WEIGHT: bold;">%s</td></tr>';
+    sHTML: Result := '<tr><td>%s</td><td colspan="4" style="COLOR: white; BACKGROUND: red; FONT-WEIGHT: bold;">%s</td></tr>';
     else Result := '%s'#13#10'### Warning: %s';
   end;
 end;
@@ -152,7 +152,7 @@ end;
 procedure OutputResult(AFilePath, ABaseDir: string; AMI: TMaintainabilityIndex);
 begin
   WriteLn(FFile, Format(GetResultFormat(AMI.Value),
-    [ExtractRelativePath(ABaseDir, AFilePath), AMI.Value, AMI.LOCCounter.LOCProgram]));
+    [ExtractRelativePath(ABaseDir, AFilePath), AMI.Value, AMI.McCabe.Count, AMI.LOCCounter.LOCProgram]));
 end;
 
 procedure OutputWarning(AFilePath, ABaseDir, AWarning: string);
