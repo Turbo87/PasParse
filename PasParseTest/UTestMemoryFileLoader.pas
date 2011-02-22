@@ -49,6 +49,8 @@ begin
 
   OK(ALoader.Exists('Foo.pas'), 'Exists()');
 
+  OK(ALoader.LoadFromParentDirs('Bar\Foo.pas') = 'Bar', 'LoadFromParentDirs()');
+
   ALoader['FOO.PAS'] := 'Baz';
   OK(ALoader['Foo.pas'] = 'Baz', 'CaseInvariant');
 
