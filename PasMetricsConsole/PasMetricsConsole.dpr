@@ -104,7 +104,7 @@ function GetHeader: string;
 begin
   case FStyle of
     sCSV: Result := 'File,MI,LOCpro';
-    sHTML: Result := '<html><head><title>PasMetrics</title></head><body><table><tr><td>File</td><td>MI</td><td>LOCpro</td></tr>';
+    sHTML: Result := '<html><head><title>PasMetrics</title><style>html { FONT-FAMILY: Arial; }</style></head><body><table><tr><td>File</td><td>MI</td><td>LOCpro</td></tr>';
     else Result := '';
   end;
 end;
