@@ -73,7 +73,9 @@ begin
   IsFound := FindFirst(ADirectory + AFilter, faAnyFile - faDirectory, SR) = 0;
   while IsFound do
   begin
-    AFiles.Add(ADirectory + SR.Name);
+    // HACK due to bad FindNext/First() implementation
+    if Copy(SR.Name, length(SR.Name) - 5, 6) <> '.dproj' then
+      AFiles.Add(ADirectory + SR.Name);
     IsFound := FindNext(SR) = 0;
   end;
   FindClose(SR);
