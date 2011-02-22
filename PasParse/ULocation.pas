@@ -59,7 +59,7 @@ begin
   if FFileName = '' then
     Result := ''
   else
-    Result := ExtractFilePath(FFileName);
+    Result := ExtractFileDir(FFileName);
 end;
 
 end.
