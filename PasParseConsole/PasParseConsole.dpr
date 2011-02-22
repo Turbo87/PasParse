@@ -22,7 +22,7 @@ begin
     ACompilerDefines := TCompilerDefines.Create;
     try
       // Create the parser
-      AParser := TParser.CreateFromText(AContent, '', ACompilerDefines, AFileLoader);
+      AParser := TParser.CreateFromText(AContent, AFileName, ACompilerDefines, AFileLoader);
       try
         // Try to parse a unit from the file content
         ANode := AParser.ParseRule(RTGoal);
