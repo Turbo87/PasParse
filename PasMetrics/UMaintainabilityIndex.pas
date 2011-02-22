@@ -31,20 +31,14 @@ implementation
 { TMaintainabilityIndex }
 
 procedure TMaintainabilityIndex.Calculate(ANode: TASTNode);
-var
-  AMcCabeValue: Integer;
 begin
   FLOCCounter.Visit(ANode);
   FMcCabe.Calculate(ANode);
   FHalstead.Calculate(ANode);
 
-  AMcCabeValue := FMcCabe.Count;
-  if AMcCabeValue < 1 then
-    AMcCabeValue := 1;
-
   FMI := 171 -
     5.2 * ln(FHalstead.ProgramVolume) -
-    0.23 * ln(AMcCabeValue) -
+    0.23 * ln(FMcCabe.Count) -
     16.2 * ln(FLOCCounter.LOCProgram);
     
   if FMI < 0 then

@@ -38,6 +38,9 @@ uses
 procedure TMcCabe.Calculate(ANode: TASTNode);
 begin
   ANode.Accept(Self);
+
+  if FCount < 1 then
+    FCount := 1;
 end;
 
 constructor TMcCabe.Create;
