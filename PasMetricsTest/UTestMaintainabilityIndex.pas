@@ -48,8 +48,6 @@ var
   AParser: TParser;
   ANode: TASTNode;
 begin
-  Result := nil;
-
   // Create FileLoader to load the specified file
   AFileLoader := TFileLoader.Create;
   try

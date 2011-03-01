@@ -43,8 +43,6 @@ var
   ANode: TASTNode;
   AMcCabe: TMcCabe;
 begin
-  Result := False;
-  
   // Create FileLoader to load the specified file
   AFileLoader := TFileLoader.Create;
   try
