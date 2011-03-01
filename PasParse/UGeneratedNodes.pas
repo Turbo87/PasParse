@@ -46,6 +46,7 @@ type
   TMethodImplementationNode = class;
   TMethodResolutionNode = class;
   TNumberFormatNode = class;
+  TOpenArrayConstructorNode = class;
   TOpenArrayNode = class;
   TPackageNode = class;
   TPackedTypeNode = class;
@@ -748,6 +749,22 @@ type
     property SizeNode: TASTNode read FSizeNode;
     property PrecisionColonNode: TToken read FPrecisionColonNode;
     property PrecisionNode: TASTNode read FPrecisionNode;
+  end;
+
+  TOpenArrayConstructorNode = class(TNonTerminalNode)
+  private
+    FOpenBracketNode: TToken;
+    FItemListNode: TListNode;
+    FCloseBracketNode: TToken;
+
+  public
+    constructor Create(AOpenBracketNode: TToken; AItemListNode: TListNode; ACloseBracketNode: TToken);
+
+    function Clone: TASTNode; override;
+
+    property OpenBracketNode: TToken read FOpenBracketNode;
+    property ItemListNode: TListNode read FItemListNode;
+    property CloseBracketNode: TToken read FCloseBracketNode;
   end;
 
   TOpenArrayNode = class(TNonTerminalNode)
@@ -3715,6 +3732,55 @@ begin
   FProperties.Add(TASTNodeProperty.Create('SizeNode', ASizeNode));
   FProperties.Add(TASTNodeProperty.Create('PrecisionColonNode', APrecisionColonNode));
   FProperties.Add(TASTNodeProperty.Create('PrecisionNode', APrecisionNode));
+end;
+
+{ TOpenArrayConstructorNode }
+
+function TOpenArrayConstructorNode.Clone: TASTNode;
+var
+  AOpenBracketNode: TToken;
+  AItemListNode: TListNode;
+  ACloseBracketNode: TToken;
+begin
+  if FOpenBracketNode <> nil then
+    AOpenBracketNode := (FOpenBracketNode.Clone as TToken)
+  else
+    AOpenBracketNode := nil;
+
+  if FItemListNode <> nil then
+    AItemListNode := (FItemListNode.Clone as TListNode)
+  else
+    AItemListNode := nil;
+
+  if FCloseBracketNode <> nil then
+    ACloseBracketNode := (FCloseBracketNode.Clone as TToken)
+  else
+    ACloseBracketNode := nil;
+
+  Result := TOpenArrayConstructorNode.Create(
+    AOpenBracketNode,
+    AItemListNode,
+    ACloseBracketNode);
+end;
+
+constructor TOpenArrayConstructorNode.Create(AOpenBracketNode: TToken; AItemListNode: TListNode; ACloseBracketNode: TToken);
+begin
+  inherited Create;
+
+  // Assigning private members
+  FOpenBracketNode := AOpenBracketNode;
+  FItemListNode := AItemListNode;
+  FCloseBracketNode := ACloseBracketNode;
+
+  // Adding child nodes
+  FChildNodes.Add(AOpenBracketNode);
+  FChildNodes.Add(AItemListNode);
+  FChildNodes.Add(ACloseBracketNode);
+
+  // Adding properties
+  FProperties.Add(TASTNodeProperty.Create('OpenBracketNode', AOpenBracketNode));
+  FProperties.Add(TASTNodeProperty.Create('ItemListNode', AItemListNode));
+  FProperties.Add(TASTNodeProperty.Create('CloseBracketNode', ACloseBracketNode));
 end;
 
 { TOpenArrayNode }

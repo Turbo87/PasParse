@@ -54,6 +54,7 @@ type
     procedure Visit(ANode: TMethodImplementationNode); overload; virtual;
     procedure Visit(ANode: TMethodResolutionNode); overload; virtual;
     procedure Visit(ANode: TNumberFormatNode); overload; virtual;
+    procedure Visit(ANode: TOpenArrayConstructorNode); overload; virtual;
     procedure Visit(ANode: TOpenArrayNode); overload; virtual;
     procedure Visit(ANode: TPackageNode); overload; virtual;
     procedure Visit(ANode: TPackedTypeNode); overload; virtual;
@@ -179,6 +180,8 @@ begin
     Visit(ANode as TMethodResolutionNode);
   if ANode is TNumberFormatNode then
     Visit(ANode as TNumberFormatNode);
+  if ANode is TOpenArrayConstructorNode then
+    Visit(ANode as TOpenArrayConstructorNode);
   if ANode is TOpenArrayNode then
     Visit(ANode as TOpenArrayNode);
   if ANode is TPackageNode then
@@ -764,6 +767,17 @@ begin
     Visit(ANode.PrecisionColonNode);
   if ANode.PrecisionNode <> nil then
     Visit(ANode.PrecisionNode);
+end;
+
+procedure TVisitor.Visit(ANode: TOpenArrayConstructorNode);
+begin
+  // Visit child nodes
+  if ANode.OpenBracketNode <> nil then
+    Visit(ANode.OpenBracketNode);
+  if ANode.ItemListNode <> nil then
+    Visit(ANode.ItemListNode);
+  if ANode.CloseBracketNode <> nil then
+    Visit(ANode.CloseBracketNode);
 end;
 
 procedure TVisitor.Visit(ANode: TOpenArrayNode);

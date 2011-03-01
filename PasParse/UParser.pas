@@ -156,6 +156,7 @@ begin
   AddRule(RTMethodOrProperty, TMethodOrPropertyRule);
   AddRule(RTMethodReturnType, TMethodReturnTypeRule);
   AddRule(RTOpenArray, TOpenArrayRule);
+  AddRule(RTOpenArrayConstructor, TOpenArrayConstructorRule);
   AddRule(RTPackage, TPackageRule);
   AddRule(RTPackedType, TPackedTypeRule);
   AddRule(RTParameter, TParameterRule);

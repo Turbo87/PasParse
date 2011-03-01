@@ -192,6 +192,10 @@ NodeTypes:
     - {Name: ArrayKeywordNode, Type: Token}
     - {Name: OfKeywordNode, Type: Token}
     - {Name: TypeNode, Type: AstNode}
+  OpenArrayConstructorNode:
+    - {Name: OpenBracketNode, Type: Token}
+    - {Name: ItemListNode, Type: ListNode<DelimitedItemNode<AstNode>>}
+    - {Name: CloseBracketNode, Type: Token}
   PackageNode:
     - {Name: PackageKeywordNode, Type: Token}
     - {Name: NameNode, Type: AstNode}

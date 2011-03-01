@@ -346,6 +346,12 @@ type
     function Evaluate: TASTNode; override;
   end;
 
+  TOpenArrayConstructorRule = class(TRule)
+  public
+    function CanParse: Boolean; override;
+    function Evaluate: TASTNode; override;
+  end;
+
   TPackageRule = class(TRule)
   public
     function CanParse: Boolean; override;
@@ -2047,6 +2053,30 @@ begin
   Result := TOpenArrayNode.Create(AArray, AOf, AType);
 end;
 
+
+{ TOpenArrayConstructorRule }
+
+function TOpenArrayConstructorRule.CanParse: Boolean;
+begin
+  Result := FParser.CanParseToken(TTOpenBracket);
+end;
+
+function TOpenArrayConstructorRule.Evaluate: TASTNode;
+var
+  AOpen, AClose: TToken;
+  AList: TListNode;
+begin
+  AOpen := FParser.ParseToken(TTOpenBracket);
+
+  if FParser.CanParseRule(RTExpressionList) then
+    AList := FParser.ParseRuleInternal(RTExpressionList) as TListNode
+  else
+    AList := FParser.CreateEmptyListNode;
+
+  AClose := FParser.ParseToken(TTCloseBracket);
+  Result := TOpenArrayConstructorNode.Create(AOpen, AList, AClose);
+end;
+
 { TPackageRule }
 
 function TPackageRule.CanParse: Boolean;
@@ -2241,7 +2271,7 @@ end;
 constructor TParticleRule.Create(AParser: IParser; ARuleType: TRuleType);
 begin
   inherited Create(AParser, ARuleType);
-  FAlternator := TAlternator.Create;
+  FAlternator := TAlternator.Create(True);
   FAlternator.AddToken(TTFileKeyword);
   FAlternator.AddToken(TTNilKeyword);
   FAlternator.AddToken(TTNumber);
@@ -2250,6 +2280,7 @@ begin
   FAlternator.AddRule(RTIdent);
   FAlternator.AddRule(RTParenthesizedExpression);
   FAlternator.AddRule(RTSetLiteral);
+  FAlternator.AddRule(RTOpenArrayConstructor);
 end;
 
 destructor TParticleRule.Destroy;
@@ -2631,12 +2662,12 @@ var
   AList: TListNode;
 begin
   AOpen := FParser.ParseToken(TTOpenBracket);
-  
+
   if FParser.CanParseRule(RTExpressionOrRangeList) then
     AList := FParser.ParseRuleInternal(RTExpressionOrRangeList) as TListNode
   else
     AList := FParser.CreateEmptyListNode;
-    
+
   AClose := FParser.ParseToken(TTCloseBracket);
   Result := TSetLiteralNode.Create(AOpen, AList, AClose);
 end;
