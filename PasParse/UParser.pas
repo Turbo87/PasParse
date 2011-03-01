@@ -216,14 +216,26 @@ var
   ATokenFilter: TTokenFilter;
 begin
   ALexScanner := TLexScanner.Create(AText, AFileName);
-  ATokens := ALexScanner.Tokens;
-  ATokenFilter := TTokenFilter.Create(ATokens, ACompilerDefines, AFileLoader);
-  AFilteredTokens := ATokenFilter.Tokens;
-  CreateFromTokens(AFilteredTokens);
-  AFilteredTokens.Free;
-  ATokenFilter.Free;
-  ATokens.Free;
-  ALexScanner.Free;
+  try
+    ATokens := ALexScanner.Tokens;
+    try
+      ATokenFilter := TTokenFilter.Create(ATokens, ACompilerDefines, AFileLoader);
+      try
+        AFilteredTokens := ATokenFilter.Tokens;
+        try
+          CreateFromTokens(AFilteredTokens);
+        finally
+          AFilteredTokens.Free;
+        end;
+      finally
+        ATokenFilter.Free;
+      end;
+    finally
+      ATokens.Free;
+    end;
+  finally
+    ALexScanner.Free;
+  end;
 end;
 
 constructor TParser.CreateFromTokens(ATokens: TObjectList);
@@ -352,7 +364,7 @@ begin
     AItem := ParseRuleInternal(ARuleType);
     AItems.Add(AItem);
   end;
-      
+
   Result := TListNode.Create(AItems);
   AItems.Free;
 end;
@@ -371,7 +383,7 @@ var
   AItem: TASTNode;
 begin
   AItems := TObjectList.Create(False);
-  
+
   try
     repeat
       AItem := ParseRuleInternal(ARuleType);
@@ -384,7 +396,7 @@ begin
     // And raise exception again
     raise;
   end;
-  
+
   Result := TListNode.Create(AItems);
   AItems.Free;
 end;
@@ -411,7 +423,7 @@ var
   AList: TObjectList;
 begin
   AList := TObjectList.Create(False);
-  
+
   while CanParseToken(ATokenSet) do
     AList.Add(ParseToken(ATokenSet));
 
@@ -449,3 +461,4 @@ begin
 end;
 
 end.
+
