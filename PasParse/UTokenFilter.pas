@@ -323,7 +323,7 @@ var
   I: Integer;
 begin
   AFileName := FFileLoader.ExpandFileName(ADirectory, AFileName);
-  ASource := FFileLoader.Load(AFileName);
+  ASource := FFileLoader.LoadFromParentDirs(AFileName);
 
   ALexer := TLexScanner.Create(ASource, AFileName);
   try

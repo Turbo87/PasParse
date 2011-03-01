@@ -57,6 +57,7 @@ type
     RTMethodReturnType,
     RTMulOp,
     RTOpenArray,
+    RTOpenArrayConstructor,
     RTPackage,
     RTPackedType,
     RTParameter,

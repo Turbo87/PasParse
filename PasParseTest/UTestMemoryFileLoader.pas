@@ -41,9 +41,15 @@ begin
     OK(False, 'Load exception');
   end;
 
+  OK(not ALoader.Exists('Foo.pas'), 'not Exists()');
+
   ALoader['Foo.pas'] := 'Bar';
   OK(ALoader.Load('Foo.pas') = 'Bar', 'Load()');
   OK(ALoader['Foo.pas'] = 'Bar', '[]');
+
+  OK(ALoader.Exists('Foo.pas'), 'Exists()');
+
+  OK(ALoader.LoadFromParentDirs('Bar\Foo.pas') = 'Bar', 'LoadFromParentDirs()');
 
   ALoader['FOO.PAS'] := 'Baz';
   OK(ALoader['Foo.pas'] = 'Baz', 'CaseInvariant');

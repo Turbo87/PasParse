@@ -75,11 +75,20 @@ def generate_nodes(yaml_content):
     cs += "{ T" + node_type_name + " }\n\n"
 
     cs += "function T" + node_type_name + ".Clone: TASTNode;\n"
+    cs += "var\n"
+    for property in properties:
+      cs += "  A" + property.get('Name') + ": T" + replace_types(property.get('Type')) + ";\n"
+      
     cs += "begin\n"
+    for property in properties:
+      cs += "  if F" + property.get('Name') + " <> nil then\n"
+      cs += "    A" + property.get('Name') + " := (F" + property.get('Name') + ".Clone as T" + replace_types(property.get('Type')) + ")\n"
+      cs += "  else\n"
+      cs += "    A" + property.get('Name') + " := nil;\n\n"
 
     params = []
     for property in properties:
-      params.append("F" + property.get('Name') + ".Clone as T" + replace_types(property.get('Type')));
+      params.append("A" + property.get('Name'));
 
     cs += "  Result := T" + node_type_name + ".Create(\n    " + ',\n    '.join(params) + ");\n"
     cs += "end;\n\n"
@@ -192,8 +201,10 @@ def generate_visitor(yaml_content):
   cs += "procedure TVisitor.Visit(ANode: TDelimitedItemNode);\n"
   cs += "begin\n"
   cs += "  // Visit child nodes\n"
-  cs += "  Visit(ANode.ItemNode);\n"
-  cs += "  Visit(ANode.DelimiterNode);\n"
+  cs += "  if ANode.ItemNode <> nil then\n"
+  cs += "    Visit(ANode.ItemNode);\n"
+  cs += "  if ANode.DelimiterNode <> nil then\n"
+  cs += "    Visit(ANode.DelimiterNode);\n"
   cs += "end;\n\n"
 
   cs += "procedure TVisitor.Visit(ANode: TListNode);\n"
@@ -202,7 +213,10 @@ def generate_visitor(yaml_content):
   cs += "begin\n"
   cs += "  // Visit child nodes\n"
   cs += "  for I := 0 to ANode.ItemsCount - 1 do\n"
-  cs += "    Visit(ANode.Items[I]);\n"
+  cs += "  begin\n"
+  cs += "    if ANode.Items[I] <> nil then\n"
+  cs += "      Visit(ANode.Items[I]);\n"
+  cs += "  end;\n"
   cs += "end;\n\n"
 
   cs += "procedure TVisitor.Visit(ANode: TToken);\n"
@@ -219,7 +233,8 @@ def generate_visitor(yaml_content):
 
     cs += "  // Visit child nodes\n"
     for property in properties:
-      cs += "  Visit(ANode." + property.get('Name') + ");\n"
+      cs += "  if ANode." + property.get('Name') + " <> nil then\n"
+      cs += "    Visit(ANode." + property.get('Name') + ");\n"
 
     cs += "end;\n\n"
 

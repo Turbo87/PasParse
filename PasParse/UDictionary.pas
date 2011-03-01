@@ -69,6 +69,12 @@ type
     /// <Description>Assigns Value to Key. Overwrites if Key exists already.</Description>
     function Write(const AKey: string; const AValue: TObject): Boolean;
 
+    /// <Description>Clears all items from the dictionary.</Description>
+    procedure Clear;
+
+    /// <Description>Returns the number of pairs in the Dictionary.</Description>
+    function Count: Integer;
+
     /// <Description>Checks whether the Key exists in the Dictionary.</Description>
     function Contains(const AKey: string): Boolean;
 
@@ -80,6 +86,25 @@ implementation
 
 { TDictionary }
 
+procedure TDictionary.Clear;
+var
+  I: Integer;
+begin
+  // If the dictionary is supposed to kill it's children
+  if FFreeChildren then
+  begin
+    // ... iterate through the children
+    for I := 0 to FList.Count - 1 do
+    begin
+      // ... and free them
+      FList.Objects[I].Free;
+    end;
+  end;
+
+  // Clear the remaining pointers from the interal list
+  FList.Clear;
+end;
+
 function TDictionary.Contains(const AKey: string): Boolean;
 var
   AIndex: Integer;
@@ -88,6 +113,11 @@ begin
   AIndex := IndexOf(AKey);
   // IndexOf returns negative value if Key was not found!
   Result := (AIndex >= 0);
+end;
+
+function TDictionary.Count: Integer;
+begin
+  Result := FList.Count;
 end;
 
 constructor TDictionary.Create(const AFreeChildren: Boolean);
@@ -99,20 +129,9 @@ begin
 end;
 
 destructor TDictionary.Destroy;
-var
-  I: Integer;
 begin
-  // If the dictionary is supposed to kill it's children
-  if FFreeChildren then
-  begin
-    // ... iterate through the children
-    for I := 0 to FList.Count - 1 do
-    begin
-      // ... and free them 
-      FList.Objects[I].Free;
-    end;
-  end;
-
+  Clear;
+  
   // Destroy the internal list
   FList.Free;
   inherited;

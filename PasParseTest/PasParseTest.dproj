@@ -18,10 +18,10 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <Version>7.0</Version>
     <DCC_Define>DEBUG</DCC_Define>
-    <DCC_UnitSearchPath>$(BDS)\lib\Debug;$(BDS)\Lib\Debug\Indy10</DCC_UnitSearchPath>
-    <DCC_ResourcePath>$(BDS)\lib\Debug;$(BDS)\Lib\Debug\Indy10</DCC_ResourcePath>
-    <DCC_ObjPath>$(BDS)\lib\Debug;$(BDS)\Lib\Debug\Indy10</DCC_ObjPath>
-    <DCC_IncludePath>$(BDS)\lib\Debug;$(BDS)\Lib\Debug\Indy10</DCC_IncludePath>
+    <DCC_UnitSearchPath>$(BDS)\lib\Debug;$(BDS)\Lib\Debug\Indy10;..\PasParse;..\PasTest</DCC_UnitSearchPath>
+    <DCC_ResourcePath>$(BDS)\lib\Debug;$(BDS)\Lib\Debug\Indy10;..\PasParse;..\PasTest</DCC_ResourcePath>
+    <DCC_ObjPath>$(BDS)\lib\Debug;$(BDS)\Lib\Debug\Indy10;..\PasParse;..\PasTest</DCC_ObjPath>
+    <DCC_IncludePath>$(BDS)\lib\Debug;$(BDS)\Lib\Debug\Indy10;..\PasParse;..\PasTest</DCC_IncludePath>
     <DCC_MapFile>3</DCC_MapFile>
   </PropertyGroup>
   <ProjectExtensions>
@@ -37,7 +37,6 @@
     </DelphiCompile>
     <DCCReference Include="..\FastMM\FastMM4.pas" />
     <DCCReference Include="..\FastMM\FastMM4Messages.pas" />
-    <DCCReference Include="UTest.pas" />
     <DCCReference Include="UTestAddOp.pas" />
     <DCCReference Include="UTestAlternator.pas" />
     <DCCReference Include="UTestArrayType.pas" />
@@ -76,6 +75,7 @@
     <DCCReference Include="UTestFileLoader.pas" />
     <DCCReference Include="UTestFileType.pas" />
     <DCCReference Include="UTestForStatement.pas" />
+    <DCCReference Include="UTestGoal.pas" />
     <DCCReference Include="UTestGotoStatement.pas" />
     <DCCReference Include="UTestIdent.pas" />
     <DCCReference Include="UTestIdentList.pas" />

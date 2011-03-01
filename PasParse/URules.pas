@@ -199,7 +199,12 @@ type
   end;
   
   TGoalRule = class(TRule)
+    FAlternator: TAlternator;
+
   public
+    constructor Create(AParser: IParser; ARuleType: TRuleType); override;
+    destructor Destroy; override;
+
     function CanParse: Boolean; override;
     function Evaluate: TASTNode; override;
   end;
@@ -337,6 +342,12 @@ type
     constructor Create(AParser: IParser; ARuleType: TRuleType); override;
     destructor Destroy; override;
 
+    function CanParse: Boolean; override;
+    function Evaluate: TASTNode; override;
+  end;
+
+  TOpenArrayConstructorRule = class(TRule)
+  public
     function CanParse: Boolean; override;
     function Evaluate: TASTNode; override;
   end;
@@ -1506,12 +1517,27 @@ end;
 
 function TGoalRule.CanParse: Boolean;
 begin
-  Result := False;
+  Result := FAlternator.LookAhead(FParser);
+end;
+
+constructor TGoalRule.Create(AParser: IParser; ARuleType: TRuleType);
+begin
+  inherited Create(AParser, ARuleType);
+  FAlternator := TAlternator.Create;
+  FAlternator.AddRule(RTPackage);
+  FAlternator.AddRule(RTProgram);
+  FAlternator.AddRule(RTUnit);
+end;
+
+destructor TGoalRule.Destroy;
+begin
+  FAlternator.Free;
+  inherited;
 end;
 
 function TGoalRule.Evaluate: TASTNode;
 begin
-  Result := nil;
+  Result := FAlternator.Execute(FParser);
 end;
 
 { TGotoStatementRule }
@@ -2027,6 +2053,30 @@ begin
   Result := TOpenArrayNode.Create(AArray, AOf, AType);
 end;
 
+
+{ TOpenArrayConstructorRule }
+
+function TOpenArrayConstructorRule.CanParse: Boolean;
+begin
+  Result := FParser.CanParseToken(TTOpenBracket);
+end;
+
+function TOpenArrayConstructorRule.Evaluate: TASTNode;
+var
+  AOpen, AClose: TToken;
+  AList: TListNode;
+begin
+  AOpen := FParser.ParseToken(TTOpenBracket);
+
+  if FParser.CanParseRule(RTExpressionList) then
+    AList := FParser.ParseRuleInternal(RTExpressionList) as TListNode
+  else
+    AList := FParser.CreateEmptyListNode;
+
+  AClose := FParser.ParseToken(TTCloseBracket);
+  Result := TOpenArrayConstructorNode.Create(AOpen, AList, AClose);
+end;
+
 { TPackageRule }
 
 function TPackageRule.CanParse: Boolean;
@@ -2221,7 +2271,7 @@ end;
 constructor TParticleRule.Create(AParser: IParser; ARuleType: TRuleType);
 begin
   inherited Create(AParser, ARuleType);
-  FAlternator := TAlternator.Create;
+  FAlternator := TAlternator.Create(True);
   FAlternator.AddToken(TTFileKeyword);
   FAlternator.AddToken(TTNilKeyword);
   FAlternator.AddToken(TTNumber);
@@ -2230,6 +2280,7 @@ begin
   FAlternator.AddRule(RTIdent);
   FAlternator.AddRule(RTParenthesizedExpression);
   FAlternator.AddRule(RTSetLiteral);
+  FAlternator.AddRule(RTOpenArrayConstructor);
 end;
 
 destructor TParticleRule.Destroy;
@@ -2611,12 +2662,12 @@ var
   AList: TListNode;
 begin
   AOpen := FParser.ParseToken(TTOpenBracket);
-  
+
   if FParser.CanParseRule(RTExpressionOrRangeList) then
     AList := FParser.ParseRuleInternal(RTExpressionOrRangeList) as TListNode
   else
     AList := FParser.CreateEmptyListNode;
-    
+
   AClose := FParser.ParseToken(TTCloseBracket);
   Result := TSetLiteralNode.Create(AOpen, AList, AClose);
 end;

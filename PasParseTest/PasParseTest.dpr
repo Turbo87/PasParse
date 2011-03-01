@@ -7,7 +7,6 @@ uses
   FastMM4Messages in '..\FastMM\FastMM4Messages.pas',
   SysUtils,
   UTestLexScanner in 'UTestLexScanner.pas',
-  UTest in 'UTest.pas',
   UTestDictionary in 'UTestDictionary.pas',
   UTestCompilerDefines in 'UTestCompilerDefines.pas',
   UTestASTNode in 'UTestASTNode.pas',
@@ -114,7 +113,8 @@ uses
   UTestTokenFilter in 'UTestTokenFilter.pas',
   UTestMemoryFileLoader in 'UTestMemoryFileLoader.pas',
   UTestFileLoader in 'UTestFileLoader.pas',
-  UTestVisitor in 'UTestVisitor.pas';
+  UTestVisitor in 'UTestVisitor.pas',
+  UTestGoal in 'UTestGoal.pas';
 
 begin
   try
@@ -161,6 +161,7 @@ begin
     TTestFieldSection.Test;
     TTestFileType.Test;
     TTestForStatement.Test;
+    TTestGoal.Test;
     TTestGotoStatement.Test;
     TTestIdent.Test;
     TTestIdentList.Test;

@@ -83,13 +83,15 @@ type
     /// <Description>TObjectList of IAlternate elements.</Description>
     FAlternates: TObjectList;
 
+    FDiscardParseExceptions: Boolean;
+
     /// <Description>Textual representation of the Alternates.</Description>
     /// <Description>Use the public DisplayText property to access!</Description>
     function GetDisplayText: string;
 
   public
     /// <Description>Default constructor initializing the Alternates list.</Description>
-    constructor Create;
+    constructor Create(ADiscardParseExceptions: Boolean = False);
     /// <Description>Default destructor destroying the Alternates list.</Description>
     destructor Destroy; override;
 
@@ -114,7 +116,8 @@ type
 implementation
 
 uses
-  USingleTokenTokenSet, TypInfo, UInvalidOperationException;
+  USingleTokenTokenSet, TypInfo, UInvalidOperationException,
+  UParseException, UIFrame;
 
 { TAlternator }
 
@@ -141,11 +144,12 @@ begin
     TSingleTokenTokenSet.Create(ATokenType), True));
 end;
 
-constructor TAlternator.Create;
+constructor TAlternator.Create(ADiscardParseExceptions: Boolean);
 begin
-  inherited;
+  inherited Create;
   // Initialize the Alternates list
   FAlternates := TObjectList.Create;
+  FDiscardParseExceptions := ADiscardParseExceptions;
 end;
 
 destructor TAlternator.Destroy;
@@ -158,17 +162,37 @@ end;
 function TAlternator.Execute(AParser: IParser): TASTNode;
 var
   I: Integer;
+  AAlternate: IAlternate;
+  ANextFrame: IFrame;
 begin
   Result := nil;
+  ANextFrame := nil;
 
   // Iterate through the Alternates list
   for I := 0 to FAlternates.Count - 1 do
   begin
     // Try to parse the next Token with each Alternate
-    Result := (FAlternates.Items[I] as IAlternate).TryParse(AParser);
-    if Result <> nil then
-      // ... and stop iterating when parsing was successful
-      Break;
+    AAlternate := (FAlternates.Items[I] as IAlternate);
+    if AAlternate <> nil then
+    begin
+      try
+        ANextFrame := AParser.NextFrame;
+        Result := AAlternate.TryParse(AParser);
+      except
+        on EParseException do
+        begin
+          Result.Free;
+          Result := nil;
+          AParser.NextFrame := ANextFrame;
+          if not FDiscardParseExceptions then
+            raise;
+        end;
+      end;
+      
+      if Result <> nil then
+        // ... and stop iterating when parsing was successful
+        Break;
+    end;
   end;
 
   if Result = nil then

@@ -156,7 +156,6 @@ begin
   AddRule(RTMethodOrProperty, TMethodOrPropertyRule);
   AddRule(RTMethodReturnType, TMethodReturnTypeRule);
   AddRule(RTOpenArray, TOpenArrayRule);
-  AddRule(RTOpenArrayConstructor, TOpenArrayConstructorRule);
   AddRule(RTPackage, TPackageRule);
   AddRule(RTPackedType, TPackedTypeRule);
   AddRule(RTParameter, TParameterRule);
@@ -217,26 +216,14 @@ var
   ATokenFilter: TTokenFilter;
 begin
   ALexScanner := TLexScanner.Create(AText, AFileName);
-  try
-    ATokens := ALexScanner.Tokens;
-    try
-      ATokenFilter := TTokenFilter.Create(ATokens, ACompilerDefines, AFileLoader);
-      try
-        AFilteredTokens := ATokenFilter.Tokens;
-        try
-          CreateFromTokens(AFilteredTokens);
-        finally
-          AFilteredTokens.Free;
-        end;
-      finally
-        ATokenFilter.Free;
-      end;
-    finally
-      ATokens.Free;
-    end;
-  finally
-    ALexScanner.Free;
-  end;
+  ATokens := ALexScanner.Tokens;
+  ATokenFilter := TTokenFilter.Create(ATokens, ACompilerDefines, AFileLoader);
+  AFilteredTokens := ATokenFilter.Tokens;
+  CreateFromTokens(AFilteredTokens);
+  AFilteredTokens.Free;
+  ATokenFilter.Free;
+  ATokens.Free;
+  ALexScanner.Free;
 end;
 
 constructor TParser.CreateFromTokens(ATokens: TObjectList);
@@ -254,11 +241,11 @@ begin
 
   SetLength(FRules, 0);
 
-  if (FNextFrame <> nil) and FNextFrame.IsEOF and (FNextFrame <> FFirstFrame) then
+  if FNextFrame.IsEOF and (FNextFrame <> FFirstFrame) then
     FNextFrame.Free;
 
   FNextFrame := FFirstFrame;
-  while (FNextFrame <> nil) and (not FNextFrame.IsEOF) do
+  while not FNextFrame.IsEOF do
   begin
     AFrame := FNextFrame;
     FNextFrame := FNextFrame.Next;
@@ -365,7 +352,7 @@ begin
     AItem := ParseRuleInternal(ARuleType);
     AItems.Add(AItem);
   end;
-
+      
   Result := TListNode.Create(AItems);
   AItems.Free;
 end;
@@ -384,7 +371,7 @@ var
   AItem: TASTNode;
 begin
   AItems := TObjectList.Create(False);
-
+  
   try
     repeat
       AItem := ParseRuleInternal(ARuleType);
@@ -397,7 +384,7 @@ begin
     // And raise exception again
     raise;
   end;
-
+  
   Result := TListNode.Create(AItems);
   AItems.Free;
 end;
@@ -424,7 +411,7 @@ var
   AList: TObjectList;
 begin
   AList := TObjectList.Create(False);
-
+  
   while CanParseToken(ATokenSet) do
     AList.Add(ParseToken(ATokenSet));
 
@@ -462,4 +449,3 @@ begin
 end;
 
 end.
-

@@ -47,6 +47,12 @@ begin
   OK(ALoader.Load('data/FileLoaderTestUnix.txt') =
     'foo' + #10 + 'bar' + #10 + 'baz', 'Load() with \n');
 
+  OK(not ALoader.Exists('data/FileLoaderTestUnix.txt.xxx'), 'not Exists()');
+  OK(ALoader.Exists('data/FileLoaderTestUnix.txt'), 'Exists()');
+
+  OK(ALoader.LoadFromParentDirs('data\foo\bar\FileLoaderTestUnix.txt') <> '',
+    'LoadFromParentDirs()');
+
   ALoader.Free;
 end;
 

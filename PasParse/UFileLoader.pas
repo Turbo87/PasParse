@@ -10,6 +10,7 @@ type
   public
     function ExpandFileName(ACurrentDirectory, AFileName: string): string; override;
     function Load(AFileName: string): string; override;
+    function Exists(AFileName: string): Boolean; override;
   end;
 
 implementation
@@ -18,6 +19,11 @@ uses
   SysUtils;
 
 { TFileLoader }
+
+function TFileLoader.Exists(AFileName: string): Boolean;
+begin
+  Result := FileExists(AFileName);
+end;
 
 function TFileLoader.ExpandFileName(ACurrentDirectory,
   AFileName: string): string;
@@ -45,6 +51,9 @@ begin
     begin
       Read(AFile, AChar);
       Result := Result + AChar;
+
+      if Result = #239#187#191 then
+        Result := '';
     end;
 
     // Close File
