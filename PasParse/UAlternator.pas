@@ -166,6 +166,7 @@ var
   ANextFrame: IFrame;
 begin
   Result := nil;
+  ANextFrame := nil;
 
   // Iterate through the Alternates list
   for I := 0 to FAlternates.Count - 1 do
