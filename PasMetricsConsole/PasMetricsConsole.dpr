@@ -111,7 +111,12 @@ function GetHeader: string;
 begin
   case FStyle of
     sCSV: Result := 'File,MI,McCabe,LOCpro';
-    sHTML: Result := '<html><head><title>PasMetrics</title><style>html { FONT-FAMILY: Arial; }</style></head><body><table><tr><td>File</td><td colspan="2">Maintainability Index</td><td>McCabe</td><td>LOCpro</td></tr>';
+    sHTML: Result := '<html><head><title>PasMetrics</title>' +
+      '<style>html { FONT-FAMILY: Arial; }</style></head>' +
+      '<body><table cellspacing="0" cellpadding="3">' +
+      '<tr style="COLOR: white; BACKGROUND: #555555; FONT-WEIGHT: bold;">' +
+      '<td>File</td><td colspan="2">Maintainability Index</td>' +
+      '<td>McCabe</td><td>LOCpro</td></tr>';
     else Result := '';
   end;
 end;
@@ -122,8 +127,12 @@ var
 begin
   case FStyle of
     sCSV: AFormat := '%d,%.1f,%.0f,%d';
-    sHTML: AFormat := '<tr><td>Summary: %d Files</td><td colspan="2">avg. %.1f</td><td>avg. %.0f</td><td>%d (avg. %.1f)</td></tr>';
-    else AFormat := 'Summary: %d Files - avg. MI: %.1f - avg. McCabe: %.0f - LOCpro: %d (avg. %.1f)';
+    sHTML: AFormat := '<tr style="COLOR: white; BACKGROUND: #555555; ' +
+      'FONT-WEIGHT: bold;"><td>Summary: %d Files</td>' +
+      '<td colspan="2">avg. %.1f</td><td>avg. %.0f</td>' +
+      '<td>%d (avg. %.1f)</td></tr>';
+    else AFormat := 'Summary: %d Files - avg. MI: %.1f - ' +
+      'avg. McCabe: %.0f - LOCpro: %d (avg. %.1f)';
   end;
   Result := Format(AFormat, [FFiles, FMI / FFiles, FMcCabe / FFiles,
                              FLOCpro, FLOCpro / FFiles]);
@@ -154,7 +163,9 @@ begin
 
   case FStyle of
     sCSV: Result := '%s,%.0f,%d,%d';
-    sHTML: Result := '<tr><td>%s</td><td>%.0f</td><td><div style="WIDTH: ' + Format('%.0f', [AMI]) + 'px; BACKGROUND: ' + AColor + ';">&nbsp;</div></td><td>%d</td><td>%d</td></tr>';
+    sHTML: Result := '<tr><td>%s</td><td>%.0f</td><td><div style="WIDTH: ' +
+      Format('%.0f', [AMI]) + 'px; BACKGROUND: ' + AColor + ';">&nbsp;</div>' +
+      '</td><td>%d</td><td>%d</td></tr>';
     else Result := '%s - MI: %.0f - McCabe: %d - LOCpro: %d';
   end;
 end;
@@ -163,7 +174,8 @@ function GetWarningFormat: string;
 begin
   case FStyle of
     sCSV: Result := '%s,%s';
-    sHTML: Result := '<tr><td>%s</td><td colspan="4" style="COLOR: white; BACKGROUND: red; FONT-WEIGHT: bold;">%s</td></tr>';
+    sHTML: Result := '<tr><td>%s</td><td colspan="4" style="COLOR: white; ' +
+      'BACKGROUND: red; FONT-WEIGHT: bold;">%s</td></tr>';
     else Result := '%s'#13#10'### Warning: %s';
   end;
 end;
