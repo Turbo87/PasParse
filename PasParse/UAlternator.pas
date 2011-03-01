@@ -83,13 +83,15 @@ type
     /// <Description>TObjectList of IAlternate elements.</Description>
     FAlternates: TObjectList;
 
+    FDiscardParseExceptions: Boolean;
+
     /// <Description>Textual representation of the Alternates.</Description>
     /// <Description>Use the public DisplayText property to access!</Description>
     function GetDisplayText: string;
 
   public
     /// <Description>Default constructor initializing the Alternates list.</Description>
-    constructor Create;
+    constructor Create(ADiscardParseExceptions: Boolean = False);
     /// <Description>Default destructor destroying the Alternates list.</Description>
     destructor Destroy; override;
 
@@ -114,7 +116,7 @@ type
 implementation
 
 uses
-  USingleTokenTokenSet, TypInfo, UInvalidOperationException;
+  USingleTokenTokenSet, TypInfo, UInvalidOperationException, UParseException;
 
 { TAlternator }
 
@@ -141,11 +143,12 @@ begin
     TSingleTokenTokenSet.Create(ATokenType), True));
 end;
 
-constructor TAlternator.Create;
+constructor TAlternator.Create(ADiscardParseExceptions: Boolean);
 begin
-  inherited;
+  inherited Create;
   // Initialize the Alternates list
   FAlternates := TObjectList.Create;
+  FDiscardParseExceptions := ADiscardParseExceptions;
 end;
 
 destructor TAlternator.Destroy;
@@ -169,7 +172,18 @@ begin
     AAlternate := (FAlternates.Items[I] as IAlternate);
     if AAlternate <> nil then
     begin
-      Result := AAlternate.TryParse(AParser);
+      try
+        Result := AAlternate.TryParse(AParser);
+      except
+        on EParseException do
+        begin
+          Result.Free;
+          Result := nil;
+          if not FDiscardParseExceptions then
+            raise;
+        end;
+      end;
+      
       if Result <> nil then
         // ... and stop iterating when parsing was successful
         Break;
