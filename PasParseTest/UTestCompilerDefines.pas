@@ -29,8 +29,11 @@ var
   ALocation: TLocation;
 begin
   ALocation := TLocation.Create('', '', 0);
-  Result := ACompilerDefines.IsTrue(ACompilerDirective, ALocation);
-  ALocation.Free;
+  try
+    Result := ACompilerDefines.IsTrue(ACompilerDirective, ALocation);
+  finally
+    ALocation.Free;
+  end;
 end;
 
 class function TTestCompilerDefines.GetName: string;
