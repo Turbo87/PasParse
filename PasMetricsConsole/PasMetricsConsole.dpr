@@ -18,6 +18,11 @@ var
   FFile: TextFile;
   FStyle: TStyle;
 
+  FFiles: Integer;
+  FLOCpro: Integer;
+  FMcCabe: Integer;
+  FMI: Extended;
+
 procedure ParseParameters(out ADirectory: string; out ARecursive: Boolean);
 var
   I: Integer;
@@ -111,12 +116,26 @@ begin
   end;
 end;
 
+function GetSummary: string;
+var
+  AFormat: string;
+begin
+  case FStyle of
+    sCSV: AFormat := '%d,%.1f,%.0f,%d';
+    sHTML: AFormat := '<tr><td>Summary: %d Files</td><td colspan="2">avg. %.1f</td><td>avg. %.0f</td><td>%d (avg. %.1f)</td></tr>';
+    else AFormat := 'Summary: %d Files - avg. MI: %.1f - avg. McCabe: %.0f - LOCpro: %d (avg. %.1f)';
+  end;
+  Result := Format(AFormat, [FFiles, FMI / FFiles, FMcCabe / FFiles,
+                             FLOCpro, FLOCpro / FFiles]);
+end;
+
 function GetFooter: string;
 begin
   case FStyle of
     sHTML: Result := '</table></body></html>';
     else Result := '';
   end;
+  Result := GetSummary + Result;
 end;
 
 function GetResultFormat(AMI: Extended): string;
@@ -188,6 +207,12 @@ begin
           AMI := TMaintainabilityIndex.Create;
           AMI.Calculate(ANode);
           OutputResult(AFilePath, ABaseDir, AMI);
+
+          Inc(FFiles);
+          FLOCpro := FLOCpro + AMI.LOCCounter.LOCProgram;
+          FMcCabe := FMcCabe + AMI.McCabe.Count;
+          FMI := FMI + AMI.Value;
+
           AMI.Free;
         finally
           ANode.Free;
