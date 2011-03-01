@@ -152,7 +152,7 @@ begin
   else
     raise EPreprocessorException.Create('Compiler directive ''' +
       ACompilerDirective + ''' has not been defined as either True or False',
-      ALocation);
+      ALocation.Clone);
 end;
 
 procedure TCompilerDefines.UndefineSymbol(ASymbol: string);
