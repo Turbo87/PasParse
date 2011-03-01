@@ -116,7 +116,8 @@ type
 implementation
 
 uses
-  USingleTokenTokenSet, TypInfo, UInvalidOperationException, UParseException;
+  USingleTokenTokenSet, TypInfo, UInvalidOperationException,
+  UParseException, UIFrame;
 
 { TAlternator }
 
@@ -162,6 +163,7 @@ function TAlternator.Execute(AParser: IParser): TASTNode;
 var
   I: Integer;
   AAlternate: IAlternate;
+  ANextFrame: IFrame;
 begin
   Result := nil;
 
@@ -173,12 +175,14 @@ begin
     if AAlternate <> nil then
     begin
       try
+        ANextFrame := AParser.NextFrame;
         Result := AAlternate.TryParse(AParser);
       except
         on EParseException do
         begin
           Result.Free;
           Result := nil;
+          AParser.NextFrame := ANextFrame;
           if not FDiscardParseExceptions then
             raise;
         end;
