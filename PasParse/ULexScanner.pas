@@ -298,7 +298,7 @@ end;
 
 function TLexScanner.GetLocation: TLocation;
 begin
-  Result := TLocation.Create(FFileName, FSource, FIndex);
+  Result := TLocation.Create(FFileName, FSource, FIndex + 1);
 end;
 
 function TLexScanner.GetTokens: TObjectList;
