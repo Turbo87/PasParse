@@ -41,9 +41,12 @@ begin
 
   for I := 0 to FChildNodes.Count - 1 do
   begin
-    Result := (FChildNodes.Items[I] as TASTNode).Location;
-    if Result <> nil then
-      Break;
+    if FChildNodes.Items[I] <> nil then
+    begin
+      Result := (FChildNodes.Items[I] as TASTNode).Location;
+      if Result <> nil then
+        Break;
+    end;
   end;
 end;
 
