@@ -217,15 +217,17 @@ begin
         ANode := AParser.ParseRule(RTGoal);
         try
           AMI := TMaintainabilityIndex.Create;
-          AMI.Calculate(ANode);
-          OutputResult(AFilePath, ABaseDir, AMI);
+          try
+            AMI.Calculate(ANode);
+            OutputResult(AFilePath, ABaseDir, AMI);
 
-          Inc(FFiles);
-          FLOCpro := FLOCpro + AMI.LOCCounter.LOCProgram;
-          FMcCabe := FMcCabe + AMI.McCabe.Count;
-          FMI := FMI + AMI.Value;
-
-          AMI.Free;
+            Inc(FFiles);
+            FLOCpro := FLOCpro + AMI.LOCCounter.LOCProgram;
+            FMcCabe := FMcCabe + AMI.McCabe.Count;
+            FMI := FMI + AMI.Value;
+          finally
+            AMI.Free;
+          end;
         finally
           ANode.Free;
         end;
