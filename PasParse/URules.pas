@@ -668,6 +668,8 @@ var
   AOf: TToken;
   AType: TASTNode;
 begin
+  // array[1..7, 1..24] of Real
+
   AArray := FParser.ParseToken(TTArrayKeyword);
   AOpenBracket := nil;
   ACloseBracket := nil;
@@ -699,6 +701,8 @@ function TAssemblerStatementRule.Evaluate: TASTNode;
 var
   AASM, AEnd: TToken;
 begin
+  // asm ... end
+
   AASM := FParser.ParseToken(TTAsmKeyword);
   while not FParser.CanParseToken(TTEndKeyword) do
     try
@@ -803,6 +807,8 @@ end;
 
 function TBareInheritedRule.Evaluate: TASTNode;
 begin
+  // inherited
+  
   Result := FParser.ParseToken(TTInheritedKeyword);
 end;
 
@@ -818,6 +824,8 @@ var
   ABegin, AEnd: TToken;
   AList: TListNode;
 begin
+  // asm ... end
+  // begin ... end
   if FParser.CanParseRule(RTAssemblerStatement) then
     Result := FParser.ParseRuleInternal(RTAssemblerStatement)
   else
@@ -935,6 +943,8 @@ var
   AClass, AOf: TToken;
   AType: TASTNode;
 begin
+  // class of TSomething
+
   AClass := FParser.ParseToken(TTClassKeyword);
   AOf := FParser.ParseToken(TTOfKeyword);
   AType := FParser.ParseRuleInternal(RTQualifiedIdent);
@@ -1253,6 +1263,7 @@ var
   AOperator: TToken;
   ARight: TASTNode;
 begin
+  // a < b
   Result := FParser.ParseRuleInternal(RTSimpleExpression);
   while FParser.CanParseRule(RTRelOp) do
   begin
@@ -1271,6 +1282,7 @@ end;
 
 function TExpressionListRule.Evaluate: TASTNode;
 begin
+  // a < b, b < c, c < d
   Result := FParser.ParseDelimitedList(RTExpression, TTComma);
 end;
 
@@ -1286,6 +1298,8 @@ var
   AOperator: TToken;
   ARight: TASTNode;
 begin
+  // a := b
+  // c := a < b
   Result := FParser.ParseRuleInternal(RTExpression);
   if FParser.CanParseToken(TTColonEquals) then
   begin
@@ -1387,6 +1401,7 @@ var
   ADeclList: TListNode;
   ABlock: TASTNode;
 begin
+  // var AVar: Integer begin ... end
   ADeclList := FParser.ParseOptionalRuleList(RTImplementationDecl);
   ABlock := FParser.ParseRuleInternal(RTBlock);
   Result := TFancyBlockNode.Create(ADeclList, ABlock);
@@ -1482,6 +1497,9 @@ var
   AFor, ALoopVariable, AIn, ADo, AColonEquals, ADirection: TToken;
   AExpression, AStatement, AStartingValue, AEndingValue: TASTNode;
 begin
+  // for AVariable in AArray do ...
+  // for AVariable := 0 to 5 do ...
+
   AFor := FParser.ParseToken(TTForKeyword);
   ALoopVariable := FParser.ParseRuleInternal(RTIdent) as TToken;
 
@@ -1552,6 +1570,8 @@ var
   AGoTo: TToken;
   ALabelId: TToken;
 begin
+  // goto LABEL
+
   AGoTo := FParser.ParseToken(TTGotoKeyword);
   ALabelId := FParser.ParseRuleInternal(RTLabelId) as TToken;
   Result := TGotoStatementNode.Create(AGoTo, ALabelId);
@@ -1597,6 +1617,9 @@ var
   AIf, AThen, AElse: TToken;
   ACondition, AThenStatement, AElseStatement: TASTNode;
 begin
+  // if a < b then ...
+  // if a < b then ... else ...
+
   AIf := FParser.ParseToken(TTIfKeyword);
   ACondition := FParser.ParseRuleInternal(RTExpression);
   AThen := FParser.ParseToken(TTThenKeyword);
@@ -2306,6 +2329,8 @@ var
   ACaret: TToken;
   AType: TASTNode;
 begin
+  // ^Integer
+  
   ACaret := FParser.ParseToken(TTCaret);
   AType := FParser.ParseRuleInternal(RTType);
   Result := TPointerTypeNode.Create(ACaret, AType);
@@ -2624,6 +2649,8 @@ var
   AList: TListNode;
   ACondition: TASTNode;
 begin
+  // repeat ... until a < b
+
   ARepeat := FParser.ParseToken(TTRepeatKeyword);
   AList := FParser.ParseOptionalStatementList;
   AUntil := FParser.ParseToken(TTUntilKeyword);
@@ -2684,6 +2711,8 @@ var
   ASet, AOf: TToken;
   AType: TASTNode;
 begin
+  // Set of TSomething
+
   ASet := FParser.ParseToken(TTSetKeyword);
   AOf := FParser.ParseToken(TTOfKeyword);
   AType := FParser.ParseRuleInternal(RTType);
@@ -2863,6 +2892,9 @@ var
   ATryStatements, AExceptionItemList: TListNode;
   AElseStatements, AFinallyStatements: TListNode;
 begin
+  // try ... finally ... end
+  // try ... except ... end
+
   ATry := FParser.ParseToken(TTTryKeyword);
   ATryStatements := FParser.ParseOptionalStatementList;
 
@@ -3345,6 +3377,8 @@ var
   AWhile, ADo: TToken;
   ACondition, AStatement: TASTNode;
 begin
+  // while a < b do ...
+
   AWhile := FParser.ParseToken(TTWhileKeyword);
   ACondition := FParser.ParseRuleInternal(RTExpression);
   ADo := FParser.ParseToken(TTDoKeyword);
