@@ -411,10 +411,18 @@ function TLexScanner.NextToken: TToken;
 var
   AMatch: TMatch;
   AText: string;
+  ALineBreaksBefore: Integer;
 begin
+  ALineBreaksBefore := 0;
+
   // Skip whitespace
-  while (FIndex < Length(FSource)) and IsWhitespace(Peek(0))  do
+  while (FIndex < Length(FSource)) and IsWhitespace(Peek(0)) do
+  begin
+    if IsLineBreak(Peek(0)) then
+      Inc(ALineBreaksBefore);
+      
     Inc(FIndex);
+  end;
 
   // End-of-file reached
   if FIndex >= Length(FSource) then
@@ -433,6 +441,7 @@ begin
       AText := Copy(FSource, FIndex + 1, AMatch.Length);
       Result := TToken.Create(AMatch.TokenType, Location, AText,
                               AMatch.ParsedText);
+      Result.LineBreaksBefore := ALineBreaksBefore;
       Inc(FIndex, AMatch.Length);
       AMatch.Free;
     end;
