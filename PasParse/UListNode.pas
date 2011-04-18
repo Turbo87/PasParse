@@ -56,10 +56,10 @@ begin
   inherited Create;
 
   for I := 0 to AItems.Count - 1 do
+  begin
     FChildNodes.Add(AItems[I]);
-
-  for I := 0 to AItems.Count - 1 do
     FProperties.Add(TASTNodeProperty.Create('Items[' + IntToStr(I) + ']', (AItems[I] as TASTNode)));
+  end;
 end;
 
 function TListNode.GetCount: Integer;
