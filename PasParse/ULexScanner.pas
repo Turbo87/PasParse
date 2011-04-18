@@ -100,6 +100,8 @@ type
     function IsLetter(AChar: Char): Boolean;
     /// <Description>Checks whether the given character is some form of whitespace.</Description>
     function IsWhitespace(AChar: Char): Boolean;
+    /// <Description>Checks whether the given character is a line break character.</Description>
+    function IsLineBreak(AChar: Char): Boolean;
 
     /// <Description>Returns a Location instance of the current reading position.</Description>
     /// <Description>The caller is responsible for freeing the Location instance!</Description>
@@ -361,6 +363,11 @@ end;
 function TLexScanner.IsWhitespace(AChar: Char): Boolean;
 begin
   Result := ((AChar <= #13) and (AChar >= #9)) or (AChar = ' ')
+end;
+
+function TLexScanner.IsLineBreak(AChar: Char): Boolean;
+begin
+  Result := (AChar = #10)
 end;
 
 function TLexScanner.IsWordContinuationChar(AChar: Char): Boolean;
