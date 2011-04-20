@@ -111,6 +111,8 @@ type
     /// <Description>The caller is responsible for freeing the list!</Description>
     function GetTokens: TObjectList;
 
+    procedure FillLineBreaksAfter(ATokenList: TObjectList);
+
   public
     /// <Description>Default constructor.</Description>
     constructor Create(ASource, AFileName: string);
@@ -298,6 +300,22 @@ begin
   end;
 end;
 
+procedure TLexScanner.FillLineBreaksAfter(ATokenList: TObjectList);
+var
+  I: Integer;
+begin
+  // Iterate through token list
+  for I := 1 to ATokenList.Count - 1 do
+  begin
+    // Use LineBreaksBefore of current token
+    // for LineBreaksAfter of previous token
+    if (ATokenList.Items[I] <> nil) and (ATokenList.Items[I] is TToken) and
+       (ATokenList.Items[I - 1] <> nil) and (ATokenList.Items[I - 1] is TToken) then
+      (ATokenList.Items[I - 1] as TToken).LineBreaksAfter :=
+        (ATokenList.Items[I] as TToken).LineBreaksBefore;
+  end;
+end;
+
 function TLexScanner.GetLocation: TLocation;
 begin
   Result := TLocation.Create(FFileName, FSource, FIndex + 1);
@@ -319,6 +337,8 @@ begin
 
       Result.Add(AToken);
     until False;
+
+    FillLineBreaksAfter(Result);
   except
     Result.Free;
     raise;

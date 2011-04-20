@@ -15,6 +15,7 @@ type
     FText: string;
     FTokenType: TTokenType;
     FLineBreaksBefore: Integer;
+    FLineBreaksAfter: Integer;
 
   protected
     function GetLocation: TLocation; override;
@@ -36,6 +37,7 @@ type
     property TokenType: TTokenType read FTokenType;
 
     property LineBreaksBefore: Integer read FLineBreaksBefore write FLineBreaksBefore;
+    property LineBreaksAfter: Integer read FLineBreaksAfter write FLineBreaksAfter;
 
     /// Creates a copy of the token with another token type.
     ///  The caller has to destroy the resulting object again!
@@ -65,6 +67,7 @@ begin
   FText := AText;
   FParsedText := AParsedText;
   FLineBreaksBefore := 0;
+  FLineBreaksAfter := 0;
 
   // Create a new TLocation instance at the end position of the token
   FEndLocation := TLocation.Create(FLocation.FileName, FLocation.FileSource,
