@@ -433,14 +433,16 @@ var
   AText: string;
   ALineBreaksBefore: Integer;
 begin
+  // Reset line break counter
   ALineBreaksBefore := 0;
 
   // Skip whitespace
   while (FIndex < Length(FSource)) and IsWhitespace(Peek(0)) do
   begin
+    // If line break was found increase the counter
     if IsLineBreak(Peek(0)) then
       Inc(ALineBreaksBefore);
-      
+
     Inc(FIndex);
   end;
 
@@ -461,7 +463,11 @@ begin
       AText := Copy(FSource, FIndex + 1, AMatch.Length);
       Result := TToken.Create(AMatch.TokenType, Location, AText,
                               AMatch.ParsedText);
+
+      // Store the amount of line breaks that were found
+      // between this token and the last one
       Result.LineBreaksBefore := ALineBreaksBefore;
+
       Inc(FIndex, AMatch.Length);
       AMatch.Free;
     end;
