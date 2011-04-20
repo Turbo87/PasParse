@@ -107,6 +107,8 @@ end;
 function TToken.WithTokenType(ATokenType: TTokenType): TToken;
 begin
   Result := TToken.Create(ATokenType, Location.Clone, Text, ParsedText);
+  (Result as TToken).LineBreaksBefore := FLineBreaksBefore;
+  (Result as TToken).LineBreaksAfter := FLineBreaksAfter;
 end;
 
 end.
