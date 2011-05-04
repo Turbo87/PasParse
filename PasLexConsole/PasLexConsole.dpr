@@ -3,14 +3,16 @@ program PasLexConsole;
 {$APPTYPE CONSOLE}
 
 uses
-  SysUtils, ULexScanner, UToken, UTokenType, UFileLoader, TypInfo;
+  SysUtils, ULexScanner, UToken, UTokenType, UFileLoader, TypInfo, Contnrs;
 
 procedure LoadFile(const AFileName: string);
 var
   AFileLoader: TFileLoader;
   AContent: string;
   ALexScanner: TLexScanner;
+  ATokens: TObjectList;
   AToken: TToken;
+  I: Integer;
 begin
   // Create FileLoader to load the specified file
   AFileLoader := TFileLoader.Create;
@@ -21,20 +23,24 @@ begin
     ALexScanner := TLexScanner.Create(AContent, AFileName);
     try
       // Read tokens
-      repeat
-        AToken := ALexScanner.NextToken;
-        // Last token reached?
-        if AToken = nil then
-          Break;
+      ATokens := ALexScanner.Tokens;
+      try
+        for I := 0 to ATokens.Count - 1 do
+        begin
+          AToken := (ATokens[I] as TToken);
+          // Last token reached?
+          if AToken = nil then
+            Break;
 
-        // Write token type and token text to stdout
-        WriteLn(
-          GetEnumName(TypeInfo(TTokenType), Integer(AToken.TokenType)) + ': ''' +
-          AToken.Text + '''');
-
-        AToken.Destroy;
-      until False;
-
+          // Write token type and token text to stdout
+          AContent := GetEnumName(TypeInfo(TTokenType), Integer(AToken.TokenType)) + ': ''' + AToken.Text + '''';
+          if (AToken.LineBreaksBefore > 0) or (AToken.LineBreaksAfter > 0) then
+            AContent := AContent + ' (Before: ' + IntToStr(AToken.LineBreaksBefore) + ' - After: ' + IntToStr(AToken.LineBreaksAfter) + ')';
+          WriteLn(AContent);
+        end;
+      finally
+        ATokens.Free;
+      end;
     finally
       ALexScanner.Free;
     end;
