@@ -55,9 +55,7 @@ uses
 
 function TToken.Clone: TASTNode;
 begin
-  Result := TToken.Create(FTokenType, FLocation.Clone, FText, FParsedText);
-  (Result as TToken).LineBreaksBefore := FLineBreaksBefore;
-  (Result as TToken).LineBreaksAfter := FLineBreaksAfter;
+  Result := WithTokenType(TokenType);
 end;
 
 constructor TToken.Create(ATokenType: TTokenType; ALocation: TLocation; AText,
