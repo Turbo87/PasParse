@@ -309,10 +309,10 @@ begin
   begin
     // Use LineBreaksBefore of current token
     // for LineBreaksAfter of previous token
-    if (ATokenList.Items[I] <> nil) and (ATokenList.Items[I] is TToken) and
-       (ATokenList.Items[I - 1] <> nil) and (ATokenList.Items[I - 1] is TToken) then
-      (ATokenList.Items[I - 1] as TToken).LineBreaksAfter :=
-        (ATokenList.Items[I] as TToken).LineBreaksBefore;
+    if (ATokenList[I] <> nil) and (ATokenList[I] is TToken) and
+       (ATokenList[I - 1] <> nil) and (ATokenList[I - 1] is TToken) then
+      (ATokenList[I - 1] as TToken).LineBreaksAfter :=
+        (ATokenList[I] as TToken).LineBreaksBefore;
   end;
 end;
 
