@@ -43,6 +43,8 @@ type
     ///  The caller has to destroy the resulting object again!
     function WithTokenType(ATokenType: TTokenType): TToken;
 
+    function IsComment: Boolean;
+
     function Clone: TASTNode; override;
   end;
 
@@ -100,6 +102,11 @@ begin
     ' |' + Text + '|';
   if (ParsedText <> '') then
     Result := Result + ', parsed=|' + ParsedText + '|';
+end;
+
+function TToken.IsComment: Boolean;
+begin
+  Result := (TokenType = TTSingleLineComment) or (TokenType = TTCurlyBraceComment) or (TokenType = TTParenStarComment);
 end;
 
 function TToken.WithTokenType(ATokenType: TTokenType): TToken;
