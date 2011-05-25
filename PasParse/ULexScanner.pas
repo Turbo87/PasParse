@@ -112,6 +112,7 @@ type
     function GetTokens: TObjectList;
 
     procedure FillLineBreaksAfter(ATokenList: TObjectList);
+    procedure CopyCommentsIntoTokens(ATokenList: TObjectList);
 
   public
     /// <Description>Default constructor.</Description>
@@ -207,6 +208,64 @@ end;
 function TLexScanner.CanRead(AOffset: Integer): Boolean;
 begin
   Result := (FIndex + AOffset < Length(FSource));
+end;
+
+procedure CopyCommentIntoToken(ATokenList: TObjectList; AComment: Integer);
+var
+  I: Integer;
+begin
+  // Look for non-comment token on the same line before the comment
+  for I := AComment - 1 downto 0 do
+  begin
+    if ATokenList[I] = nil then
+      Continue;
+
+    // if a line break was found then cancel searching in front of the comment
+    if (ATokenList[I] as TToken).LineBreaksAfter > 0 then
+      Break;
+
+    // if a non-comment token was found
+    if not (ATokenList[I] as TToken).IsComment then
+    begin
+      // .. add the comment to the token and exit the function
+      (ATokenList[I] as TToken).CommentsAfter.Add((ATokenList[AComment] as TToken).Clone);
+      Exit;
+    end;
+  end;
+
+  // Look for next non-comment token
+  for I := AComment + 1 to ATokenList.Count - 1 do
+  begin
+    if ATokenList[I] = nil then
+      Continue;
+
+    // if a non-comment token was found
+    if not (ATokenList[I] as TToken).IsComment then
+    begin
+      // .. add the comment to the token and exit the function
+      (ATokenList[I] as TToken).CommentsBefore.Add((ATokenList[AComment] as TToken).Clone);
+      Exit;
+    end;
+  end;
+end;
+
+procedure TLexScanner.CopyCommentsIntoTokens(ATokenList: TObjectList);
+var
+  I: Integer;
+begin
+  // Iterate through token list
+  for I := 0 to ATokenList.Count - 1 do
+  begin
+    if ATokenList[I] = nil then
+      Continue;
+
+    // Filter out all the non-comment tokens
+    if not (ATokenList[I] as TToken).IsComment then
+      Continue;
+
+    // Copy comment-tokens into relating tokens
+    CopyCommentIntoToken(ATokenList, I);
+  end;
 end;
 
 constructor TLexScanner.Create(ASource, AFileName: string);
@@ -339,6 +398,7 @@ begin
     until False;
 
     FillLineBreaksAfter(Result);
+    CopyCommentsIntoTokens(Result);
   except
     Result.Free;
     raise;
