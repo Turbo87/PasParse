@@ -1,150 +1,219 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <PropertyGroup>
-    <ProjectGuid>{c3777d0d-edbd-48d9-9d63-eeafd5b65319}</ProjectGuid>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <DCC_DCCCompiler>DCC32</DCC_DCCCompiler>
-    <DCC_DependencyCheckOutputName>PasParseTest.exe</DCC_DependencyCheckOutputName>
-    <MainSource>PasParseTest.dpr</MainSource>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <Version>7.0</Version>
-    <DCC_DebugInformation>False</DCC_DebugInformation>
-    <DCC_LocalDebugSymbols>False</DCC_LocalDebugSymbols>
-    <DCC_SymbolReferenceInfo>0</DCC_SymbolReferenceInfo>
-    <DCC_Define>RELEASE</DCC_Define>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <Version>7.0</Version>
-    <DCC_Define>DEBUG</DCC_Define>
-    <DCC_UnitSearchPath>$(BDS)\lib\Debug;$(BDS)\Lib\Debug\Indy10;..\PasParse;..\PasTest</DCC_UnitSearchPath>
-    <DCC_ResourcePath>$(BDS)\lib\Debug;$(BDS)\Lib\Debug\Indy10;..\PasParse;..\PasTest</DCC_ResourcePath>
-    <DCC_ObjPath>$(BDS)\lib\Debug;$(BDS)\Lib\Debug\Indy10;..\PasParse;..\PasTest</DCC_ObjPath>
-    <DCC_IncludePath>$(BDS)\lib\Debug;$(BDS)\Lib\Debug\Indy10;..\PasParse;..\PasTest</DCC_IncludePath>
-    <DCC_MapFile>3</DCC_MapFile>
-  </PropertyGroup>
-  <ProjectExtensions>
-    <Borland.Personality>Delphi.Personality</Borland.Personality>
-    <Borland.ProjectType />
-    <BorlandProject>
-<BorlandProject><Delphi.Personality><Parameters><Parameters Name="UseLauncher">False</Parameters><Parameters Name="LoadAllSymbols">True</Parameters><Parameters Name="LoadUnspecifiedSymbols">False</Parameters></Parameters><VersionInfo><VersionInfo Name="IncludeVerInfo">False</VersionInfo><VersionInfo Name="AutoIncBuild">False</VersionInfo><VersionInfo Name="MajorVer">1</VersionInfo><VersionInfo Name="MinorVer">0</VersionInfo><VersionInfo Name="Release">0</VersionInfo><VersionInfo Name="Build">0</VersionInfo><VersionInfo Name="Debug">False</VersionInfo><VersionInfo Name="PreRelease">False</VersionInfo><VersionInfo Name="Special">False</VersionInfo><VersionInfo Name="Private">False</VersionInfo><VersionInfo Name="DLL">False</VersionInfo><VersionInfo Name="Locale">1031</VersionInfo><VersionInfo Name="CodePage">1252</VersionInfo></VersionInfo><VersionInfoKeys><VersionInfoKeys Name="CompanyName"></VersionInfoKeys><VersionInfoKeys Name="FileDescription"></VersionInfoKeys><VersionInfoKeys Name="FileVersion">1.0.0.0</VersionInfoKeys><VersionInfoKeys Name="InternalName"></VersionInfoKeys><VersionInfoKeys Name="LegalCopyright"></VersionInfoKeys><VersionInfoKeys Name="LegalTrademarks"></VersionInfoKeys><VersionInfoKeys Name="OriginalFilename"></VersionInfoKeys><VersionInfoKeys Name="ProductName"></VersionInfoKeys><VersionInfoKeys Name="ProductVersion">1.0.0.0</VersionInfoKeys><VersionInfoKeys Name="Comments"></VersionInfoKeys></VersionInfoKeys><Source><Source Name="MainSource">PasParseTest.dpr</Source></Source></Delphi.Personality></BorlandProject></BorlandProject>
-  </ProjectExtensions>
-  <Import Project="$(MSBuildBinPath)\Borland.Delphi.Targets" />
-  <ItemGroup>
-    <DelphiCompile Include="PasParseTest.dpr">
-      <MainSource>MainSource</MainSource>
-    </DelphiCompile>
-    <DCCReference Include="..\FastMM\FastMM4.pas" />
-    <DCCReference Include="..\FastMM\FastMM4Messages.pas" />
-    <DCCReference Include="UTestAddOp.pas" />
-    <DCCReference Include="UTestAlternator.pas" />
-    <DCCReference Include="UTestArrayType.pas" />
-    <DCCReference Include="UTestAssemblerStatement.pas" />
-    <DCCReference Include="UTestAssemblyAttribute.pas" />
-    <DCCReference Include="UTestASTNode.pas" />
-    <DCCReference Include="UTestAtom.pas" />
-    <DCCReference Include="UTestBareInherited.pas" />
-    <DCCReference Include="UTestBlock.pas" />
-    <DCCReference Include="UTestCaseSelector.pas" />
-    <DCCReference Include="UTestCaseStatement.pas" />
-    <DCCReference Include="UTestClassHelperType.pas" />
-    <DCCReference Include="UTestClassOf.pas" />
-    <DCCReference Include="UTestClassType.pas" />
-    <DCCReference Include="UTestCompilerDefines.pas" />
-    <DCCReference Include="UTestConstantDecl.pas" />
-    <DCCReference Include="UTestConstSection.pas" />
-    <DCCReference Include="UTestDictionary.pas" />
-    <DCCReference Include="UTestDirective.pas" />
-    <DCCReference Include="UTestEnumeratedType.pas" />
-    <DCCReference Include="UTestEnumeratedTypeElement.pas" />
-    <DCCReference Include="UTestExceptionItem.pas" />
-    <DCCReference Include="UTestExportsItem.pas" />
-    <DCCReference Include="UTestExportsSpecifier.pas" />
-    <DCCReference Include="UTestExportsStatement.pas" />
-    <DCCReference Include="UTestExpression.pas" />
-    <DCCReference Include="UTestExpressionList.pas" />
-    <DCCReference Include="UTestExpressionOrAssignment.pas" />
-    <DCCReference Include="UTestExpressionOrRange.pas" />
-    <DCCReference Include="UTestExpressionOrRangeList.pas" />
-    <DCCReference Include="UTestExtendedIdent.pas" />
-    <DCCReference Include="UTestFactor.pas" />
-    <DCCReference Include="UTestFancyBlock.pas" />
-    <DCCReference Include="UTestFieldDecl.pas" />
-    <DCCReference Include="UTestFieldSection.pas" />
-    <DCCReference Include="UTestFileLoader.pas" />
-    <DCCReference Include="UTestFileType.pas" />
-    <DCCReference Include="UTestForStatement.pas" />
-    <DCCReference Include="UTestGoal.pas" />
-    <DCCReference Include="UTestGotoStatement.pas" />
-    <DCCReference Include="UTestIdent.pas" />
-    <DCCReference Include="UTestIdentList.pas" />
-    <DCCReference Include="UTestIfStatement.pas" />
-    <DCCReference Include="UTestImplementationDecl.pas" />
-    <DCCReference Include="UTestImplementationSection.pas" />
-    <DCCReference Include="UTestInitSection.pas" />
-    <DCCReference Include="UTestInterfaceDecl.pas" />
-    <DCCReference Include="UTestInterfaceSection.pas" />
-    <DCCReference Include="UTestInterfaceType.pas" />
-    <DCCReference Include="UTestLabelDeclSection.pas" />
-    <DCCReference Include="UTestLabelId.pas" />
-    <DCCReference Include="UTestLexScanner.pas" />
-    <DCCReference Include="UTestMemoryFileLoader.pas" />
-    <DCCReference Include="UTestMethodHeading.pas" />
-    <DCCReference Include="UTestMethodImplementation.pas" />
-    <DCCReference Include="UTestMethodOrProperty.pas" />
-    <DCCReference Include="UTestMethodReturnType.pas" />
-    <DCCReference Include="UTestMulOp.pas" />
-    <DCCReference Include="UTestOpenArray.pas" />
-    <DCCReference Include="UTestPackage.pas" />
-    <DCCReference Include="UTestPackedType.pas" />
-    <DCCReference Include="UTestParameter.pas" />
-    <DCCReference Include="UTestParameterExpression.pas" />
-    <DCCReference Include="UTestParameterType.pas" />
-    <DCCReference Include="UTestParenthesizedExpression.pas" />
-    <DCCReference Include="UTestParser.pas" />
-    <DCCReference Include="UTestParticle.pas" />
-    <DCCReference Include="UTestPointerType.pas" />
-    <DCCReference Include="UTestPortabilityDirective.pas" />
-    <DCCReference Include="UTestProcedureType.pas" />
-    <DCCReference Include="UTestProgram.pas" />
-    <DCCReference Include="UTestProperty.pas" />
-    <DCCReference Include="UTestPropertyDirective.pas" />
-    <DCCReference Include="UTestQualifiedIdent.pas" />
-    <DCCReference Include="UTestRaiseStatement.pas" />
-    <DCCReference Include="UTestRecordFieldConstant.pas" />
-    <DCCReference Include="UTestRecordHelperType.pas" />
-    <DCCReference Include="UTestRecordType.pas" />
-    <DCCReference Include="UTestRelOp.pas" />
-    <DCCReference Include="UTestRepeatStatement.pas" />
-    <DCCReference Include="UTestRequiresClause.pas" />
-    <DCCReference Include="UTestSetLiteral.pas" />
-    <DCCReference Include="UTestSetType.pas" />
-    <DCCReference Include="UTestSimpleExpression.pas" />
-    <DCCReference Include="UTestSimpleStatement.pas" />
-    <DCCReference Include="UTestStatement.pas" />
-    <DCCReference Include="UTestStatementList.pas" />
-    <DCCReference Include="UTestStringType.pas" />
-    <DCCReference Include="UTestTerm.pas" />
-    <DCCReference Include="UTestTokenFilter.pas" />
-    <DCCReference Include="UTestTryStatement.pas" />
-    <DCCReference Include="UTestType.pas" />
-    <DCCReference Include="UTestTypedConstant.pas" />
-    <DCCReference Include="UTestTypeDecl.pas" />
-    <DCCReference Include="UTestTypeSection.pas" />
-    <DCCReference Include="UTestUnaryOperator.pas" />
-    <DCCReference Include="UTestUnit.pas" />
-    <DCCReference Include="UTestUsedUnit.pas" />
-    <DCCReference Include="UTestUsesClause.pas" />
-    <DCCReference Include="UTestVarDecl.pas" />
-    <DCCReference Include="UTestVariantGroup.pas" />
-    <DCCReference Include="UTestVariantSection.pas" />
-    <DCCReference Include="UTestVarSection.pas" />
-    <DCCReference Include="UTestVisibility.pas" />
-    <DCCReference Include="UTestVisibilitySection.pas" />
-    <DCCReference Include="UTestVisibilitySectionContent.pas" />
-    <DCCReference Include="UTestVisitor.pas" />
-    <DCCReference Include="UTestWhileStatement.pas" />
-    <DCCReference Include="UTestWithStatement.pas" />
-  </ItemGroup>
-</Project>
+﻿	<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+		<PropertyGroup>
+			<ProjectGuid>{c3777d0d-edbd-48d9-9d63-eeafd5b65319}</ProjectGuid>
+			<Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+			<DCC_DCCCompiler>DCC32</DCC_DCCCompiler>
+			<DCC_DependencyCheckOutputName>PasParseTest.exe</DCC_DependencyCheckOutputName>
+			<MainSource>PasParseTest.dpr</MainSource>
+			<ProjectVersion>12.3</ProjectVersion>
+			<Basis>True</Basis>
+			<Config Condition="'$(Config)'==''">Debug</Config>
+			<Platform>Win32</Platform>
+			<AppType>Console</AppType>
+			<FrameworkType>None</FrameworkType>
+		</PropertyGroup>
+		<PropertyGroup Condition="'$(Config)'=='Basis' or '$(Base)'!=''">
+			<Base>true</Base>
+		</PropertyGroup>
+		<PropertyGroup Condition="'$(Config)'=='Release' or '$(Cfg_1)'!=''">
+			<Cfg_1>true</Cfg_1>
+			<CfgParent>Base</CfgParent>
+			<Base>true</Base>
+		</PropertyGroup>
+		<PropertyGroup Condition="'$(Config)'=='Debug' or '$(Cfg_2)'!=''">
+			<Cfg_2>true</Cfg_2>
+			<CfgParent>Base</CfgParent>
+			<Base>true</Base>
+		</PropertyGroup>
+		<PropertyGroup Condition="'$(Base)'!=''">
+			<DCC_UnitAlias>WinTypes=Windows;WinProcs=Windows;DbiTypes=BDE;DbiProcs=BDE;DbiErrs=BDE;$(DCC_UnitAlias)</DCC_UnitAlias>
+		</PropertyGroup>
+		<PropertyGroup Condition="'$(Cfg_1)'!=''">
+			<Version>7.0</Version>
+			<DCC_DebugInformation>False</DCC_DebugInformation>
+			<DCC_LocalDebugSymbols>False</DCC_LocalDebugSymbols>
+			<DCC_SymbolReferenceInfo>0</DCC_SymbolReferenceInfo>
+			<DCC_Define>RELEASE;$(DCC_Define)</DCC_Define>
+		</PropertyGroup>
+		<PropertyGroup Condition="'$(Cfg_2)'!=''">
+			<Version>7.0</Version>
+			<DCC_Define>DEBUG;$(DCC_Define)</DCC_Define>
+			<DCC_UnitSearchPath>$(BDS)\lib\Debug;$(BDS)\Lib\Debug\Indy10;..\PasParse;..\PasTest;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
+			<DCC_ResourcePath>$(BDS)\lib\Debug;$(BDS)\Lib\Debug\Indy10;..\PasParse;..\PasTest;$(DCC_ResourcePath)</DCC_ResourcePath>
+			<DCC_ObjPath>$(BDS)\lib\Debug;$(BDS)\Lib\Debug\Indy10;..\PasParse;..\PasTest;$(DCC_ObjPath)</DCC_ObjPath>
+			<DCC_IncludePath>$(BDS)\lib\Debug;$(BDS)\Lib\Debug\Indy10;..\PasParse;..\PasTest;$(DCC_IncludePath)</DCC_IncludePath>
+			<DCC_MapFile>3</DCC_MapFile>
+		</PropertyGroup>
+		<ProjectExtensions>
+			<Borland.Personality>Delphi.Personality.12</Borland.Personality>
+			<Borland.ProjectType/>
+			<BorlandProject>
+				<Delphi.Personality>
+					<Parameters/>
+					<VersionInfo>
+						<VersionInfo Name="IncludeVerInfo">False</VersionInfo>
+						<VersionInfo Name="AutoIncBuild">False</VersionInfo>
+						<VersionInfo Name="MajorVer">1</VersionInfo>
+						<VersionInfo Name="MinorVer">0</VersionInfo>
+						<VersionInfo Name="Release">0</VersionInfo>
+						<VersionInfo Name="Build">0</VersionInfo>
+						<VersionInfo Name="Debug">False</VersionInfo>
+						<VersionInfo Name="PreRelease">False</VersionInfo>
+						<VersionInfo Name="Special">False</VersionInfo>
+						<VersionInfo Name="Private">False</VersionInfo>
+						<VersionInfo Name="DLL">False</VersionInfo>
+						<VersionInfo Name="Locale">1031</VersionInfo>
+						<VersionInfo Name="CodePage">1252</VersionInfo>
+					</VersionInfo>
+					<VersionInfoKeys>
+						<VersionInfoKeys Name="CompanyName"/>
+						<VersionInfoKeys Name="FileDescription"/>
+						<VersionInfoKeys Name="FileVersion">1.0.0.0</VersionInfoKeys>
+						<VersionInfoKeys Name="InternalName"/>
+						<VersionInfoKeys Name="LegalCopyright"/>
+						<VersionInfoKeys Name="LegalTrademarks"/>
+						<VersionInfoKeys Name="OriginalFilename"/>
+						<VersionInfoKeys Name="ProductName"/>
+						<VersionInfoKeys Name="ProductVersion">1.0.0.0</VersionInfoKeys>
+						<VersionInfoKeys Name="Comments"/>
+					</VersionInfoKeys>
+					<Source>
+						<Source Name="MainSource">PasParseTest.dpr</Source>
+					</Source>
+				</Delphi.Personality>
+				<Platforms>
+					<Platform value="Win32">True</Platform>
+				</Platforms>
+			</BorlandProject>
+			<ProjectFileVersion>12</ProjectFileVersion>
+		</ProjectExtensions>
+		<ItemGroup>
+			<DelphiCompile Include="PasParseTest.dpr">
+				<MainSource>MainSource</MainSource>
+			</DelphiCompile>
+			<DCCReference Include="..\FastMM\FastMM4.pas"/>
+			<DCCReference Include="..\FastMM\FastMM4Messages.pas"/>
+			<DCCReference Include="UTestLexScanner.pas"/>
+			<DCCReference Include="UTestDictionary.pas"/>
+			<DCCReference Include="UTestCompilerDefines.pas"/>
+			<DCCReference Include="UTestASTNode.pas"/>
+			<DCCReference Include="UTestRelOp.pas"/>
+			<DCCReference Include="UTestParser.pas"/>
+			<DCCReference Include="UTestArrayType.pas"/>
+			<DCCReference Include="UTestAddOp.pas"/>
+			<DCCReference Include="UTestMulOp.pas"/>
+			<DCCReference Include="UTestPortabilityDirective.pas"/>
+			<DCCReference Include="UTestUnaryOperator.pas"/>
+			<DCCReference Include="UTestExtendedIdent.pas"/>
+			<DCCReference Include="UTestQualifiedIdent.pas"/>
+			<DCCReference Include="UTestIdent.pas"/>
+			<DCCReference Include="UTestFileType.pas"/>
+			<DCCReference Include="UTestIdentList.pas"/>
+			<DCCReference Include="UTestFactor.pas"/>
+			<DCCReference Include="UTestUsedUnit.pas"/>
+			<DCCReference Include="UTestUsesClause.pas"/>
+			<DCCReference Include="UTestClassOf.pas"/>
+			<DCCReference Include="UTestBareInherited.pas"/>
+			<DCCReference Include="UTestAssemblerStatement.pas"/>
+			<DCCReference Include="UTestAlternator.pas"/>
+			<DCCReference Include="UTestLabelId.pas"/>
+			<DCCReference Include="UTestVisibility.pas"/>
+			<DCCReference Include="UTestGotoStatement.pas"/>
+			<DCCReference Include="UTestParticle.pas"/>
+			<DCCReference Include="UTestAtom.pas"/>
+			<DCCReference Include="UTestTerm.pas"/>
+			<DCCReference Include="UTestSimpleExpression.pas"/>
+			<DCCReference Include="UTestExpression.pas"/>
+			<DCCReference Include="UTestParenthesizedExpression.pas"/>
+			<DCCReference Include="UTestExpressionList.pas"/>
+			<DCCReference Include="UTestExpressionOrAssignment.pas"/>
+			<DCCReference Include="UTestExpressionOrRange.pas"/>
+			<DCCReference Include="UTestExpressionOrRangeList.pas"/>
+			<DCCReference Include="UTestSetType.pas"/>
+			<DCCReference Include="UTestSetLiteral.pas"/>
+			<DCCReference Include="UTestIfStatement.pas"/>
+			<DCCReference Include="UTestStatement.pas"/>
+			<DCCReference Include="UTestWhileStatement.pas"/>
+			<DCCReference Include="UTestWithStatement.pas"/>
+			<DCCReference Include="UTestBlock.pas"/>
+			<DCCReference Include="UTestStatementList.pas"/>
+			<DCCReference Include="UTestCaseSelector.pas"/>
+			<DCCReference Include="UTestCaseStatement.pas"/>
+			<DCCReference Include="UTestExceptionItem.pas"/>
+			<DCCReference Include="UTestRaiseStatement.pas"/>
+			<DCCReference Include="UTestParameterExpression.pas"/>
+			<DCCReference Include="UTestRepeatStatement.pas"/>
+			<DCCReference Include="UTestForStatement.pas"/>
+			<DCCReference Include="UTestTryStatement.pas"/>
+			<DCCReference Include="UTestSimpleStatement.pas"/>
+			<DCCReference Include="UTestOpenArray.pas"/>
+			<DCCReference Include="UTestParameterType.pas"/>
+			<DCCReference Include="UTestParameter.pas"/>
+			<DCCReference Include="UTestEnumeratedTypeElement.pas"/>
+			<DCCReference Include="UTestEnumeratedType.pas"/>
+			<DCCReference Include="UTestMethodReturnType.pas"/>
+			<DCCReference Include="UTestMethodHeading.pas"/>
+			<DCCReference Include="UTestExportsSpecifier.pas"/>
+			<DCCReference Include="UTestDirective.pas"/>
+			<DCCReference Include="UTestPropertyDirective.pas"/>
+			<DCCReference Include="UTestProperty.pas"/>
+			<DCCReference Include="UTestMethodOrProperty.pas"/>
+			<DCCReference Include="UTestInterfaceType.pas"/>
+			<DCCReference Include="UTestAssemblyAttribute.pas"/>
+			<DCCReference Include="UTestExportsItem.pas"/>
+			<DCCReference Include="UTestExportsStatement.pas"/>
+			<DCCReference Include="UTestInitSection.pas"/>
+			<DCCReference Include="UTestLabelDeclSection.pas"/>
+			<DCCReference Include="UTestProcedureType.pas"/>
+			<DCCReference Include="UTestRecordHelperType.pas"/>
+			<DCCReference Include="UTestType.pas"/>
+			<DCCReference Include="UTestPackedType.pas"/>
+			<DCCReference Include="UTestPointerType.pas"/>
+			<DCCReference Include="UTestTypedConstant.pas"/>
+			<DCCReference Include="UTestRecordFieldConstant.pas"/>
+			<DCCReference Include="UTestVarDecl.pas"/>
+			<DCCReference Include="UTestConstantDecl.pas"/>
+			<DCCReference Include="UTestVarSection.pas"/>
+			<DCCReference Include="UTestConstSection.pas"/>
+			<DCCReference Include="UTestFieldDecl.pas"/>
+			<DCCReference Include="UTestFieldSection.pas"/>
+			<DCCReference Include="UTestTypeDecl.pas"/>
+			<DCCReference Include="UTestTypeSection.pas"/>
+			<DCCReference Include="UTestVisibilitySectionContent.pas"/>
+			<DCCReference Include="UTestVisibilitySection.pas"/>
+			<DCCReference Include="UTestVariantGroup.pas"/>
+			<DCCReference Include="UTestVariantSection.pas"/>
+			<DCCReference Include="UTestRecordType.pas"/>
+			<DCCReference Include="UTestClassHelperType.pas"/>
+			<DCCReference Include="UTestStringType.pas"/>
+			<DCCReference Include="UTestClassType.pas"/>
+			<DCCReference Include="UTestInterfaceDecl.pas"/>
+			<DCCReference Include="UTestInterfaceSection.pas"/>
+			<DCCReference Include="UTestImplementationDecl.pas"/>
+			<DCCReference Include="UTestFancyBlock.pas"/>
+			<DCCReference Include="UTestMethodImplementation.pas"/>
+			<DCCReference Include="UTestImplementationSection.pas"/>
+			<DCCReference Include="UTestUnit.pas"/>
+			<DCCReference Include="UTestRequiresClause.pas"/>
+			<DCCReference Include="UTestProgram.pas"/>
+			<DCCReference Include="UTestPackage.pas"/>
+			<DCCReference Include="UTestTokenFilter.pas"/>
+			<DCCReference Include="UTestMemoryFileLoader.pas"/>
+			<DCCReference Include="UTestFileLoader.pas"/>
+			<DCCReference Include="UTestVisitor.pas"/>
+			<DCCReference Include="UTestGoal.pas"/>
+			<BuildConfiguration Include="Debug">
+				<Key>Cfg_2</Key>
+				<CfgParent>Base</CfgParent>
+			</BuildConfiguration>
+			<BuildConfiguration Include="Basis">
+				<Key>Base</Key>
+			</BuildConfiguration>
+			<BuildConfiguration Include="Release">
+				<Key>Cfg_1</Key>
+				<CfgParent>Base</CfgParent>
+			</BuildConfiguration>
+		</ItemGroup>
+		<Import Condition="Exists('$(BDS)\Bin\CodeGear.Delphi.Targets')" Project="$(BDS)\Bin\CodeGear.Delphi.Targets"/>
+		<Import Condition="Exists('$(APPDATA)\Embarcadero\$(BDSAPPDATABASEDIR)\$(PRODUCTVERSION)\UserTools.proj')" Project="$(APPDATA)\Embarcadero\$(BDSAPPDATABASEDIR)\$(PRODUCTVERSION)\UserTools.proj"/>
+	</Project>
