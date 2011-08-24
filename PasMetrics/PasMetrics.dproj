@@ -17,6 +17,10 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <Version>7.0</Version>
+    <DCC_UnitSearchPath>..\PasParse</DCC_UnitSearchPath>
+    <DCC_ResourcePath>..\PasParse</DCC_ResourcePath>
+    <DCC_ObjPath>..\PasParse</DCC_ObjPath>
+    <DCC_IncludePath>..\PasParse</DCC_IncludePath>
   </PropertyGroup>
   <ProjectExtensions>
     <Borland.Personality>Delphi.Personality</Borland.Personality>
