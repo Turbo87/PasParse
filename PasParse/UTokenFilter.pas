@@ -3,7 +3,7 @@ unit UTokenFilter;
 interface
 
 uses
-  UDictionary, UCompilerDefines, UIFileLoader, UToken, ULocation, Contnrs;
+  Generics.Collections, UCompilerDefines, UIFileLoader, UToken, ULocation, Contnrs;
 
 type
   TDirectiveType = (
@@ -30,7 +30,7 @@ type
     FTokens: TObjectList;
     FCompilerDefines: TCompilerDefines;
     FFileLoader: IFileLoader;
-    FDirectiveTypes: TDictionary;
+    FDirectiveTypes: TDictionary<string, TDirectiveType>;
 
     function Filter(AIfDefStack: TStack; ATokens: TObjectList): TObjectList;
     function GetTokens: TObjectList;
@@ -66,84 +66,84 @@ begin
   FCompilerDefines := ACompilerDefines;
   FFileLoader := AFileLoader;
 
-  FDirectiveTypes := TDictionary.Create;
-  FDirectiveTypes['IF'] := TObject(DTIf);
-  FDirectiveTypes['IFDEF'] := TObject(DTIf);
-  FDirectiveTypes['IFNDEF'] := TObject(DTIf);
-  FDirectiveTypes['IFOPT'] := TObject(DTIf);
-  FDirectiveTypes['IFNOPT'] := TObject(DTIf);
-  FDirectiveTypes['ELSE'] := TObject(DTElse);
-  FDirectiveTypes['ELSEIF'] := TObject(DTElseIf);
-  FDirectiveTypes['ENDIF'] := TObject(DTEndIf);
-  FDirectiveTypes['IFEND'] := TObject(DTEndIf);
+  FDirectiveTypes := TDictionary<string, TDirectiveType>.Create;
+  FDirectiveTypes.AddOrSetValue('IF', DTIf);
+  FDirectiveTypes.AddOrSetValue('IFDEF', DTIf);
+  FDirectiveTypes.AddOrSetValue('IFNDEF', DTIf);
+  FDirectiveTypes.AddOrSetValue('IFOPT', DTIf);
+  FDirectiveTypes.AddOrSetValue('IFNOPT', DTIf);
+  FDirectiveTypes.AddOrSetValue('ELSE', DTElse);
+  FDirectiveTypes.AddOrSetValue('ELSEIF', DTElseIf);
+  FDirectiveTypes.AddOrSetValue('ENDIF', DTEndIf);
+  FDirectiveTypes.AddOrSetValue('IFEND', DTEndIf);
   // Delphi compiler directives
-  FDirectiveTypes['ALIGN'] := TObject(DTIgnored);
-  FDirectiveTypes['APPTYPE'] := TObject(DTIgnored);
-  FDirectiveTypes['ASSERTIONS'] := TObject(DTIgnored);
-  FDirectiveTypes['AUTOBOX'] := TObject(DTIgnored);
-  FDirectiveTypes['BOOLEVAL'] := TObject(DTIgnored);
-  FDirectiveTypes['DEBUGINFO'] := TObject(DTIgnored);
-  FDirectiveTypes['DEFINE'] := TObject(DTDefine);
-  FDirectiveTypes['DEFINITIONINFO'] := TObject(DTIgnored);
-  FDirectiveTypes['DENYPACKAGEUNIT'] := TObject(DTIgnored);
-  FDirectiveTypes['DESCRIPTION'] := TObject(DTIgnored);
-  FDirectiveTypes['DESIGNONLY'] := TObject(DTIgnored);
-  FDirectiveTypes['ENDREGION'] := TObject(DTIgnored);
-  FDirectiveTypes['EXTENDEDSYNTAX'] := TObject(DTIgnored);
-  FDirectiveTypes['EXTENSION'] := TObject(DTIgnored);
-  FDirectiveTypes['FINITEFLOAT'] := TObject(DTIgnored);
-  FDirectiveTypes['HINTS'] := TObject(DTIgnored);
-  FDirectiveTypes['I'] := TObject(DTPossibleInclude);
-  FDirectiveTypes['IMAGEBASE'] := TObject(DTIgnored);
-  FDirectiveTypes['IMPLICITBUILD'] := TObject(DTIgnored);
-  FDirectiveTypes['IMPORTEDDATA'] := TObject(DTIgnored);
-  FDirectiveTypes['INCLUDE'] := TObject(DTInclude);
-  FDirectiveTypes['INLINE'] := TObject(DTIgnored); // undocumented
-  FDirectiveTypes['IOCHECKS'] := TObject(DTIgnored);
-  FDirectiveTypes['LIBPREFIX'] := TObject(DTIgnored);
-  FDirectiveTypes['LIBSUFFIX'] := TObject(DTIgnored);
-  FDirectiveTypes['LIBVERSION'] := TObject(DTIgnored);
-  FDirectiveTypes['LINK'] := TObject(DTIgnored);
-  FDirectiveTypes['LOCALSYMBOLS'] := TObject(DTIgnored);
-  FDirectiveTypes['LONGSTRINGS'] := TObject(DTIgnored);
-  FDirectiveTypes['MAXSTACKSIZE'] := TObject(DTIgnored);
-  FDirectiveTypes['MESSAGE'] := TObject(DTIgnored);
-  FDirectiveTypes['METHODINFO'] := TObject(DTIgnored);
-  FDirectiveTypes['MINENUMSIZE'] := TObject(DTIgnored);
-  FDirectiveTypes['MINSTACKSIZE'] := TObject(DTIgnored);
-  FDirectiveTypes['OBJEXPORTALL'] := TObject(DTIgnored);
-  FDirectiveTypes['OPENSTRINGS'] := TObject(DTIgnored);
-  FDirectiveTypes['OPTIMIZATION'] := TObject(DTIgnored);
-  FDirectiveTypes['OVERFLOWCHECKS'] := TObject(DTIgnored);
-  FDirectiveTypes['RANGECHECKS'] := TObject(DTIgnored);
-  FDirectiveTypes['REALCOMPATIBILITY'] := TObject(DTIgnored);
-  FDirectiveTypes['REFERENCEINFO'] := TObject(DTIgnored);
-  FDirectiveTypes['REGION'] := TObject(DTIgnored);
-  FDirectiveTypes['RESOURCE'] := TObject(DTIgnored);
-  FDirectiveTypes['RESOURCERESERVE'] := TObject(DTIgnored);
-  FDirectiveTypes['RUNONLY'] := TObject(DTIgnored);
-  FDirectiveTypes['SAFEDIVIDE'] := TObject(DTIgnored);
-  FDirectiveTypes['SETPEFLAGS'] := TObject(DTIgnored);
-  FDirectiveTypes['SOPREFIX'] := TObject(DTIgnored); // undocumented
-  FDirectiveTypes['SOSUFFIX'] := TObject(DTIgnored); // undocumented
-  FDirectiveTypes['SOVERSION'] := TObject(DTIgnored); // undocumented
-  FDirectiveTypes['STACKCHECKS'] := TObject(DTIgnored); // undocumented
-  FDirectiveTypes['STACKFRAMES'] := TObject(DTIgnored);
-  FDirectiveTypes['TYPEDADDRESS'] := TObject(DTIgnored);
-  FDirectiveTypes['TYPEINFO'] := TObject(DTIgnored);
-  FDirectiveTypes['UNDEF'] := TObject(DTUndefine);
-  FDirectiveTypes['UNSAFECODE'] := TObject(DTIgnored);
-  FDirectiveTypes['VARPROPSETTER'] := TObject(DTIgnored); // undocumented
-  FDirectiveTypes['VARSTRINGCHECKS'] := TObject(DTIgnored);
-  FDirectiveTypes['WARN'] := TObject(DTIgnored);
-  FDirectiveTypes['WARNINGS'] := TObject(DTIgnored);
-  FDirectiveTypes['WEAKPACKAGEUNIT'] := TObject(DTIgnored);
-  FDirectiveTypes['WRITEABLECONST'] := TObject(DTIgnored);
+  FDirectiveTypes.AddOrSetValue('ALIGN', DTIgnored);
+  FDirectiveTypes.AddOrSetValue('APPTYPE', DTIgnored);
+  FDirectiveTypes.AddOrSetValue('ASSERTIONS', DTIgnored);
+  FDirectiveTypes.AddOrSetValue('AUTOBOX', DTIgnored);
+  FDirectiveTypes.AddOrSetValue('BOOLEVAL', DTIgnored);
+  FDirectiveTypes.AddOrSetValue('DEBUGINFO', DTIgnored);
+  FDirectiveTypes.AddOrSetValue('DEFINE', DTDefine);
+  FDirectiveTypes.AddOrSetValue('DEFINITIONINFO', DTIgnored);
+  FDirectiveTypes.AddOrSetValue('DENYPACKAGEUNIT', DTIgnored);
+  FDirectiveTypes.AddOrSetValue('DESCRIPTION', DTIgnored);
+  FDirectiveTypes.AddOrSetValue('DESIGNONLY', DTIgnored);
+  FDirectiveTypes.AddOrSetValue('ENDREGION', DTIgnored);
+  FDirectiveTypes.AddOrSetValue('EXTENDEDSYNTAX', DTIgnored);
+  FDirectiveTypes.AddOrSetValue('EXTENSION', DTIgnored);
+  FDirectiveTypes.AddOrSetValue('FINITEFLOAT', DTIgnored);
+  FDirectiveTypes.AddOrSetValue('HINTS', DTIgnored);
+  FDirectiveTypes.AddOrSetValue('I', DTPossibleInclude);
+  FDirectiveTypes.AddOrSetValue('IMAGEBASE', DTIgnored);
+  FDirectiveTypes.AddOrSetValue('IMPLICITBUILD', DTIgnored);
+  FDirectiveTypes.AddOrSetValue('IMPORTEDDATA', DTIgnored);
+  FDirectiveTypes.AddOrSetValue('INCLUDE', DTInclude);
+  FDirectiveTypes.AddOrSetValue('INLINE', DTIgnored); // undocumented
+  FDirectiveTypes.AddOrSetValue('IOCHECKS', DTIgnored);
+  FDirectiveTypes.AddOrSetValue('LIBPREFIX', DTIgnored);
+  FDirectiveTypes.AddOrSetValue('LIBSUFFIX', DTIgnored);
+  FDirectiveTypes.AddOrSetValue('LIBVERSION', DTIgnored);
+  FDirectiveTypes.AddOrSetValue('LINK', DTIgnored);
+  FDirectiveTypes.AddOrSetValue('LOCALSYMBOLS', DTIgnored);
+  FDirectiveTypes.AddOrSetValue('LONGSTRINGS', DTIgnored);
+  FDirectiveTypes.AddOrSetValue('MAXSTACKSIZE', DTIgnored);
+  FDirectiveTypes.AddOrSetValue('MESSAGE', DTIgnored);
+  FDirectiveTypes.AddOrSetValue('METHODINFO', DTIgnored);
+  FDirectiveTypes.AddOrSetValue('MINENUMSIZE', DTIgnored);
+  FDirectiveTypes.AddOrSetValue('MINSTACKSIZE', DTIgnored);
+  FDirectiveTypes.AddOrSetValue('OBJEXPORTALL', DTIgnored);
+  FDirectiveTypes.AddOrSetValue('OPENSTRINGS', DTIgnored);
+  FDirectiveTypes.AddOrSetValue('OPTIMIZATION', DTIgnored);
+  FDirectiveTypes.AddOrSetValue('OVERFLOWCHECKS', DTIgnored);
+  FDirectiveTypes.AddOrSetValue('RANGECHECKS', DTIgnored);
+  FDirectiveTypes.AddOrSetValue('REALCOMPATIBILITY', DTIgnored);
+  FDirectiveTypes.AddOrSetValue('REFERENCEINFO', DTIgnored);
+  FDirectiveTypes.AddOrSetValue('REGION', DTIgnored);
+  FDirectiveTypes.AddOrSetValue('RESOURCE', DTIgnored);
+  FDirectiveTypes.AddOrSetValue('RESOURCERESERVE', DTIgnored);
+  FDirectiveTypes.AddOrSetValue('RUNONLY', DTIgnored);
+  FDirectiveTypes.AddOrSetValue('SAFEDIVIDE', DTIgnored);
+  FDirectiveTypes.AddOrSetValue('SETPEFLAGS', DTIgnored);
+  FDirectiveTypes.AddOrSetValue('SOPREFIX', DTIgnored); // undocumented
+  FDirectiveTypes.AddOrSetValue('SOSUFFIX', DTIgnored); // undocumented
+  FDirectiveTypes.AddOrSetValue('SOVERSION', DTIgnored); // undocumented
+  FDirectiveTypes.AddOrSetValue('STACKCHECKS', DTIgnored); // undocumented
+  FDirectiveTypes.AddOrSetValue('STACKFRAMES', DTIgnored);
+  FDirectiveTypes.AddOrSetValue('TYPEDADDRESS', DTIgnored);
+  FDirectiveTypes.AddOrSetValue('TYPEINFO', DTIgnored);
+  FDirectiveTypes.AddOrSetValue('UNDEF', DTUndefine);
+  FDirectiveTypes.AddOrSetValue('UNSAFECODE', DTIgnored);
+  FDirectiveTypes.AddOrSetValue('VARPROPSETTER', DTIgnored); // undocumented
+  FDirectiveTypes.AddOrSetValue('VARSTRINGCHECKS', DTIgnored);
+  FDirectiveTypes.AddOrSetValue('WARN', DTIgnored);
+  FDirectiveTypes.AddOrSetValue('WARNINGS', DTIgnored);
+  FDirectiveTypes.AddOrSetValue('WEAKPACKAGEUNIT', DTIgnored);
+  FDirectiveTypes.AddOrSetValue('WRITEABLECONST', DTIgnored);
   // Directives for generation of C++Builder .hpp files
-  FDirectiveTypes['EXTERNALSYM'] := TObject(DTIgnored);
-  FDirectiveTypes['HPPEMIT'] := TObject(DTIgnored);
-  FDirectiveTypes['NODEFINE'] := TObject(DTIgnored);
-  FDirectiveTypes['NOINCLUDE'] := TObject(DTIgnored);
+  FDirectiveTypes.AddOrSetValue('EXTERNALSYM', DTIgnored);
+  FDirectiveTypes.AddOrSetValue('HPPEMIT', DTIgnored);
+  FDirectiveTypes.AddOrSetValue('NODEFINE', DTIgnored);
+  FDirectiveTypes.AddOrSetValue('NOINCLUDE', DTIgnored);
 end;
 
 destructor TTokenFilter.Destroy;
@@ -202,8 +202,8 @@ end;
 
 function TTokenFilter.GetDirectiveType(AFirstWord: string): TDirectiveType;
 begin
-  if FDirectiveTypes.Contains(AFirstWord) then
-    Result := TDirectiveType(FDirectiveTypes[AFirstWord])
+  if FDirectiveTypes.ContainsKey(AFirstWord) then
+    Result := FDirectiveTypes[AFirstWord]
   else if Length(AFirstWord) = 1 then
     Result := DTIgnored
   else
