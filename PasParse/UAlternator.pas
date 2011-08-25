@@ -3,7 +3,7 @@ unit UAlternator;
 interface
 
 uses
-  URuleType, UITokenSet, UTokenType, UASTNode, UIParser, Contnrs;
+  URuleType, UITokenSet, UTokenType, UASTNode, UIParser, Generics.Collections;
 
 type
   /// <Description>Prototype/Interface for an Alternate.</Description>
@@ -81,7 +81,7 @@ type
   TAlternator = class
   private
     /// <Description>TObjectList of IAlternate elements.</Description>
-    FAlternates: TObjectList;
+    FAlternates: TObjectList<IAlternate>;
 
     FDiscardParseExceptions: Boolean;
 
@@ -148,7 +148,7 @@ constructor TAlternator.Create(ADiscardParseExceptions: Boolean);
 begin
   inherited Create;
   // Initialize the Alternates list
-  FAlternates := TObjectList.Create;
+  FAlternates := TObjectList<IAlternate>.Create;
   FDiscardParseExceptions := ADiscardParseExceptions;
 end;
 
@@ -172,7 +172,7 @@ begin
   for I := 0 to FAlternates.Count - 1 do
   begin
     // Try to parse the next Token with each Alternate
-    AAlternate := (FAlternates.Items[I] as IAlternate);
+    AAlternate := FAlternates.Items[I];
     if AAlternate <> nil then
     begin
       try
@@ -223,7 +223,7 @@ begin
         // ", " for the others
         Result := Result + ', ';
     end;
-    Result := Result + (FAlternates.Items[I] as IAlternate).DisplayText;
+    Result := Result + FAlternates[I].DisplayText;
   end;
 end;
 
@@ -237,7 +237,7 @@ begin
   for I := 0 to FAlternates.Count - 1 do
   begin
     // Check whether the Alternate can parse the next Token
-    if (FAlternates.Items[I] as IAlternate).LookAhead(AParser) then
+    if FAlternates[I].LookAhead(AParser) then
     begin
       // ... and stop iterating if we find an Alternate that can
       Result := True;
