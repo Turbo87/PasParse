@@ -25,6 +25,8 @@ type
     IDTTrue
   );
 
+  TIfDefStack = class(TStack<TIfDefTruth>);
+
   TTokenFilter = class
   private
     FTokens: TObjectList<TToken>;
@@ -32,16 +34,16 @@ type
     FFileLoader: IFileLoader;
     FDirectiveTypes: TDictionary<string, TDirectiveType>;
 
-    function Filter(AIfDefStack: TStack<TIfDefTruth>; ATokens: TObjectList<TToken>): TObjectList<TToken>;
+    function Filter(AIfDefStack: TIfDefStack; ATokens: TObjectList<TToken>): TObjectList<TToken>;
     function GetTokens: TObjectList<TToken>;
 
     function FirstWordOf(AString: string): string;
     function GetDirectiveType(AFirstWord: string): TDirectiveType;
-    procedure HandleCompilerDirective(AIfDefStack: TStack<TIfDefTruth>; AToken: TToken; ATokens: TObjectList<TToken>);
-    procedure HandleIf(AIfDefStack: TStack<TIfDefTruth>; ADirective: string; ALocation: TLocation);
-    procedure HandleElseIf(AIfDefStack: TStack<TIfDefTruth>; ADirective: string; ALocation: TLocation);
-    procedure HandleElse(AIfDefStack: TStack<TIfDefTruth>);
-    procedure HandleInclude(AIfDefStack: TStack<TIfDefTruth>; ATokens: TObjectList<TToken>; ADirectory, AFileName: string);
+    procedure HandleCompilerDirective(AIfDefStack: TIfDefStack; AToken: TToken; ATokens: TObjectList<TToken>);
+    procedure HandleIf(AIfDefStack: TIfDefStack; ADirective: string; ALocation: TLocation);
+    procedure HandleElseIf(AIfDefStack: TIfDefStack; ADirective: string; ALocation: TLocation);
+    procedure HandleElse(AIfDefStack: TIfDefStack);
+    procedure HandleInclude(AIfDefStack: TIfDefStack; ATokens: TObjectList<TToken>; ADirectory, AFileName: string);
 
   public
     constructor Create(ATokens: TObjectList<TToken>; ACompilerDefines: TCompilerDefines;
@@ -152,7 +154,7 @@ begin
   inherited;
 end;
 
-function TTokenFilter.Filter(AIfDefStack: TStack<TIfDefTruth>; ATokens: TObjectList<TToken>): TObjectList<TToken>;
+function TTokenFilter.Filter(AIfDefStack: TIfDefStack; ATokens: TObjectList<TToken>): TObjectList<TToken>;
 var
   AToken: TToken;
   I: Integer;
@@ -212,9 +214,9 @@ end;
 
 function TTokenFilter.GetTokens: TObjectList<TToken>;
 var
-  AIfDefStack: TStack<TIfDefTruth>;
+  AIfDefStack: TIfDefStack;
 begin
-  AIfDefStack := TStack<TIfDefTruth>.Create;
+  AIfDefStack := TIfDefStack.Create;
   AIfDefStack.Push(IDTTrue);
   try
     Result := Filter(AIfDefStack, FTokens);
@@ -223,7 +225,7 @@ begin
   end;
 end;
 
-procedure TTokenFilter.HandleCompilerDirective(AIfDefStack: TStack<TIfDefTruth>;
+procedure TTokenFilter.HandleCompilerDirective(AIfDefStack: TIfDefStack;
   AToken: TToken; ATokens: TObjectList<TToken>);
 var
   ADirective, AFirstWord, AParameter: string;
@@ -270,7 +272,7 @@ begin
   end;
 end;
 
-procedure TTokenFilter.HandleElse(AIfDefStack: TStack<TIfDefTruth>);
+procedure TTokenFilter.HandleElse(AIfDefStack: TIfDefStack);
 var
   ATruth: TIfDefTruth;
 begin
@@ -281,7 +283,7 @@ begin
     AIfDefStack.Push(IDTForeverFalse);
 end;
 
-procedure TTokenFilter.HandleElseIf(AIfDefStack: TStack<TIfDefTruth>; ADirective: string;
+procedure TTokenFilter.HandleElseIf(AIfDefStack: TIfDefStack; ADirective: string;
   ALocation: TLocation);
 var
   ATruth: TIfDefTruth;
@@ -300,7 +302,7 @@ begin
   end;
 end;
 
-procedure TTokenFilter.HandleIf(AIfDefStack: TStack<TIfDefTruth>; ADirective: string;
+procedure TTokenFilter.HandleIf(AIfDefStack: TIfDefStack; ADirective: string;
   ALocation: TLocation);
 begin
   if AIfDefStack.Peek() = IDTTrue then
@@ -314,7 +316,7 @@ begin
     AIfDefStack.Push(IDTForeverFalse);
 end;
 
-procedure TTokenFilter.HandleInclude(AIfDefStack: TStack<TIfDefTruth>; ATokens: TObjectList<TToken>;
+procedure TTokenFilter.HandleInclude(AIfDefStack: TIfDefStack; ATokens: TObjectList<TToken>;
   ADirectory, AFileName: string);
 var
   ASource: string;
