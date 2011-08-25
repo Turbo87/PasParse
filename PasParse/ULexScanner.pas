@@ -3,7 +3,7 @@ unit ULexScanner;
 interface
 
 uses
-  ULocation, UTokenType, UToken, UTokenSet, Generics.Collections, Contnrs;
+  ULocation, UTokenType, UToken, UTokenSet, Generics.Collections;
 
 type
   /// <Description>An instance of this class is returned when a matching token is found.</Description>

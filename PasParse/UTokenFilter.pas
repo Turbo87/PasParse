@@ -3,7 +3,7 @@ unit UTokenFilter;
 interface
 
 uses
-  Generics.Collections, UCompilerDefines, UIFileLoader, UToken, ULocation, Contnrs;
+  Generics.Collections, UCompilerDefines, UIFileLoader, UToken, ULocation;
 
 type
   TDirectiveType = (

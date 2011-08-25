@@ -4,7 +4,7 @@ interface
 
 uses
   UCompilerDefines, UToken, UIFrame, UITokenSet, UTokenType, UListNode,
-  UParseException, UIParser, URule, URuleType, UASTNode, UIFileLoader, Contnrs,
+  UParseException, UIParser, URule, URuleType, UASTNode, UIFileLoader,
   Generics.Collections;
 
 type
