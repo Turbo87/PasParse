@@ -4,7 +4,8 @@ program PasMetricsConsole;
 
 uses
   SysUtils, Classes, UFileLoader, UCompilerDefines, UASTNode,
-  UMaintainabilityIndex, UParser, URuleType, ULexException, UParseException;
+  UMaintainabilityIndex, UParser, URuleType, ULexException, UParseException,
+  Generics.Collections;
 
 type
   TStyle = (
@@ -12,6 +13,13 @@ type
     sCSV,
     sHTML
   );
+
+  TResult = record
+    FMI: TMaintainabilityIndex;
+    FError: string;
+
+    constructor Create(const AMI: TMaintainabilityIndex; const AError: string);
+  end;
 
 var
   FFileName: string;
@@ -237,6 +245,8 @@ var
   AFiles: TStringList;
   i: integer;
   AMI: TMaintainabilityIndex;
+  AResults: TList<TPair<string, TResult>>;
+  AResult: TPair<string, TResult>;
 begin
   FStyle := sASCII;
   FFileName := '';
@@ -252,32 +262,53 @@ begin
   FindFiles(AFiles, ADirectory, '*.dpr', ARecursive);
   FindFiles(AFiles, ADirectory, '*.dpk', ARecursive);
 
+  AResults := TList<TPair<string, TResult>>.Create;
   for i := 0 to AFiles.Count - 1 do
   begin
     try
       AMI := AnalyzeFile(AFiles[i], ADirectory);
+      AResults.Add(TPair<string, TResult>.Create(AFiles[i], TResult.Create(AMI, '')));
     except
       on E: Exception do
       begin
-        OutputWarning(AFiles[i], ADirectory, E.Message);
-        Continue;
+        AResults.Add(TPair<string, TResult>.Create(AFiles[i], TResult.Create(nil, E.Message)));
       end;
     end;
+  end;
 
-    OutputResult(AFiles[i], ADirectory, AMI);
+  for AResult in AResults do
+  begin
+    if AResult.Value.FMI <> nil then
+    begin
+      AMI := AResult.Value.FMI;
+      OutputResult(AResult.Key, ADirectory, AMI);
 
-    Inc(FFiles);
-    FLOCpro := FLOCpro + AMI.LOCCounter.LOCProgram;
-    FMcCabe := FMcCabe + AMI.McCabe.Count;
-    FMI := FMI + AMI.Value;
-    AMI.Free;
+      Inc(FFiles);
+      FLOCpro := FLOCpro + AMI.LOCCounter.LOCProgram;
+      FMcCabe := FMcCabe + AMI.McCabe.Count;
+      FMI := FMI + AMI.Value;
+      AMI.Free;
+    end;
+    
+    if AResult.Value.FError <> '' then
+      OutputWarning(AResult.Key, ADirectory, AResult.Value.FError);
   end;
 
   if GetFooter <> '' then
     WriteLn(FFile, GetFooter);
 
   CloseFile(FFile);
+  AResults.Free;
   AFiles.Free;
+end;
+
+{ TResult }
+
+constructor TResult.Create(const AMI: TMaintainabilityIndex;
+  const AError: string);
+begin
+  FMI := AMI;
+  FError := AError;
 end;
 
 begin
