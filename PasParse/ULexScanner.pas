@@ -3,7 +3,7 @@ unit ULexScanner;
 interface
 
 uses
-  ULocation, UTokenType, UToken, UTokenSet, UDictionary, Contnrs;
+  ULocation, UTokenType, UToken, UTokenSet, Generics.Collections, Contnrs;
 
 type
   /// <Description>An instance of this class is returned when a matching token is found.</Description>
@@ -46,7 +46,7 @@ type
     /// <Description>Content of the file that this instance should tokenize.</Description>
     FSource: string;
     /// <Description>Dictionary of (semi)keywords.</Description>
-    FWordTypes: TDictionary;
+    FWordTypes: TDictionary<string, TTokenType>;
 
     /// <Description>Adds contents of the given TTokenSet to the FWordTypes dictionary.</Description>
     procedure AddWordTypes(ATokenSet: TTokenSet; ASuffixLength: Integer);
@@ -158,7 +158,7 @@ begin
       // Convert token name to keyword (e.g. TTIfKeyword -> If)
       ABaseWord := Copy(ATokenString, 3, Length(ATokenString) - ASuffixLength);
       // Add keyword-token pair to FWordTypes keyword list
-      FWordTypes.Write(AnsiLowerCase(ABaseWord), TObject(ATokenType));
+      FWordTypes.Add(AnsiLowerCase(ABaseWord), ATokenType);
     end;  
   end;      
 end;
@@ -184,7 +184,6 @@ var
   ALength: Integer;
   AWord: string;
   ATokenType: TTokenType;
-  AObject: TObject;
 begin
   if not IsWordLeadChar(Peek(0)) then
     Result := nil
@@ -196,9 +195,7 @@ begin
 
     // Check whether the parsed identifier is a known keyword
     AWord := Copy(FSource, FIndex + 1, ALength);
-    if FWordTypes.Read(AnsiLowerCase(AWord), AObject) then
-      ATokenType := TTokenType(AObject)
-    else
+    if not FWordTypes.TryGetValue(AnsiLowerCase(AWord), ATokenType) then
       ATokenType := TTIdentifier;
 
     Result := TMatch.Create(ATokenType, ALength);
@@ -275,7 +272,7 @@ begin
   FFileName := AFileName;
 
   // Create new keyword list
-  FWordTypes := TDictionary.Create;
+  FWordTypes := TDictionary<string, TTokenType>.Create;
   // Added (semi-)keywords to the keyword list
   AddWordTypes(TTokenSets.TSSemikeyword, Length('TTSemikeyword'));
   AddWordTypes(TTokenSets.TSKeyword, Length('TTKeyword'));
