@@ -200,7 +200,7 @@ begin
     [ExtractRelativePath(ABaseDir, AFilePath), AWarning]));
 end;
 
-function AnalyzeFile(AFilePath, ABaseDir: string): TMaintainabilityIndex;
+function CalculateMI(AFilePath, ABaseDir: string): TMaintainabilityIndex; 
 var
   AFileLoader: TFileLoader;
   AContent: string;
@@ -238,13 +238,28 @@ begin
   end;
 end;
 
+function AnalyzeFile(AFilePath, ABaseDir: string): TResult; 
+var
+  AMI: TMaintainabilityIndex;
+begin
+  try
+    AMI := CalculateMI(AFilePath, ABaseDir);
+    Result := TResult.Create(AMI, '');
+  except
+    on E: Exception do
+    begin
+      Result := TResult.Create(nil, E.Message);
+    end;
+  end;
+
+end;
+
 procedure Main;
 var
   ADirectory: string;
   ARecursive: Boolean;
   AFiles: TStringList;
   i: integer;
-  AMI: TMaintainabilityIndex;
   AResults: TList<TPair<string, TResult>>;
   AResult: TPair<string, TResult>;
 begin
@@ -264,30 +279,19 @@ begin
 
   AResults := TList<TPair<string, TResult>>.Create;
   for i := 0 to AFiles.Count - 1 do
-  begin
-    try
-      AMI := AnalyzeFile(AFiles[i], ADirectory);
-      AResults.Add(TPair<string, TResult>.Create(AFiles[i], TResult.Create(AMI, '')));
-    except
-      on E: Exception do
-      begin
-        AResults.Add(TPair<string, TResult>.Create(AFiles[i], TResult.Create(nil, E.Message)));
-      end;
-    end;
-  end;
+    AResults.Add(TPair<string, TResult>.Create(AFiles[i], AnalyzeFile(AFiles[i], ADirectory)));
 
   for AResult in AResults do
   begin
     if AResult.Value.FMI <> nil then
     begin
-      AMI := AResult.Value.FMI;
-      OutputResult(AResult.Key, ADirectory, AMI);
+      OutputResult(AResult.Key, ADirectory, AResult.Value.FMI);
 
       Inc(FFiles);
-      FLOCpro := FLOCpro + AMI.LOCCounter.LOCProgram;
-      FMcCabe := FMcCabe + AMI.McCabe.Count;
-      FMI := FMI + AMI.Value;
-      AMI.Free;
+      FLOCpro := FLOCpro + AResult.Value.FMI.LOCCounter.LOCProgram;
+      FMcCabe := FMcCabe + AResult.Value.FMI.McCabe.Count;
+      FMI := FMI + AResult.Value.FMI.Value;
+      AResult.Value.FMI.Free;
     end;
     
     if AResult.Value.FError <> '' then
