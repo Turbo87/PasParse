@@ -192,14 +192,13 @@ begin
     [ExtractRelativePath(ABaseDir, AFilePath), AWarning]));
 end;
 
-procedure AnalyzeFile(AFilePath, ABaseDir: string);
+function AnalyzeFile(AFilePath, ABaseDir: string): TMaintainabilityIndex;
 var
   AFileLoader: TFileLoader;
   AContent: string;
   ACompilerDefines: TCompilerDefines;
   AParser: TParser;
   ANode: TASTNode;
-  AMI: TMaintainabilityIndex;
 begin
   // Create FileLoader to load the specified file
   AFileLoader := TFileLoader.Create;
@@ -209,34 +208,19 @@ begin
     // Create empty compiler defines
     ACompilerDefines := TCompilerDefines.Create;
     try
-      try
       // Create the parser
       AParser := TParser.CreateFromText(AContent, AFilePath, ACompilerDefines, AFileLoader);
       try
         // Try to parse a unit from the file content
         ANode := AParser.ParseRule(RTGoal);
         try
-          AMI := TMaintainabilityIndex.Create;
-          try
-            AMI.Calculate(ANode);
-            OutputResult(AFilePath, ABaseDir, AMI);
-
-            Inc(FFiles);
-            FLOCpro := FLOCpro + AMI.LOCCounter.LOCProgram;
-            FMcCabe := FMcCabe + AMI.McCabe.Count;
-            FMI := FMI + AMI.Value;
-          finally
-            AMI.Free;
-          end;
+          Result := TMaintainabilityIndex.Create;
+          Result.Calculate(ANode);
         finally
           ANode.Free;
         end;
       finally
         AParser.Free;
-      end;
-      except
-        on E: Exception do
-          OutputWarning(AFilePath, ABaseDir, E.Message);
       end;
     finally
       ACompilerDefines.Free;
@@ -252,6 +236,7 @@ var
   ARecursive: Boolean;
   AFiles: TStringList;
   i: integer;
+  AMI: TMaintainabilityIndex;
 begin
   FStyle := sASCII;
   FFileName := '';
@@ -269,7 +254,23 @@ begin
 
   for i := 0 to AFiles.Count - 1 do
   begin
-    AnalyzeFile(AFiles[i], ADirectory);
+    try
+      AMI := AnalyzeFile(AFiles[i], ADirectory);
+    except
+      on E: Exception do
+      begin
+        OutputWarning(AFiles[i], ADirectory, E.Message);
+        Continue;
+      end;
+    end;
+
+    OutputResult(AFiles[i], ADirectory, AMI);
+
+    Inc(FFiles);
+    FLOCpro := FLOCpro + AMI.LOCCounter.LOCProgram;
+    FMcCabe := FMcCabe + AMI.McCabe.Count;
+    FMI := FMI + AMI.Value;
+    AMI.Free;
   end;
 
   if GetFooter <> '' then
