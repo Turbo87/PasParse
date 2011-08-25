@@ -45,7 +45,7 @@ begin
       try
         for I := 0 to ATokens.Count - 1 do
         begin
-          AToken := ATokens[I] as TToken;
+          AToken := ATokens[I];
           Result := (AToken <> nil) and (AToken.Inspect = AExpectedTokens[I]);
         end;
       finally

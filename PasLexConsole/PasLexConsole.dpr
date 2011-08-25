@@ -27,7 +27,7 @@ begin
       try
         for I := 0 to ATokens.Count - 1 do
         begin
-          AToken := (ATokens[I] as TToken);
+          AToken := ATokens[I];
           // Last token reached?
           if AToken = nil then
             Break;
