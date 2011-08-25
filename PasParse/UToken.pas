@@ -3,7 +3,7 @@ unit UToken;
 interface
 
 uses
-  UTokenType, ULocation, UASTNode, Contnrs;
+  UTokenType, ULocation, UASTNode, Generics.Collections;
 
 type
   /// Represents a token including it's text, positions and token type
@@ -15,9 +15,9 @@ type
     FText: string;
     FTokenType: TTokenType;
     FLineBreaksBefore: Integer;
-    FCommentsBefore: TObjectList;
+    FCommentsBefore: TObjectList<TASTNode>;
     FLineBreaksAfter: Integer;
-    FCommentsAfter: TObjectList;
+    FCommentsAfter: TObjectList<TASTNode>;
 
   protected
     function GetLocation: TLocation; override;
@@ -39,9 +39,9 @@ type
     property TokenType: TTokenType read FTokenType;
 
     property LineBreaksBefore: Integer read FLineBreaksBefore write FLineBreaksBefore;
-    property CommentsBefore: TObjectList read FCommentsBefore write FCommentsBefore;
+    property CommentsBefore: TObjectList<TASTNode> read FCommentsBefore write FCommentsBefore;
     property LineBreaksAfter: Integer read FLineBreaksAfter write FLineBreaksAfter;
-    property CommentsAfter: TObjectList read FCommentsAfter write FCommentsAfter;
+    property CommentsAfter: TObjectList<TASTNode> read FCommentsAfter write FCommentsAfter;
 
     /// Creates a copy of the token with another token type.
     ///  The caller has to destroy the resulting object again!
@@ -73,9 +73,9 @@ begin
   FText := AText;
   FParsedText := AParsedText;
   FLineBreaksBefore := 0;
-  FCommentsBefore := TObjectList.Create;
+  FCommentsBefore := TObjectList<TASTNode>.Create;
   FLineBreaksAfter := 0;
-  FCommentsAfter := TObjectList.Create;
+  FCommentsAfter := TObjectList<TASTNode>.Create;
 
   // Create a new TLocation instance at the end position of the token
   FEndLocation := TLocation.Create(FLocation.FileName, FLocation.FileSource,
@@ -126,10 +126,10 @@ begin
   Result.LineBreaksAfter := FLineBreaksAfter;
 
   for I := 0 to FCommentsBefore.Count - 1 do
-    Result.CommentsBefore.Add((FCommentsBefore[I] as TToken).Clone);
+    Result.CommentsBefore.Add(FCommentsBefore[I].Clone);
 
   for I := 0 to FCommentsAfter.Count - 1 do
-    Result.CommentsAfter.Add((FCommentsAfter[I] as TToken).Clone);
+    Result.CommentsAfter.Add(FCommentsAfter[I].Clone);
 end;
 
 end.
