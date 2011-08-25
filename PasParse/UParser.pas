@@ -93,9 +93,9 @@ end;
 
 function TParser.CreateEmptyListNode: TListNode;
 var
-  AList: TObjectList;
+  AList: TObjectList<TASTNode>;
 begin
-  AList := TObjectList.Create;
+  AList := TObjectList<TASTNode>.Create;
   Result := TListNode.Create(AList);
   AList.Free;
 end;
@@ -332,11 +332,11 @@ end;
 function TParser.ParseDelimitedList(AItemRule: TRuleType;
   ADelimiterType: TTokenType): TListNode;
 var
-  AItems: TObjectList;
+  AItems: TObjectList<TASTNode>;
   AItem: TASTNode;
   ADelimiter: TToken;
 begin
-  AItems := TObjectList.Create(False);
+  AItems := TObjectList<TASTNode>.Create(False);
 
   try
     repeat
@@ -356,10 +356,10 @@ end;
 
 function TParser.ParseOptionalRuleList(ARuleType: TRuleType): TListNode;
 var
-  AItems: TObjectList;
+  AItems: TObjectList<TASTNode>;
   AItem: TASTNode;
 begin
-  AItems := TObjectList.Create(False);
+  AItems := TObjectList<TASTNode>.Create(False);
 
   while CanParseRule(ARuleType) do
   begin
@@ -381,10 +381,10 @@ end;
 
 function TParser.ParseRequiredRuleList(ARuleType: TRuleType): TListNode;
 var
-  AItems: TObjectList;
+  AItems: TObjectList<TASTNode>;
   AItem: TASTNode;
 begin
-  AItems := TObjectList.Create(False);
+  AItems := TObjectList<TASTNode>.Create(False);
 
   try
     repeat
@@ -422,9 +422,9 @@ end;
 
 function TParser.ParseTokenList(ATokenSet: ITokenSet): TListNode;
 var
-  AList: TObjectList;
+  AList: TObjectList<TASTNode>;
 begin
-  AList := TObjectList.Create(False);
+  AList := TObjectList<TASTNode>.Create(False);
 
   while CanParseToken(ATokenSet) do
     AList.Add(ParseToken(ATokenSet));

@@ -651,7 +651,7 @@ implementation
 
 uses
   UTokenType, UToken, UListNode, UGeneratedNodes, UTokenSets, UParseException,
-  UDelimitedItemNode, UTokenSet, Contnrs, UIFrame;
+  UDelimitedItemNode, UTokenSet, Generics.Collections, UIFrame;
 
 { TArrayTypeRule }
 
@@ -1708,7 +1708,7 @@ var
   ABlock: TBlockNode;
   AASM: TAssemblerStatementNode;
   AItem: TDelimitedItemNode;
-  AItemList: TObjectList;
+  AItemList: TObjectList<TASTNode>;
 begin
   AInitHeader := nil;
   AInitStatements := FParser.CreateEmptyListNode;
@@ -1730,7 +1730,7 @@ begin
     AASM := FParser.ParseRuleInternal(RTAssemblerStatement)
       as TAssemblerStatementNode;
     AItem := TDelimitedItemNode.Create(AASM, nil);
-    AItemList := TObjectList.Create(False);
+    AItemList := TObjectList<TASTNode>.Create(False);
     AItemList.Add(AItem);
     AInitStatements.Free;
     AInitStatements := TListNode.Create(AItemList);
@@ -2813,11 +2813,11 @@ end;
 
 function TStatementListRule.Evaluate: TASTNode;
 var
-  AItems: TObjectList;
+  AItems: TObjectList<TASTNode>;
   AItem: TASTNode;
   ADelimiter: TToken;
 begin
-  AItems := TObjectList.Create(False);
+  AItems := TObjectList<TASTNode>.Create(False);
   while (FParser.CanParseRule(RTStatement)) or
     (FParser.CanParseToken(TTSemicolon)) do
   begin

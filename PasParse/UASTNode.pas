@@ -3,7 +3,7 @@ unit UASTNode;
 interface
 
 uses
-  ULocation, Contnrs;
+  ULocation, Generics.Collections;
 
 type
   TASTNode = class;
@@ -40,9 +40,9 @@ type
 
   protected
     /// <Description>TObjectList of TASTNode elements.</Description>
-    FChildNodes: TObjectList;
+    FChildNodes: TObjectList<TASTNode>;
     /// <Description>TObjectList of TASTNodeProperty elements.</Description>
-    FProperties: TObjectList;
+    FProperties: TObjectList<TASTNodeProperty>;
 
     /// <Description>Default constructor.</Description>
     /// <Description>Should only be called by "inherited" of derived constructors.</Description>
@@ -134,8 +134,8 @@ constructor TASTNode.Create;
 begin
   inherited;
   // Make room for children and properties
-  FChildNodes := TObjectList.Create;
-  FProperties := TObjectList.Create;
+  FChildNodes := TObjectList<TASTNode>.Create;
+  FProperties := TObjectList<TASTNodeProperty>.Create;
 end;
 
 destructor TASTNode.Destroy;
