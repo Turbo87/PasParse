@@ -94,7 +94,6 @@
 			<DCCReference Include="..\FastMM\FastMM4.pas"/>
 			<DCCReference Include="..\FastMM\FastMM4Messages.pas"/>
 			<DCCReference Include="UTestLexScanner.pas"/>
-			<DCCReference Include="UTestDictionary.pas"/>
 			<DCCReference Include="UTestCompilerDefines.pas"/>
 			<DCCReference Include="UTestASTNode.pas"/>
 			<DCCReference Include="UTestRelOp.pas"/>

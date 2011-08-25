@@ -3,7 +3,7 @@ unit UMemoryFileLoader;
 interface
 
 uses
-  UIFileLoader, UDictionary, Classes;
+  UIFileLoader, Classes;
 
 type
   TMemoryFileLoader = class(IFileLoader)

@@ -39,7 +39,6 @@ contains
   URuleType in 'URuleType.pas',
   UCompilerDefines in 'UCompilerDefines.pas',
   UPreprocessorException in 'UPreprocessorException.pas',
-  UDictionary in 'UDictionary.pas',
   UASTNode in 'UASTNode.pas',
   UNonTerminalNode in 'UNonTerminalNode.pas',
   UDelimitedItemNode in 'UDelimitedItemNode.pas',

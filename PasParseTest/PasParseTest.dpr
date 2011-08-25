@@ -7,7 +7,6 @@ uses
   FastMM4Messages in '..\FastMM\FastMM4Messages.pas',
   SysUtils,
   UTestLexScanner in 'UTestLexScanner.pas',
-  UTestDictionary in 'UTestDictionary.pas',
   UTestCompilerDefines in 'UTestCompilerDefines.pas',
   UTestASTNode in 'UTestASTNode.pas',
   UTestRelOp in 'UTestRelOp.pas',
@@ -118,8 +117,6 @@ uses
 
 begin
   try
-    TTestDictionary.Test;
-
     TTestASTNode.Test;
     TTestLexScanner.Test;
     TTestCompilerDefines.Test;

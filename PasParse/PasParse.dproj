@@ -100,7 +100,6 @@
 			<DCCReference Include="URuleType.pas"/>
 			<DCCReference Include="UCompilerDefines.pas"/>
 			<DCCReference Include="UPreprocessorException.pas"/>
-			<DCCReference Include="UDictionary.pas"/>
 			<DCCReference Include="UASTNode.pas"/>
 			<DCCReference Include="UNonTerminalNode.pas"/>
 			<DCCReference Include="UDelimitedItemNode.pas"/>
