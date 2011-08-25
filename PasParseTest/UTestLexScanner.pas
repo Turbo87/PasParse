@@ -18,7 +18,7 @@ type
 implementation
 
 uses
-  ULexScanner, UToken, ULexException, Contnrs;
+  ULexScanner, UToken, ULexException, Generics.Collections;
 
 { TTestLexScanner }
 
@@ -31,7 +31,7 @@ class function TTestLexScanner.LexesAs(ASource: string;
   AExpectedTokens: array of string): Boolean;
 var
   ALexScanner: TLexScanner;
-  ATokens: TObjectList;
+  ATokens: TObjectList<TToken>;
   AToken: TToken;
   I: Integer;
 begin

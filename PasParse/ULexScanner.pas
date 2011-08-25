@@ -109,10 +109,10 @@ type
 
     /// <Description>Returns a list with all found tokens.</Description>
     /// <Description>The caller is responsible for freeing the list!</Description>
-    function GetTokens: TObjectList;
+    function GetTokens: TObjectList<TToken>;
 
-    procedure FillLineBreaksAfter(ATokenList: TObjectList);
-    procedure CopyCommentsIntoTokens(ATokenList: TObjectList);
+    procedure FillLineBreaksAfter(ATokenList: TObjectList<TToken>);
+    procedure CopyCommentsIntoTokens(ATokenList: TObjectList<TToken>);
 
   public
     /// <Description>Default constructor.</Description>
@@ -130,7 +130,7 @@ type
 
     /// <Description>Returns a list with all found tokens.</Description>
     /// <Description>The caller is responsible for freeing the list!</Description>
-    property Tokens: TObjectList read GetTokens;
+    property Tokens: TObjectList<TToken> read GetTokens;
   end;
 
 implementation
@@ -207,7 +207,7 @@ begin
   Result := (FIndex + AOffset < Length(FSource));
 end;
 
-procedure CopyCommentIntoToken(ATokenList: TObjectList; AComment: Integer);
+procedure CopyCommentIntoToken(ATokenList: TObjectList<TToken>; AComment: Integer);
 var
   I: Integer;
 begin
@@ -218,14 +218,14 @@ begin
       Continue;
 
     // if a line break was found then cancel searching in front of the comment
-    if (ATokenList[I] as TToken).LineBreaksAfter > 0 then
+    if ATokenList[I].LineBreaksAfter > 0 then
       Break;
 
     // if a non-comment token was found
-    if not (ATokenList[I] as TToken).IsComment then
+    if not ATokenList[I].IsComment then
     begin
       // .. add the comment to the token and exit the function
-      (ATokenList[I] as TToken).CommentsAfter.Add((ATokenList[AComment] as TToken).Clone);
+      ATokenList[I].CommentsAfter.Add(ATokenList[AComment].Clone);
       Exit;
     end;
   end;
@@ -237,16 +237,16 @@ begin
       Continue;
 
     // if a non-comment token was found
-    if not (ATokenList[I] as TToken).IsComment then
+    if not ATokenList[I].IsComment then
     begin
       // .. add the comment to the token and exit the function
-      (ATokenList[I] as TToken).CommentsBefore.Add((ATokenList[AComment] as TToken).Clone);
+      ATokenList[I].CommentsBefore.Add(ATokenList[AComment].Clone);
       Exit;
     end;
   end;
 end;
 
-procedure TLexScanner.CopyCommentsIntoTokens(ATokenList: TObjectList);
+procedure TLexScanner.CopyCommentsIntoTokens(ATokenList: TObjectList<TToken>);
 var
   I: Integer;
 begin
@@ -257,7 +257,7 @@ begin
       Continue;
 
     // Filter out all the non-comment tokens
-    if not (ATokenList[I] as TToken).IsComment then
+    if not ATokenList[I].IsComment then
       Continue;
 
     // Copy comment-tokens into relating tokens
@@ -356,7 +356,7 @@ begin
   end;
 end;
 
-procedure TLexScanner.FillLineBreaksAfter(ATokenList: TObjectList);
+procedure TLexScanner.FillLineBreaksAfter(ATokenList: TObjectList<TToken>);
 var
   I: Integer;
 begin
@@ -365,10 +365,8 @@ begin
   begin
     // Use LineBreaksBefore of current token
     // for LineBreaksAfter of previous token
-    if (ATokenList[I] <> nil) and (ATokenList[I] is TToken) and
-       (ATokenList[I - 1] <> nil) and (ATokenList[I - 1] is TToken) then
-      (ATokenList[I - 1] as TToken).LineBreaksAfter :=
-        (ATokenList[I] as TToken).LineBreaksBefore;
+    if (ATokenList[I] <> nil) and (ATokenList[I - 1] <> nil) then
+      ATokenList[I - 1].LineBreaksAfter := ATokenList[I].LineBreaksBefore;
   end;
 end;
 
@@ -377,12 +375,12 @@ begin
   Result := TLocation.Create(FFileName, FSource, FIndex + 1);
 end;
 
-function TLexScanner.GetTokens: TObjectList;
+function TLexScanner.GetTokens: TObjectList<TToken>;
 var
   AToken: TToken;
 begin
   // Create TToken list
-  Result := TObjectList.Create;
+  Result := TObjectList<TToken>.Create;
   try
     // Iterate through tokens and add them to the list
     repeat

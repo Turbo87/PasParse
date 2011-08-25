@@ -22,7 +22,7 @@ type
 implementation
 
 uses
-  ULexScanner, UToken, UTokenFilter, ULexException, Contnrs;
+  ULexScanner, UToken, UTokenFilter, ULexException, Generics.Collections;
 
 { TTestTokenFilter }
 
@@ -35,7 +35,7 @@ class function TTestTokenFilter.LexesAndFiltersAs(ASource: string;
   AExpectedTokens: array of string): Boolean;
 var
   ALexScanner: TLexScanner;
-  ATokens, AFilteredTokens: TObjectList;
+  ATokens, AFilteredTokens: TObjectList<TToken>;
   ATokenFilter: TTokenFilter;
   AToken: TToken;
   I: Integer;

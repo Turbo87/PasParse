@@ -27,28 +27,28 @@ type
 
   TTokenFilter = class
   private
-    FTokens: TObjectList;
+    FTokens: TObjectList<TToken>;
     FCompilerDefines: TCompilerDefines;
     FFileLoader: IFileLoader;
     FDirectiveTypes: TDictionary<string, TDirectiveType>;
 
-    function Filter(AIfDefStack: TStack<TIfDefTruth>; ATokens: TObjectList): TObjectList;
-    function GetTokens: TObjectList;
+    function Filter(AIfDefStack: TStack<TIfDefTruth>; ATokens: TObjectList<TToken>): TObjectList<TToken>;
+    function GetTokens: TObjectList<TToken>;
 
     function FirstWordOf(AString: string): string;
     function GetDirectiveType(AFirstWord: string): TDirectiveType;
-    procedure HandleCompilerDirective(AIfDefStack: TStack<TIfDefTruth>; AToken: TToken; ATokens: TObjectList);
+    procedure HandleCompilerDirective(AIfDefStack: TStack<TIfDefTruth>; AToken: TToken; ATokens: TObjectList<TToken>);
     procedure HandleIf(AIfDefStack: TStack<TIfDefTruth>; ADirective: string; ALocation: TLocation);
     procedure HandleElseIf(AIfDefStack: TStack<TIfDefTruth>; ADirective: string; ALocation: TLocation);
     procedure HandleElse(AIfDefStack: TStack<TIfDefTruth>);
-    procedure HandleInclude(AIfDefStack: TStack<TIfDefTruth>; ATokens: TObjectList; ADirectory, AFileName: string);
+    procedure HandleInclude(AIfDefStack: TStack<TIfDefTruth>; ATokens: TObjectList<TToken>; ADirectory, AFileName: string);
 
   public
-    constructor Create(ATokens: TObjectList; ACompilerDefines: TCompilerDefines;
+    constructor Create(ATokens: TObjectList<TToken>; ACompilerDefines: TCompilerDefines;
       AFileLoader: IFileLoader);
     destructor Destroy; override;
 
-    property Tokens: TObjectList read GetTokens;
+    property Tokens: TObjectList<TToken> read GetTokens;
   end;
 
 implementation
@@ -58,7 +58,7 @@ uses
 
 { TTokenFilter }
 
-constructor TTokenFilter.Create(ATokens: TObjectList;
+constructor TTokenFilter.Create(ATokens: TObjectList<TToken>;
   ACompilerDefines: TCompilerDefines; AFileLoader: IFileLoader);
 begin
   inherited Create;
@@ -152,18 +152,18 @@ begin
   inherited;
 end;
 
-function TTokenFilter.Filter(AIfDefStack: TStack<TIfDefTruth>; ATokens: TObjectList): TObjectList;
+function TTokenFilter.Filter(AIfDefStack: TStack<TIfDefTruth>; ATokens: TObjectList<TToken>): TObjectList<TToken>;
 var
   AToken: TToken;
   I: Integer;
 begin
-  Result := TObjectList.Create;
+  Result := TObjectList<TToken>.Create;
 
   try
     I := 0;
     while I < ATokens.Count do
     begin
-      AToken := ATokens[I] as TToken;
+      AToken := ATokens[I];
       case AToken.TokenType of
         TTSingleLineComment,
         TTCurlyBraceComment,
@@ -175,7 +175,7 @@ begin
 
         else
           if AIfDefStack.Peek() = IDTTrue then
-            Result.Add(AToken.Clone);
+            Result.Add(AToken.Clone as TToken);
       end;
       Inc(I);
     end;
@@ -210,7 +210,7 @@ begin
     Result := DTUnrecognized;
 end;
 
-function TTokenFilter.GetTokens: TObjectList;
+function TTokenFilter.GetTokens: TObjectList<TToken>;
 var
   AIfDefStack: TStack<TIfDefTruth>;
 begin
@@ -224,7 +224,7 @@ begin
 end;
 
 procedure TTokenFilter.HandleCompilerDirective(AIfDefStack: TStack<TIfDefTruth>;
-  AToken: TToken; ATokens: TObjectList);
+  AToken: TToken; ATokens: TObjectList<TToken>);
 var
   ADirective, AFirstWord, AParameter: string;
 begin
@@ -314,12 +314,12 @@ begin
     AIfDefStack.Push(IDTForeverFalse);
 end;
 
-procedure TTokenFilter.HandleInclude(AIfDefStack: TStack<TIfDefTruth>; ATokens: TObjectList;
+procedure TTokenFilter.HandleInclude(AIfDefStack: TStack<TIfDefTruth>; ATokens: TObjectList<TToken>;
   ADirectory, AFileName: string);
 var
   ASource: string;
   ALexer: TLexScanner;
-  ALexTokens, ANewTokens: TObjectList;
+  ALexTokens, ANewTokens: TObjectList<TToken>;
   I: Integer;
 begin
   AFileName := FFileLoader.ExpandFileName(ADirectory, AFileName);
@@ -332,7 +332,7 @@ begin
       ANewTokens := Filter(AIfDefStack, ALexTokens);
 
       for I := 0 to ANewTokens.Count - 1 do
-        ATokens.Add(ANewTokens.Items[I]);
+        ATokens.Add(ANewTokens[I]);
 
       ANewTokens.OwnsObjects := False;
       ANewTokens.Free;

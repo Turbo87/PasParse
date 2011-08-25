@@ -4,7 +4,8 @@ interface
 
 uses
   UCompilerDefines, UToken, UIFrame, UITokenSet, UTokenType, UListNode,
-  UParseException, UIParser, URule, URuleType, UASTNode, UIFileLoader, Contnrs;
+  UParseException, UIParser, URule, URuleType, UASTNode, UIFileLoader, Contnrs,
+  Generics.Collections;
 
 type
   TRuleClass = class of TRule;
@@ -15,7 +16,7 @@ type
     FNextFrame: IFrame;
     FRules: array of TRule;
 
-    class function FrameFromTokens(ATokens: TObjectList): IFrame;
+    class function FrameFromTokens(ATokens: TObjectList<TToken>): IFrame;
     function GetIsEOF: Boolean;
 
     procedure AddTokenRule(ARuleType: TRuleType; ATokenSet: ITokenSet);
@@ -29,7 +30,7 @@ type
     constructor CreateFromText(AText, AFileName: string;
       ACompilerDefines: TCompilerDefines; AFileLoader: IFileLoader);
     constructor CreateFromFrame(AFrame: IFrame);
-    constructor CreateFromTokens(ATokens: TObjectList);
+    constructor CreateFromTokens(ATokens: TObjectList<TToken>);
     destructor Destroy; override;
 
     property IsEOF: Boolean read GetIsEOF;
@@ -213,7 +214,7 @@ constructor TParser.CreateFromText(AText, AFileName: string;
   ACompilerDefines: TCompilerDefines; AFileLoader: IFileLoader);
 var
   ALexScanner: TLexScanner;
-  ATokens, AFilteredTokens: TObjectList;
+  ATokens, AFilteredTokens: TObjectList<TToken>;
   ATokenFilter: TTokenFilter;
 begin
   ALexScanner := TLexScanner.Create(AText, AFileName);
@@ -239,7 +240,7 @@ begin
   end;
 end;
 
-constructor TParser.CreateFromTokens(ATokens: TObjectList);
+constructor TParser.CreateFromTokens(ATokens: TObjectList<TToken>);
 begin
   CreateFromFrame(FrameFromTokens(ATokens));
 end;
@@ -275,7 +276,7 @@ begin
     FNextFrame.DisplayName, FNextFrame.Location.Clone);
 end;
 
-class function TParser.FrameFromTokens(ATokens: TObjectList): IFrame;
+class function TParser.FrameFromTokens(ATokens: TObjectList<TToken>): IFrame;
 var
   AFirstFrame: IFrame;
   APrevFrame: IFrame;

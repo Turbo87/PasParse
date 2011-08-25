@@ -3,14 +3,14 @@ program PasLexConsole;
 {$APPTYPE CONSOLE}
 
 uses
-  SysUtils, ULexScanner, UToken, UTokenType, UFileLoader, TypInfo, Contnrs;
+  SysUtils, ULexScanner, UToken, UTokenType, UFileLoader, TypInfo, Generics.Collections;
 
 procedure LoadFile(const AFileName: string);
 var
   AFileLoader: TFileLoader;
   AContent: string;
   ALexScanner: TLexScanner;
-  ATokens: TObjectList;
+  ATokens: TObjectList<TToken>;
   AToken: TToken;
   I: Integer;
 begin
