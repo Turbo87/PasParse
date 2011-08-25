@@ -3,12 +3,12 @@ unit UCompilerDefines;
 interface
 
 uses
-  UDictionary, ULocation;
+  Generics.Collections, ULocation;
 
 type
   TCompilerDefines = class
   private
-    FDictionary: TDictionary;
+    FDictionary: TDictionary<string, Boolean>;
 
   public
     constructor Create(ADefineStandards: Boolean = False);
@@ -34,18 +34,18 @@ uses
 
 function TCompilerDefines.Clone: TCompilerDefines;
 var
-  APair: TDictionaryKeyValuePair;
+  APair: TPair<string, Boolean>;
 begin
   Result := TCompilerDefines.Create;
   for APair in FDictionary do
   begin
-    Result.DefineDirective(APair.Key, (APair.Value = TObject(true)));    
+    Result.DefineDirective(APair.Key, APair.Value);
   end;
 end;
 
 constructor TCompilerDefines.Create(ADefineStandards: Boolean);
 begin
-  FDictionary := TDictionary.Create;
+  FDictionary := TDictionary<string, Boolean>.Create;
 
   if ADefineStandards then
   begin
@@ -108,7 +108,7 @@ end;
 procedure TCompilerDefines.DefineDirective(ACompilerDirective: string;
   AIsTrue: Boolean);
 begin
-  FDictionary[AnsiLowerCase(ACompilerDirective)] := TObject(AIsTrue);
+  FDictionary.AddOrSetValue(AnsiLowerCase(ACompilerDirective), AIsTrue);
 end;
 
 procedure TCompilerDefines.DefineDirectiveAsFalse(ACompilerDirective: string);
@@ -141,10 +141,10 @@ end;
 function TCompilerDefines.IsTrue(ACompilerDirective: string;
   ALocation: TLocation): Boolean;
 var
-  AObject: TObject;
+  AValue: Boolean;
 begin
-  if FDictionary.Read(AnsiLowerCase(ACompilerDirective), AObject) then
-    Result := Boolean(AObject)
+  if FDictionary.TryGetValue(AnsiLowerCase(ACompilerDirective), AValue) then
+    Result := AValue
   else if Copy(AnsiLowerCase(ACompilerDirective), 1, 6) = 'ifdef ' then
     Result := False
   else if Copy(AnsiLowerCase(ACompilerDirective), 1, 7) = 'ifndef ' then
