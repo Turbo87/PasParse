@@ -3,7 +3,7 @@ unit UHalstead;
 interface
 
 uses
-  UVisitor, UASTNode, UToken, UDictionary, UTokenType;
+  Generics.Collections, UVisitor, UASTNode, UToken, UTokenType;
 
 type
   THalstead = class(TVisitor)
@@ -12,7 +12,7 @@ type
     function GetOperatorCount: Integer;
 
   protected
-    FOperators, FOperands: TDictionary;
+    FOperators, FOperands: TDictionary<string, Integer>;
     FTotalOperators, FTotalOperands: Integer;
     FProgramLength, FVocabularySize: Integer;
     FProgramVolume, FDifficultyLevel, FProgramLevel: Extended;
@@ -63,8 +63,8 @@ constructor THalstead.Create;
 begin
   inherited;
 
-  FOperators := TDictionary.Create;
-  FOperands := TDictionary.Create;
+  FOperators := TDictionary<string, Integer>.Create;
+  FOperands := TDictionary<string, Integer>.Create;
 
   Reset;
 end;
@@ -128,12 +128,12 @@ end;
 
 procedure THalstead.UpdateValues;
 var
-  APair: TDictionaryKeyValuePair;
+  AValue: Integer;
 begin
-  for APair in FOperators do
-    FTotalOperators := FTotalOperators + Integer(APair.Value);
-  for APair in FOperands do
-    FTotalOperands := FTotalOperands + Integer(APair.Value);
+  for AValue in FOperators.Values do
+    FTotalOperators := FTotalOperators + AValue;
+  for AValue in FOperands.Values do
+    FTotalOperands := FTotalOperands + AValue;
 
   FProgramLength := FTotalOperators + FTotalOperands;
   FVocabularySize := FOperators.Count + FOperands.Count;
@@ -155,17 +155,17 @@ begin
   ATokenType := GetEnumName(TypeInfo(TTokenType), Integer(ANode.TokenType));
   if IsOperator(ANode.TokenType) then
   begin
-    if FOperators.Contains(ATokenType) then
-      FOperators[ATokenType] := TObject(Integer(FOperators[ATokenType]) + 1)
+    if FOperators.ContainsKey(ATokenType) then
+      FOperators[ATokenType] := FOperators[ATokenType] + 1
     else
-      FOperators[ATokenType] := TObject(1);   
+      FOperators.Add(ATokenType, 1);
   end
   else if IsOperand(ANode.TokenType) then
   begin
-    if FOperands.Contains(ATokenType) then
-      FOperands[ATokenType] := TObject(Integer(FOperands[ATokenType]) + 1)
+    if FOperands.ContainsKey(ATokenType) then
+      FOperands[ATokenType] := FOperands[ATokenType] + 1
     else
-      FOperands[ATokenType] := TObject(1);
+      FOperands.Add(ATokenType, 1);
   end;
 end;
 
