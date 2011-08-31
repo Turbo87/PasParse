@@ -14,7 +14,8 @@ uses
   ULexException,
   UParseException,
   Generics.Collections,
-  UFileVisitor in 'UFileVisitor.pas';
+  UFileVisitor in 'UFileVisitor.pas',
+  UFileListVisitor in 'UFileListVisitor.pas';
 
 type
   TStyle = (
@@ -28,20 +29,6 @@ type
     FError: string;
 
     constructor Create(const AMI: TMaintainabilityIndex; const AError: string);
-  end;
-
-  TFileListVisitor = class(TFileVisitor)
-  private
-    FFileList: TStringList;
-
-  protected
-    procedure Visit(AFilePath: string); override;
-
-  public
-    property Files: TStringList read FFileList;
-
-    constructor Create;
-    destructor Destroy; override; virtual;
   end;
 
 var
@@ -311,25 +298,6 @@ constructor TResult.Create(const AMI: TMaintainabilityIndex;
 begin
   FMI := AMI;
   FError := AError;
-end;
-
-{ TFileListVisiot }
-
-constructor TFileListVisitor.Create;
-begin
-  inherited;
-  FFileList := TStringList.Create;
-end;
-
-destructor TFileListVisitor.Destroy;
-begin
-  FFileList.Free;
-  inherited;
-end;
-
-procedure TFileListVisitor.Visit(AFilePath: string);
-begin
-  FFileList.Add(AFilePath);
 end;
 
 begin
