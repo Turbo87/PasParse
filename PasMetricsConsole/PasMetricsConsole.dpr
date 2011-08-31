@@ -3,9 +3,18 @@ program PasMetricsConsole;
 {$APPTYPE CONSOLE}
 
 uses
-  SysUtils, Classes, UFileLoader, UCompilerDefines, UASTNode,
-  UMaintainabilityIndex, UParser, URuleType, ULexException, UParseException,
-  Generics.Collections;
+  SysUtils,
+  Classes,
+  UFileLoader,
+  UCompilerDefines,
+  UASTNode,
+  UMaintainabilityIndex,
+  UParser,
+  URuleType,
+  ULexException,
+  UParseException,
+  Generics.Collections,
+  UFileVisitor in 'UFileVisitor.pas';
 
 type
   TStyle = (
@@ -19,6 +28,20 @@ type
     FError: string;
 
     constructor Create(const AMI: TMaintainabilityIndex; const AError: string);
+  end;
+
+  TFileListVisitor = class(TFileVisitor)
+  private
+    FFileList: TStringList;
+
+  protected
+    procedure Visit(AFilePath: string); override;
+
+  public
+    property Files: TStringList read FFileList;
+
+    constructor Create;
+    destructor Destroy; override; virtual;
   end;
 
 var
@@ -75,44 +98,19 @@ end;
 procedure FindFiles(AFiles: TStringList; ADirectory, AFilter: string;
   ARecursive: Boolean);
 var
-  SR: TSearchRec;
-  DirList: TStringList;
-  IsFound: Boolean;
-  i: integer;
+  AVisitor: TFileListVisitor;
+  AFile: string;
 begin
-  if ADirectory[length(ADirectory)] <> '\' then
-    ADirectory := ADirectory + '\';
+  AVisitor := TFileListVisitor.Create;
+  AVisitor.VisitFilesFiltered(ADirectory, AFilter, ARecursive);
 
-  IsFound := FindFirst(ADirectory + AFilter, faAnyFile - faDirectory, SR) = 0;
-  while IsFound do
+  for AFile in AVisitor.Files do
   begin
-    // HACK due to bad FindNext/First() implementation
-    if Copy(SR.Name, length(SR.Name) - 5, 6) <> '.dproj' then
-      AFiles.Add(ADirectory + SR.Name);
-    IsFound := FindNext(SR) = 0;
+    if Copy(AFile, length(AFile) - 5, 6) <> '.dproj' then
+      AFiles.Add(AFile);
   end;
-  FindClose(SR);
 
-  if ARecursive then
-  begin
-    // Build a list of subdirectories
-    DirList := TStringList.Create;
-    IsFound := FindFirst(ADirectory + '*', faAnyFile, SR) = 0;
-    while IsFound do
-    begin
-      if ((SR.Attr and faDirectory) <> 0) and (SR.Name[1] <> '.') then
-        DirList.Add(ADirectory + SR.Name);
-
-      IsFound := FindNext(SR) = 0;
-    end;
-    FindClose(SR);
-
-    // Scan the list of subdirectories
-    for i := 0 to DirList.Count - 1 do
-      FindFiles(AFiles, DirList[i], AFilter, True);
-
-    DirList.Free;
-  end;
+  AVisitor.Free;
 end;
 
 function GetHeader: string;
@@ -313,6 +311,25 @@ constructor TResult.Create(const AMI: TMaintainabilityIndex;
 begin
   FMI := AMI;
   FError := AError;
+end;
+
+{ TFileListVisiot }
+
+constructor TFileListVisitor.Create;
+begin
+  inherited;
+  FFileList := TStringList.Create;
+end;
+
+destructor TFileListVisitor.Destroy;
+begin
+  FFileList.Free;
+  inherited;
+end;
+
+procedure TFileListVisitor.Visit(AFilePath: string);
+begin
+  FFileList.Add(AFilePath);
 end;
 
 begin
