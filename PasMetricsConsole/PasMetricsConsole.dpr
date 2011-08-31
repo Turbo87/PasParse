@@ -185,7 +185,7 @@ begin
     [ExtractRelativePath(ABaseDir, AFilePath), AWarning]));
 end;
 
-function CalculateMI(AFilePath, ABaseDir: string): TMaintainabilityIndex; 
+function CalculateMI(AFilePath: string): TMaintainabilityIndex;
 var
   AFileLoader: TFileLoader;
   AContent: string;
@@ -223,12 +223,12 @@ begin
   end;
 end;
 
-function AnalyzeFile(AFilePath, ABaseDir: string): TResult; 
+function AnalyzeFile(AFilePath: string): TResult;
 var
   AMI: TMaintainabilityIndex;
 begin
   try
-    AMI := CalculateMI(AFilePath, ABaseDir);
+    AMI := CalculateMI(AFilePath);
     Result := TResult.Create(AMI, '');
   except
     on E: Exception do
@@ -264,7 +264,7 @@ begin
 
   AResults := TList<TPair<string, TResult>>.Create;
   for i := 0 to AFiles.Count - 1 do
-    AResults.Add(TPair<string, TResult>.Create(AFiles[i], AnalyzeFile(AFiles[i], ADirectory)));
+    AResults.Add(TPair<string, TResult>.Create(AFiles[i], AnalyzeFile(AFiles[i])));
 
   for AResult in AResults do
   begin
