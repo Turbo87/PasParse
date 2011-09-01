@@ -5,6 +5,7 @@ program PasMetricsConsole;
 uses
   SysUtils,
   Classes,
+  Forms,
   UFileLoader,
   UCompilerDefines,
   UASTNode,
@@ -15,7 +16,11 @@ uses
   UParseException,
   Generics.Collections,
   UFileVisitor in 'UFileVisitor.pas',
-  UFileListVisitor in 'UFileListVisitor.pas';
+  UFileListVisitor in 'UFileListVisitor.pas',
+  OtlParallel in '..\OmniThreadLibrary\OtlParallel.pas',
+  OtlTaskControl in '..\OmniThreadLibrary\OtlTaskControl.pas',
+  OtlComm in '..\OmniThreadLibrary\OtlComm.pas',
+  OtlTask in '..\OmniThreadLibrary\OtlTask.pas';
 
 type
   TStyle = (
@@ -244,9 +249,9 @@ var
   ADirectory: string;
   ARecursive: Boolean;
   AFiles: TStringList;
-  i: integer;
   AResults: TList<TResult>;
   AResult: TResult;
+  AForEachFinished: Boolean;
 begin
   FStyle := sASCII;
   FFileName := '';
@@ -263,8 +268,24 @@ begin
   FindFiles(AFiles, ADirectory, '*.dpk', ARecursive);
 
   AResults := TList<TResult>.Create;
-  for i := 0 to AFiles.Count - 1 do
-    AResults.Add(AnalyzeFile(AFiles[i]));
+
+  AForEachFinished := False;
+  Parallel.ForEach<string>(AFiles).NoWait
+    .OnStop(
+      procedure begin
+        AForEachFinished := True;
+      end)
+    .OnMessage(0,
+      procedure(const task: IOmniTaskControl; const msg: TOmniMessage) begin
+        AResults.Add(TResult(msg.MsgData.AsObject));
+      end)
+    .Execute(
+      procedure(const task: IOmniTask; const value: string) begin
+        task.Comm.Send(0, AnalyzeFile(value));
+      end);
+
+  while not AForEachFinished do
+    Application.ProcessMessages;
 
   for AResult in AResults do
   begin
