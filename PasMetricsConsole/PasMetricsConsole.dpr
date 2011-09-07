@@ -28,8 +28,6 @@ type
     FPath: string;
     FMI: TMaintainabilityIndex;
     FError: string;
-
-    constructor Create(const APath: string; const AMI: TMaintainabilityIndex; const AError: string);
   end;
 
 var
@@ -225,16 +223,17 @@ begin
 end;
 
 function AnalyzeFile(AFilePath: string): TResult;
-var
-  AMI: TMaintainabilityIndex;
 begin
+  Result := TResult.Create;
+  Result.FPath := AFilePath;
   try
-    AMI := CalculateMI(AFilePath);
-    Result := TResult.Create(AFilePath, AMI, '');
+    Result.FMI := CalculateMI(AFilePath);
+    Result.FError := '';
   except
     on E: Exception do
     begin
-      Result := TResult.Create(AFilePath, nil, E.Message);
+      Result.FMI := nil;
+      Result.FError := E.Message;
     end;
   end;
 
@@ -293,15 +292,6 @@ begin
 
   AResults.Free;
   AFiles.Free;
-end;
-
-{ TResult }
-
-constructor TResult.Create(const APath: string; const AMI: TMaintainabilityIndex; const AError: string);
-begin
-  FPath := APath;
-  FMI := AMI;
-  FError := AError;
 end;
 
 begin
