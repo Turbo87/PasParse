@@ -24,11 +24,12 @@ type
     sHTML
   );
 
-  TResult = record
+  TResult = class(TObject)
+    FPath: string;
     FMI: TMaintainabilityIndex;
     FError: string;
 
-    constructor Create(const AMI: TMaintainabilityIndex; const AError: string);
+    constructor Create(const APath: string; const AMI: TMaintainabilityIndex; const AError: string);
   end;
 
 var
@@ -229,11 +230,11 @@ var
 begin
   try
     AMI := CalculateMI(AFilePath);
-    Result := TResult.Create(AMI, '');
+    Result := TResult.Create(AFilePath, AMI, '');
   except
     on E: Exception do
     begin
-      Result := TResult.Create(nil, E.Message);
+      Result := TResult.Create(AFilePath, nil, E.Message);
     end;
   end;
 
@@ -245,8 +246,8 @@ var
   ARecursive: Boolean;
   AFiles: TStringList;
   i: integer;
-  AResults: TList<TPair<string, TResult>>;
-  AResult: TPair<string, TResult>;
+  AResults: TList<TResult>;
+  AResult: TResult;
 begin
   FStyle := sASCII;
   FFileName := '';
@@ -262,40 +263,43 @@ begin
   FindFiles(AFiles, ADirectory, '*.dpr', ARecursive);
   FindFiles(AFiles, ADirectory, '*.dpk', ARecursive);
 
-  AResults := TList<TPair<string, TResult>>.Create;
+  AResults := TList<TResult>.Create;
   for i := 0 to AFiles.Count - 1 do
-    AResults.Add(TPair<string, TResult>.Create(AFiles[i], AnalyzeFile(AFiles[i])));
+    AResults.Add(AnalyzeFile(AFiles[i]));
 
   for AResult in AResults do
   begin
-    if AResult.Value.FMI <> nil then
+    if AResult.FMI <> nil then
     begin
-      OutputResult(AResult.Key, ADirectory, AResult.Value.FMI);
+      OutputResult(AResult.FPath, ADirectory, AResult.FMI);
 
       Inc(FFiles);
-      FLOCpro := FLOCpro + AResult.Value.FMI.LOCCounter.LOCProgram;
-      FMcCabe := FMcCabe + AResult.Value.FMI.McCabe.Count;
-      FMI := FMI + AResult.Value.FMI.Value;
-      AResult.Value.FMI.Free;
+      FLOCpro := FLOCpro + AResult.FMI.LOCCounter.LOCProgram;
+      FMcCabe := FMcCabe + AResult.FMI.McCabe.Count;
+      FMI := FMI + AResult.FMI.Value;
+      AResult.FMI.Free;
     end;
     
-    if AResult.Value.FError <> '' then
-      OutputWarning(AResult.Key, ADirectory, AResult.Value.FError);
+    if AResult.FError <> '' then
+      OutputWarning(AResult.FPath, ADirectory, AResult.FError);
   end;
 
   if GetFooter <> '' then
     WriteLn(FFile, GetFooter);
 
   CloseFile(FFile);
+  for AResult in AResults do
+    AResult.Free;
+
   AResults.Free;
   AFiles.Free;
 end;
 
 { TResult }
 
-constructor TResult.Create(const AMI: TMaintainabilityIndex;
-  const AError: string);
+constructor TResult.Create(const APath: string; const AMI: TMaintainabilityIndex; const AError: string);
 begin
+  FPath := APath;
   FMI := AMI;
   FError := AError;
 end;
