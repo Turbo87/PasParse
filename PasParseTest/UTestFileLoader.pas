@@ -44,6 +44,9 @@ begin
   OK(ALoader.Load('data/FileLoaderTestWin.txt') =
     'foo' + #13#10 + 'bar' + #13#10 + 'baz', 'Load() with \r\n');
 
+  OK(ALoader.Load('data/FileLoaderTestBOM.txt') =
+    'foo' + #13#10 + 'bar' + #13#10 + 'baz', 'Load() with Byte Order Mark');
+
   OK(ALoader.Load('data/FileLoaderTestUnix.txt') =
     'foo' + #10 + 'bar' + #10 + 'baz', 'Load() with \n');
 
