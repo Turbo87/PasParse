@@ -31,6 +31,19 @@ contains
   ULOCCounter in 'ULOCCounter.pas',
   UMcCabe in 'UMcCabe.pas',
   UHalstead in 'UHalstead.pas',
-  UMaintainabilityIndex in 'UMaintainabilityIndex.pas';
+  UMaintainabilityIndex in 'UMaintainabilityIndex.pas',
+  UGeneratedNodes,
+  UVisitor,
+  UITokenSet,
+  UTokenSet,
+  UTokenType,
+  UToken,
+  UNonTerminalNode,
+  ULocation,
+  UASTNode,
+  UTokenSets,
+  UListNode,
+  UDelimitedItemNode;
 
 end.
+
