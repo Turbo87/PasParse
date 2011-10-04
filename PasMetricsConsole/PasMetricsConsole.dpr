@@ -15,6 +15,7 @@ uses
   ULexException,
   UParseException,
   Generics.Collections,
+  Generics.Defaults,
   UFileVisitor in 'UFileVisitor.pas',
   UFileListVisitor in 'UFileListVisitor.pas',
   OtlParallel in '..\OmniThreadLibrary\OtlParallel.pas',
@@ -286,6 +287,12 @@ begin
 
   while not AForEachFinished do
     Application.ProcessMessages;
+
+  AResults.Sort(TComparer<TResult>.Construct(
+    function (const L, R: TResult): Integer
+    begin
+      Result := AnsiCompareText(L.FPath, R.FPath);
+    end));
 
   for AResult in AResults do
   begin
