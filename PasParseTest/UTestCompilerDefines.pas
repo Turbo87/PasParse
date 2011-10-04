@@ -49,9 +49,11 @@ begin
 
   // Test for False if undefined IfDef
   OK(not DefineIsTrue(ADefines, 'IFDEF FOO'), 'not IFDEF FOO');
+  OK(not DefineIsTrue(ADefines, 'ifdef FOO'), 'not ifdef FOO');
 
   // Test for True if undefined IfNDef
   OK(DefineIsTrue(ADefines, 'IFNDEF FOO'), 'IFNDEF FOO');
+  OK(DefineIsTrue(ADefines, 'ifndef FOO'), 'ifndef FOO');
 
   // Test for exception on undefined if
   try

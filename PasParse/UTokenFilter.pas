@@ -204,6 +204,7 @@ end;
 
 function TTokenFilter.GetDirectiveType(AFirstWord: string): TDirectiveType;
 begin
+  AFirstWord := UpperCase(AFirstWord);
   if FDirectiveTypes.ContainsKey(AFirstWord) then
     Result := FDirectiveTypes[AFirstWord]
   else if Length(AFirstWord) = 1 then
