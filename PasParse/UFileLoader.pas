@@ -16,7 +16,7 @@ type
 implementation
 
 uses
-  SysUtils;
+  SysUtils, Classes;
 
 { TFileLoader }
 
@@ -33,31 +33,15 @@ end;
 
 function TFileLoader.Load(AFileName: string): string;
 var
-  AFile: TextFile;
-  AChar: char;
+  AReader: TStreamReader;
 begin
   if not FileExists(AFileName) then
     raise EInOutError.Create('File not found: ' + AFileName)
   else
   begin
-    Result := '';
-
-    // Open File
-    AssignFile(AFile, AFileName);
-    Reset(AFile);
-
-    // Read File
-    while not Eof(AFile) do
-    begin
-      Read(AFile, AChar);
-      Result := Result + AChar;
-
-      if Result = #239#187#191 then
-        Result := '';
-    end;
-
-    // Close File
-    Close(AFile);
+    AReader := TStreamReader.Create(AFileName, True);
+    Result := AReader.ReadToEnd;
+    AReader.Free;
   end;
 end;
 
