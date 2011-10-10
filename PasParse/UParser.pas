@@ -119,6 +119,7 @@ begin
   AddRule(RTClassOfType, TClassOfTypeRule);
   AddRule(RTClassType, TClassTypeRule);
   AddRule(RTConstantDecl, TConstantDeclRule);
+  AddRule(RTConstraint, TConstraintRule);
   AddRule(RTConstSection, TConstSectionRule);
   AddRule(RTDirective, TDirectiveRule);
   AddRule(RTEnumeratedType, TEnumeratedTypeRule);

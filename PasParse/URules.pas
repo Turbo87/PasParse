@@ -77,7 +77,19 @@ type
     function CanParse: Boolean; override;
     function Evaluate: TASTNode; override;
   end;
-  
+
+  TConstraintRule = class(TRule)
+  private
+    FAlternator: TAlternator;
+
+  public
+    constructor Create(AParser: IParser; ARuleType: TRuleType); override;
+    destructor Destroy; override;
+
+    function CanParse: Boolean; override;
+    function Evaluate: TASTNode; override;
+  end;
+
   TConstSectionRule = class(TRule)
   public
     function CanParse: Boolean; override;
@@ -549,7 +561,7 @@ type
     function CanParse: Boolean; override;
     function Evaluate: TASTNode; override;
   end;
-  
+
   TTypedConstantRule = class(TRule)
   public
     function CanParse: Boolean; override;
@@ -1021,9 +1033,37 @@ begin
   AValue := FParser.ParseRuleInternal(RTTypedConstant);
   ADirectives := FParser.ParseOptionalRuleList(RTPortabilityDirective);
   ASemicolon := FParser.ParseToken(TTSemicolon);
-  
+
   Result := TConstantDeclNode.Create(AName, AColon, AType, AEqual, AValue,
     ADirectives, ASemicolon);
+end;
+
+{ TConstraintRule }
+
+function TConstraintRule.CanParse: Boolean;
+begin
+  Result := FAlternator.LookAhead(FParser);
+end;
+
+constructor TConstraintRule.Create(AParser: IParser; ARuleType: TRuleType);
+begin
+  inherited Create(AParser, ARuleType);
+  FAlternator := TAlternator.Create;
+  FAlternator.AddToken(TTConstructorKeyword);
+  FAlternator.AddToken(TTRecordKeyword);
+  FAlternator.AddToken(TTClassKeyword);
+  FAlternator.AddRule(RTQualifiedIdent);
+end;
+
+destructor TConstraintRule.Destroy;
+begin
+  FAlternator.Free;
+  inherited;
+end;
+
+function TConstraintRule.Evaluate: TASTNode;
+begin
+  Result := FAlternator.Execute(FParser);
 end;
 
 { TConstSectionRule }

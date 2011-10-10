@@ -113,7 +113,8 @@ uses
   UTestMemoryFileLoader in 'UTestMemoryFileLoader.pas',
   UTestFileLoader in 'UTestFileLoader.pas',
   UTestVisitor in 'UTestVisitor.pas',
-  UTestGoal in 'UTestGoal.pas';
+  UTestGoal in 'UTestGoal.pas',
+  UTestConstraint in 'UTestConstraint.pas';
 
 begin
   try
@@ -138,6 +139,7 @@ begin
     TTestClassHelperType.Test;
     TTestClassOf.Test;
     TTestConstantDecl.Test;
+    TTestConstraint.Test;
     TTestConstSection.Test;
     TTestDirective.Test;
     TTestEnumeratedType.Test;

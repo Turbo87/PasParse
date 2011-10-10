@@ -18,6 +18,7 @@ type
     RTClassOfType,
     RTClassType,
     RTConstantDecl,
+    RTConstraint,
     RTConstSection,
     RTDirective,
     RTEnumeratedType,
