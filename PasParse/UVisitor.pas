@@ -81,6 +81,7 @@ type
     procedure Visit(ANode: TTypeHelperNode); overload; virtual;
     procedure Visit(ANode: TTypeParamDeclNode); overload; virtual;
     procedure Visit(ANode: TTypeParamNode); overload; virtual;
+    procedure Visit(ANode: TTypeParamsNode); overload; virtual;
     procedure Visit(ANode: TTypeSectionNode); overload; virtual;
     procedure Visit(ANode: TUnaryOperationNode); overload; virtual;
     procedure Visit(ANode: TUnitNode); overload; virtual;
@@ -236,6 +237,8 @@ begin
     Visit(ANode as TTypeParamDeclNode);
   if ANode is TTypeParamNode then
     Visit(ANode as TTypeParamNode);
+  if ANode is TTypeParamsNode then
+    Visit(ANode as TTypeParamsNode);
   if ANode is TTypeSectionNode then
     Visit(ANode as TTypeSectionNode);
   if ANode is TUnaryOperationNode then
@@ -1162,6 +1165,17 @@ begin
     Visit(ANode.ModifierNode);
   if ANode.NameNode <> nil then
     Visit(ANode.NameNode);
+end;
+
+procedure TVisitor.Visit(ANode: TTypeParamsNode);
+begin
+  // Visit child nodes
+  if ANode.OpenBracketNode <> nil then
+    Visit(ANode.OpenBracketNode);
+  if ANode.TypeParamDeclNode <> nil then
+    Visit(ANode.TypeParamDeclNode);
+  if ANode.CloseBracketNode <> nil then
+    Visit(ANode.CloseBracketNode);
 end;
 
 procedure TVisitor.Visit(ANode: TTypeSectionNode);

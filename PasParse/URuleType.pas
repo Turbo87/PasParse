@@ -94,6 +94,7 @@ type
     RTTypeDecl,
     RTTypeParam,
     RTTypeParamDecl,
+    RTTypeParams,
     RTTypeSection,
     RTUnaryOperator,
     RTUnit,

@@ -116,7 +116,8 @@ uses
   UTestGoal in 'UTestGoal.pas',
   UTestConstraint in 'UTestConstraint.pas',
   UTestTypeParam in 'UTestTypeParam.pas',
-  UTestTypeParamDecl in 'UTestTypeParamDecl.pas';
+  UTestTypeParamDecl in 'UTestTypeParamDecl.pas',
+  UTestTypeParams in 'UTestTypeParams.pas';
 
 begin
   try
@@ -216,6 +217,7 @@ begin
     TTestTypeDecl.Test;
     TTestTypeParam.Test;
     TTestTypeParamDecl.Test;
+    TTestTypeParams.Test;
     TTestTypeSection.Test;
     TTestUnaryOperator.Test;
     TTestUnit.Test;

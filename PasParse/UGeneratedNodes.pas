@@ -73,6 +73,7 @@ type
   TTypeHelperNode = class;
   TTypeParamDeclNode = class;
   TTypeParamNode = class;
+  TTypeParamsNode = class;
   TTypeSectionNode = class;
   TUnaryOperationNode = class;
   TUnitNode = class;
@@ -1275,6 +1276,22 @@ type
 
     property ModifierNode: TToken read FModifierNode;
     property NameNode: TToken read FNameNode;
+  end;
+
+  TTypeParamsNode = class(TNonTerminalNode)
+  private
+    FOpenBracketNode: TToken;
+    FTypeParamDeclNode: TTypeParamDeclNode;
+    FCloseBracketNode: TToken;
+
+  public
+    constructor Create(AOpenBracketNode: TToken; ATypeParamDeclNode: TTypeParamDeclNode; ACloseBracketNode: TToken);
+
+    function Clone: TASTNode; override;
+
+    property OpenBracketNode: TToken read FOpenBracketNode;
+    property TypeParamDeclNode: TTypeParamDeclNode read FTypeParamDeclNode;
+    property CloseBracketNode: TToken read FCloseBracketNode;
   end;
 
   TTypeSectionNode = class(TNonTerminalNode)
@@ -5547,6 +5564,55 @@ begin
   // Adding properties
   FProperties.Add(TASTNodeProperty.Create('ModifierNode', AModifierNode));
   FProperties.Add(TASTNodeProperty.Create('NameNode', ANameNode));
+end;
+
+{ TTypeParamsNode }
+
+function TTypeParamsNode.Clone: TASTNode;
+var
+  AOpenBracketNode: TToken;
+  ATypeParamDeclNode: TTypeParamDeclNode;
+  ACloseBracketNode: TToken;
+begin
+  if FOpenBracketNode <> nil then
+    AOpenBracketNode := (FOpenBracketNode.Clone as TToken)
+  else
+    AOpenBracketNode := nil;
+
+  if FTypeParamDeclNode <> nil then
+    ATypeParamDeclNode := (FTypeParamDeclNode.Clone as TTypeParamDeclNode)
+  else
+    ATypeParamDeclNode := nil;
+
+  if FCloseBracketNode <> nil then
+    ACloseBracketNode := (FCloseBracketNode.Clone as TToken)
+  else
+    ACloseBracketNode := nil;
+
+  Result := TTypeParamsNode.Create(
+    AOpenBracketNode,
+    ATypeParamDeclNode,
+    ACloseBracketNode);
+end;
+
+constructor TTypeParamsNode.Create(AOpenBracketNode: TToken; ATypeParamDeclNode: TTypeParamDeclNode; ACloseBracketNode: TToken);
+begin
+  inherited Create;
+
+  // Assigning private members
+  FOpenBracketNode := AOpenBracketNode;
+  FTypeParamDeclNode := ATypeParamDeclNode;
+  FCloseBracketNode := ACloseBracketNode;
+
+  // Adding child nodes
+  FChildNodes.Add(AOpenBracketNode);
+  FChildNodes.Add(ATypeParamDeclNode);
+  FChildNodes.Add(ACloseBracketNode);
+
+  // Adding properties
+  FProperties.Add(TASTNodeProperty.Create('OpenBracketNode', AOpenBracketNode));
+  FProperties.Add(TASTNodeProperty.Create('TypeParamDeclNode', ATypeParamDeclNode));
+  FProperties.Add(TASTNodeProperty.Create('CloseBracketNode', ACloseBracketNode));
 end;
 
 { TTypeSectionNode }

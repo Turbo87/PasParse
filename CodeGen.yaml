@@ -342,6 +342,10 @@ NodeTypes:
     - {Name: TypeParamListNode, Type: ListNode<DelimitedItemNode<AstNode>>}
     - {Name: ColonNode, Type: Token}
     - {Name: ConstraintListNode, Type: ListNode<DelimitedItemNode<AstNode>>}
+  TypeParamsNode:
+    - {Name: OpenBracketNode, Type: Token}
+    - {Name: TypeParamDeclNode, Type: TypeParamDeclNode}
+    - {Name: CloseBracketNode, Type: Token}
   TypeSectionNode:
     - {Name: TypeKeywordNode, Type: Token}
     - {Name: TypeListNode, Type: ListNode<AstNode>}
