@@ -71,6 +71,7 @@ type
   TTypeDeclNode = class;
   TTypeForwardDeclarationNode = class;
   TTypeHelperNode = class;
+  TTypeParamNode = class;
   TTypeSectionNode = class;
   TUnaryOperationNode = class;
   TUnitNode = class;
@@ -1243,6 +1244,20 @@ type
     property TypeNode: TASTNode read FTypeNode;
     property ContentListNode: TListNode read FContentListNode;
     property EndKeywordNode: TToken read FEndKeywordNode;
+  end;
+
+  TTypeParamNode = class(TNonTerminalNode)
+  private
+    FModifierNode: TToken;
+    FNameNode: TToken;
+
+  public
+    constructor Create(AModifierNode: TToken; ANameNode: TToken);
+
+    function Clone: TASTNode; override;
+
+    property ModifierNode: TToken read FModifierNode;
+    property NameNode: TToken read FNameNode;
   end;
 
   TTypeSectionNode = class(TNonTerminalNode)
@@ -5427,6 +5442,45 @@ begin
   FProperties.Add(TASTNodeProperty.Create('TypeNode', ATypeNode));
   FProperties.Add(TASTNodeProperty.Create('ContentListNode', AContentListNode));
   FProperties.Add(TASTNodeProperty.Create('EndKeywordNode', AEndKeywordNode));
+end;
+
+{ TTypeParamNode }
+
+function TTypeParamNode.Clone: TASTNode;
+var
+  AModifierNode: TToken;
+  ANameNode: TToken;
+begin
+  if FModifierNode <> nil then
+    AModifierNode := (FModifierNode.Clone as TToken)
+  else
+    AModifierNode := nil;
+
+  if FNameNode <> nil then
+    ANameNode := (FNameNode.Clone as TToken)
+  else
+    ANameNode := nil;
+
+  Result := TTypeParamNode.Create(
+    AModifierNode,
+    ANameNode);
+end;
+
+constructor TTypeParamNode.Create(AModifierNode: TToken; ANameNode: TToken);
+begin
+  inherited Create;
+
+  // Assigning private members
+  FModifierNode := AModifierNode;
+  FNameNode := ANameNode;
+
+  // Adding child nodes
+  FChildNodes.Add(AModifierNode);
+  FChildNodes.Add(ANameNode);
+
+  // Adding properties
+  FProperties.Add(TASTNodeProperty.Create('ModifierNode', AModifierNode));
+  FProperties.Add(TASTNodeProperty.Create('NameNode', ANameNode));
 end;
 
 { TTypeSectionNode }

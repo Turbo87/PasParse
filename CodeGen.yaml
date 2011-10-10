@@ -335,6 +335,9 @@ NodeTypes:
     - {Name: TypeNode, Type: AstNode}
     - {Name: ContentListNode, Type: ListNode<VisibilitySectionNode>}
     - {Name: EndKeywordNode, Type: Token}
+  TypeParamNode:
+    - {Name: ModifierNode, Type: Token}
+    - {Name: NameNode, Type: Token}
   TypeSectionNode:
     - {Name: TypeKeywordNode, Type: Token}
     - {Name: TypeListNode, Type: ListNode<AstNode>}

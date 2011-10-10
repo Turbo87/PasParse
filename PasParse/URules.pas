@@ -574,6 +574,12 @@ type
     function Evaluate: TASTNode; override;
   end;
   
+  TTypeParamRule = class(TRule)
+  public
+    function CanParse: Boolean; override;
+    function Evaluate: TASTNode; override;
+  end;
+
   TTypeSectionRule = class(TRule)
   public
     function CanParse: Boolean; override;
@@ -3102,6 +3108,30 @@ begin
     Result := TTypeDeclNode.Create(AName, AEqual, ATypeKeyword, AType,
       ADirectives, ASemicolon);
   end;
+end;
+
+{ TTypeParamRule }
+
+function TTypeParamRule.CanParse: Boolean;
+begin
+  Result := FParser.CanParseToken(TTPlusSign) or
+    FParser.CanParseToken(TTMinusSign) or
+    FParser.CanParseRule(RTQualifiedIdent);
+end;
+
+function TTypeParamRule.Evaluate: TASTNode;
+var
+  AModifier, AName: TToken;
+begin
+  if FParser.CanParseToken(TTPlusSign) then
+    AModifier := FParser.ParseToken(TTPlusSign)
+  else if FParser.CanParseToken(TTMinusSign) then
+    AModifier := FParser.ParseToken(TTMinusSign)
+  else
+    AModifier := nil;
+
+  AName := FParser.ParseRuleInternal(RTIdent) as TToken;
+  Result := TTypeParamNode.Create(AModifier, AName);
 end;
 
 { TTypeSectionRule }

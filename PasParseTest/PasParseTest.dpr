@@ -114,7 +114,8 @@ uses
   UTestFileLoader in 'UTestFileLoader.pas',
   UTestVisitor in 'UTestVisitor.pas',
   UTestGoal in 'UTestGoal.pas',
-  UTestConstraint in 'UTestConstraint.pas';
+  UTestConstraint in 'UTestConstraint.pas',
+  UTestTypeParam in 'UTestTypeParam.pas';
 
 begin
   try
@@ -212,6 +213,7 @@ begin
     TTestType.Test;
     TTestTypedConstant.Test;
     TTestTypeDecl.Test;
+    TTestTypeParam.Test;
     TTestTypeSection.Test;
     TTestUnaryOperator.Test;
     TTestUnit.Test;
