@@ -71,6 +71,7 @@ type
   TTypeDeclNode = class;
   TTypeForwardDeclarationNode = class;
   TTypeHelperNode = class;
+  TTypeParamDeclNode = class;
   TTypeParamNode = class;
   TTypeSectionNode = class;
   TUnaryOperationNode = class;
@@ -1244,6 +1245,22 @@ type
     property TypeNode: TASTNode read FTypeNode;
     property ContentListNode: TListNode read FContentListNode;
     property EndKeywordNode: TToken read FEndKeywordNode;
+  end;
+
+  TTypeParamDeclNode = class(TNonTerminalNode)
+  private
+    FTypeParamListNode: TListNode;
+    FColonNode: TToken;
+    FConstraintListNode: TListNode;
+
+  public
+    constructor Create(ATypeParamListNode: TListNode; AColonNode: TToken; AConstraintListNode: TListNode);
+
+    function Clone: TASTNode; override;
+
+    property TypeParamListNode: TListNode read FTypeParamListNode;
+    property ColonNode: TToken read FColonNode;
+    property ConstraintListNode: TListNode read FConstraintListNode;
   end;
 
   TTypeParamNode = class(TNonTerminalNode)
@@ -5442,6 +5459,55 @@ begin
   FProperties.Add(TASTNodeProperty.Create('TypeNode', ATypeNode));
   FProperties.Add(TASTNodeProperty.Create('ContentListNode', AContentListNode));
   FProperties.Add(TASTNodeProperty.Create('EndKeywordNode', AEndKeywordNode));
+end;
+
+{ TTypeParamDeclNode }
+
+function TTypeParamDeclNode.Clone: TASTNode;
+var
+  ATypeParamListNode: TListNode;
+  AColonNode: TToken;
+  AConstraintListNode: TListNode;
+begin
+  if FTypeParamListNode <> nil then
+    ATypeParamListNode := (FTypeParamListNode.Clone as TListNode)
+  else
+    ATypeParamListNode := nil;
+
+  if FColonNode <> nil then
+    AColonNode := (FColonNode.Clone as TToken)
+  else
+    AColonNode := nil;
+
+  if FConstraintListNode <> nil then
+    AConstraintListNode := (FConstraintListNode.Clone as TListNode)
+  else
+    AConstraintListNode := nil;
+
+  Result := TTypeParamDeclNode.Create(
+    ATypeParamListNode,
+    AColonNode,
+    AConstraintListNode);
+end;
+
+constructor TTypeParamDeclNode.Create(ATypeParamListNode: TListNode; AColonNode: TToken; AConstraintListNode: TListNode);
+begin
+  inherited Create;
+
+  // Assigning private members
+  FTypeParamListNode := ATypeParamListNode;
+  FColonNode := AColonNode;
+  FConstraintListNode := AConstraintListNode;
+
+  // Adding child nodes
+  FChildNodes.Add(ATypeParamListNode);
+  FChildNodes.Add(AColonNode);
+  FChildNodes.Add(AConstraintListNode);
+
+  // Adding properties
+  FProperties.Add(TASTNodeProperty.Create('TypeParamListNode', ATypeParamListNode));
+  FProperties.Add(TASTNodeProperty.Create('ColonNode', AColonNode));
+  FProperties.Add(TASTNodeProperty.Create('ConstraintListNode', AConstraintListNode));
 end;
 
 { TTypeParamNode }

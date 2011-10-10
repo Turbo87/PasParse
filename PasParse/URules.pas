@@ -580,6 +580,12 @@ type
     function Evaluate: TASTNode; override;
   end;
 
+  TTypeParamDeclRule = class(TRule)
+  public
+    function CanParse: Boolean; override;
+    function Evaluate: TASTNode; override;
+  end;
+
   TTypeSectionRule = class(TRule)
   public
     function CanParse: Boolean; override;
@@ -3134,6 +3140,30 @@ begin
   Result := TTypeParamNode.Create(AModifier, AName);
 end;
 
+{ TTypeParamDeclRule }
+
+function TTypeParamDeclRule.CanParse: Boolean;
+begin
+  Result := FParser.CanParseRule(RTTypeParam);
+end;
+
+function TTypeParamDeclRule.Evaluate: TASTNode;
+var
+  AParams, AConstraints: TListNode;
+  AColon: TToken;
+begin
+  AParams := FParser.ParseDelimitedList(RTTypeParam, TTComma);
+  AColon := nil;
+  AConstraints := nil;
+
+  if FParser.CanParseToken(TTColon) then
+  begin
+    AColon := FParser.ParseToken(TTColon);
+    AConstraints := FParser.ParseDelimitedList(RTConstraint, TTComma)
+  end;
+  Result := TTypeParamDeclNode.Create(AParams, AColon, AConstraints);
+end;
+
 { TTypeSectionRule }
 
 function TTypeSectionRule.CanParse: Boolean;
@@ -3147,14 +3177,14 @@ var
   ATypeList: TListNode;
 begin
   AType := FParser.ParseToken(TTTypeKeyword);
-  
+
   try
     ATypeList := FParser.ParseRequiredRuleList(RTTypeDecl);
   except
     AType.Free;
     raise
   end;
-  
+
   Result := TTypeSectionNode.Create(AType, ATypeList);
 end;
 

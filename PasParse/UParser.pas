@@ -191,6 +191,7 @@ begin
   AddRule(RTTypedConstant, TTypedConstantRule);
   AddRule(RTTypeDecl, TTypeDeclRule);
   AddRule(RTTypeParam, TTypeParamRule);
+  AddRule(RTTypeParamDecl, TTypeParamDeclRule);
   AddRule(RTTypeSection, TTypeSectionRule);
   AddRule(RTUnit, TUnitRule);
   AddRule(RTUsedUnit, TUsedUnitRule);

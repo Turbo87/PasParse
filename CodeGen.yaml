@@ -338,6 +338,10 @@ NodeTypes:
   TypeParamNode:
     - {Name: ModifierNode, Type: Token}
     - {Name: NameNode, Type: Token}
+  TypeParamDeclNode:
+    - {Name: TypeParamListNode, Type: ListNode<DelimitedItemNode<AstNode>>}
+    - {Name: ColonNode, Type: Token}
+    - {Name: ConstraintListNode, Type: ListNode<DelimitedItemNode<AstNode>>}
   TypeSectionNode:
     - {Name: TypeKeywordNode, Type: Token}
     - {Name: TypeListNode, Type: ListNode<AstNode>}

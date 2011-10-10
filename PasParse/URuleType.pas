@@ -93,6 +93,7 @@ type
     RTTypedConstant,
     RTTypeDecl,
     RTTypeParam,
+    RTTypeParamDecl,
     RTTypeSection,
     RTUnaryOperator,
     RTUnit,
